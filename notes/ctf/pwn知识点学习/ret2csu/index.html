@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ret2csu | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ret2csu | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/pwn知识点学习/ret2csu/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/pwn知识点学习/ret2csu/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+            <a class="category-chip" href="/categories/ctf/pwn%E7%9F%A5%E8%AF%86%E7%82%B9%E5%AD%A6%E4%B9%A0/">pwn知识点学习</a>
+          
+        
+      </div>
+      <h1>ret2csu</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>6 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/pwn知识点学习/ret2csu.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <p>我真的会看的，一看到很长的exp我就头疼，理解一下本萌新.<br>在看了..</p>
+<p><a target="_blank" rel="noopener" href="https://www.yuque.com/hxfqg9/bin/pqc1nq">Intermediate ROP</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_72981769/article/details/141114894?ops_request_misc=%257B%2522request%255Fid%2522%253A%25226993d21d90a5908d3287c9a6c09a40ad%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=6993d21d90a5908d3287c9a6c09a40ad&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-141114894-null-null.142%5Ev102%5Epc_search_result_base7&utm_term=ret2csu&spm=1018.2226.3001.4187">ret2csu-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/zhengmin1989/ROP_STEP_BY_STEP/blob/master/linux_x64/level5">ROP_STEP_BY_STEP&#x2F;linux_x64&#x2F;level5 at master · zhengmin1989&#x2F;ROP_STEP_BY_STEP</a></p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//gcc -z execstack -fno-stack-protector -no-pie -z norelro -O0 demo1.c</span></span><br><span class="line"><span class="meta">#<span class="keyword">undef</span> _FORTIFY_SOURCE</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">vulnerable_function</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="type">char</span> buf[<span class="number">128</span>];</span><br><span class="line">	read(STDIN_FILENO, buf, <span class="number">512</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>** argv)</span> &#123;</span><br><span class="line">	write(STDOUT_FILENO, <span class="string">&quot;Hello, World\n&quot;</span>, <span class="number">13</span>);</span><br><span class="line">	vulnerable_function();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>基本信息：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1766579372209-b38d2a07-53bf-404d-a3c3-50ccb8847666.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>可写段：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1766579654297-bfee3ccc-f890-4a1b-aaba-c2eaf87a8a97.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>csu初始化函数：</p>
+<figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">.text:00000000004005A0                                   ; =============== S U B R O U T I N E =======================================</span><br><span class="line">.text:00000000004005A0</span><br><span class="line">.text:00000000004005A0</span><br><span class="line">.text:00000000004005A0                                   ; void _libc_csu_init()</span><br><span class="line">.text:00000000004005A0                                   public __libc_csu_init</span><br><span class="line">.text:00000000004005A0                                   __libc_csu_init proc near               ; DATA XREF: _start+16↑o</span><br><span class="line">.text:00000000004005A0</span><br><span class="line">.text:00000000004005A0                                   var_30= qword ptr -30h</span><br><span class="line">.text:00000000004005A0                                   var_28= qword ptr -28h</span><br><span class="line">.text:00000000004005A0                                   var_20= qword ptr -20h</span><br><span class="line">.text:00000000004005A0                                   var_18= qword ptr -18h</span><br><span class="line">.text:00000000004005A0                                   var_10= qword ptr -10h</span><br><span class="line">.text:00000000004005A0                                   var_8= qword ptr -8</span><br><span class="line">.text:00000000004005A0</span><br><span class="line">.text:00000000004005A0                                   ; __unwind &#123;</span><br><span class="line">.text:00000000004005A0 000 48 89 6C 24 D8                mov     [rsp+var_28], rbp</span><br><span class="line">.text:00000000004005A5 000 4C 89 64 24 E0                mov     [rsp+var_20], r12</span><br><span class="line">.text:00000000004005AA 000 48 8D 2D 73 08 20 00          lea     rbp, cs:600E24h</span><br><span class="line">.text:00000000004005B1 000 4C 8D 25 6C 08 20 00          lea     r12, cs:600E24h</span><br><span class="line">.text:00000000004005B8 000 4C 89 6C 24 E8                mov     [rsp+var_18], r13</span><br><span class="line">.text:00000000004005BD 000 4C 89 74 24 F0                mov     [rsp+var_10], r14</span><br><span class="line">.text:00000000004005C2 000 4C 89 7C 24 F8                mov     [rsp+var_8], r15</span><br><span class="line">.text:00000000004005C7 000 48 89 5C 24 D0                mov     [rsp+var_30], rbx</span><br><span class="line">.text:00000000004005CC 000 48 83 EC 38                   sub     rsp, 38h</span><br><span class="line">.text:00000000004005D0 038 4C 29 E5                      sub     rbp, r12</span><br><span class="line">.text:00000000004005D3 038 41 89 FD                      mov     r13d, edi</span><br><span class="line">.text:00000000004005D6 038 49 89 F6                      mov     r14, rsi</span><br><span class="line">.text:00000000004005D9 038 48 C1 FD 03                   sar     rbp, 3</span><br><span class="line">.text:00000000004005DD 038 49 89 D7                      mov     r15, rdx</span><br><span class="line">.text:00000000004005E0 038 E8 1B FE FF FF                call    _init_proc</span><br><span class="line">.text:00000000004005E0</span><br><span class="line">.text:00000000004005E5 038 48 85 ED                      <span class="built_in">test</span>    rbp, rbp</span><br><span class="line">.text:00000000004005E8 038 74 1C                         jz      short loc_400606</span><br><span class="line">.text:00000000004005E8</span><br><span class="line">.text:00000000004005EA 038 31 DB                         xor     ebx, ebx</span><br><span class="line">.text:00000000004005EC 038 0F 1F 40 00                   nop     dword ptr [rax+00h]</span><br><span class="line">.text:00000000004005EC</span><br><span class="line">.text:00000000004005F0</span><br><span class="line">.text:00000000004005F0                                   loc_4005F0:                             ; CODE XREF: __libc_csu_init+64↓j</span><br><span class="line">.text:00000000004005F0 038 4C 89 FA                      mov     rdx, r15</span><br><span class="line">.text:00000000004005F3 038 4C 89 F6                      mov     rsi, r14</span><br><span class="line">.text:00000000004005F6 038 44 89 EF                      mov     edi, r13d</span><br><span class="line">.text:00000000004005F9 038 41 FF 14 DC                   call    qword ptr [r12+rbx*8]</span><br><span class="line">.text:00000000004005F9</span><br><span class="line">.text:00000000004005FD 038 48 83 C3 01                   add     rbx, 1</span><br><span class="line">.text:0000000000400601 038 48 39 EB                      cmp     rbx, rbp</span><br><span class="line">.text:0000000000400604 038 75 EA                         jnz     short loc_4005F0</span><br><span class="line">.text:0000000000400604</span><br><span class="line">.text:0000000000400606</span><br><span class="line">.text:0000000000400606                                   loc_400606:                             ; CODE XREF: __libc_csu_init+48↑j</span><br><span class="line">.text:0000000000400606 038 48 8B 5C 24 08                mov     rbx, [rsp+38h+var_30]</span><br><span class="line">.text:000000000040060B 038 48 8B 6C 24 10                mov     rbp, [rsp+38h+var_28]</span><br><span class="line">.text:0000000000400610 038 4C 8B 64 24 18                mov     r12, [rsp+38h+var_20]</span><br><span class="line">.text:0000000000400615 038 4C 8B 6C 24 20                mov     r13, [rsp+38h+var_18]</span><br><span class="line">.text:000000000040061A 038 4C 8B 74 24 28                mov     r14, [rsp+38h+var_10]</span><br><span class="line">.text:000000000040061F 038 4C 8B 7C 24 30                mov     r15, [rsp+38h+var_8]</span><br><span class="line">.text:0000000000400624 038 48 83 C4 38                   add     rsp, 38h</span><br><span class="line">.text:0000000000400628 000 C3                            retn</span><br><span class="line">.text:0000000000400628                                   ; &#125; // starts at 4005A0</span><br><span class="line">.text:0000000000400628</span><br><span class="line">.text:0000000000400628                                   __libc_csu_init endp</span><br><span class="line">.text:0000000000400628</span><br><span class="line">.text:0000000000400628                                   ; ---------------------------------------------------------------------------</span><br><span class="line">.text:0000000000400629 0F 1F 80 00 00 00 00              align 10h</span><br></pre></td></tr></table></figure>
+
+<p>从<code>0x400606</code>开始控制栈</p>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <p class="muted-copy">No heading outline is available for this note.</p>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

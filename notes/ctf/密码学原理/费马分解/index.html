@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>费马分解 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="费马分解 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/密码学原理/费马分解/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/密码学原理/费马分解/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+            <a class="category-chip" href="/categories/ctf/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/">密码学原理</a>
+          
+        
+      </div>
+      <h1>费马分解</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>1 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/密码学原理/费马分解.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <h2 id="一、基本思想"><a href="#一、基本思想" class="headerlink" title="一、基本思想"></a>一、基本思想</h2><p>费马分解法适用于分解两个素数因子接近的奇数合数。<br>它基于这样一个数学事实：</p>
+<p>$ n &#x3D; a^2 - b^2 &#x3D; (a+b)(a-b) $</p>
+<p>只要我们能找到整数 $ a, b $，使得 $ n &#x3D; a^2 - b^2 $，就能分解 $ n $。</p>
+<hr>
+<h2 id="二、具体步骤"><a href="#二、具体步骤" class="headerlink" title="二、具体步骤"></a>二、具体步骤</h2><ol>
+<li><strong>起点</strong>：<br>给定一个奇数合数 $ n $。<br>（偶数可以直接分解出因子 2。）</li>
+<li>**选择 **$ a $：<br>从 $ \lceil \sqrt{n} \rceil $ 开始，因为如果 $ a^2 &lt; n $，那么 $ b^2 $ 会是负数，不成立。<br>也就是说，最小的候选 $ a $ 是不小于 $ \sqrt{n} $ 的整数。</li>
+<li>**计算 **$ b^2 $：</li>
+</ol>
+<p>$ b^2 &#x3D; a^2 - n $</p>
+<p>   如果 $ b^2 $ 不是完全平方数，就让 $ a &#x3D; a+1 $，继续尝试。</p>
+<ol start="4">
+<li><strong>得到分解</strong>：<br>当 $ b^2 $ 是完全平方数时，得到 $ b &#x3D; \sqrt{a^2 - n} $。<br>然后：</li>
+</ol>
+<p>$ n &#x3D; (a-b)(a+b) $</p>
+<p>   就得到了分解因子。</p>
+<hr>
+<h2 id="三、举例"><a href="#三、举例" class="headerlink" title="三、举例"></a>三、举例</h2><p>假设 $ n &#x3D; 5959 $。</p>
+<ol>
+<li>$ \sqrt{5959} \approx 77.2 $，所以从 $ a&#x3D;78 $ 开始。</li>
+<li>$ a&#x3D;78 $：</li>
+</ol>
+<p>$ b^2 &#x3D; 78^2 - 5959 &#x3D; 6084 - 5959 &#x3D; 125 \quad (\text{不是平方数}) $</p>
+<ol start="3">
+<li>$ a&#x3D;79 $：</li>
+</ol>
+<p>$ b^2 &#x3D; 79^2 - 5959 &#x3D; 6241 - 5959 &#x3D; 282 \quad (\text{不是平方数}) $</p>
+<ol start="4">
+<li>$ a&#x3D;80 $：</li>
+</ol>
+<p>$ b^2 &#x3D; 6400 - 5959 &#x3D; 441 &#x3D; 21^2 $</p>
+<p>   找到了！<br>   所以：</p>
+<p>$ 5959 &#x3D; (80-21)(80+21) &#x3D; 59 \times 101 $</p>
+<hr>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-list-text">一、基本思想</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E4%BA%8C%E3%80%81%E5%85%B7%E4%BD%93%E6%AD%A5%E9%AA%A4"><span class="toc-list-text">二、具体步骤</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E4%B8%89%E3%80%81%E4%B8%BE%E4%BE%8B"><span class="toc-list-text">三、举例</span></a></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

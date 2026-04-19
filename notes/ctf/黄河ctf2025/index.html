@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>黄河ctf2025 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="黄河ctf2025 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/黄河ctf2025/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/黄河ctf2025/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+        
+      </div>
+      <h1>黄河ctf2025</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>1 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/黄河ctf2025.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <p>找个借口：今天上午去考了科目三，没多少时间打（假的）</p>
+<h1 id="misc"><a href="#misc" class="headerlink" title="misc"></a>misc</h1><h2 id="1-数学天才"><a href="#1-数学天才" class="headerlink" title="1.数学天才"></a>1.数学天才</h2><p>数独题：<img src="https://cdn.nlark.com/yuque/0/2025/jpeg/54208227/1748081580775-051aa496-5578-405c-b1bf-56a43bfb71c7.jpeg" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>ds一下发现是叫杀人数独，以及我找到一个这个数独的解题网站，但是当时是全英文的，所以就没怎么看懂怎么用<a target="_blank" rel="noopener" href="https://www.sudokuwiki.org/KillerSudoku.aspx">Killer Sudoku Solver by Andrew Stuart</a>，试了好几个不如手动解：<img src="https://cdn.nlark.com/yuque/0/2025/jpeg/54208227/1748083641927-5a656a96-cae9-4fc9-8ad9-1b19b9cb7c86.jpeg" referrerpolicy="no-referrer" loading="lazy" decoding="async">（来自sqsama）</p>
+<p>然后得出斜对角：<code>295$25$23</code>(4换成$)</p>
+<p>然后解压txt：<code>DJ?ELtbo</code>0+o8F0Eb2G9dPN（提示：试炼三：你是第60位前来考核的人员，想想该怎么读懂葵花宝典呢？这里60&#x3D;47+13然后对应了rot47和rot13的算法：<a target="_blank" rel="noopener" href="https://www.qqxiuzi.cn/bianma/ROT5-13-18-47.php">ROT5、ROT13、ROT18、ROT47位移编码</a></p>
+<p>rot47：<code>synt{E3@1_ @gu_t3avh5!}</code>👉rot13：<code>flag{R3@1_ @th_g3niu5!}</code></p>
+<h2 id="2-小小挑战"><a href="#2-小小挑战" class="headerlink" title="2.小小挑战"></a>2.小小挑战</h2><p>Linux里面的指令binwalk -e 1.png能直接分离整个图片里面有的文件：<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1748084615819-7fbbb221-b203-4882-bdf1-a58b31fd4e6b.png" referrerpolicy="no-referrer" loading="lazy" decoding="async">flag打不开，结合一下这张图片和一开始的那张图片，其实这两张图片还是不同的，然后尺寸相同，所以用xor算法的得出了一下图片：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/jpeg/54208227/1748084719716-363fd483-91e7-4a60-864f-55086bb75c75.jpeg" referrerpolicy="no-referrer" loading="lazy" decoding="async">这个码叫datamatrix，扫一下：<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1748084750271-3ad4f368-fe8c-4795-bb71-65b2e9d41ed7.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<ol>
+<li>DATAMATRIX: <code>&lt;E:8E?W^Z&lt;=tEZ)=lP6n&gt;;.Tg&gt;q@+!/6=B)/6_%hLg*.rH&lt;gLN</code></li>
+</ol>
+<p>base85解码：<code>UV!W_X_YZ,U,Y∈[0,9], V,W,X,Z∈[A,z]</code>（这样就可以爆破了）</p>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#misc"><span class="toc-list-text">misc</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E6%95%B0%E5%AD%A6%E5%A4%A9%E6%89%8D"><span class="toc-list-text">1.数学天才</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-%E5%B0%8F%E5%B0%8F%E6%8C%91%E6%88%98"><span class="toc-list-text">2.小小挑战</span></a></li></ol></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

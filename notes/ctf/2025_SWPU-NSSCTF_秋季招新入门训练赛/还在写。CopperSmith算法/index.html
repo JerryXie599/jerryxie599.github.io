@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>还在写。CopperSmith算法 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="还在写。CopperSmith算法 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/2025_SWPU-NSSCTF_秋季招新入门训练赛/还在写。CopperSmith算法/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/2025_SWPU-NSSCTF_秋季招新入门训练赛/还在写。CopperSmith算法/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+            <a class="category-chip" href="/categories/ctf/2025-SWPU-NSSCTF-%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">2025_SWPU-NSSCTF_秋季招新入门训练赛</a>
+          
+        
+      </div>
+      <h1>还在写。CopperSmith算法</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>1 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/2025_SWPU-NSSCTF_秋季招新入门训练赛/还在写。CopperSmith算法.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <p>这个算法看来非常有必要学。我先放几个参考链接</p>
+<h1 id="二十年以来对-RSA-密码系统攻击综述"><a href="#二十年以来对-RSA-密码系统攻击综述" class="headerlink" title="二十年以来对 RSA 密码系统攻击综述"></a>二十年以来对 RSA 密码系统攻击综述</h1><p><a target="_blank" rel="noopener" href="https://paper.seebug.org/727/">https://paper.seebug.org/727/</a></p>
+<h1 id="密码学学习笔记-之-Coppersmith’s-Method"><a href="#密码学学习笔记-之-Coppersmith’s-Method" class="headerlink" title="密码学学习笔记 之 Coppersmith’s Method"></a>密码学学习笔记 之 Coppersmith’s Method</h1><p><a target="_blank" rel="noopener" href="https://jayxv.github.io/2020/08/13/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8Bcoppersmith/">Van1sh的小屋</a></p>
+<h1 id="Coppersmith-方法"><a href="#Coppersmith-方法" class="headerlink" title="Coppersmith 方法"></a>Coppersmith 方法</h1><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1jj41167tU?spm_id_from=333.788.recommend_more_video.-1&vd_source=7564738e9554c00c8cc808fd3016b121">Coppersmith 方法_哔哩哔哩_bilibili</a></p>
+<h1 id="LLL-格基归约算法"><a href="#LLL-格基归约算法" class="headerlink" title="LLL 格基归约算法"></a>LLL 格基归约算法</h1><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Pk4y157xa/?spm_id_from=333.337.search-card.all.click&vd_source=7564738e9554c00c8cc808fd3016b121">LLL 格基归约算法_哔哩哔哩_bilibili</a></p>
+<h1 id="格基规约算法"><a href="#格基规约算法" class="headerlink" title="格基规约算法"></a>格基规约算法</h1><p><a target="_blank" rel="noopener" href="https://ctf-wiki.org/crypto/asymmetric/lattice/lattice-reduction/">https://ctf-wiki.org/crypto/asymmetric/lattice/lattice-reduction/</a></p>
+<p>简单讲：</p>
+<p>LLL算法将一个随机的基向量转换成一个更优的、模长更短的基向量</p>
+<p>Coppersmith算法优化了解出f(x)≡0(mod N)解集的算法</p>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E4%BA%8C%E5%8D%81%E5%B9%B4%E4%BB%A5%E6%9D%A5%E5%AF%B9-RSA-%E5%AF%86%E7%A0%81%E7%B3%BB%E7%BB%9F%E6%94%BB%E5%87%BB%E7%BB%BC%E8%BF%B0"><span class="toc-list-text">二十年以来对 RSA 密码系统攻击综述</span></a></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E5%AF%86%E7%A0%81%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%B9%8B-Coppersmith%E2%80%99s-Method"><span class="toc-list-text">密码学学习笔记 之 Coppersmith’s Method</span></a></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#Coppersmith-%E6%96%B9%E6%B3%95"><span class="toc-list-text">Coppersmith 方法</span></a></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#LLL-%E6%A0%BC%E5%9F%BA%E5%BD%92%E7%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-list-text">LLL 格基归约算法</span></a></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E6%A0%BC%E5%9F%BA%E8%A7%84%E7%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-list-text">格基规约算法</span></a></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/pwn/">
+              <strong>pwn</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

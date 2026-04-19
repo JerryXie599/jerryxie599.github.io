@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>awdp_-_pwn | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="awdp_-_pwn | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/26国赛摸底ctf/awdp_-_pwn/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/26国赛摸底ctf/awdp_-_pwn/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+            <a class="category-chip" href="/categories/ctf/26%E5%9B%BD%E8%B5%9B%E6%91%B8%E5%BA%95ctf/">26国赛摸底ctf</a>
+          
+        
+      </div>
+      <h1>awdp_-_pwn</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>3 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/26国赛摸底ctf/awdp_-_pwn.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <p>Break &amp; Fix<br>Break  等同于  CTF解题赛<br>Fix       修复程序使得主办方的exp不成功 ，同时要能够通过平台的check<br>需要提交<code>patch.tar.gz</code></p>
+<p>赛前注意关注一下比赛手册<br>了解得分机制，一般策略是尽早轮次得分 ，一般修复要比利用更简单更快</p>
+<h5 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h5><p><code>tar czvf patch.tar.gz patch.sh patch_ok</code></p>
+<figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">cp</span> patch_ok /home/ctf/challenge/login</span><br></pre></td></tr></table></figure>
+
+<h4 id="check主要逻辑"><a href="#check主要逻辑" class="headerlink" title="check主要逻辑"></a>check主要逻辑</h4><p>不同出题人、不同平台方check的逻辑思路不同，所以有些时候是要看运气的<br>常见的check思路<br>1、检测程序正常功能的交互<br>2、检测文件大小是否被修改 （确保文件没变）<br>3、限制修改的范围<br>4、限制修改的字节数<br>5、针对恶意修复检测<br>… …</p>
+<h4 id="fix"><a href="#fix" class="headerlink" title="fix"></a>fix</h4><h5 id="ida-keypatch"><a href="#ida-keypatch" class="headerlink" title="ida-keypatch"></a>ida-keypatch</h5><h6 id="stack-overflow"><a href="#stack-overflow" class="headerlink" title="stack_overflow"></a>stack_overflow</h6><p>1、修改size<br>2、调整栈位置<br>3、scanf(“%s”,buf) —&gt; scanf(“%ns”,buf)  或者 改成read(0,buf,size)</p>
+<h6 id="fmt"><a href="#fmt" class="headerlink" title="fmt"></a>fmt</h6><p>1、printf—&gt;puts         <code>_printf  --&gt; _puts</code>   会多一个<code>\n</code><br>        2024-anime<br>2、加参数%s     0x25 0x73 0x00<br>A- 在<code>.eh_frame</code>写入想要执行的代码，将原函数位置改成 <code>jmp  eh_frame</code><br>        需要注意将LOAD中EH_FRAME的Flags改为7<br>        2024-anime<br>    B- 在原函数调用前用更短的代码实现原功能，从而节省出足够长度写入新内容<br>        2024-anime<br>        mov rax,0 &#x3D;&#x3D;&gt; xor rax,rax  甚至 xor eax,eax<br>        mov rax,rbx &#x3D;&#x3D;&gt; mov eax,ebx  |  push rbx；pop rax  |  xchg rax,rbx<br>        jmp offset  &#x3D;&#x3D;&gt;  jmp short offset<br>3、snprintf  参数顺序问题<br>2025-typo  (利用角度在堆溢出)</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">snprintf</span> <span class="params">( <span class="type">char</span> * str, <span class="type">size_t</span> size, <span class="type">const</span> <span class="type">char</span> * format, ... )</span>;</span><br><span class="line"></span><br><span class="line">正确参数案例：<span class="built_in">snprintf</span>(buffer, <span class="number">6</span>, <span class="string">&quot;%s&quot;</span>, s);</span><br><span class="line">错误参数案例：<span class="built_in">snprintf</span>(buffer, <span class="string">&quot;%s&quot;</span>, s, <span class="number">6</span>);</span><br><span class="line">    <span class="string">&quot;%s&quot;</span>是传入字符串地址，这个地址会被解析为size，</span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>,buf)</span><br><span class="line"><span class="built_in">sprintf</span>(adr,<span class="string">&quot;%s&quot;</span>,buf)</span><br><span class="line"><span class="built_in">snprintf</span>(adr,n,<span class="string">&quot;%s&quot;</span>,buf)</span><br></pre></td></tr></table></figure>
+
+<h6 id="整数溢出"><a href="#整数溢出" class="headerlink" title="整数溢出"></a>整数溢出</h6><p>调整jmp指令<br>nsctf_online_2019_pwn1</p>
+<table>
+<thead>
+<tr>
+<th>无符号跳转指令</th>
+<th>描述</th>
+<th>有符号跳转指令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>JA</td>
+<td>无符号大于则跳转</td>
+<td>JG</td>
+<td>有符号大于则跳转</td>
+</tr>
+<tr>
+<td>JNA</td>
+<td>无符号不大于则跳转</td>
+<td>JNG</td>
+<td>有符号不大于则跳转</td>
+</tr>
+<tr>
+<td>JAE</td>
+<td>无符号大于等于则跳转（同JNB）</td>
+<td>JGE</td>
+<td>有符号大于等于则跳转（同JNL）</td>
+</tr>
+<tr>
+<td>JNAE</td>
+<td>无符号不大于等于则跳转（同JB）</td>
+<td>JNGE</td>
+<td>有符号不大于等于则跳转（同JL）</td>
+</tr>
+<tr>
+<td>JB</td>
+<td>无符号小于则跳转</td>
+<td>JL</td>
+<td>有符号小于则跳转</td>
+</tr>
+<tr>
+<td>JNB</td>
+<td>无符号不小于则跳转</td>
+<td>JNL</td>
+<td>有符号不小于则跳转</td>
+</tr>
+<tr>
+<td>JBE</td>
+<td>无符号小于等于则跳转（同JNA）</td>
+<td>JLE</td>
+<td>有符号小于等于则跳转（同JNG）</td>
+</tr>
+<tr>
+<td>JNBE</td>
+<td>无符号不小于等于则跳转（同JA）</td>
+<td>JNLE</td>
+<td>有符号不小于等于则跳转（同JG）</td>
+</tr>
+</tbody></table>
+<h6 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h6><p>1、check不严谨可直接 nop free</p>
+<p>2、UAF –&gt; free后添加置空<br>    A- 在<code>.eh_frame</code>写入想要执行的代码，将原函数位置改成 <code>jmp  eh_frame</code><br>    B- 在原函数调用前用更短的代码实现原功能，从而节省出足够长度写入新内容<br>        2023_notepad</p>
+<p>3、堆溢出 –&gt; 调整写入时的size 或者 调整malloc申请时的大小<br>        prompt</p>
+<h6 id="奇奇怪怪"><a href="#奇奇怪怪" class="headerlink" title="奇奇怪怪"></a>奇奇怪怪</h6><p>1、alarm<br>通常程序的alarm时间较长，可以测试进行一次操作的时间大概多久，比如5次操作需要2秒，正常程序运行需要几次操作，多留1次的时间大致就行，例如设置为alarm(3)，这样限制多次操作也能修复程序。</p>
+<p>2、patch指令限制</p>
+<p>3、<code>exit()</code>退出的堆题，可以尝试把<code>exit()</code>改成<code>_exit()</code></p>
+<h5 id="AwdPwnPatcher"><a href="#AwdPwnPatcher" class="headerlink" title="AwdPwnPatcher"></a>AwdPwnPatcher</h5><p>用脚本替代手动patch，可以不用但不能没有</p>
+<h4 id="通防-evilPatcher"><a href="#通防-evilPatcher" class="headerlink" title="通防 - evilPatcher"></a>通防 - evilPatcher</h4><p>大概率没用，小概率有效</p>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <p class="muted-copy">No heading outline is available for this note.</p>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

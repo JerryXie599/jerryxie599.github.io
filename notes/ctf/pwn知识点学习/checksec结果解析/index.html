@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>checksec结果解析 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="checksec结果解析 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/pwn知识点学习/checksec结果解析/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/pwn知识点学习/checksec结果解析/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+            <a class="category-chip" href="/categories/ctf/pwn%E7%9F%A5%E8%AF%86%E7%82%B9%E5%AD%A6%E4%B9%A0/">pwn知识点学习</a>
+          
+        
+      </div>
+      <h1>checksec结果解析</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>5 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/pwn知识点学习/checksec结果解析.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <h2 id="0x00-检测"><a href="#0x00-检测" class="headerlink" title="0x00 检测"></a>0x00 检测</h2><p>可以使用 pwntools 中的 checksec 工具进行检测，红色表示未开启该保护。<br><img src="https://cdn.nlark.com/yuque/0/2026/png/54208227/1772536531921-d513351e-8eae-4d32-910a-93448efcb94f.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Arch:       amd64-64-little</span><br><span class="line">RELRO:      Partial RELRO</span><br><span class="line">Stack:      No canary found</span><br><span class="line">NX:         NX enabled</span><br><span class="line">PIE:        No PIE (0x400000)</span><br><span class="line">Stripped:   No</span><br></pre></td></tr></table></figure>
+
+<h2 id="0x01-保护"><a href="#0x01-保护" class="headerlink" title="0x01 保护"></a>0x01 保护</h2><h4 id="一、ASLR"><a href="#一、ASLR" class="headerlink" title="一、ASLR"></a>一、ASLR</h4><h6 id="1-介绍："><a href="#1-介绍：" class="headerlink" title="1.介绍："></a>1.介绍：</h6><p>ASLR 的是操作系统的功能选项，作用于 executable（ELF）装入内存运行时，因而只能随机化 stack、heap、libraries 的基址。</p>
+<h6 id="2-表现形式"><a href="#2-表现形式" class="headerlink" title="2.表现形式"></a>2.表现形式</h6><p>开启后每次加载程序的 stack、libarys、heap 等地址都会随机化，可用 cat &#x2F;proc&#x2F;<code>pidof xxx</code>&#x2F;maps 查看。</p>
+<h6 id="3-作用"><a href="#3-作用" class="headerlink" title="3.作用"></a>3.作用</h6><p>未开启：无作用<br>半开启：随机化 stack 和 libarys<br>全开启：随机化 stack、libarys 和 heap</p>
+<h6 id="4-保护开启和关闭方式"><a href="#4-保护开启和关闭方式" class="headerlink" title="4.保护开启和关闭方式"></a>4.保护开启和关闭方式</h6><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">## 未开启：地址随机化关闭</span><br><span class="line">  echo 0 &gt; /proc/sys/kernel/randomize_va_space</span><br><span class="line">  ## 半开启：随机化 stack 、librarys</span><br><span class="line">  echo 1 &gt; /proc/sys/kernel/randomize_va_space</span><br><span class="line">  ## 全开启：随机化 stack 、librarys 、heap（默认选项）</span><br><span class="line">  echo 2 &gt; /proc/sys/kernel/randomize_va_space</span><br></pre></td></tr></table></figure>
+
+<h4 id="二、NX"><a href="#二、NX" class="headerlink" title="二、NX"></a>二、NX</h4><h6 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1.介绍"></a>1.介绍</h6><p>No-Execute（不可执行），Nx 的原理是将数据所在内存页标识为不可执行，当程序执行流被劫持到栈上时，程序会尝试在数据页面上执行指令，因为数据页被标记为不可知性，此时CPU 就会抛出异常，而不是去执行栈上数据。</p>
+<h6 id="2-表现形式-1"><a href="#2-表现形式-1" class="headerlink" title="2.表现形式"></a>2.表现形式</h6><p>在程序的某个位置有控制程序是否可以执行的标志位（若为 6 不可执行 、7 不可执行），也可以用 execstack 工具查询和设置该标志位，该标志位在 51e5 7464 后边。详细见下图<br><img src="https://cdn.nlark.com/yuque/0/2026/png/54208227/1772536532062-19aad420-6c73-446e-8326-83bcc4d0be2c.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"><br><strong>xxd 1 :无保护</strong><br><img src="https://cdn.nlark.com/yuque/0/2026/png/54208227/1772536532056-4d792b46-295e-4fc1-be6e-46125b54f36d.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"><br><strong>xxd 2 ：有保护</strong><br><img src="https://cdn.nlark.com/yuque/0/2026/png/54208227/1772536532177-b50f94ab-fdf3-4d48-ab69-cccfb2252f4e.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h6 id="3-作用-1"><a href="#3-作用-1" class="headerlink" title="3.作用"></a>3.作用</h6><p><strong>NX disabled：</strong> 栈可以执行，栈上的数据也可以被当作代码执行 。<br><strong>NX enabled：</strong> 栈不可执行，栈上的数据程序只认为是数据，如果去执行的话会发生错误。即栈上的数据不可以被当作代码执行。</p>
+<h6 id="4-gcc-编译选项（为程序添加保护的方式）"><a href="#4-gcc-编译选项（为程序添加保护的方式）" class="headerlink" title="4.gcc 编译选项（为程序添加保护的方式）"></a>4.gcc 编译选项（为程序添加保护的方式）</h6><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">## 栈可执行：NX disabled</span><br><span class="line">  gcc -z execstack</span><br><span class="line">  ## 栈不可执行：NX enabled（默认选项）</span><br><span class="line">  gcc -z noexecstack </span><br></pre></td></tr></table></figure>
+
+<h4 id="三、PIE"><a href="#三、PIE" class="headerlink" title="三、PIE"></a>三、PIE</h4><h6 id="1-介绍-1"><a href="#1-介绍-1" class="headerlink" title="1.介绍"></a>1.介绍</h6><p>PIE（Position Independent Executables）是编译器（gcc，…）功能选项（-fPIE &#x2F; -fpie），作用于编译过程，可将其理解为特殊的 PIC（so专用，Position Independent Code），加了 PIE 选项编译出来的 ELF 用 file 命令查看会显示其为 so，其随机化了 ELF 装载内存的基址（代码段、plt、got、data 等共同的基址）。其效果为用 objdump、IDA 反汇编之后的地址是用偏移表示的而不是绝对地址。</p>
+<h6 id="2-表现形式-2"><a href="#2-表现形式-2" class="headerlink" title="2.表现形式"></a>2.表现形式</h6><p><img src="https://cdn.nlark.com/yuque/0/2026/png/54208227/1772536532114-799a0228-44ca-4723-87e1-11779a24e1ad.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h6 id="3-作用-2"><a href="#3-作用-2" class="headerlink" title="3.作用"></a>3.作用</h6><p><strong>No PIE：</strong> 无作用<br><strong>PIE enabled：</strong> 代码段、plt、got、data 等共同的基址会随机化。在编译后的程序中，只保留指令、数据等的偏移，而不是绝对地址的形式。</p>
+<h6 id="4-gcc-编译选项（为程序添加保护的方式）-1"><a href="#4-gcc-编译选项（为程序添加保护的方式）-1" class="headerlink" title="4.gcc 编译选项（为程序添加保护的方式）"></a>4.gcc 编译选项（为程序添加保护的方式）</h6><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">## 关闭：No PIE（默认选项）</span><br><span class="line">  -no-pie</span><br><span class="line">  ## 开启：PIE enabled</span><br><span class="line">  -fpie -pie / -fPIE -pie  </span><br><span class="line">  ## 笔者并不知道这两个选项有什么区别，在用不同选项编译一个程序时他们两个的 hash 居然都一样，所以在此求教各位。</span><br><span class="line"></span><br><span class="line">AI写代码python运行</span><br><span class="line"></span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td></tr></table></figure>
+
+<h4 id="四、Canary"><a href="#四、Canary" class="headerlink" title="四、Canary"></a>四、Canary</h4><h6 id="1-介绍-2"><a href="#1-介绍-2" class="headerlink" title="1.介绍"></a>1.介绍</h6><p>金丝雀保护，是一种用来防护栈溢出的保护机制。其原理是在函数入口处，先从 fs&#x2F;gs 寄存器中取出一个 4(eax)&#x2F;8(rax) 字节的 cookie 信息存到栈上，当函数结束返回的时候会验证 cookie 信息是否合法(与开始存的是否一致)，如果不合法就停止程序运行。真正的 cookie 信息也会保存在程序的某个位置。插入栈中的 cookie 一般在 ebp &#x2F; rbp 之上的一个内存单元保存。</p>
+<h6 id="2-表现形式-3"><a href="#2-表现形式-3" class="headerlink" title="2.表现形式"></a>2.表现形式</h6><p><img src="https://cdn.nlark.com/yuque/0/2026/png/54208227/1772536532440-f9f37b24-2878-473b-a191-a1148893a38d.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h6 id="3-作用-3"><a href="#3-作用-3" class="headerlink" title="3.作用"></a>3.作用</h6><p><strong>无 Canary 保护：</strong> 无任何作用<br><strong>部分函数 Canary 保护：</strong> 在一些容易受到攻击的函数返回地址之前添加 cookie 。在函数返回时，检查该 cookie 与原本程序插入该位置的 cookie 是否一致，若一致则程序认为没有受到栈溢出攻击。<br><strong>全部函数 Canary 保护：</strong> 所有的自定义函数在返回地址之前都会添加 cookie 。在函数返回时，检查该 cookie 与原本程序插入该位置的 cookie 是否一致，若一致则程序认为没有受到栈溢出攻击。</p>
+<h6 id="4-gcc-编译选项（为程序添加保护的方式）-2"><a href="#4-gcc-编译选项（为程序添加保护的方式）-2" class="headerlink" title="4.gcc 编译选项（为程序添加保护的方式）"></a>4.gcc 编译选项（为程序添加保护的方式）</h6><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">## 无 canary 保护：No canary found</span><br><span class="line">  -fno-stack-protector(无) / -fstack-protector(无) </span><br><span class="line">  ## 部分 canary 保护：Canary found（默认选项）</span><br><span class="line">  -fstack-protector-strong</span><br><span class="line">  ## 全部 canary 保护：Canary found</span><br><span class="line">  -fstack-protector-all </span><br><span class="line"></span><br><span class="line">AI写代码python运行</span><br><span class="line"></span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td></tr></table></figure>
+
+<h4 id="五、RELRO-RELocation-Read-Only"><a href="#五、RELRO-RELocation-Read-Only" class="headerlink" title="五、RELRO RELocation Read-Only"></a>五、RELRO <code>RELocation Read-Only</code></h4><h6 id="1-介绍-3"><a href="#1-介绍-3" class="headerlink" title="1.介绍"></a>1.介绍</h6><p>设置符号重定位表格为只读或在程序启动时就解析并绑定所有动态符号，从而减少对 GOT 攻击。</p>
+<h6 id="2-作用"><a href="#2-作用" class="headerlink" title="2.作用"></a>2.作用</h6><p><strong>No RELRO：</strong> 在这种模式下关于重定位并不进行任何保护。<br><strong>Partial RELRO：</strong> 在这种模式下，一些段 (包括.dynamic) 在初始化后将会被标识为只读。<br><strong>Full RELRO：</strong> 在这种模式下，除了会开启部分保护外。惰性解析会被禁用（所有的导入符号将在开始时被解析，.got.plt 段会被完全初始化为目标函数的终地址，并被标记为只读）。此外，既然惰性解析被禁用，GOT[1] 与 GOT[2] 条目将不会被初始化为提到的值。</p>
+<h6 id="3-gcc-编译选项（为程序添加保护的方式）"><a href="#3-gcc-编译选项（为程序添加保护的方式）" class="headerlink" title="3.gcc 编译选项（为程序添加保护的方式）"></a>3.gcc 编译选项（为程序添加保护的方式）</h6><figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 关闭： No RELRO</span></span><br><span class="line">  -z norelro</span><br><span class="line">  <span class="comment">## 开启： Partial RELRO(默认选项)</span></span><br><span class="line">  -z lazy</span><br><span class="line">  <span class="comment">## 完全开启： Full RELRO</span></span><br><span class="line">  -z now</span><br></pre></td></tr></table></figure>
+
+<p> 把和“重定位（relocation）”相关的一些关键数据结构（常见是 <strong>GOT&#x2F;相关段</strong>）在程序启动完成重定位后设为 <strong>只读</strong>，防止被篡改。  </p>
+<p>可以把“<strong>重定位（relocation）</strong>”理解成：程序编译出来时，很多地址先写成“以后再填&#x2F;再算”，等程序真正被加载到内存里运行时，系统再把这些位置补成当次运行的真实地址。</p>
+<p>只读：<strong>启用RELRO</strong>后，重定位完成后，这些重要的内存区域会被设置为只读，攻击者无法通过改变这些地址来控制程序流。</p>
+<p>常见的有<code>Partial RELRO</code>&#x2F;<code>No RELRO</code>&#x2F;<code>Full RELRO</code></p>
+<p>见<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_71015193/article/details/137607117">【pwn之最】RELRO:最小丑的机制-CSDN博客</a></p>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#0x00-%E6%A3%80%E6%B5%8B"><span class="toc-list-text">0x00 检测</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#0x01-%E4%BF%9D%E6%8A%A4"><span class="toc-list-text">0x01 保护</span></a></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

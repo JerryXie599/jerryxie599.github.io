@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ida还原proto文件 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ida还原proto文件 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/26国赛摸底ctf/ida还原proto文件/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/26国赛摸底ctf/ida还原proto文件/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+            <a class="category-chip" href="/categories/ctf/26%E5%9B%BD%E8%B5%9B%E6%91%B8%E5%BA%95ctf/">26国赛摸底ctf</a>
+          
+        
+      </div>
+      <h1>ida还原proto文件</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>6 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/26国赛摸底ctf/ida还原proto文件.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <p>搜索 （ctrl + i）常数0x28AAEEF9 或者 二进制搜索（ctrl + b）F9 EE AA 28</p>
+<p>IDA快速定位proto的Descriptor结构：<br>    1、ctrl + i 常数搜索 0x28AAEEF9<br>    2、ctrl + b 二进制搜索 F9 EE AA 28<br>这是protubuf的结构体签名</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#define PROTOBUF_C__SERVICE_DESCRIPTOR_MAGIC 0x14159bc3 </span><br><span class="line">#define PROTOBUF_C__MESSAGE_DESCRIPTOR_MAGIC 0x28aaeef9 </span><br><span class="line">#define PROTOBUF_C__ENUM_DESCRIPTOR_MAGIC 0x114315af</span><br></pre></td></tr></table></figure>
+
+
+
+<p>![[Pasted image 20250604105941.png]]<br>在这上方 就是协议字段描述了，这里直接看不明显，可以shift + F9导入对应结构体：<br>[[IDA常用]]<br>1、枚举类型 ProtobufCLabel<br>2、枚举类型 ProtobufCtype<br>3、结构体 ProtobufCFieldDescriptor</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">ProtobufCLabel</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  PROTOBUF_C_LABEL_REQUIRED = <span class="number">0x0</span>,      <span class="comment">///&lt; A well-formed message must have exactly one of this field.</span></span><br><span class="line">  PROTOBUF_C_LABEL_OPTIONAL = <span class="number">0x1</span>,      <span class="comment">///&lt; A well-formed message can have zero or one of this field (but not</span></span><br><span class="line">                                        <span class="comment">///&lt; more than one).</span></span><br><span class="line">  PROTOBUF_C_LABEL_REPEATED = <span class="number">0x2</span>,      <span class="comment">///&lt; This field can be repeated any number of times (including zero) in a</span></span><br><span class="line">                                        <span class="comment">///&lt; well-formed message. The order of the repeated values will be</span></span><br><span class="line">                                        <span class="comment">///&lt; preserved.</span></span><br><span class="line">  PROTOBUF_C_LABEL_NONE = <span class="number">0x3</span>,          <span class="comment">///&lt; This field has no label. This is valid only in proto3 and is</span></span><br><span class="line">                                        <span class="comment">///&lt; equivalent to OPTIONAL but no &quot;has&quot; quantifier will be consulted.</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">ProtobufCType</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  PROTOBUF_C_TYPE_INT32 = <span class="number">0x0</span>,          <span class="comment">///&lt; int32</span></span><br><span class="line">  PROTOBUF_C_TYPE_SINT32 = <span class="number">0x1</span>,         <span class="comment">///&lt; signed int32</span></span><br><span class="line">  PROTOBUF_C_TYPE_SFIXED32 = <span class="number">0x2</span>,       <span class="comment">///&lt; signed int32 (4 bytes)</span></span><br><span class="line">  PROTOBUF_C_TYPE_INT64 = <span class="number">0x3</span>,          <span class="comment">///&lt; int64</span></span><br><span class="line">  PROTOBUF_C_TYPE_SINT64 = <span class="number">0x4</span>,         <span class="comment">///&lt; signed int64</span></span><br><span class="line">  PROTOBUF_C_TYPE_SFIXED64 = <span class="number">0x5</span>,       <span class="comment">///&lt; signed int64 (8 bytes)</span></span><br><span class="line">  PROTOBUF_C_TYPE_UINT32 = <span class="number">0x6</span>,         <span class="comment">///&lt; unsigned int32</span></span><br><span class="line">  PROTOBUF_C_TYPE_FIXED32 = <span class="number">0x7</span>,        <span class="comment">///&lt; unsigned int32 (4 bytes)</span></span><br><span class="line">  PROTOBUF_C_TYPE_UINT64 = <span class="number">0x8</span>,         <span class="comment">///&lt; unsigned int64</span></span><br><span class="line">  PROTOBUF_C_TYPE_FIXED64 = <span class="number">0x9</span>,        <span class="comment">///&lt; unsigned int64 (8 bytes)</span></span><br><span class="line">  PROTOBUF_C_TYPE_FLOAT = <span class="number">0xA</span>,          <span class="comment">///&lt; float</span></span><br><span class="line">  PROTOBUF_C_TYPE_DOUBLE = <span class="number">0xB</span>,         <span class="comment">///&lt; double</span></span><br><span class="line">  PROTOBUF_C_TYPE_BOOL = <span class="number">0xC</span>,           <span class="comment">///&lt; boolean</span></span><br><span class="line">  PROTOBUF_C_TYPE_ENUM = <span class="number">0xD</span>,           <span class="comment">///&lt; enumerated type</span></span><br><span class="line">  PROTOBUF_C_TYPE_STRING = <span class="number">0xE</span>,         <span class="comment">///&lt; UTF-8 or ASCII string</span></span><br><span class="line">  PROTOBUF_C_TYPE_BYTES = <span class="number">0xF</span>,          <span class="comment">///&lt; arbitrary byte sequence</span></span><br><span class="line">  PROTOBUF_C_TYPE_MESSAGE = <span class="number">0x10</span>,       <span class="comment">///&lt; nested message</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ProtobufCFieldDescriptor</span> &#123;</span></span><br><span class="line">    <span class="comment">/** Name of the field as given in the .proto file. */</span></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>		*name;</span><br><span class="line">    <span class="comment">/** Tag value of the field as given in the .proto file. */</span></span><br><span class="line">    <span class="type">uint32_t</span>		id;</span><br><span class="line">    <span class="comment">/** Whether the field is `REQUIRED`, `OPTIONAL`, or `REPEATED`. */</span></span><br><span class="line">    ProtobufCLabel		label;</span><br><span class="line">    <span class="comment">/** The type of the field. */</span></span><br><span class="line">    ProtobufCType		type;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The offset in bytes of the message&#x27;s C structure&#x27;s quantifier field</span></span><br><span class="line"><span class="comment">     * (the `has_MEMBER` field for optional members or the `n_MEMBER` field</span></span><br><span class="line"><span class="comment">     * for repeated members or the case enum for oneofs).</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="type">unsigned</span>		quantifier_offset;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The offset in bytes into the message&#x27;s C structure for the member</span></span><br><span class="line"><span class="comment">     * itself.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="type">unsigned</span>		offset;</span><br><span class="line">    <span class="type">const</span> <span class="type">void</span>		*descriptor; <span class="comment">/* for MESSAGE and ENUM types */</span></span><br><span class="line">    <span class="comment">/** The default value for this field, if defined. May be NULL. */</span></span><br><span class="line">    <span class="type">const</span> <span class="type">void</span>		*default_value;</span><br><span class="line">    <span class="type">uint32_t</span>		flags;</span><br><span class="line">    <span class="comment">/** Reserved for future use. */</span></span><br><span class="line">    <span class="type">unsigned</span>		reserved_flags;</span><br><span class="line">    <span class="comment">/** Reserved for future use. */</span></span><br><span class="line">    <span class="type">void</span>			*reserved2;</span><br><span class="line">    <span class="comment">/** Reserved for future use. */</span></span><br><span class="line">    <span class="type">void</span>			*reserved3;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>然后将字段转为ProtobufCFieldDescriptor结构类型，就可以很直观的看出.proto<br>![[Pasted image 20250604134805.png]]</p>
+<p>以此写出.proto文件，其中可以发现有_NONE标签，所以用proto3</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">syntax = <span class="string">&quot;proto3&quot;</span>;</span><br><span class="line">package pack.base;</span><br><span class="line">message heybro&#123;</span><br><span class="line">    sint32 opt = <span class="number">1</span>;</span><br><span class="line">    sint32 malloc_size = <span class="number">2</span>;</span><br><span class="line">    sint32 idx = <span class="number">3</span>;</span><br><span class="line">    <span class="built_in">string</span> con = <span class="number">4</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意：这里repeated标签表示允许同一个字段名在一条消息中出现多次<br>可以在.proto文件中同样用repeated修饰</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">syntax = <span class="string">&quot;proto3&quot;</span>;</span><br><span class="line">message HeapPayload &#123;</span><br><span class="line">    int32 option = <span class="number">1</span>;</span><br><span class="line">    repeated int32 chunksize = <span class="number">2</span>;</span><br><span class="line">    repeated int32 heap_chunks_id = <span class="number">3</span>;</span><br><span class="line">    bytes heap_content = <span class="number">4</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用repeated修饰的参数在后续使用时用.append进行传参<br>例如：</p>
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">heap = heap_pb2.HeapPayload()</span><br><span class="line">    heap.option = <span class="number">2</span></span><br><span class="line">    heap.heap_chunks_id.append(idx)</span><br></pre></td></tr></table></figure>
+
+<p>然后用protoc编译为.py文件</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protoc --python_out=./ ./ctf.proto</span><br></pre></td></tr></table></figure>
+
+
+
+<p>还可以protoc编译为c语言，将c语言结构导入ida中便于逆向</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">protoc-c --c_out=./ ./ctf.proto</span><br><span class="line"># 在ctf.bp-c.h问价可以找到对应结构体</span><br></pre></td></tr></table></figure>
+
+<p>会得到ctf.pb-c.c和ctf.pb-c.h两个文件，在.h中可以找到对应结构体<br>需要补充</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ProtobufCBinaryData</span> &#123;</span> <span class="comment">// 这个结构体在protobuf-c项目里面有定义</span></span><br><span class="line">    <span class="type">size_t</span>	len;        <span class="comment">/**&lt; Number of bytes in the `data` field. */</span></span><br><span class="line">    <span class="type">uint8_t</span>	*data;      <span class="comment">/**&lt; Data bytes. */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ProtobufCMessage</span> &#123;</span>    <span class="comment">//  简单实现</span></span><br><span class="line"><span class="type">uint64_t</span> descriptor; <span class="comment">// 8字节指针 </span></span><br><span class="line"><span class="type">uint32_t</span> n_unknown; <span class="comment">// 4字节计数 </span></span><br><span class="line"><span class="type">uint32_t</span> pad1; <span class="comment">// 对齐填充（如果需要） </span></span><br><span class="line"><span class="type">uint64_t</span> unknown_ptr; <span class="comment">// 8字节指针 </span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <p class="muted-copy">No heading outline is available for this note.</p>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

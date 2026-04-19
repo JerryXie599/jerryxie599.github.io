@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>杂记 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="杂记 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/电子取证/杂记/">
+  <link rel="canonical" href="https://jerryxie.top/notes/电子取证/杂记/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/">电子取证</a>
+          
+        
+      </div>
+      <h1>杂记</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>3 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>电子取证/杂记.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <p>题目转换：帮我整理题目，选择题保留选项，wp全部、“查看题解 保存”删除，把某些长一点的题目涉及到的检材名设成1级标题（比如： 1、根据你的分析，警方成功定位到曾向与IQ Coin关联虚拟钱包进行转账的账户持有人Mr. Arjun Sharma。据其供述，转账原因是此前收到一封邀请参与名为”IQ Coin”虚拟货币投资的邮件。请根据比赛提供的邮件材料（Arjun_Sharma_email.zip），回答以下问题 在电子邮件取证方面，警方需要注意以下要点：…，这里就把Arjun_Sharma_email.zip设为一级标题），把整道题目设成2级标题，给我markdown（不需要你做题），顺序一定要对，不要修改题目内容</p>
+<h1 id="手机"><a href="#手机" class="headerlink" title="手机"></a>手机</h1><h2 id="微信"><a href="#微信" class="headerlink" title="微信"></a>微信</h2><h3 id="1-微信聊天中的定位经纬度："><a href="#1-微信聊天中的定位经纬度：" class="headerlink" title="1.微信聊天中的定位经纬度："></a>1.微信聊天中的定位经纬度：</h3><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1763693850097-e3dc8abf-9785-4652-a510-7bc6bcb9af6f.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>有时候会看到这种定位，当时做美亚的时候就没出来。实际上可以在位置部分找到：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1763693931694-57101728-b4a5-4918-bdd4-fb527ddf3b24.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>2.聊天记录数据库解密</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="1-windows详细信息中位置信息转换"><a href="#1-windows详细信息中位置信息转换" class="headerlink" title="1.windows详细信息中位置信息转换"></a>1.windows详细信息中位置信息转换</h3><p>转换代码：</p>
+<figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">把 “度;分;秒” 坐标转换为十进制度，并自动添加 N/E/S/W 标记。</span></span><br><span class="line"><span class="string">&quot;</span><span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">def dms_to_dd(s: str) -&gt; <span class="built_in">float</span>:</span><br><span class="line">    <span class="string">&quot;&quot;</span><span class="string">&quot;  &quot;</span>度;分;秒<span class="string">&quot; → 十进制度  &quot;</span><span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 统一分隔符，去掉空格，再拆分</span></span><br><span class="line">    parts = [p <span class="keyword">for</span> p <span class="keyword">in</span> s.replace(<span class="string">&#x27;；&#x27;</span>, <span class="string">&#x27;;&#x27;</span>).replace(<span class="string">&#x27;,&#x27;</span>, <span class="string">&#x27;;&#x27;</span>).<span class="built_in">split</span>(<span class="string">&#x27;;&#x27;</span>) <span class="keyword">if</span> p.strip()]</span><br><span class="line">    deg, minute, sec = map(<span class="built_in">float</span>, parts)          <span class="comment"># 直接转 float</span></span><br><span class="line">    <span class="built_in">return</span> deg + minute / 60.0 + sec / 3600.0      <span class="comment"># 十进制度公式</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def dd_with_dir(value: <span class="built_in">float</span>, is_lat: bool) -&gt; str:</span><br><span class="line">    <span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">    把十进制度数值转换为 “数值° 方向” 的字符串。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    参数</span></span><br><span class="line"><span class="string">    ----</span></span><br><span class="line"><span class="string">    value   : 十进制度（正数或负数）</span></span><br><span class="line"><span class="string">    is_lat  : True → 处理纬度，False → 处理经度</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    返回</span></span><br><span class="line"><span class="string">    ----</span></span><br><span class="line"><span class="string">    如 &quot;</span>40.0112° N<span class="string">&quot;、&quot;</span>-112.7001° W<span class="string">&quot; → &quot;</span>112.7001° W<span class="string">&quot;</span></span><br><span class="line"><span class="string">    &quot;</span><span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 方向决定</span></span><br><span class="line">    <span class="keyword">if</span> is_lat:                     <span class="comment"># 纬度</span></span><br><span class="line">        direction = <span class="string">&#x27;N&#x27;</span> <span class="keyword">if</span> value &gt;= 0 <span class="keyword">else</span> <span class="string">&#x27;S&#x27;</span></span><br><span class="line">    <span class="keyword">else</span>:                          <span class="comment"># 经度</span></span><br><span class="line">        direction = <span class="string">&#x27;E&#x27;</span> <span class="keyword">if</span> value &gt;= 0 <span class="keyword">else</span> <span class="string">&#x27;W&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 取绝对值后拼接</span></span><br><span class="line">    <span class="built_in">return</span> f<span class="string">&quot;&#123;abs(value):.12f&#125;° &#123;direction&#125;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ------------------- 示例 -------------------</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="comment"># 你的原始数据（可以自行改成其它字符串）</span></span><br><span class="line">    lat_raw = <span class="string">&quot;40;0;40.3800000000046566&quot;</span></span><br><span class="line">    lon_raw = <span class="string">&quot;112; 42; 0.289999999978931555&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 转换</span></span><br><span class="line">    lat_dd = dms_to_dd(lat_raw)</span><br><span class="line">    lon_dd = dms_to_dd(lon_raw)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 自动加方向标记</span></span><br><span class="line">    lat_str = dd_with_dir(lat_dd, is_lat=True)</span><br><span class="line">    lon_str = dd_with_dir(lon_dd, is_lat=False)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">&quot;Latitude  : &#123;lat_str&#125;&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">&quot;Longitude : &#123;lon_str&#125;&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E6%89%8B%E6%9C%BA"><span class="toc-list-text">手机</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E5%BE%AE%E4%BF%A1"><span class="toc-list-text">微信</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#1-%E5%BE%AE%E4%BF%A1%E8%81%8A%E5%A4%A9%E4%B8%AD%E7%9A%84%E5%AE%9A%E4%BD%8D%E7%BB%8F%E7%BA%AC%E5%BA%A6%EF%BC%9A"><span class="toc-list-text">1.微信聊天中的定位经纬度：</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-list-text">其他</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#1-windows%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF%E4%B8%AD%E4%BD%8D%E7%BD%AE%E4%BF%A1%E6%81%AF%E8%BD%AC%E6%8D%A2"><span class="toc-list-text">1.windows详细信息中位置信息转换</span></a></li></ol></li></ol></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from 电子取证</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E7%BE%8E%E4%BA%9A%E6%9D%AF/%E4%B8%AA%E4%BA%BA%E8%B5%9B/">
+              <strong>个人赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%9124%E6%95%B0%E8%AF%81%E5%86%B3-%E5%9B%A2/">
+              <strong>【转载】24数证决-团</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/2024%E6%95%B0%E8%AF%81%E6%9D%AF%E5%88%9D%E8%B5%9B/">
+              <strong>2024数证杯初赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/2024%E6%95%B0%E8%AF%81%E6%9D%AF%E5%86%B3%E8%B5%9B-%E4%B8%AA%E4%BA%BA%E8%B5%9B/">
+              <strong>2024数证杯决赛-个人赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

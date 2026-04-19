@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>低指数加密攻击 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="低指数加密攻击 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/密码学原理/低指数加密攻击/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/密码学原理/低指数加密攻击/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+            <a class="category-chip" href="/categories/ctf/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/">密码学原理</a>
+          
+        
+      </div>
+      <h1>低指数加密攻击</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>2 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/密码学原理/低指数加密攻击.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/2401_84859230/article/details/149551231?ops_request_misc=%257B%2522request%255Fid%2522%253A%252209aace096b43f750637d714073f3f093%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=09aace096b43f750637d714073f3f093&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-149551231-null-null.142%5Ev102%5Epc_search_result_base8&utm_term=%E4%BD%8E%E5%8A%A0%E5%AF%86%E6%8C%87%E6%95%B0%E5%B9%BF%E6%92%AD%E6%94%BB%E5%87%BB">低指数加密攻击（低指数广播攻击）_低加密指数广播攻击-CSDN博客</a></p>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><h2 id="1-中国剩余定理-CRT-简述"><a href="#1-中国剩余定理-CRT-简述" class="headerlink" title="1. 中国剩余定理 (CRT) 简述"></a>1. 中国剩余定理 (CRT) 简述</h2><p>给定一组同余方程：</p>
+<p>$ x \equiv a_1 \pmod{m_1} $</p>
+<p>$ x \equiv a_2 \pmod{m_2} $</p>
+<p>$ \cdots $</p>
+<p>$ x \equiv a_k \pmod{m_k} $</p>
+<p>如果这些模数 $ m_i $ 两两互素（即 $ \gcd(m_i,m_j)&#x3D;1 $），则存在唯一解 $ x $（模 $ M&#x3D;m_1 m_2 \cdots m_k $）。</p>
+<hr>
+<h2 id="2-sympy-ntheory-modular-crt-用法"><a href="#2-sympy-ntheory-modular-crt-用法" class="headerlink" title="2. sympy.ntheory.modular.crt 用法"></a>2. <code>sympy.ntheory.modular.crt</code> 用法</h2><figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sympy.ntheory.modular <span class="keyword">import</span> crt</span><br><span class="line"></span><br><span class="line">moduli = [m1, m2, m3]     <span class="comment"># 模数列表</span></span><br><span class="line">remainders = [a1, a2, a3] <span class="comment"># 余数列表</span></span><br><span class="line"></span><br><span class="line">x, M = crt(moduli, remainders)</span><br></pre></td></tr></table></figure>
+
+<p><strong>返回值：</strong></p>
+<p><code>crt</code> 的返回值是一个 <strong>二元组 (x, M)</strong>：</p>
+<ul>
+<li><strong>x</strong>：解出来的最小非负整数（满足所有同余条件）。</li>
+<li><strong>M</strong>：所有模数的乘积 $ m_1 m_2 \cdots m_k $。</li>
+</ul>
+<p>这意味着，方程的通解是：</p>
+<p>$ X \equiv x \pmod{M} $</p>
+<p>$ 即X&#x3D;x+k·M $</p>
+<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import gmpy2</span><br><span class="line">from sympy.ntheory.modular import crt</span><br><span class="line"></span><br><span class="line"># 模数（互不相同）</span><br><span class="line">n1 = 10142789312725007</span><br><span class="line">n2 = 10142789312725009</span><br><span class="line">n3 = 10142789312725013</span><br><span class="line">e = 3</span><br><span class="line">m = 123456  # 明文</span><br><span class="line"></span><br><span class="line"># 加密</span><br><span class="line">c1 = pow(m, e, n1) #c1=1881640295202816</span><br><span class="line">c2 = pow(m, e, n2) #c2=1881640295202816</span><br><span class="line">c3 = pow(m, e, n3) #c3=1881640295202816</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>$ c_1 \equiv m^{e} \pmod{n_1} $</p>
+<p>$ c_2 \equiv m^{e} \pmod{n_2} $</p>
+<p>$ c_3 \equiv m^{e} \pmod{n_3} $</p>
+<p>先确认ni之间是互素的，在此之后用crt算出来之后开方即可：</p>
+<p>$ m &#x3D; \sqrt[e]{x} $</p>
+<p>以下是代码实现：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">import gmpy2</span><br><span class="line">from sympy.ntheory.modular import crt</span><br><span class="line"></span><br><span class="line">#m = 123456</span><br><span class="line">n_list=[10142789312725007,10142789312725009,10142789312725013]</span><br><span class="line">e = 3</span><br><span class="line">c_list=[1881640295202816,1881640295202816,1881640295202816]</span><br><span class="line">#示例代码中的数字比较小，所以模下来数字一样，不过无所谓，重在示例</span><br><span class="line"></span><br><span class="line">#先要检验n各个数字之间是否是互素的</span><br><span class="line">for i in n_list:</span><br><span class="line">    for j in n_list:</span><br><span class="line">        if i != j:</span><br><span class="line">            if gmpy2.gcd(i, j) == 1:</span><br><span class="line">                continue</span><br><span class="line">            else:</span><br><span class="line">                print(i, j)</span><br><span class="line">                print(gmpy2.gcd(n_list[i-1], n_list[j-1]))</span><br><span class="line"></span><br><span class="line">c, N = crt(n_list, c_list) </span><br><span class="line">root, exact = gmpy2.iroot(c, e)</span><br><span class="line">print(root)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E5%8F%82%E8%80%83"><span class="toc-list-text">参考</span></a></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-list-text">原理</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86-CRT-%E7%AE%80%E8%BF%B0"><span class="toc-list-text">1. 中国剩余定理 (CRT) 简述</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-sympy-ntheory-modular-crt-%E7%94%A8%E6%B3%95"><span class="toc-list-text">2. sympy.ntheory.modular.crt 用法</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E4%BE%8B%E9%A2%98"><span class="toc-list-text">例题</span></a></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

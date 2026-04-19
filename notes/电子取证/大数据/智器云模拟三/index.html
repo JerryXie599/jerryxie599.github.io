@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>智器云模拟三 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="智器云模拟三 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/电子取证/大数据/智器云模拟三/">
+  <link rel="canonical" href="https://jerryxie.top/notes/电子取证/大数据/智器云模拟三/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/">电子取证</a>
+          
+            <a class="category-chip" href="/categories/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
+          
+        
+      </div>
+      <h1>智器云模拟三</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>23 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>电子取证/大数据/智器云模拟三.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <h1 id="22"><a href="#22" class="headerlink" title="22"></a>22</h1><p><strong>在A市发生了一起贩卖假烟案，警方已掌握了贩卖团伙中的5位嫌疑人，并调取了他们的手机通讯数据，现想通过分析他们的通话情况挖掘出更多参与假烟贩卖的其他人员，请根据提供的数据进行分析研判，完成以下问题：</strong></p>
+<p><strong>5位嫌疑人的手机号分别是:</strong></p>
+<p><strong>139****7748</strong></p>
+<p><strong>138****9744</strong></p>
+<p><strong>151****4398</strong></p>
+<p><strong>139****3593</strong></p>
+<p><strong>136****3489</strong></p>
+<h2 id="（1）请问和5位嫌疑人中任意3个及以上嫌疑人发生过通话关系的对方号码有哪些？（填写手机号）-（8分）"><a href="#（1）请问和5位嫌疑人中任意3个及以上嫌疑人发生过通话关系的对方号码有哪些？（填写手机号）-（8分）" class="headerlink" title="（1）请问和5位嫌疑人中任意3个及以上嫌疑人发生过通话关系的对方号码有哪些？（填写手机号） （8分）"></a><strong>（1）请问和5位嫌疑人中任意3个及以上嫌疑人发生过通话关系的对方号码有哪些？（填写手机号） （8分）</strong></h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757587682634-813ba15a-8f67-4859-8bdd-591a2e4b5dc1.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>导入ai之后有共同联系人分析即可</p>
+<h2 id="（2）请问在夜间22-00-6-00期间通话总时长最长的已知嫌疑人是谁？在此期间与该已知嫌疑人通话总时长最长的对方号码又是谁？（填写手机号）（6分）"><a href="#（2）请问在夜间22-00-6-00期间通话总时长最长的已知嫌疑人是谁？在此期间与该已知嫌疑人通话总时长最长的对方号码又是谁？（填写手机号）（6分）" class="headerlink" title="（2）请问在夜间22:00-6:00期间通话总时长最长的已知嫌疑人是谁？在此期间与该已知嫌疑人通话总时长最长的对方号码又是谁？（填写手机号）（6分）"></a><strong>（2）请问在夜间22:00-6:00期间通话总时长最长的已知嫌疑人是谁？在此期间与该已知嫌疑人通话总时长最长的对方号码又是谁？（填写手机号）（6分）</strong></h2><table>
+<thead>
+<tr>
+<th># 题目</th>
+<th># 答题区</th>
+</tr>
+</thead>
+<tbody><tr>
+<td># 在夜间22:00-6:00期间通话总时长最长的已知嫌疑人是谁？</td>
+<td></td>
+</tr>
+<tr>
+<td># 在此期间与该已知嫌疑人通话总时长最长的对方号码又是谁？</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>“”E:\大数据\比赛\智器云模拟\22\第22题数据.xlsx”这是文件地址，结果输出到”E:\大数据\比赛\智器云模拟\22””</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line"># 读取Excel文件</span><br><span class="line">df = pd.read_excel(r&#x27;E:\大数据\比赛\智器云模拟\22\第22题数据.xlsx&#x27;, sheet_name=&#x27;Sheet1&#x27;)</span><br><span class="line"></span><br><span class="line"># 转换通话时间为datetime格式</span><br><span class="line">df[&#x27;通话时间&#x27;] = pd.to_datetime(df[&#x27;通话时间&#x27;])</span><br><span class="line"></span><br><span class="line"># 提取通话时间中的小时</span><br><span class="line">df[&#x27;通话小时&#x27;] = df[&#x27;通话时间&#x27;].dt.hour</span><br><span class="line"></span><br><span class="line"># 筛选夜间通话记录（22:00-06:00）</span><br><span class="line">night_mask = (df[&#x27;通话小时&#x27;] &gt;= 22) | (df[&#x27;通话小时&#x27;] &lt; 6)</span><br><span class="line">night_calls = df[night_mask].copy()</span><br><span class="line"></span><br><span class="line"># 将通话时长转换为数值型</span><br><span class="line">night_calls[&#x27;通话时长&#x27;] = pd.to_numeric(night_calls[&#x27;通话时长&#x27;], errors=&#x27;coerce&#x27;)</span><br><span class="line"></span><br><span class="line"># 按嫌疑人号码分组计算总通话时长</span><br><span class="line">night_call_sums = night_calls.groupby(&#x27;本方号码&#x27;)[&#x27;通话时长&#x27;].sum().reset_index()</span><br><span class="line"></span><br><span class="line"># 找到通话时长最大的嫌疑人</span><br><span class="line">longest_night_caller = night_call_sums.loc[night_call_sums[&#x27;通话时长&#x27;].idxmax()]</span><br><span class="line"></span><br><span class="line"># 输出结果</span><br><span class="line">print(&quot;=&quot;*60)</span><br><span class="line">print(f&quot;夜间通话时长最长的嫌疑人号码: &#123;longest_night_caller[&#x27;本方号码&#x27;]&#125;&quot;)</span><br><span class="line">print(f&quot;总夜间通话时长(秒): &#123;longest_night_caller[&#x27;通话时长&#x27;]:.0f&#125;&quot;)</span><br><span class="line">print(&quot;=&quot;*60)</span><br><span class="line"></span><br><span class="line"># 详细数据输出</span><br><span class="line">print(&quot;\n所有嫌疑人的夜间通话总时长统计:&quot;)</span><br><span class="line">print(night_call_sums.sort_values(&#x27;通话时长&#x27;, ascending=False))</span><br></pre></td></tr></table></figure>
+
+<p>“请问在夜间22:00-6:00期间通话总时长最长的已知嫌疑人是谁？</p>
+<p>1读取excel中“通话时间”（例如2023-09-09 15:40:50，读取里面的小时分钟，筛选出22:00-6:00），计算总计时长</p>
+<p>给我筛选代码”</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line"># 1. 读取Excel文件</span><br><span class="line">df = pd.read_excel(r&#x27;E:\大数据\比赛\智器云模拟\22\第22题数据.xlsx&#x27;, sheet_name=&#x27;Sheet1&#x27;)</span><br><span class="line"></span><br><span class="line"># 2. 处理通话时间列</span><br><span class="line">df[&#x27;通话时间&#x27;] = pd.to_datetime(df[&#x27;通话时间&#x27;], errors=&#x27;coerce&#x27;)</span><br><span class="line">df[&#x27;通话小时&#x27;] = df[&#x27;通话时间&#x27;].dt.hour</span><br><span class="line"></span><br><span class="line"># 3. 筛选特定嫌疑人的夜间通话记录（139****3593在22:00-6:00期间）</span><br><span class="line">target_suspect = &#x27;139****3593&#x27;</span><br><span class="line">night_calls = df[</span><br><span class="line">    (df[&#x27;本方号码&#x27;] == target_suspect) &amp;</span><br><span class="line">    ((df[&#x27;通话小时&#x27;] &gt;= 22) | (df[&#x27;通话小时&#x27;] &lt; 6))</span><br><span class="line">    ].copy()</span><br><span class="line"></span><br><span class="line"># 4. 确保通话时长为数值类型</span><br><span class="line">night_calls[&#x27;通话时长&#x27;] = pd.to_numeric(night_calls[&#x27;通话时长&#x27;], errors=&#x27;coerce&#x27;)</span><br><span class="line"></span><br><span class="line"># 5. 按对方号码分组并计算总通话时长</span><br><span class="line">partner_duration = night_calls.groupby(&#x27;对方号码&#x27;)[&#x27;通话时长&#x27;].sum().reset_index()</span><br><span class="line"></span><br><span class="line"># 6. 找出通话总时长最长的对方号码</span><br><span class="line">if not partner_duration.empty:</span><br><span class="line">    max_duration_row = partner_duration.loc[partner_duration[&#x27;通话时长&#x27;].idxmax()]</span><br><span class="line">    top_partner = max_duration_row[&#x27;对方号码&#x27;]</span><br><span class="line">    total_duration = max_duration_row[&#x27;通话时长&#x27;]</span><br><span class="line"></span><br><span class="line">    # 7. 输出结果</span><br><span class="line">    print(&quot;=&quot; * 50)</span><br><span class="line">    print(f&quot;与嫌疑人 &#123;target_suspect&#125; 在夜间通话最频繁的对方号码&quot;)</span><br><span class="line">    print(&quot;=&quot; * 50)</span><br><span class="line">    print(f&quot;对方号码: &#123;top_partner&#125;&quot;)</span><br><span class="line">    print(f&quot;总通话时长: &#123;total_duration:.0f&#125; 秒&quot;)</span><br><span class="line">    print(f&quot;通话次数: &#123;len(night_calls[night_calls[&#x27;对方号码&#x27;] == top_partner])&#125;&quot;)</span><br><span class="line"></span><br><span class="line">    # 输出详细统计</span><br><span class="line">    print(&quot;\n所有与嫌疑人通话的对方号码及其总时长:&quot;)</span><br><span class="line">    print(partner_duration.sort_values(&#x27;通话时长&#x27;, ascending=False).reset_index(drop=True))</span><br><span class="line">else:</span><br><span class="line">    print(f&quot;嫌疑人 &#123;target_suspect&#125; 在夜间没有通话记录&quot;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="（3）请问与1389744和1363489这两个已知嫌疑人共同通话总次数最多的密切联系对方号码是谁（填写手机号）？这两个嫌疑号码跟该密切联系对手发生通话时最常在哪个基站大区号下（填写基站大区号）？（6分）"><a href="#（3）请问与1389744和1363489这两个已知嫌疑人共同通话总次数最多的密切联系对方号码是谁（填写手机号）？这两个嫌疑号码跟该密切联系对手发生通话时最常在哪个基站大区号下（填写基站大区号）？（6分）" class="headerlink" title="（3）请问与1389744和1363489这两个已知嫌疑人共同通话总次数最多的密切联系对方号码是谁（填写手机号）？这两个嫌疑号码跟该密切联系对手发生通话时最常在哪个基站大区号下（填写基站大区号）？（6分）"></a><strong>（3）请问与138<strong><strong>9744和136</strong></strong>3489这两个已知嫌疑人共同通话总次数最多的密切联系对方号码是谁（填写手机号）？这两个嫌疑号码跟该密切联系对手发生通话时最常在哪个基站大区号下（填写基站大区号）？（6分）</strong></h2><table>
+<thead>
+<tr>
+<th># 题目</th>
+<th># 答题区</th>
+</tr>
+</thead>
+<tbody><tr>
+<td># 与138<strong><strong>9744和136</strong></strong>3489这两个已知嫌疑人共同通话总次数最多的密切联系对方号码是谁？</td>
+<td></td>
+</tr>
+<tr>
+<td># 这两个嫌疑号码跟该密切联系对手发生通话时最常在哪个基站大区号下？</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="（4）有人举报在2023年9月1日（含）至9月30日（含）期间，有嫌疑人在“基站大区号：21088，基站小区号：16427”的位置区域内进行线下交易，请根据通话数据找出疑似参与线下交易的已知嫌疑人有哪些，并统计他们期间在该位置区域的联系对手分别有多少个？（填写手机号和通话对手数量）（5分）"><a href="#（4）有人举报在2023年9月1日（含）至9月30日（含）期间，有嫌疑人在“基站大区号：21088，基站小区号：16427”的位置区域内进行线下交易，请根据通话数据找出疑似参与线下交易的已知嫌疑人有哪些，并统计他们期间在该位置区域的联系对手分别有多少个？（填写手机号和通话对手数量）（5分）" class="headerlink" title="（4）有人举报在2023年9月1日（含）至9月30日（含）期间，有嫌疑人在“基站大区号：21088，基站小区号：16427”的位置区域内进行线下交易，请根据通话数据找出疑似参与线下交易的已知嫌疑人有哪些，并统计他们期间在该位置区域的联系对手分别有多少个？（填写手机号和通话对手数量）（5分）"></a><strong>（4）有人举报在2023年9月1日（含）至9月30日（含）期间，有嫌疑人在“基站大区号：21088，基站小区号：16427”的位置区域内进行线下交易，请根据通话数据找出疑似参与线下交易的已知嫌疑人有哪些，并统计他们期间在该位置区域的联系对手分别有多少个？（填写手机号和通话对手数量）（5分）</strong></h2><table>
+<thead>
+<tr>
+<th># 手机号码</th>
+<th># 联系对手数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td># …</td>
+<td># …</td>
+</tr>
+</tbody></table>
+<h1 id="23"><a href="#23" class="headerlink" title="23."></a>23.</h1><p><strong>近日，某地一家大型银行反洗钱部门发现部分银行账户在近期交易金额成倍增长，交易次数暴增，资金流动异常，遂将线索移交至本地经侦部门，请根据提供的数据进行分析研判，完成以下问题：</strong></p>
+<h2 id="（1）找出嫌疑人梁坤（卡号：62262-8369212）的最大资金来源账户与最大资金去向账户。（填写银行卡号）（8分）"><a href="#（1）找出嫌疑人梁坤（卡号：62262-8369212）的最大资金来源账户与最大资金去向账户。（填写银行卡号）（8分）" class="headerlink" title="（1）找出嫌疑人梁坤（卡号：62262***8369212）的最大资金来源账户与最大资金去向账户。（填写银行卡号）（8分）"></a><strong>（1）找出嫌疑人梁<em>坤（卡号：62262</em>***8369212）的最大资金来源账户与最大资金去向账户。（填写银行卡号）（8分）</strong></h2><table>
+<thead>
+<tr>
+<th>题目</th>
+<th>答题区</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>最大资金来源账户</td>
+<td></td>
+</tr>
+<tr>
+<td>最大资金去向账户</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>“找出嫌疑人梁<em>坤（“客户名称”&#x3D;梁</em>坤）（卡号：622628369212（查询卡号&#x3D;622628369212））的最大资金来源账户（“借贷标志”&#x3D;进）与最大资金去向账户（“借贷标志”&#x3D;出）。（填写银行卡号）</p>
+<p>地址&#x3D;”E:\大数据\比赛\智器云模拟\23\第23题数据.xlsx”</p>
+<p>给我筛选代码（py pandas库）”</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line"># 读取Excel文件</span><br><span class="line">file_path = r&quot;E:\大数据\比赛\智器云模拟\23\第23题数据.xlsx&quot;</span><br><span class="line">df = pd.read_excel(file_path, sheet_name=&#x27;Sheet1&#x27;)</span><br><span class="line"></span><br><span class="line"># 筛选梁*坤且卡号为62262****8369212的所有交易记录</span><br><span class="line">suspect_trans = df[</span><br><span class="line">    (df[&#x27;客户名称&#x27;] == &#x27;梁*坤&#x27;) &amp;</span><br><span class="line">    (df[&#x27;查询卡号&#x27;] == &#x27;62262****8369212&#x27;)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"># 筛选资金来源账户（借贷标志为“进”）</span><br><span class="line">in_trans = suspect_trans[suspect_trans[&#x27;借贷标志&#x27;] == &#x27;进&#x27;]</span><br><span class="line"></span><br><span class="line"># 筛选资金去向账户（借贷标志为“出”）</span><br><span class="line">out_trans = suspect_trans[suspect_trans[&#x27;借贷标志&#x27;] == &#x27;出&#x27;]</span><br><span class="line"></span><br><span class="line"># 按交易对方卡号分组，计算总交易金额</span><br><span class="line">in_grouped = in_trans.groupby(&#x27;交易对方卡号&#x27;)[&#x27;交易金额&#x27;].sum().reset_index()</span><br><span class="line">out_grouped = out_trans.groupby(&#x27;交易对方卡号&#x27;)[&#x27;交易金额&#x27;].sum().reset_index()</span><br><span class="line"></span><br><span class="line"># 找出最大资金来源账户（进）</span><br><span class="line">if not in_grouped.empty:</span><br><span class="line">    max_in = in_grouped.loc[in_grouped[&#x27;交易金额&#x27;].idxmax()]</span><br><span class="line">    max_in_card = max_in[&#x27;交易对方卡号&#x27;]</span><br><span class="line">else:</span><br><span class="line">    max_in_card = &quot;无交易记录&quot;</span><br><span class="line"></span><br><span class="line"># 找出最大资金去向账户（出）</span><br><span class="line">if not out_grouped.empty:</span><br><span class="line">    max_out = out_grouped.loc[out_grouped[&#x27;交易金额&#x27;].idxmax()]</span><br><span class="line">    max_out_card = max_out[&#x27;交易对方卡号&#x27;]</span><br><span class="line">else:</span><br><span class="line">    max_out_card = &quot;无交易记录&quot;</span><br><span class="line"></span><br><span class="line">print(f&quot;最大资金来源账户（进）银行卡号: &#123;max_in_card&#125;&quot;)</span><br><span class="line">print(f&quot;最大资金去向账户（出）银行卡号: &#123;max_out_card&#125;&quot;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="（2）请问哪些银行卡同时接收过李欣名下两张卡的钱且没有给李欣任何一张银行卡转过钱？（填写银行卡号）（10分）"><a href="#（2）请问哪些银行卡同时接收过李欣名下两张卡的钱且没有给李欣任何一张银行卡转过钱？（填写银行卡号）（10分）" class="headerlink" title="（2）请问哪些银行卡同时接收过李欣名下两张卡的钱且没有给李欣任何一张银行卡转过钱？（填写银行卡号）（10分）"></a><strong>（2）请问哪些银行卡同时接收过李<em>欣名下两张卡的钱且没有给李</em>欣任何一张银行卡转过钱？（填写银行卡号）（10分）</strong></h2><table>
+<thead>
+<tr>
+<th>银行卡号</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>…</td>
+</tr>
+</tbody></table>
+<p>转出转入筛选<strong>李*欣，有两张卡：</strong><code>**3220****7521**</code><strong>、</strong><code>**020024****122707**</code></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757511102540-e036b760-fde7-4479-a8c3-2db13ff9df1f.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>可视化图也可以看到，复制出来两张卡都有交易信息的，然后筛选即可<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757511156460-6672ce9c-e83f-456c-9014-c93f65e59b04.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h2 id="（3）在本案中，需追踪大额可疑资金的最终去向。以唐既110104-062991的银行卡为1级卡，追踪1级卡的大额资金去向账户（流入金额÷交易总金额≥80-且流入金额在-2000万及以上）作为2级卡，再继续追踪2级卡的大额资金去向账户（流入金额÷交易总金额≥80-且流入金额在-2000万及以上）作为3级卡，请找出满足上述条件的3级卡有哪些？（填写银行卡号）（6分）"><a href="#（3）在本案中，需追踪大额可疑资金的最终去向。以唐既110104-062991的银行卡为1级卡，追踪1级卡的大额资金去向账户（流入金额÷交易总金额≥80-且流入金额在-2000万及以上）作为2级卡，再继续追踪2级卡的大额资金去向账户（流入金额÷交易总金额≥80-且流入金额在-2000万及以上）作为3级卡，请找出满足上述条件的3级卡有哪些？（填写银行卡号）（6分）" class="headerlink" title="（3）在本案中，需追踪大额可疑资金的最终去向。以唐既110104***062991的银行卡为1级卡，追踪1级卡的大额资金去向账户（流入金额÷交易总金额≥80%且流入金额在 2000万及以上）作为2级卡，再继续追踪2级卡的大额资金去向账户（流入金额÷交易总金额≥80%且流入金额在 2000万及以上）作为3级卡，请找出满足上述条件的3级卡有哪些？（填写银行卡号）（6分）"></a><strong>（3）在本案中，需追踪大额可疑资金的最终去向。以唐<em>既110104</em>***062991的银行卡为1级卡，追踪1级卡的大额资金去向账户（流入金额÷交易总金额≥80%且流入金额在 2000万及以上）作为2级卡，再继续追踪2级卡的大额资金去向账户（流入金额÷交易总金额≥80%且流入金额在 2000万及以上）作为3级卡，请找出满足上述条件的3级卡有哪些？（填写银行卡号）（6分）</strong></h2><table>
+<thead>
+<tr>
+<th>## 银行卡号</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>## …</td>
+</tr>
+</tbody></table>
+<h2 id=""><a href="#" class="headerlink" title=""></a><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757590827540-bdae5fcc-b84d-4abf-8216-fc4fd773714b.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></h2><p>筛选出2级卡：<code>1992****5448</code>&amp;<code>110010****3018090</code>&amp;<code>20029****000125</code></p>
+<table>
+<thead>
+<tr>
+<th>## 110010****3018090</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>## 1992****5448</td>
+<td></td>
+</tr>
+<tr>
+<td>## 20029****000125</td>
+<td></td>
+</tr>
+<tr>
+<td>## 020305****001192</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757559255725-0e4e5717-6167-44d3-869b-ec52825f64e4.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></h2><p>三级卡筛完就剩一张卡了。。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757591062483-00e46109-b657-418b-988d-27ca07d379b7.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h2 id="（4）资金分析中常常通过共用IP或MAC找可疑团伙，该案件中的银行卡若同时满足以下2个条件：①银行卡在相同IP或MAC地址上登陆过（相同IP或MAC地址：该IP或-MAC-地址至少关联2张及以上银行卡）；②银行卡至少在该IP或MAC地址上登陆过2次及以上。则将这些银行卡视为同一团伙所控制，请问同时满足以上2个条件的银行卡有哪些？（填写银行卡号）（6分）"><a href="#（4）资金分析中常常通过共用IP或MAC找可疑团伙，该案件中的银行卡若同时满足以下2个条件：①银行卡在相同IP或MAC地址上登陆过（相同IP或MAC地址：该IP或-MAC-地址至少关联2张及以上银行卡）；②银行卡至少在该IP或MAC地址上登陆过2次及以上。则将这些银行卡视为同一团伙所控制，请问同时满足以上2个条件的银行卡有哪些？（填写银行卡号）（6分）" class="headerlink" title="（4）资金分析中常常通过共用IP或MAC找可疑团伙，该案件中的银行卡若同时满足以下2个条件：①银行卡在相同IP或MAC地址上登陆过（相同IP或MAC地址：该IP或 MAC 地址至少关联2张及以上银行卡）；②银行卡至少在该IP或MAC地址上登陆过2次及以上。则将这些银行卡视为同一团伙所控制，请问同时满足以上2个条件的银行卡有哪些？（填写银行卡号）（6分）"></a><strong>（4）资金分析中常常通过共用IP或MAC找可疑团伙，该案件中的银行卡若同时满足以下2个条件：①银行卡在相同IP或MAC地址上登陆过（相同IP或MAC地址：该IP或 MAC 地址至少关联2张及以上银行卡）；②银行卡至少在该IP或MAC地址上登陆过2次及以上。则将这些银行卡视为同一团伙所控制，请问同时满足以上2个条件的银行卡有哪些？（填写银行卡号）（6分）</strong></h2><table>
+<thead>
+<tr>
+<th>银行卡号</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>…</td>
+</tr>
+</tbody></table>
+<p>数据上图，然后根据这个图片分析</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757565347312-29037d02-ad15-46f5-bb7d-b62b9464e3b4.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>根据题目要求来看其实就是筛选中间这个ip<code>120.41.113.194</code></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757565385803-0ba1dea3-0ba7-4c0b-a31d-d259dc6e04d6.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>就这两张卡登录了多次</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757565501806-8993ff1a-3f3e-44ec-9c5c-3a82373f3176.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h1 id="24"><a href="#24" class="headerlink" title="24"></a>24</h1><p>在某件正在侦办的涉黄案件中，警方已掌握了涉黄团伙中 3 位专门用于接收嫖资的嫌疑人的微信号并调取了相关微信交易数据，请根据提供的数据进行下一步的分析，完成以下问题：</p>
+<p>已知的 3位嫌疑人微信账号分别是：</p>
+<p>L13315704334</p>
+<p>liqin13145209</p>
+<p>y1298477937</p>
+<h2 id="（1）根据嫖客账号特征：①交易时间在晚上22点到凌晨6点；②向已知嫌疑账户转过钱，且单笔交易金额在200元（含）到300元（含）之间。请找出同时满足以上2个条件的对手微信账号，即有可能为嫖客账号。（填写微信账号）（5分）"><a href="#（1）根据嫖客账号特征：①交易时间在晚上22点到凌晨6点；②向已知嫌疑账户转过钱，且单笔交易金额在200元（含）到300元（含）之间。请找出同时满足以上2个条件的对手微信账号，即有可能为嫖客账号。（填写微信账号）（5分）" class="headerlink" title="（1）根据嫖客账号特征：①交易时间在晚上22点到凌晨6点；②向已知嫌疑账户转过钱，且单笔交易金额在200元（含）到300元（含）之间。请找出同时满足以上2个条件的对手微信账号，即有可能为嫖客账号。（填写微信账号）（5分）"></a>（1）根据嫖客账号特征：①交易时间在晚上22点到凌晨6点；②向已知嫌疑账户转过钱，且单笔交易金额在200元（含）到300元（含）之间。请找出同时满足以上2个条件的对手微信账号，即有可能为嫖客账号。（填写微信账号）（5分）</h2><p>先用ai跑一个分离小时的代码</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line"># 读取Excel文件</span><br><span class="line">file_path = r&quot;E:\大数据\比赛\智器云模拟\第24题数据.xlsx&quot;</span><br><span class="line">df = pd.read_excel(file_path, sheet_name=&#x27;Sheet1&#x27;)</span><br><span class="line"></span><br><span class="line"># 确保列名正确（处理可能的前后空格）</span><br><span class="line">df.columns = [col.strip() for col in df.columns]</span><br><span class="line"></span><br><span class="line"># 找到接收时间列的位置</span><br><span class="line"># Q列对应索引位置16（0-based），列名应为&#x27;接收时间&#x27;</span><br><span class="line">try:</span><br><span class="line">    # 尝试通过列名定位</span><br><span class="line">    receive_time_idx = df.columns.get_loc(&#x27;接收时间&#x27;)</span><br><span class="line">except KeyError:</span><br><span class="line">    # 如果列名不存在，使用位置索引（第17列）</span><br><span class="line">    receive_time_idx = 16</span><br><span class="line"></span><br><span class="line"># 转换接收时间为datetime格式</span><br><span class="line">df[&#x27;接收时间&#x27;] = pd.to_datetime(df.iloc[:, receive_time_idx], errors=&#x27;coerce&#x27;)</span><br><span class="line"></span><br><span class="line"># 提取小时并创建新列</span><br><span class="line">df[&#x27;接收小时&#x27;] = df[&#x27;接收时间&#x27;].dt.hour</span><br><span class="line"></span><br><span class="line"># 将新列插入到接收时间列后面</span><br><span class="line">col_position = receive_time_idx + 1</span><br><span class="line">df.insert(col_position, &#x27;接收小时&#x27;, df.pop(&#x27;接收小时&#x27;))</span><br><span class="line"></span><br><span class="line"># 保存处理后的数据到新文件</span><br><span class="line">output_path = r&quot;E:\大数据\比赛\智器云模拟\第24题数据_处理后.xlsx&quot;</span><br><span class="line">df.to_excel(output_path, index=False)</span><br><span class="line"></span><br><span class="line">print(&quot;处理完成！新文件已保存至:&quot;, output_path)</span><br></pre></td></tr></table></figure>
+
+<p>接下来按照题目的要求筛选：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line"># 读取处理后的Excel文件</span><br><span class="line">file_path = r&quot;E:\大数据\比赛\智器云模拟\第24题数据_处理后.xlsx&quot;</span><br><span class="line">df = pd.read_excel(file_path)</span><br><span class="line"></span><br><span class="line"># 筛选条件：</span><br><span class="line"># 1. 接收小时在22点到凌晨6点之间（包含22点和6点）</span><br><span class="line"># 2. 借贷标志为&quot;进&quot;</span><br><span class="line"># 3. 交易金额在200-300之间（包含边界值）</span><br><span class="line"></span><br><span class="line"># 创建筛选条件</span><br><span class="line">condition = (</span><br><span class="line">    # 接收小时在22-23点或0-6点之间</span><br><span class="line">    ((df[&#x27;接收小时&#x27;] &gt;= 22) &amp; (df[&#x27;接收小时&#x27;] &lt;= 23)) |</span><br><span class="line">    ((df[&#x27;接收小时&#x27;] &gt;= 0) &amp; (df[&#x27;接收小时&#x27;] &lt;= 6))</span><br><span class="line">) &amp; (</span><br><span class="line">    # 借贷标志为&quot;进&quot;</span><br><span class="line">    df[&#x27;借贷标志&#x27;] == &#x27;进&#x27;</span><br><span class="line">) &amp; (</span><br><span class="line">    # 交易金额在200-300之间</span><br><span class="line">    (df[&#x27;交易金额&#x27;] &gt;= 200) &amp; (df[&#x27;交易金额&#x27;] &lt;= 300)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"># 应用筛选条件</span><br><span class="line">filtered_df = df[condition]</span><br><span class="line"></span><br><span class="line"># 保存筛选结果到新文件</span><br><span class="line">output_path = r&quot;E:\大数据\比赛\智器云模拟\第24题数据_筛选结果.xlsx&quot;</span><br><span class="line">filtered_df.to_excel(output_path, index=False)</span><br><span class="line"></span><br><span class="line">print(f&quot;筛选完成！共找到 &#123;len(filtered_df)&#125; 条符合条件的记录&quot;)</span><br><span class="line">print(f&quot;结果已保存至: &#123;output_path&#125;&quot;)</span><br><span class="line"></span><br><span class="line"># 如果需要查看筛选结果的前几行</span><br><span class="line">print(&quot;\n筛选结果前5行预览:&quot;)</span><br><span class="line">print(filtered_df.head())</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757568169312-bd4e5e7f-16da-46fb-ba52-8af09d3a9b1f.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h2 id="（2）根据卖淫组织中介账号特征：①接收已知嫌疑账户资金转入，且累计接收3位嫌疑人转入交易总金额在10000元（含）以上；②接收过3位嫌疑人中任意2位及以上资金转入的账户。请找出同时满足以上2个条件的对手微信账号，即有可能为中介账号。（填写微信账号）（5分）"><a href="#（2）根据卖淫组织中介账号特征：①接收已知嫌疑账户资金转入，且累计接收3位嫌疑人转入交易总金额在10000元（含）以上；②接收过3位嫌疑人中任意2位及以上资金转入的账户。请找出同时满足以上2个条件的对手微信账号，即有可能为中介账号。（填写微信账号）（5分）" class="headerlink" title="（2）根据卖淫组织中介账号特征：①接收已知嫌疑账户资金转入，且累计接收3位嫌疑人转入交易总金额在10000元（含）以上；②接收过3位嫌疑人中任意2位及以上资金转入的账户。请找出同时满足以上2个条件的对手微信账号，即有可能为中介账号。（填写微信账号）（5分）"></a>（2）根据卖淫组织中介账号特征：①接收已知嫌疑账户资金转入，且累计接收3位嫌疑人转入交易总金额在10000元（含）以上；②接收过3位嫌疑人中任意2位及以上资金转入的账户。请找出同时满足以上2个条件的对手微信账号，即有可能为中介账号。（填写微信账号）（5分）</h2><p>微信账号</p>
+<p>…</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757575130514-af46a749-629f-4e53-9144-4d9918cef525.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line"># 读取处理后的Excel文件</span><br><span class="line">file_path = r&quot;E:\大数据\比赛\智器云模拟\第24题数据_处理后.xlsx&quot;</span><br><span class="line">df = pd.read_excel(file_path)</span><br><span class="line"></span><br><span class="line"># 1. 获取所有嫌疑用户ID（用户ID列）</span><br><span class="line">suspect_ids = df[&#x27;用户ID&#x27;].unique().tolist()</span><br><span class="line"></span><br><span class="line"># 2. 筛选相关交易记录：</span><br><span class="line">#    - 借贷标志为&quot;出&quot;（嫌疑用户转出）</span><br><span class="line">#    - 交易对手是微信账号（根据实际情况可能需要调整）</span><br><span class="line">suspect_transactions = df[</span><br><span class="line">    (df[&#x27;借贷标志&#x27;] == &#x27;出&#x27;) &amp; </span><br><span class="line">    (df[&#x27;用户ID&#x27;].isin(suspect_ids))</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"># 3. 按对手微信账号分组统计</span><br><span class="line">#    - 统计接收的不同嫌疑人数量</span><br><span class="line">#    - 计算累计接收金额</span><br><span class="line">result = suspect_transactions.groupby(&#x27;对手微信账号&#x27;).agg(</span><br><span class="line">    suspect_count=(&#x27;用户ID&#x27;, &#x27;nunique&#x27;),  # 不同嫌疑人数量</span><br><span class="line">    total_amount=(&#x27;交易金额&#x27;, &#x27;sum&#x27;)      # 累计接收金额</span><br><span class="line">).reset_index()</span><br><span class="line"></span><br><span class="line"># 4. 应用筛选条件</span><br><span class="line">#   条件①：接收≥3位不同嫌疑人且总金额≥10,000元</span><br><span class="line">#   条件②：接收≥2位不同嫌疑人（已隐含在条件①中）</span><br><span class="line">intermediary_accounts = result[</span><br><span class="line">    (result[&#x27;suspect_count&#x27;] &gt;= 3) &amp; </span><br><span class="line">    (result[&#x27;total_amount&#x27;] &gt;= 10000)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"># 5. 输出结果</span><br><span class="line">print(f&quot;找到 &#123;len(intermediary_accounts)&#125; 个可能的中介账号:&quot;)</span><br><span class="line">print(intermediary_accounts[[&#x27;对手微信账号&#x27;, &#x27;suspect_count&#x27;, &#x27;total_amount&#x27;]])</span><br><span class="line"></span><br><span class="line"># 保存结果到Excel</span><br><span class="line">output_path = r&quot;E:\大数据\比赛\智器云模拟\中介账号分析结果.xlsx&quot;</span><br><span class="line">intermediary_accounts.to_excel(output_path, index=False)</span><br><span class="line">print(f&quot;\n结果已保存至: &#123;output_path&#125;&quot;)</span><br></pre></td></tr></table></figure>
+
+<h1 id="25"><a href="#25" class="headerlink" title="25"></a>25</h1><p><strong>在一起跨境网赌案件中，某地警方发现辖区内有人在某赌博APP上参与赌博，并推广发展其他赌客获利，立案后，警方通过技术渗透得到了网赌平台的后台代理数据，请根据提供的后台代理数据进行分析：</strong></p>
+<h2 id="（1）请问返点金额在3万元及以上代理会员有哪些？每个账号的返点金额是多少（四舍五入，保留至小数点后两位）？（填写会员账号和返点金额）（6分）"><a href="#（1）请问返点金额在3万元及以上代理会员有哪些？每个账号的返点金额是多少（四舍五入，保留至小数点后两位）？（填写会员账号和返点金额）（6分）" class="headerlink" title="（1）请问返点金额在3万元及以上代理会员有哪些？每个账号的返点金额是多少（四舍五入，保留至小数点后两位）？（填写会员账号和返点金额）（6分）"></a><strong>（1）请问返点金额在3万元及以上代理会员有哪些？每个账号的返点金额是多少（四舍五入，保留至小数点后两位）？（填写会员账号和返点金额）（6分）</strong></h2><table>
+<thead>
+<tr>
+<th>会员账号</th>
+<th>返点金额（元）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757576134966-17119c06-c5ca-4a48-a199-671b49adaff6.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>筛选即可</p>
+<h2 id="（2）对代理推荐关系进行分析，请问直接发展下级会员数量在5人及以上的会员有哪些？这些会员账号发展的直接下级数量有多少个？（填写会员账号及其发展的直接下级数量）（6分）"><a href="#（2）对代理推荐关系进行分析，请问直接发展下级会员数量在5人及以上的会员有哪些？这些会员账号发展的直接下级数量有多少个？（填写会员账号及其发展的直接下级数量）（6分）" class="headerlink" title="（2）对代理推荐关系进行分析，请问直接发展下级会员数量在5人及以上的会员有哪些？这些会员账号发展的直接下级数量有多少个？（填写会员账号及其发展的直接下级数量）（6分）"></a><strong>（2）对代理推荐关系进行分析，请问直接发展下级会员数量在5人及以上的会员有哪些？这些会员账号发展的直接下级数量有多少个？（填写会员账号及其发展的直接下级数量）（6分）</strong></h2><table>
+<thead>
+<tr>
+<th>会员账号</th>
+<th>直接下级数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody></table>
+<p><em>“对代理推荐关系进行分析，请问直接发展下级会员数量在5人及以上的会员有哪些？这些会员账号发展的直接下级数量有多少个？（填写会员账号及其发展的直接下级数量）</em></p>
+<p><em>我的思路是：1.读取D列“上级代理会员账号”，统计每个账号出现的次数，并输出到心表格中，给我对应的py代码（pandas库）</em></p>
+<p><em>地址是”E:\大数据\比赛\智器云模拟\第25题数据\会员历史报表.xlsx””</em></p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line"># 读取Excel文件</span><br><span class="line">file_path = r&quot;E:\大数据\比赛\智器云模拟\第25题数据\会员历史报表.xlsx&quot;</span><br><span class="line">df = pd.read_excel(file_path, sheet_name=&#x27;Sheet1&#x27;)</span><br><span class="line"></span><br><span class="line"># 统计每个上级代理会员账号出现的次数（即其直接下级数量）</span><br><span class="line">direct_subordinate_counts = df[&#x27;上级代理会员账号&#x27;].value_counts().reset_index()</span><br><span class="line">direct_subordinate_counts.columns = [&#x27;会员账号&#x27;, &#x27;直接下级数量&#x27;]</span><br><span class="line"></span><br><span class="line"># 筛选直接下级数量≥5的会员</span><br><span class="line">result = direct_subordinate_counts[direct_subordinate_counts[&#x27;直接下级数量&#x27;] &gt;= 5]</span><br><span class="line"></span><br><span class="line"># 按直接下级数量降序排列</span><br><span class="line">result_sorted = result.sort_values(by=&#x27;直接下级数量&#x27;, ascending=False)</span><br><span class="line"></span><br><span class="line"># 打印结果</span><br><span class="line">print(&quot;直接发展下级≥5人的代理会员：&quot;)</span><br><span class="line">print(result_sorted)</span><br><span class="line"></span><br><span class="line"># 可选：保存结果到新文件</span><br><span class="line">result_sorted.to_excel(&#x27;下级数量统计结果.xlsx&#x27;, index=False)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757576222823-8001c4ad-a6cf-4856-b56c-54652284bfbd.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h2 id="（3）结合第（1）问和第（2）问的结果，请问返点金额在3万元及以上、直接发展下级会员数量在5人及以上且最后登录时间在2023年1月1日（含）后，有银行卡信息的会员有哪些？（填写会员账号及其对应的卡号和开卡行）（3分）"><a href="#（3）结合第（1）问和第（2）问的结果，请问返点金额在3万元及以上、直接发展下级会员数量在5人及以上且最后登录时间在2023年1月1日（含）后，有银行卡信息的会员有哪些？（填写会员账号及其对应的卡号和开卡行）（3分）" class="headerlink" title="（3）结合第（1）问和第（2）问的结果，请问返点金额在3万元及以上、直接发展下级会员数量在5人及以上且最后登录时间在2023年1月1日（含）后，有银行卡信息的会员有哪些？（填写会员账号及其对应的卡号和开卡行）（3分）"></a><strong>（3）结合第（1）问和第（2）问的结果，请问返点金额在3万元及以上、直接发展下级会员数量在5人及以上且最后登录时间在2023年1月1日（含）后，有银行卡信息的会员有哪些？（填写会员账号及其对应的卡号和开卡行）（3分）</strong></h2><table>
+<thead>
+<tr>
+<th>会员账号</th>
+<th>银行卡号</th>
+<th>开户银行</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody></table>
+<p><em>“题目：结合第（1）问和第（2）问的结果，请问返点金额在3万元及以上、直接发展下级会员数量在5人及以上且最后登录时间在2023年1月1日（含）后，有银行卡信息的会员有哪些？（填写会员账号及其对应的卡号和开卡行）（3分）</em></p>
+<p><em>1.我的思路是先读取大于三万的表格”E:\大数据\比赛\智器云模拟\第25题数据\大于3万.xlsx”，记住“会员账号”之后再在”E:\大数据\比赛\智器云模拟\第25题数据\下级数量统计结果.xlsx”的“会员账号”找到对应的会员，最后在”E:\大数据\比赛\智器云模拟\第25题数据\会员详情表.xlsx”中找到前两个文档重叠的会员，最后再筛选出“最后登录时间”在2023-1-1后的数据（“最后登录时间”的示例是：2023-03-19 14:02:12），给我py代码”</em></p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">from datetime import datetime</span><br><span class="line"></span><br><span class="line"># 读取三个数据文件</span><br><span class="line"># 1. 返点金额≥3万的会员</span><br><span class="line">rebate_df = pd.read_excel(r&quot;E:\大数据\比赛\智器云模拟\第25题数据\大于3万.xlsx&quot;)</span><br><span class="line"># 2. 直接下级≥5人的会员</span><br><span class="line">subordinate_df = pd.read_excel(r&quot;E:\大数据\比赛\智器云模拟\第25题数据\下级数量统计结果.xlsx&quot;)</span><br><span class="line"># 3. 会员详情表</span><br><span class="line">detail_df = pd.read_excel(r&quot;E:\大数据\比赛\智器云模拟\第25题数据\会员详情表.xlsx&quot;)</span><br><span class="line"></span><br><span class="line"># 确保列名一致（去除前后空格）</span><br><span class="line">for df in [rebate_df, subordinate_df, detail_df]:</span><br><span class="line">    df.columns = df.columns.str.strip()</span><br><span class="line"></span><br><span class="line"># 找出同时满足返点金额≥3万和下级≥5人的会员</span><br><span class="line"># 取两个数据集的交集</span><br><span class="line">common_members = pd.merge(</span><br><span class="line">    rebate_df[[&#x27;会员账号&#x27;]],</span><br><span class="line">    subordinate_df[[&#x27;会员账号&#x27;]],</span><br><span class="line">    on=&#x27;会员账号&#x27;,</span><br><span class="line">    how=&#x27;inner&#x27;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"># 从会员详情表中提取这些会员的详细信息</span><br><span class="line">result_df = pd.merge(</span><br><span class="line">    common_members,</span><br><span class="line">    detail_df,</span><br><span class="line">    on=&#x27;会员账号&#x27;,</span><br><span class="line">    how=&#x27;left&#x27;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"># 筛选最后登录时间在2023-01-01之后的数据</span><br><span class="line"># 将最后登录时间转换为datetime格式</span><br><span class="line">result_df[&#x27;最后登录时间&#x27;] = pd.to_datetime(result_df[&#x27;最后登录时间&#x27;])</span><br><span class="line"></span><br><span class="line"># 设置筛选日期</span><br><span class="line">cutoff_date = datetime(2023, 1, 1)</span><br><span class="line"></span><br><span class="line"># 应用时间筛选条件</span><br><span class="line">result_df = result_df[result_df[&#x27;最后登录时间&#x27;] &gt;= cutoff_date]</span><br><span class="line"></span><br><span class="line"># 筛选有银行卡信息的会员（假设银行卡号和开卡行列都存在）</span><br><span class="line"># 需要根据实际列名调整</span><br><span class="line">result_df = result_df[</span><br><span class="line">    result_df[&#x27;银行卡&#x27;].notna() &amp;</span><br><span class="line">    result_df[&#x27;开卡行&#x27;].notna()</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"># 选择需要的列（会员账号、银行卡号、开卡行）</span><br><span class="line">final_result = result_df[[&#x27;会员账号&#x27;, &#x27;银行卡&#x27;, &#x27;开卡行&#x27;]]</span><br><span class="line"></span><br><span class="line"># 保存结果</span><br><span class="line">output_path = r&quot;E:\大数据\比赛\智器云模拟\第25题数据\最终结果.xlsx&quot;</span><br><span class="line">final_result.to_excel(output_path, index=False)</span><br><span class="line"></span><br><span class="line">print(&quot;筛选完成！结果已保存至:&quot;, output_path)</span><br><span class="line">print(&quot;符合条件的会员数量:&quot;, len(final_result))</span><br><span class="line">print(&quot;\n结果预览:&quot;)</span><br><span class="line">print(final_result.head())</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757576873377-0ea36b1e-ba70-4af5-ab86-1ff9a39d828b.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h1 id="26"><a href="#26" class="headerlink" title="26"></a>26</h1><p><strong>2020年7月10日，某市发生一起盗窃案件，根据排查，警方掌握了嫌疑人高某霞和其关系圈的其他可疑人员，现已调取了以上嫌疑人的酒店住宿和铁路出行记录，请根据调取的酒店住宿信息和铁路出行数据完成以下分析：</strong></p>
+<h2 id="（1）请分析在2020年6月27日（含）至2020年7月27日（含）期间，与高某霞入住过同一家酒店且入住时间间隔在3天以内（含3天）的人员有哪些？（填写身份证号和姓名）（5分）"><a href="#（1）请分析在2020年6月27日（含）至2020年7月27日（含）期间，与高某霞入住过同一家酒店且入住时间间隔在3天以内（含3天）的人员有哪些？（填写身份证号和姓名）（5分）" class="headerlink" title="（1）请分析在2020年6月27日（含）至2020年7月27日（含）期间，与高某霞入住过同一家酒店且入住时间间隔在3天以内（含3天）的人员有哪些？（填写身份证号和姓名）（5分）"></a><strong>（1）请分析在2020年6月27日（含）至2020年7月27日（含）期间，与高某霞入住过同一家酒店且入住时间间隔在3天以内（含3天）的人员有哪些？（填写身份证号和姓名）（5分）</strong></h2><table>
+<thead>
+<tr>
+<th>身份证号码</th>
+<th>姓名</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line"># 读取Excel文件，指定身份证号列为字符串类型</span><br><span class="line">file_path = r&quot;E:\大数据\比赛\智器云模拟\第26题数据\云搜-酒店入住数据.xlsx&quot;</span><br><span class="line">df = pd.read_excel(file_path, dtype=&#123;&#x27;证件号码&#x27;: str&#125;)</span><br><span class="line"></span><br><span class="line"># 将日期列转换为datetime类型</span><br><span class="line">df[&#x27;入住时间&#x27;] = pd.to_datetime(df[&#x27;入住时间&#x27;])</span><br><span class="line">df[&#x27;离店时间&#x27;] = pd.to_datetime(df[&#x27;离店时间&#x27;])</span><br><span class="line"></span><br><span class="line"># 筛选指定日期范围内的数据</span><br><span class="line">start_date = pd.Timestamp(&#x27;2020-06-27&#x27;)</span><br><span class="line">end_date = pd.Timestamp(&#x27;2020-07-27&#x27;)</span><br><span class="line">df_period = df[(df[&#x27;入住时间&#x27;] &gt;= start_date) &amp; (df[&#x27;入住时间&#x27;] &lt;= end_date)]</span><br><span class="line"></span><br><span class="line"># 获取高某霞在指定时间段内的入住记录</span><br><span class="line">gao_records = df_period[df_period[&#x27;姓名&#x27;] == &#x27;高某霞&#x27;]</span><br><span class="line"></span><br><span class="line"># 创建空列表保存结果</span><br><span class="line">results = []</span><br><span class="line"></span><br><span class="line"># 分析每一条高某霞的入住记录</span><br><span class="line">for _, gao_row in gao_records.iterrows():</span><br><span class="line">    # 获取当前高某霞入住信息</span><br><span class="line">    hotel_name = gao_row[&#x27;旅店名称&#x27;]  # 修改为&quot;旅店名称&quot;</span><br><span class="line">    gao_id_card = gao_row[&#x27;证件号码&#x27;]  # 修改为&quot;证件号码&quot;</span><br><span class="line">    gao_checkin = gao_row[&#x27;入住时间&#x27;]</span><br><span class="line">    </span><br><span class="line">    # 筛选同一酒店的记录</span><br><span class="line">    same_hotel = df_period[df_period[&#x27;旅店名称&#x27;] == hotel_name]  # 修改为&quot;旅店名称&quot;</span><br><span class="line">    </span><br><span class="line">    # 筛选时间间隔在3天以内的人员（排除高某霞自己）</span><br><span class="line">    for _, row in same_hotel.iterrows():</span><br><span class="line">        # 排除高某霞本人</span><br><span class="line">        if row[&#x27;证件号码&#x27;] == gao_id_card:  # 修改为&quot;证件号码&quot;</span><br><span class="line">            continue</span><br><span class="line">            </span><br><span class="line">        # 计算入住时间差（绝对值）</span><br><span class="line">        time_diff = abs((row[&#x27;入住时间&#x27;] - gao_checkin).days)</span><br><span class="line">        </span><br><span class="line">        # 如果时间差在3天以内，记录结果</span><br><span class="line">        if time_diff &lt;= 3:</span><br><span class="line">            results.append(&#123;</span><br><span class="line">                &#x27;证件号码&#x27;: row[&#x27;证件号码&#x27;],  # 修改为&quot;证件号码&quot;</span><br><span class="line">                &#x27;姓名&#x27;: row[&#x27;姓名&#x27;],</span><br><span class="line">                &#x27;旅店名称&#x27;: hotel_name,  # 修改为&quot;旅店名称&quot;</span><br><span class="line">                &#x27;高某霞入住时间&#x27;: gao_checkin.strftime(&#x27;%Y-%m-%d&#x27;),</span><br><span class="line">                &#x27;相关人员入住时间&#x27;: row[&#x27;入住时间&#x27;].strftime(&#x27;%Y-%m-%d&#x27;),</span><br><span class="line">                &#x27;时间差(天)&#x27;: time_diff</span><br><span class="line">            &#125;)</span><br><span class="line"></span><br><span class="line"># 创建结果DataFrame</span><br><span class="line">if results:</span><br><span class="line">    results_df = pd.DataFrame(results)</span><br><span class="line">    </span><br><span class="line">    # 按证件号码去重</span><br><span class="line">    results_df = results_df.drop_duplicates(subset=[&#x27;证件号码&#x27;])</span><br><span class="line">    </span><br><span class="line">    # 按证件号码排序</span><br><span class="line">    results_df = results_df.sort_values(&#x27;证件号码&#x27;)</span><br><span class="line">    </span><br><span class="line">    # 确保身份证号以文本格式显示</span><br><span class="line">    results_df[&#x27;证件号码&#x27;] = results_df[&#x27;证件号码&#x27;].astype(str)</span><br><span class="line">    </span><br><span class="line">    # 打印结果</span><br><span class="line">    print(&quot;与高某霞同住旅店且时间间隔3天内的人员：&quot;)</span><br><span class="line">    print(results_df[[&#x27;证件号码&#x27;, &#x27;姓名&#x27;]])</span><br><span class="line">    </span><br><span class="line">    # 保存结果到Excel文件（确保身份证号以文本格式保存）</span><br><span class="line">    with pd.ExcelWriter(&#x27;分析结果.xlsx&#x27;, engine=&#x27;xlsxwriter&#x27;) as writer:</span><br><span class="line">        results_df[[&#x27;证件号码&#x27;, &#x27;姓名&#x27;]].to_excel(writer, index=False)</span><br><span class="line">        workbook = writer.book</span><br><span class="line">        worksheet = writer.sheets[&#x27;Sheet1&#x27;]</span><br><span class="line">        </span><br><span class="line">        # 设置单元格格式为文本</span><br><span class="line">        text_format = workbook.add_format(&#123;&#x27;num_format&#x27;: &#x27;@&#x27;&#125;)</span><br><span class="line">        worksheet.set_column(&#x27;A:A&#x27;, None, text_format)</span><br><span class="line">    </span><br><span class="line">    print(&quot;\n分析结果已保存到 &#x27;分析结果.xlsx&#x27;&quot;)</span><br><span class="line">else:</span><br><span class="line">    print(&quot;未找到符合条件的记录&quot;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="（2）现想要进一步挖掘出疑似高某霞作案团伙的其他成员，请结合第（1）问中的结果，分析与高某霞在2020年6月27日（含）至2020年7月27日（含）有过入住同一家酒店且入住时间间隔在3天内，并与高某霞有过同一天乘坐同一车号火车记录的人员有哪些？（填写身份证号和姓名）（5分）"><a href="#（2）现想要进一步挖掘出疑似高某霞作案团伙的其他成员，请结合第（1）问中的结果，分析与高某霞在2020年6月27日（含）至2020年7月27日（含）有过入住同一家酒店且入住时间间隔在3天内，并与高某霞有过同一天乘坐同一车号火车记录的人员有哪些？（填写身份证号和姓名）（5分）" class="headerlink" title="（2）现想要进一步挖掘出疑似高某霞作案团伙的其他成员，请结合第（1）问中的结果，分析与高某霞在2020年6月27日（含）至2020年7月27日（含）有过入住同一家酒店且入住时间间隔在3天内，并与高某霞有过同一天乘坐同一车号火车记录的人员有哪些？（填写身份证号和姓名）（5分）"></a><strong>（2）现想要进一步挖掘出疑似高某霞作案团伙的其他成员，请结合第（1）问中的结果，分析与高某霞在2020年6月27日（含）至2020年7月27日（含）有过入住同一家酒店且入住时间间隔在3天内，并与高某霞有过同一天乘坐同一车号火车记录的人员有哪些？（填写身份证号和姓名）（5分）</strong></h2><table>
+<thead>
+<tr>
+<th>身份证号码</th>
+<th>姓名</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody></table>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#22"><span class="toc-list-text">22</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%EF%BC%881%EF%BC%89%E8%AF%B7%E9%97%AE%E5%92%8C5%E4%BD%8D%E5%AB%8C%E7%96%91%E4%BA%BA%E4%B8%AD%E4%BB%BB%E6%84%8F3%E4%B8%AA%E5%8F%8A%E4%BB%A5%E4%B8%8A%E5%AB%8C%E7%96%91%E4%BA%BA%E5%8F%91%E7%94%9F%E8%BF%87%E9%80%9A%E8%AF%9D%E5%85%B3%E7%B3%BB%E7%9A%84%E5%AF%B9%E6%96%B9%E5%8F%B7%E7%A0%81%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F%EF%BC%88%E5%A1%AB%E5%86%99%E6%89%8B%E6%9C%BA%E5%8F%B7%EF%BC%89-%EF%BC%888%E5%88%86%EF%BC%89"><span class="toc-list-text">（1）请问和5位嫌疑人中任意3个及以上嫌疑人发生过通话关系的对方号码有哪些？（填写手机号） （8分）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%EF%BC%882%EF%BC%89%E8%AF%B7%E9%97%AE%E5%9C%A8%E5%A4%9C%E9%97%B422-00-6-00%E6%9C%9F%E9%97%B4%E9%80%9A%E8%AF%9D%E6%80%BB%E6%97%B6%E9%95%BF%E6%9C%80%E9%95%BF%E7%9A%84%E5%B7%B2%E7%9F%A5%E5%AB%8C%E7%96%91%E4%BA%BA%E6%98%AF%E8%B0%81%EF%BC%9F%E5%9C%A8%E6%AD%A4%E6%9C%9F%E9%97%B4%E4%B8%8E%E8%AF%A5%E5%B7%B2%E7%9F%A5%E5%AB%8C%E7%96%91%E4%BA%BA%E9%80%9A%E8%AF%9D%E6%80%BB%E6%97%B6%E9%95%BF%E6%9C%80%E9%95%BF%E7%9A%84%E5%AF%B9%E6%96%B9%E5%8F%B7%E7%A0%81%E5%8F%88%E6%98%AF%E8%B0%81%EF%BC%9F%EF%BC%88%E5%A1%AB%E5%86%99%E6%89%8B%E6%9C%BA%E5%8F%B7%EF%BC%89%EF%BC%886%E5%88%86%EF%BC%89"><span class="toc-list-text">（2）请问在夜间22:00-6:00期间通话总时长最长的已知嫌疑人是谁？在此期间与该已知嫌疑人通话总时长最长的对方号码又是谁？（填写手机号）（6分）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%EF%BC%883%EF%BC%89%E8%AF%B7%E9%97%AE%E4%B8%8E1389744%E5%92%8C1363489%E8%BF%99%E4%B8%A4%E4%B8%AA%E5%B7%B2%E7%9F%A5%E5%AB%8C%E7%96%91%E4%BA%BA%E5%85%B1%E5%90%8C%E9%80%9A%E8%AF%9D%E6%80%BB%E6%AC%A1%E6%95%B0%E6%9C%80%E5%A4%9A%E7%9A%84%E5%AF%86%E5%88%87%E8%81%94%E7%B3%BB%E5%AF%B9%E6%96%B9%E5%8F%B7%E7%A0%81%E6%98%AF%E8%B0%81%EF%BC%88%E5%A1%AB%E5%86%99%E6%89%8B%E6%9C%BA%E5%8F%B7%EF%BC%89%EF%BC%9F%E8%BF%99%E4%B8%A4%E4%B8%AA%E5%AB%8C%E7%96%91%E5%8F%B7%E7%A0%81%E8%B7%9F%E8%AF%A5%E5%AF%86%E5%88%87%E8%81%94%E7%B3%BB%E5%AF%B9%E6%89%8B%E5%8F%91%E7%94%9F%E9%80%9A%E8%AF%9D%E6%97%B6%E6%9C%80%E5%B8%B8%E5%9C%A8%E5%93%AA%E4%B8%AA%E5%9F%BA%E7%AB%99%E5%A4%A7%E5%8C%BA%E5%8F%B7%E4%B8%8B%EF%BC%88%E5%A1%AB%E5%86%99%E5%9F%BA%E7%AB%99%E5%A4%A7%E5%8C%BA%E5%8F%B7%EF%BC%89%EF%BC%9F%EF%BC%886%E5%88%86%EF%BC%89"><span class="toc-list-text">（3）请问与1389744和1363489这两个已知嫌疑人共同通话总次数最多的密切联系对方号码是谁（填写手机号）？这两个嫌疑号码跟该密切联系对手发生通话时最常在哪个基站大区号下（填写基站大区号）？（6分）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%EF%BC%884%EF%BC%89%E6%9C%89%E4%BA%BA%E4%B8%BE%E6%8A%A5%E5%9C%A82023%E5%B9%B49%E6%9C%881%E6%97%A5%EF%BC%88%E5%90%AB%EF%BC%89%E8%87%B39%E6%9C%8830%E6%97%A5%EF%BC%88%E5%90%AB%EF%BC%89%E6%9C%9F%E9%97%B4%EF%BC%8C%E6%9C%89%E5%AB%8C%E7%96%91%E4%BA%BA%E5%9C%A8%E2%80%9C%E5%9F%BA%E7%AB%99%E5%A4%A7%E5%8C%BA%E5%8F%B7%EF%BC%9A21088%EF%BC%8C%E5%9F%BA%E7%AB%99%E5%B0%8F%E5%8C%BA%E5%8F%B7%EF%BC%9A16427%E2%80%9D%E7%9A%84%E4%BD%8D%E7%BD%AE%E5%8C%BA%E5%9F%9F%E5%86%85%E8%BF%9B%E8%A1%8C%E7%BA%BF%E4%B8%8B%E4%BA%A4%E6%98%93%EF%BC%8C%E8%AF%B7%E6%A0%B9%E6%8D%AE%E9%80%9A%E8%AF%9D%E6%95%B0%E6%8D%AE%E6%89%BE%E5%87%BA%E7%96%91%E4%BC%BC%E5%8F%82%E4%B8%8E%E7%BA%BF%E4%B8%8B%E4%BA%A4%E6%98%93%E7%9A%84%E5%B7%B2%E7%9F%A5%E5%AB%8C%E7%96%91%E4%BA%BA%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%8C%E5%B9%B6%E7%BB%9F%E8%AE%A1%E4%BB%96%E4%BB%AC%E6%9C%9F%E9%97%B4%E5%9C%A8%E8%AF%A5%E4%BD%8D%E7%BD%AE%E5%8C%BA%E5%9F%9F%E7%9A%84%E8%81%94%E7%B3%BB%E5%AF%B9%E6%89%8B%E5%88%86%E5%88%AB%E6%9C%89%E5%A4%9A%E5%B0%91%E4%B8%AA%EF%BC%9F%EF%BC%88%E5%A1%AB%E5%86%99%E6%89%8B%E6%9C%BA%E5%8F%B7%E5%92%8C%E9%80%9A%E8%AF%9D%E5%AF%B9%E6%89%8B%E6%95%B0%E9%87%8F%EF%BC%89%EF%BC%885%E5%88%86%EF%BC%89"><span class="toc-list-text">（4）有人举报在2023年9月1日（含）至9月30日（含）期间，有嫌疑人在“基站大区号：21088，基站小区号：16427”的位置区域内进行线下交易，请根据通话数据找出疑似参与线下交易的已知嫌疑人有哪些，并统计他们期间在该位置区域的联系对手分别有多少个？（填写手机号和通话对手数量）（5分）</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#23"><span class="toc-list-text">23.</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%EF%BC%881%EF%BC%89%E6%89%BE%E5%87%BA%E5%AB%8C%E7%96%91%E4%BA%BA%E6%A2%81%E5%9D%A4%EF%BC%88%E5%8D%A1%E5%8F%B7%EF%BC%9A62262-8369212%EF%BC%89%E7%9A%84%E6%9C%80%E5%A4%A7%E8%B5%84%E9%87%91%E6%9D%A5%E6%BA%90%E8%B4%A6%E6%88%B7%E4%B8%8E%E6%9C%80%E5%A4%A7%E8%B5%84%E9%87%91%E5%8E%BB%E5%90%91%E8%B4%A6%E6%88%B7%E3%80%82%EF%BC%88%E5%A1%AB%E5%86%99%E9%93%B6%E8%A1%8C%E5%8D%A1%E5%8F%B7%EF%BC%89%EF%BC%888%E5%88%86%EF%BC%89"><span class="toc-list-text">（1）找出嫌疑人梁坤（卡号：62262***8369212）的最大资金来源账户与最大资金去向账户。（填写银行卡号）（8分）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%EF%BC%882%EF%BC%89%E8%AF%B7%E9%97%AE%E5%93%AA%E4%BA%9B%E9%93%B6%E8%A1%8C%E5%8D%A1%E5%90%8C%E6%97%B6%E6%8E%A5%E6%94%B6%E8%BF%87%E6%9D%8E%E6%AC%A3%E5%90%8D%E4%B8%8B%E4%B8%A4%E5%BC%A0%E5%8D%A1%E7%9A%84%E9%92%B1%E4%B8%94%E6%B2%A1%E6%9C%89%E7%BB%99%E6%9D%8E%E6%AC%A3%E4%BB%BB%E4%BD%95%E4%B8%80%E5%BC%A0%E9%93%B6%E8%A1%8C%E5%8D%A1%E8%BD%AC%E8%BF%87%E9%92%B1%EF%BC%9F%EF%BC%88%E5%A1%AB%E5%86%99%E9%93%B6%E8%A1%8C%E5%8D%A1%E5%8F%B7%EF%BC%89%EF%BC%8810%E5%88%86%EF%BC%89"><span class="toc-list-text">（2）请问哪些银行卡同时接收过李欣名下两张卡的钱且没有给李欣任何一张银行卡转过钱？（填写银行卡号）（10分）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%EF%BC%883%EF%BC%89%E5%9C%A8%E6%9C%AC%E6%A1%88%E4%B8%AD%EF%BC%8C%E9%9C%80%E8%BF%BD%E8%B8%AA%E5%A4%A7%E9%A2%9D%E5%8F%AF%E7%96%91%E8%B5%84%E9%87%91%E7%9A%84%E6%9C%80%E7%BB%88%E5%8E%BB%E5%90%91%E3%80%82%E4%BB%A5%E5%94%90%E6%97%A2110104-062991%E7%9A%84%E9%93%B6%E8%A1%8C%E5%8D%A1%E4%B8%BA1%E7%BA%A7%E5%8D%A1%EF%BC%8C%E8%BF%BD%E8%B8%AA1%E7%BA%A7%E5%8D%A1%E7%9A%84%E5%A4%A7%E9%A2%9D%E8%B5%84%E9%87%91%E5%8E%BB%E5%90%91%E8%B4%A6%E6%88%B7%EF%BC%88%E6%B5%81%E5%85%A5%E9%87%91%E9%A2%9D%C3%B7%E4%BA%A4%E6%98%93%E6%80%BB%E9%87%91%E9%A2%9D%E2%89%A580-%E4%B8%94%E6%B5%81%E5%85%A5%E9%87%91%E9%A2%9D%E5%9C%A8-2000%E4%B8%87%E5%8F%8A%E4%BB%A5%E4%B8%8A%EF%BC%89%E4%BD%9C%E4%B8%BA2%E7%BA%A7%E5%8D%A1%EF%BC%8C%E5%86%8D%E7%BB%A7%E7%BB%AD%E8%BF%BD%E8%B8%AA2%E7%BA%A7%E5%8D%A1%E7%9A%84%E5%A4%A7%E9%A2%9D%E8%B5%84%E9%87%91%E5%8E%BB%E5%90%91%E8%B4%A6%E6%88%B7%EF%BC%88%E6%B5%81%E5%85%A5%E9%87%91%E9%A2%9D%C3%B7%E4%BA%A4%E6%98%93%E6%80%BB%E9%87%91%E9%A2%9D%E2%89%A580-%E4%B8%94%E6%B5%81%E5%85%A5%E9%87%91%E9%A2%9D%E5%9C%A8-2000%E4%B8%87%E5%8F%8A%E4%BB%A5%E4%B8%8A%EF%BC%89%E4%BD%9C%E4%B8%BA3%E7%BA%A7%E5%8D%A1%EF%BC%8C%E8%AF%B7%E6%89%BE%E5%87%BA%E6%BB%A1%E8%B6%B3%E4%B8%8A%E8%BF%B0%E6%9D%A1%E4%BB%B6%E7%9A%843%E7%BA%A7%E5%8D%A1%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F%EF%BC%88%E5%A1%AB%E5%86%99%E9%93%B6%E8%A1%8C%E5%8D%A1%E5%8F%B7%EF%BC%89%EF%BC%886%E5%88%86%EF%BC%89"><span class="toc-list-text">（3）在本案中，需追踪大额可疑资金的最终去向。以唐既110104***062991的银行卡为1级卡，追踪1级卡的大额资金去向账户（流入金额÷交易总金额≥80%且流入金额在 2000万及以上）作为2级卡，再继续追踪2级卡的大额资金去向账户（流入金额÷交易总金额≥80%且流入金额在 2000万及以上）作为3级卡，请找出满足上述条件的3级卡有哪些？（填写银行卡号）（6分）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link"><span class="toc-list-text"></span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#-1"><span class="toc-list-text"></span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%EF%BC%884%EF%BC%89%E8%B5%84%E9%87%91%E5%88%86%E6%9E%90%E4%B8%AD%E5%B8%B8%E5%B8%B8%E9%80%9A%E8%BF%87%E5%85%B1%E7%94%A8IP%E6%88%96MAC%E6%89%BE%E5%8F%AF%E7%96%91%E5%9B%A2%E4%BC%99%EF%BC%8C%E8%AF%A5%E6%A1%88%E4%BB%B6%E4%B8%AD%E7%9A%84%E9%93%B6%E8%A1%8C%E5%8D%A1%E8%8B%A5%E5%90%8C%E6%97%B6%E6%BB%A1%E8%B6%B3%E4%BB%A5%E4%B8%8B2%E4%B8%AA%E6%9D%A1%E4%BB%B6%EF%BC%9A%E2%91%A0%E9%93%B6%E8%A1%8C%E5%8D%A1%E5%9C%A8%E7%9B%B8%E5%90%8CIP%E6%88%96MAC%E5%9C%B0%E5%9D%80%E4%B8%8A%E7%99%BB%E9%99%86%E8%BF%87%EF%BC%88%E7%9B%B8%E5%90%8CIP%E6%88%96MAC%E5%9C%B0%E5%9D%80%EF%BC%9A%E8%AF%A5IP%E6%88%96-MAC-%E5%9C%B0%E5%9D%80%E8%87%B3%E5%B0%91%E5%85%B3%E8%81%942%E5%BC%A0%E5%8F%8A%E4%BB%A5%E4%B8%8A%E9%93%B6%E8%A1%8C%E5%8D%A1%EF%BC%89%EF%BC%9B%E2%91%A1%E9%93%B6%E8%A1%8C%E5%8D%A1%E8%87%B3%E5%B0%91%E5%9C%A8%E8%AF%A5IP%E6%88%96MAC%E5%9C%B0%E5%9D%80%E4%B8%8A%E7%99%BB%E9%99%86%E8%BF%872%E6%AC%A1%E5%8F%8A%E4%BB%A5%E4%B8%8A%E3%80%82%E5%88%99%E5%B0%86%E8%BF%99%E4%BA%9B%E9%93%B6%E8%A1%8C%E5%8D%A1%E8%A7%86%E4%B8%BA%E5%90%8C%E4%B8%80%E5%9B%A2%E4%BC%99%E6%89%80%E6%8E%A7%E5%88%B6%EF%BC%8C%E8%AF%B7%E9%97%AE%E5%90%8C%E6%97%B6%E6%BB%A1%E8%B6%B3%E4%BB%A5%E4%B8%8A2%E4%B8%AA%E6%9D%A1%E4%BB%B6%E7%9A%84%E9%93%B6%E8%A1%8C%E5%8D%A1%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F%EF%BC%88%E5%A1%AB%E5%86%99%E9%93%B6%E8%A1%8C%E5%8D%A1%E5%8F%B7%EF%BC%89%EF%BC%886%E5%88%86%EF%BC%89"><span class="toc-list-text">（4）资金分析中常常通过共用IP或MAC找可疑团伙，该案件中的银行卡若同时满足以下2个条件：①银行卡在相同IP或MAC地址上登陆过（相同IP或MAC地址：该IP或 MAC 地址至少关联2张及以上银行卡）；②银行卡至少在该IP或MAC地址上登陆过2次及以上。则将这些银行卡视为同一团伙所控制，请问同时满足以上2个条件的银行卡有哪些？（填写银行卡号）（6分）</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#24"><span class="toc-list-text">24</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%EF%BC%881%EF%BC%89%E6%A0%B9%E6%8D%AE%E5%AB%96%E5%AE%A2%E8%B4%A6%E5%8F%B7%E7%89%B9%E5%BE%81%EF%BC%9A%E2%91%A0%E4%BA%A4%E6%98%93%E6%97%B6%E9%97%B4%E5%9C%A8%E6%99%9A%E4%B8%8A22%E7%82%B9%E5%88%B0%E5%87%8C%E6%99%A86%E7%82%B9%EF%BC%9B%E2%91%A1%E5%90%91%E5%B7%B2%E7%9F%A5%E5%AB%8C%E7%96%91%E8%B4%A6%E6%88%B7%E8%BD%AC%E8%BF%87%E9%92%B1%EF%BC%8C%E4%B8%94%E5%8D%95%E7%AC%94%E4%BA%A4%E6%98%93%E9%87%91%E9%A2%9D%E5%9C%A8200%E5%85%83%EF%BC%88%E5%90%AB%EF%BC%89%E5%88%B0300%E5%85%83%EF%BC%88%E5%90%AB%EF%BC%89%E4%B9%8B%E9%97%B4%E3%80%82%E8%AF%B7%E6%89%BE%E5%87%BA%E5%90%8C%E6%97%B6%E6%BB%A1%E8%B6%B3%E4%BB%A5%E4%B8%8A2%E4%B8%AA%E6%9D%A1%E4%BB%B6%E7%9A%84%E5%AF%B9%E6%89%8B%E5%BE%AE%E4%BF%A1%E8%B4%A6%E5%8F%B7%EF%BC%8C%E5%8D%B3%E6%9C%89%E5%8F%AF%E8%83%BD%E4%B8%BA%E5%AB%96%E5%AE%A2%E8%B4%A6%E5%8F%B7%E3%80%82%EF%BC%88%E5%A1%AB%E5%86%99%E5%BE%AE%E4%BF%A1%E8%B4%A6%E5%8F%B7%EF%BC%89%EF%BC%885%E5%88%86%EF%BC%89"><span class="toc-list-text">（1）根据嫖客账号特征：①交易时间在晚上22点到凌晨6点；②向已知嫌疑账户转过钱，且单笔交易金额在200元（含）到300元（含）之间。请找出同时满足以上2个条件的对手微信账号，即有可能为嫖客账号。（填写微信账号）（5分）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%EF%BC%882%EF%BC%89%E6%A0%B9%E6%8D%AE%E5%8D%96%E6%B7%AB%E7%BB%84%E7%BB%87%E4%B8%AD%E4%BB%8B%E8%B4%A6%E5%8F%B7%E7%89%B9%E5%BE%81%EF%BC%9A%E2%91%A0%E6%8E%A5%E6%94%B6%E5%B7%B2%E7%9F%A5%E5%AB%8C%E7%96%91%E8%B4%A6%E6%88%B7%E8%B5%84%E9%87%91%E8%BD%AC%E5%85%A5%EF%BC%8C%E4%B8%94%E7%B4%AF%E8%AE%A1%E6%8E%A5%E6%94%B63%E4%BD%8D%E5%AB%8C%E7%96%91%E4%BA%BA%E8%BD%AC%E5%85%A5%E4%BA%A4%E6%98%93%E6%80%BB%E9%87%91%E9%A2%9D%E5%9C%A810000%E5%85%83%EF%BC%88%E5%90%AB%EF%BC%89%E4%BB%A5%E4%B8%8A%EF%BC%9B%E2%91%A1%E6%8E%A5%E6%94%B6%E8%BF%873%E4%BD%8D%E5%AB%8C%E7%96%91%E4%BA%BA%E4%B8%AD%E4%BB%BB%E6%84%8F2%E4%BD%8D%E5%8F%8A%E4%BB%A5%E4%B8%8A%E8%B5%84%E9%87%91%E8%BD%AC%E5%85%A5%E7%9A%84%E8%B4%A6%E6%88%B7%E3%80%82%E8%AF%B7%E6%89%BE%E5%87%BA%E5%90%8C%E6%97%B6%E6%BB%A1%E8%B6%B3%E4%BB%A5%E4%B8%8A2%E4%B8%AA%E6%9D%A1%E4%BB%B6%E7%9A%84%E5%AF%B9%E6%89%8B%E5%BE%AE%E4%BF%A1%E8%B4%A6%E5%8F%B7%EF%BC%8C%E5%8D%B3%E6%9C%89%E5%8F%AF%E8%83%BD%E4%B8%BA%E4%B8%AD%E4%BB%8B%E8%B4%A6%E5%8F%B7%E3%80%82%EF%BC%88%E5%A1%AB%E5%86%99%E5%BE%AE%E4%BF%A1%E8%B4%A6%E5%8F%B7%EF%BC%89%EF%BC%885%E5%88%86%EF%BC%89"><span class="toc-list-text">（2）根据卖淫组织中介账号特征：①接收已知嫌疑账户资金转入，且累计接收3位嫌疑人转入交易总金额在10000元（含）以上；②接收过3位嫌疑人中任意2位及以上资金转入的账户。请找出同时满足以上2个条件的对手微信账号，即有可能为中介账号。（填写微信账号）（5分）</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#25"><span class="toc-list-text">25</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%EF%BC%881%EF%BC%89%E8%AF%B7%E9%97%AE%E8%BF%94%E7%82%B9%E9%87%91%E9%A2%9D%E5%9C%A83%E4%B8%87%E5%85%83%E5%8F%8A%E4%BB%A5%E4%B8%8A%E4%BB%A3%E7%90%86%E4%BC%9A%E5%91%98%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F%E6%AF%8F%E4%B8%AA%E8%B4%A6%E5%8F%B7%E7%9A%84%E8%BF%94%E7%82%B9%E9%87%91%E9%A2%9D%E6%98%AF%E5%A4%9A%E5%B0%91%EF%BC%88%E5%9B%9B%E8%88%8D%E4%BA%94%E5%85%A5%EF%BC%8C%E4%BF%9D%E7%95%99%E8%87%B3%E5%B0%8F%E6%95%B0%E7%82%B9%E5%90%8E%E4%B8%A4%E4%BD%8D%EF%BC%89%EF%BC%9F%EF%BC%88%E5%A1%AB%E5%86%99%E4%BC%9A%E5%91%98%E8%B4%A6%E5%8F%B7%E5%92%8C%E8%BF%94%E7%82%B9%E9%87%91%E9%A2%9D%EF%BC%89%EF%BC%886%E5%88%86%EF%BC%89"><span class="toc-list-text">（1）请问返点金额在3万元及以上代理会员有哪些？每个账号的返点金额是多少（四舍五入，保留至小数点后两位）？（填写会员账号和返点金额）（6分）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%EF%BC%882%EF%BC%89%E5%AF%B9%E4%BB%A3%E7%90%86%E6%8E%A8%E8%8D%90%E5%85%B3%E7%B3%BB%E8%BF%9B%E8%A1%8C%E5%88%86%E6%9E%90%EF%BC%8C%E8%AF%B7%E9%97%AE%E7%9B%B4%E6%8E%A5%E5%8F%91%E5%B1%95%E4%B8%8B%E7%BA%A7%E4%BC%9A%E5%91%98%E6%95%B0%E9%87%8F%E5%9C%A85%E4%BA%BA%E5%8F%8A%E4%BB%A5%E4%B8%8A%E7%9A%84%E4%BC%9A%E5%91%98%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F%E8%BF%99%E4%BA%9B%E4%BC%9A%E5%91%98%E8%B4%A6%E5%8F%B7%E5%8F%91%E5%B1%95%E7%9A%84%E7%9B%B4%E6%8E%A5%E4%B8%8B%E7%BA%A7%E6%95%B0%E9%87%8F%E6%9C%89%E5%A4%9A%E5%B0%91%E4%B8%AA%EF%BC%9F%EF%BC%88%E5%A1%AB%E5%86%99%E4%BC%9A%E5%91%98%E8%B4%A6%E5%8F%B7%E5%8F%8A%E5%85%B6%E5%8F%91%E5%B1%95%E7%9A%84%E7%9B%B4%E6%8E%A5%E4%B8%8B%E7%BA%A7%E6%95%B0%E9%87%8F%EF%BC%89%EF%BC%886%E5%88%86%EF%BC%89"><span class="toc-list-text">（2）对代理推荐关系进行分析，请问直接发展下级会员数量在5人及以上的会员有哪些？这些会员账号发展的直接下级数量有多少个？（填写会员账号及其发展的直接下级数量）（6分）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%EF%BC%883%EF%BC%89%E7%BB%93%E5%90%88%E7%AC%AC%EF%BC%881%EF%BC%89%E9%97%AE%E5%92%8C%E7%AC%AC%EF%BC%882%EF%BC%89%E9%97%AE%E7%9A%84%E7%BB%93%E6%9E%9C%EF%BC%8C%E8%AF%B7%E9%97%AE%E8%BF%94%E7%82%B9%E9%87%91%E9%A2%9D%E5%9C%A83%E4%B8%87%E5%85%83%E5%8F%8A%E4%BB%A5%E4%B8%8A%E3%80%81%E7%9B%B4%E6%8E%A5%E5%8F%91%E5%B1%95%E4%B8%8B%E7%BA%A7%E4%BC%9A%E5%91%98%E6%95%B0%E9%87%8F%E5%9C%A85%E4%BA%BA%E5%8F%8A%E4%BB%A5%E4%B8%8A%E4%B8%94%E6%9C%80%E5%90%8E%E7%99%BB%E5%BD%95%E6%97%B6%E9%97%B4%E5%9C%A82023%E5%B9%B41%E6%9C%881%E6%97%A5%EF%BC%88%E5%90%AB%EF%BC%89%E5%90%8E%EF%BC%8C%E6%9C%89%E9%93%B6%E8%A1%8C%E5%8D%A1%E4%BF%A1%E6%81%AF%E7%9A%84%E4%BC%9A%E5%91%98%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F%EF%BC%88%E5%A1%AB%E5%86%99%E4%BC%9A%E5%91%98%E8%B4%A6%E5%8F%B7%E5%8F%8A%E5%85%B6%E5%AF%B9%E5%BA%94%E7%9A%84%E5%8D%A1%E5%8F%B7%E5%92%8C%E5%BC%80%E5%8D%A1%E8%A1%8C%EF%BC%89%EF%BC%883%E5%88%86%EF%BC%89"><span class="toc-list-text">（3）结合第（1）问和第（2）问的结果，请问返点金额在3万元及以上、直接发展下级会员数量在5人及以上且最后登录时间在2023年1月1日（含）后，有银行卡信息的会员有哪些？（填写会员账号及其对应的卡号和开卡行）（3分）</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#26"><span class="toc-list-text">26</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%EF%BC%881%EF%BC%89%E8%AF%B7%E5%88%86%E6%9E%90%E5%9C%A82020%E5%B9%B46%E6%9C%8827%E6%97%A5%EF%BC%88%E5%90%AB%EF%BC%89%E8%87%B32020%E5%B9%B47%E6%9C%8827%E6%97%A5%EF%BC%88%E5%90%AB%EF%BC%89%E6%9C%9F%E9%97%B4%EF%BC%8C%E4%B8%8E%E9%AB%98%E6%9F%90%E9%9C%9E%E5%85%A5%E4%BD%8F%E8%BF%87%E5%90%8C%E4%B8%80%E5%AE%B6%E9%85%92%E5%BA%97%E4%B8%94%E5%85%A5%E4%BD%8F%E6%97%B6%E9%97%B4%E9%97%B4%E9%9A%94%E5%9C%A83%E5%A4%A9%E4%BB%A5%E5%86%85%EF%BC%88%E5%90%AB3%E5%A4%A9%EF%BC%89%E7%9A%84%E4%BA%BA%E5%91%98%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F%EF%BC%88%E5%A1%AB%E5%86%99%E8%BA%AB%E4%BB%BD%E8%AF%81%E5%8F%B7%E5%92%8C%E5%A7%93%E5%90%8D%EF%BC%89%EF%BC%885%E5%88%86%EF%BC%89"><span class="toc-list-text">（1）请分析在2020年6月27日（含）至2020年7月27日（含）期间，与高某霞入住过同一家酒店且入住时间间隔在3天以内（含3天）的人员有哪些？（填写身份证号和姓名）（5分）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%EF%BC%882%EF%BC%89%E7%8E%B0%E6%83%B3%E8%A6%81%E8%BF%9B%E4%B8%80%E6%AD%A5%E6%8C%96%E6%8E%98%E5%87%BA%E7%96%91%E4%BC%BC%E9%AB%98%E6%9F%90%E9%9C%9E%E4%BD%9C%E6%A1%88%E5%9B%A2%E4%BC%99%E7%9A%84%E5%85%B6%E4%BB%96%E6%88%90%E5%91%98%EF%BC%8C%E8%AF%B7%E7%BB%93%E5%90%88%E7%AC%AC%EF%BC%881%EF%BC%89%E9%97%AE%E4%B8%AD%E7%9A%84%E7%BB%93%E6%9E%9C%EF%BC%8C%E5%88%86%E6%9E%90%E4%B8%8E%E9%AB%98%E6%9F%90%E9%9C%9E%E5%9C%A82020%E5%B9%B46%E6%9C%8827%E6%97%A5%EF%BC%88%E5%90%AB%EF%BC%89%E8%87%B32020%E5%B9%B47%E6%9C%8827%E6%97%A5%EF%BC%88%E5%90%AB%EF%BC%89%E6%9C%89%E8%BF%87%E5%85%A5%E4%BD%8F%E5%90%8C%E4%B8%80%E5%AE%B6%E9%85%92%E5%BA%97%E4%B8%94%E5%85%A5%E4%BD%8F%E6%97%B6%E9%97%B4%E9%97%B4%E9%9A%94%E5%9C%A83%E5%A4%A9%E5%86%85%EF%BC%8C%E5%B9%B6%E4%B8%8E%E9%AB%98%E6%9F%90%E9%9C%9E%E6%9C%89%E8%BF%87%E5%90%8C%E4%B8%80%E5%A4%A9%E4%B9%98%E5%9D%90%E5%90%8C%E4%B8%80%E8%BD%A6%E5%8F%B7%E7%81%AB%E8%BD%A6%E8%AE%B0%E5%BD%95%E7%9A%84%E4%BA%BA%E5%91%98%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F%EF%BC%88%E5%A1%AB%E5%86%99%E8%BA%AB%E4%BB%BD%E8%AF%81%E5%8F%B7%E5%92%8C%E5%A7%93%E5%90%8D%EF%BC%89%EF%BC%885%E5%88%86%EF%BC%89"><span class="toc-list-text">（2）现想要进一步挖掘出疑似高某霞作案团伙的其他成员，请结合第（1）问中的结果，分析与高某霞在2020年6月27日（含）至2020年7月27日（含）有过入住同一家酒店且入住时间间隔在3天内，并与高某霞有过同一天乘坐同一车号火车记录的人员有哪些？（填写身份证号和姓名）（5分）</span></a></li></ol></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from 电子取证</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E7%BE%8E%E4%BA%9A%E6%9D%AF/%E4%B8%AA%E4%BA%BA%E8%B5%9B/">
+              <strong>个人赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%9124%E6%95%B0%E8%AF%81%E5%86%B3-%E5%9B%A2/">
+              <strong>【转载】24数证决-团</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/2024%E6%95%B0%E8%AF%81%E6%9D%AF%E5%88%9D%E8%B5%9B/">
+              <strong>2024数证杯初赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/2024%E6%95%B0%E8%AF%81%E6%9D%AF%E5%86%B3%E8%B5%9B-%E4%B8%AA%E4%BA%BA%E8%B5%9B/">
+              <strong>2024数证杯决赛-个人赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

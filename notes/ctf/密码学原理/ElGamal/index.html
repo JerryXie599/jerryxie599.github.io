@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ElGamal | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ElGamal | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/密码学原理/ElGamal/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/密码学原理/ElGamal/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+            <a class="category-chip" href="/categories/ctf/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/">密码学原理</a>
+          
+        
+      </div>
+      <h1>ElGamal</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>3 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/密码学原理/ElGamal.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <p>功利性的讲（加密解密方法）</p>
+<p>ElGamal算法是一种公钥加密算法，最早由Taher ElGamal于1985年提出。它基于离散对数问题的难解性，通常用于加密和数字签名。ElGamal加密算法在现代密码学中应用广泛，特别是在公钥加密系统中，如PGP（Pretty Good Privacy）和GnuPG（GNU Privacy Guard）等。</p>
+<blockquote>
+<h3 id="密钥生成"><a href="#密钥生成" class="headerlink" title="密钥生成"></a>密钥生成</h3><p>ElGamal算法依赖于离散对数问题，这也是它的安全性基础。密钥生成过程如下：</p>
+<ol>
+<li>选择一个素数 $ p $，以及一个生成元 $ g $（即使得 $ g $ 生成模 $ p $ 的所有剩余类群元素）。通常，$ g $ 被选择为 $ p $ 的一个生成元，这意味着任何不等于1的整数都可以表示为 $ g^k \mod p $ 的形式。</li>
+<li>选择一个私钥 $ x $，其值是一个随机数，满足 $ 1 \leq x \leq p-2 $。</li>
+<li>计算公钥 $ y $：</li>
+</ol>
+<p>$ y &#x3D; g^x \mod p $</p>
+<ol start="4">
+<li>公钥由 $ (p, g, y) $ 组成，私钥由 $ x $ 组成。</li>
+</ol>
+</blockquote>
+<h3 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h3><p>ElGamal加密过程分为两个步骤：</p>
+<ol>
+<li><strong>选择一个随机数</strong> $ k $，其中 $ k $ 是一个满足 $ 1 \leq k \leq p-2 $ 的随机整数。</li>
+<li><strong>加密消息</strong>：<br>假设我们要加密的消息是 $ m $，且该消息通过数字映射到一个整数 $ m $（满足 $ m &lt; p $）。加密过程生成两个密文分量：</li>
+</ol>
+<p>因此，加密后的密文是 $ (c_1, c_2) $，它是由两个部分组成的。</p>
+<pre><code>- $ c_1 = g^k \mod p $
+- $ c_2 = m \cdot y^k \mod p $
+</code></pre>
+<h3 id="解密"><a href="#解密" class="headerlink" title="解密"></a>解密</h3><p>解密过程利用私钥 $ x $ 来恢复原始消息 $ m $。具体步骤如下：</p>
+<ol>
+<li><strong>计算</strong>：</li>
+</ol>
+<p>$ s &#x3D; c_1^x \mod p $</p>
+<ol start="2">
+<li><strong>计算逆元</strong>：<br>计算 $ s $ 在模 $ p $ 下的逆元 $ s^{-1} $，即求解 $ s^{-1} $ 使得 $ s \cdot s^{-1} \equiv 1 \mod p $。</li>
+<li><strong>恢复消息</strong>：</li>
+</ol>
+<p>$ m &#x3D; c_2 \cdot s^{-1} \mod p $</p>
+<p>   这样，解密后的消息 $ m $ 就是原始消息。</p>
+<blockquote>
+<h3 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h3><p>ElGamal的安全性基于离散对数问题：假设给定 $ g, y, p $，没有有效的算法能够从 $ y &#x3D; g^x \mod p $ 中快速计算出 $ x $（即解离散对数问题）。因此，如果离散对数问题在大数域内是困难的，ElGamal加密算法就被认为是安全的。</p>
+<h3 id="ElGamal签名"><a href="#ElGamal签名" class="headerlink" title="ElGamal签名"></a>ElGamal签名</h3><p>除了加密，ElGamal算法还可以用于数字签名，具体如下：</p>
+<ol>
+<li><strong>密钥生成</strong>：与加密时一样，选择一个素数 $ p $、生成元 $ g $ 和私钥 $ x $，公钥为 $ y &#x3D; g^x \mod p $。</li>
+<li><strong>签名过程</strong>：</li>
+</ol>
+<p>签名 $ (r, s) $ 是由两个数值组成的。</p>
+<pre><code>- 选择一个随机数 $ k $，其值是 $ 1 \leq k \leq p-2 $。
+- 计算 $ r = g^k \mod p $。
+- 计算 $ s = k^{-1} \cdot (H(m) - x \cdot r) \mod (p-1) $，其中 $ H(m) $ 是消息 $ m $ 的哈希值。
+</code></pre>
+<ol start="3">
+<li><strong>验证签名</strong>：使用公钥 $ y $ 来验证签名的有效性。给定签名 $ (r, s) $，首先计算：</li>
+</ol>
+<p>如果 $ v_1 \equiv v_2 \mod p $，则签名有效。</p>
+<pre><code>- $ v_1 = g^{H(m)} \mod p $
+- $ v_2 = y^r \cdot r^s \mod p $
+</code></pre>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><p><strong>优点</strong>：</p>
+<ul>
+<li>基于离散对数问题，广泛被认为是安全的。</li>
+<li>支持密文的随机性，因此每次加密相同的消息时会得到不同的密文，提高了安全性。</li>
+<li>提供了数字签名功能。</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>与RSA相比，ElGamal加密的密文较大。因为密文包括两个数值 $ c_1 $ 和 $ c_2 $，所以其长度是RSA密文长度的两倍。</li>
+<li>加密过程比RSA稍微慢一些，因为需要进行多次模运算。</li>
+</ul>
+<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><p>ElGamal算法广泛应用于加密和数字签名领域，尤其是在那些要求安全性较高的应用中，如PGP和其他基于公钥加密的系统。由于其基于离散对数的安全性，它也经常作为密码学研究中的一个基础算法。</p>
+</blockquote>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%AF%86%E9%92%A5%E7%94%9F%E6%88%90"><span class="toc-list-text">密钥生成</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%8A%A0%E5%AF%86"><span class="toc-list-text">加密</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E8%A7%A3%E5%AF%86"><span class="toc-list-text">解密</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7"><span class="toc-list-text">安全性</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#ElGamal%E7%AD%BE%E5%90%8D"><span class="toc-list-text">ElGamal签名</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-list-text">优缺点</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%BA%94%E7%94%A8"><span class="toc-list-text">应用</span></a></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

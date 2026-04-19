@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>流量包战法 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="流量包战法 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/电子取证/流量包专题/流量包战法/">
+  <link rel="canonical" href="https://jerryxie.top/notes/电子取证/流量包专题/流量包战法/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/">电子取证</a>
+          
+            <a class="category-chip" href="/categories/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%B5%81%E9%87%8F%E5%8C%85%E4%B8%93%E9%A2%98/">流量包专题</a>
+          
+        
+      </div>
+      <h1>流量包战法</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>6 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>电子取证/流量包专题/流量包战法.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <h1 id="1-高频使用的-Wireshark-过滤语句"><a href="#1-高频使用的-Wireshark-过滤语句" class="headerlink" title="1.高频使用的 Wireshark 过滤语句"></a><strong>1.高频使用的 Wireshark 过滤语句</strong></h1><p>以下是流量取证分析中<strong>高频使用的 Wireshark 过滤语句</strong>，按取证场景分类：</p>
+<h3 id="一、（tcp）基础协议与连接分析"><a href="#一、（tcp）基础协议与连接分析" class="headerlink" title="一、（tcp）基础协议与连接分析"></a><strong>一、（tcp）基础协议与连接分析</strong></h3><figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 过滤特定IP的所有流量（双向）</span></span><br><span class="line">ip.addr == 192.168.1.100</span><br><span class="line"></span><br><span class="line"><span class="comment"># 过滤特定端口（源或目的）</span></span><br><span class="line">tcp.port == 80</span><br><span class="line">udp.port == 53</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看TCP三次握手（SYN包）</span></span><br><span class="line">tcp.flags.syn == 1 &amp;&amp; tcp.flags.ack == 0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看TCP四次挥手（FIN包）</span></span><br><span class="line">tcp.flags.fin == 1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看被RST强制终止的连接（异常断连）</span></span><br><span class="line">tcp.flags.reset == 1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看TCP重传包（网络质量或攻击痕迹）</span></span><br><span class="line">tcp.analysis.retransmission</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看TCP慢连接攻击（长时间不发送FIN/ACK）</span></span><br><span class="line">tcp.flags.ack == 1 &amp;&amp; tcp.len == 0 &amp;&amp; tcp.window_size == 0</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="二、（http）HTTP-Web取证"><a href="#二、（http）HTTP-Web取证" class="headerlink" title="二、（http）HTTP Web取证"></a><strong>二、（http）HTTP Web取证</strong></h3><figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 过滤所有HTTP GET请求</span></span><br><span class="line">http.request.method == <span class="string">&quot;GET&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 过滤POST请求（常用于数据泄露、webshell上传）</span></span><br><span class="line">http.request.method == <span class="string">&quot;POST&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 过滤特定状态码（如404扫描、500错误）</span></span><br><span class="line">http.response.code == 404</span><br><span class="line">http.response.code != 404</span><br><span class="line">http.response.code &gt;= 500</span><br><span class="line"></span><br><span class="line"><span class="comment"># 过滤包含恶意关键词的URL</span></span><br><span class="line">http.request.uri contains <span class="string">&quot;cmd&quot;</span></span><br><span class="line">http.request.uri contains <span class="string">&quot;../../../../&quot;</span></span><br><span class="line">http.request.uri contains <span class="string">&quot;/dbadmin/test_db.php&quot;</span></span><br><span class="line"><span class="comment"># 过滤可疑User-Agent（扫描器、脚本）</span></span><br><span class="line">http.user_agent contains <span class="string">&quot;sqlmap&quot;</span></span><br><span class="line">http.user_agent contains <span class="string">&quot;nmap&quot;</span></span><br><span class="line">http.user_agent contains <span class="string">&quot;python-requests&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 过滤大文件下载（数据泄露嫌疑）</span></span><br><span class="line">http.content_length &gt; 10000000  <span class="comment"># 10MB以上</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 过滤webshell特征</span></span><br><span class="line">http.request.uri contains <span class="string">&quot;.php?&quot;</span> &amp;&amp; http.request.method == <span class="string">&quot;POST&quot;</span></span><br><span class="line"></span><br><span class="line">url路径包含</span><br><span class="line">http.request.uri.path==<span class="string">&quot;/dbadmin/test_db.php&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="三、（dns）DNS-隧道与异常检测"><a href="#三、（dns）DNS-隧道与异常检测" class="headerlink" title="三、（dns）DNS 隧道与异常检测"></a><strong>三、（dns）DNS 隧道与异常检测</strong></h3><figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 超长域名查询（DNS隧道典型特征）</span></span><br><span class="line">dns.qry.name.len &gt; 50</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看TXT记录查询（常用于隧道）</span></span><br><span class="line">dns.qry.type == 16  <span class="comment"># TXT记录</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 短时间内大量DNS查询（数据外带或DGA）</span></span><br><span class="line">dns &amp;&amp; ip.addr == 192.168.1.100</span><br><span class="line"></span><br><span class="line"><span class="comment"># 过滤NXDOMAIN响应（域名生成算法DGA）</span></span><br><span class="line">dns.flags.rcode == 3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看DNS服务器响应数据（可疑大量数据）</span></span><br><span class="line">dns.resp.len &gt; 200</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="四、恶意流量与攻击痕迹"><a href="#四、恶意流量与攻击痕迹" class="headerlink" title="四、恶意流量与攻击痕迹"></a><strong>四、恶意流量与攻击痕迹</strong></h3><figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SYN泛洪攻击（大量SYN无ACK）</span></span><br><span class="line">tcp.flags.syn == 1 &amp;&amp; tcp.flags.ack == 0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 扫描行为（TCP连接失败+RST）</span></span><br><span class="line">tcp.flags.syn == 1 &amp;&amp; tcp.flags.ack == 0 &amp;&amp; tcp.analysis.retransmission</span><br><span class="line"></span><br><span class="line"><span class="comment"># SMB勒索病毒传播（永恒之蓝利用）</span></span><br><span class="line">smb.cmd == 0x25  <span class="comment"># Trans2请求</span></span><br><span class="line">smb2.cmd == 9    <span class="comment"># SMBv2 Write请求</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 暴力破解（高频登录失败）</span></span><br><span class="line">tcp.port == 22 &amp;&amp; tcp.flags.syn == 1  <span class="comment"># SSH爆破</span></span><br><span class="line">tcp.port == 3389 &amp;&amp; tcp.flags.syn == 1  <span class="comment"># RDP爆破</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 可疑ICMP隧道（大数据包ICMP）</span></span><br><span class="line">icmp &amp;&amp; data.len &gt; 64</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="五、文件传输检测"><a href="#五、文件传输检测" class="headerlink" title="五、文件传输检测"></a><strong>五、文件传输检测</strong></h3><figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># FTP文件传输（明文账号密码）</span></span><br><span class="line">ftp.request.command == <span class="string">&quot;USER&quot;</span> or ftp.request.command == <span class="string">&quot;PASS&quot;</span></span><br><span class="line">ftp-data  <span class="comment"># 查看实际传输的文件内容</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># SMB文件共享操作</span></span><br><span class="line">smb.cmd == 0x2b  <span class="comment"># 写文件</span></span><br><span class="line">smb.file_name contains <span class="string">&quot;.exe&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 邮件附件（木马传播）</span></span><br><span class="line">smtp.data.fragment contains <span class="string">&quot;Content-Disposition: attachment&quot;</span></span><br><span class="line">smtp.data.fragment contains <span class="string">&quot;.exe&quot;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="六、（ip源和目的地）高级组合过滤"><a href="#六、（ip源和目的地）高级组合过滤" class="headerlink" title="六、（ip源和目的地）高级组合过滤"></a><strong>六、（ip源和目的地）高级组合过滤</strong></h3><figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 外连行为（内网IP连接外网IP）</span></span><br><span class="line">ip.src == 10.0.0.0/8 &amp;&amp; ip.dst != 10.0.0.0/8</span><br><span class="line"></span><br><span class="line"><span class="comment"># 横向移动（内网主机之间非标准端口）</span></span><br><span class="line">ip.src == 192.168.1.0/24 &amp;&amp; ip.dst == 192.168.1.0/24 &amp;&amp; tcp.port &gt; 10000</span><br><span class="line"></span><br><span class="line"><span class="comment"># 大数据外带（非工作时间上传）</span></span><br><span class="line">ip.src == 192.168.1.100 &amp;&amp; frame.len &gt; 10000 &amp;&amp; (hour == 2 || hour == 3)</span><br><span class="line"></span><br><span class="line"><span class="comment"># C2心跳包（固定间隔小数据包）</span></span><br><span class="line">tcp.flags.push == 1 &amp;&amp; tcp.len &lt; 100 &amp;&amp; ip.addr == 192.168.1.100</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="七、快捷统计技巧"><a href="#七、快捷统计技巧" class="headerlink" title="七、快捷统计技巧"></a><strong>七、快捷统计技巧</strong></h3><figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 统计会话频率（IO Graphs配合）</span></span><br><span class="line">ip.addr == 192.168.1.100 &amp;&amp; tcp.port == 80</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看HTTP请求来源（统计User-Agent）</span></span><br><span class="line">右键 → 应用为列 → http.user_agent</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导出特定过滤结果</span></span><br><span class="line">文件 → 导出特定分组 → 显示分组</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="2-追踪流：http流和tcp流"><a href="#2-追踪流：http流和tcp流" class="headerlink" title="2.追踪流：http流和tcp流"></a>2.追踪流：http流和tcp流</h1><p>在电子取证流量分析中，追踪TCP流和HTTP流是两种互补但应用场景不同的技术。以下是它们的追踪场景和选择原则：</p>
+<hr>
+<h3 id="一、追踪HTTP流的适用场景"><a href="#一、追踪HTTP流的适用场景" class="headerlink" title="一、追踪HTTP流的适用场景"></a><strong>一、追踪HTTP流的适用场景</strong></h3><p>HTTP流追踪专注于<strong>应用层HTTP协议细节</strong>，适合分析Web应用层攻击和数据：</p>
+<ol>
+<li><strong>Web应用攻击分析</strong><ul>
+<li>SQL注入、XSS攻击：通过<code>http contains</code>筛选恶意payload</li>
+<li>后台暴破：追踪登录请求&#x2F;响应流，查看用户名密码（如搜索结果9中筛选<code>/admin/login.php</code>）</li>
+<li>一句话木马：识别POST请求中的<code>eval</code>、<code>base64</code>等特征</li>
+</ul>
+</li>
+<li><strong>HTTP传输文件提取</strong><ul>
+<li>直接导出HTTP对象：<code>File &gt; Export Objects &gt; HTTP...</code>提取恶意样本、WebShell、被盗文件</li>
+<li>分析文件名、MD5&#x2F;SHA1哈希值等元数据</li>
+</ul>
+</li>
+<li><strong>协议规范分析</strong><ul>
+<li>查看完整的HTTP请求头、响应码（如302跳转）、Cookie、User-Agent</li>
+<li>分析RESTful API调用、AJAX请求</li>
+</ul>
+</li>
+<li><strong>快速定位Web行为</strong><ul>
+<li>按URL、请求方法（GET&#x2F;POST）过滤后追踪流，直观查看交互内容</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="二、追踪TCP流的适用场景"><a href="#二、追踪TCP流的适用场景" class="headerlink" title="二、追踪TCP流的适用场景"></a><strong>二、追踪TCP流的适用场景</strong></h3><p>TCP流追踪提供<strong>传输层会话的原始字节流</strong>，适合需要查看底层数据的深度分析：</p>
+<ol>
+<li><strong>命令执行与交互分析</strong><ul>
+<li>通过WebShell执行的系统命令：如搜索结果9中追踪TCP流解码<code>ifconfig</code>命令</li>
+<li>交互式会话：Telnet、SSH、数据库查询、C&amp;C通信的明文内容</li>
+</ul>
+</li>
+<li><strong>非标准或隧道通信</strong><ul>
+<li>非标准端口的HTTP服务</li>
+<li>HTTP隧道、端口转发等隐蔽通信</li>
+</ul>
+</li>
+<li><strong>文件重组与提取</strong><ul>
+<li>当HTTP对象提取失败时，手动追踪TCP流保存原始数据（如搜索结果12中保存为rar文件）</li>
+<li>分析文件签名（Magic Number）恢复被截断的文件</li>
+</ul>
+</li>
+<li><strong>加密流量分析</strong><ul>
+<li>HTTPS流量：TCP流显示TLS握手和加密数据，可分析证书、加密套件（搜索结果2）</li>
+<li>识别心跳包、连接保持等TCP层行为</li>
+</ul>
+</li>
+<li><strong>协议异常检测</strong><ul>
+<li>查看TCP序列号、重传、窗口大小异常</li>
+<li>发现协议混淆或伪装（如HTTP协议运行在非80端口）</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p><strong>三、实战选择原则</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>场景特征</strong></th>
+<th><strong>推荐追踪方式</strong></th>
+<th><strong>原因</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>分析登录暴破、SQL注入等Web攻击</td>
+<td><strong>先HTTP后TCP</strong></td>
+<td>HTTP流快速定位，TCP流查看完整POST数据</td>
+</tr>
+<tr>
+<td>提取上传的WebShell或恶意文件</td>
+<td><strong>HTTP对象导出 → TCP流验证</strong></td>
+<td>HTTP流提取文件，TCP流确认传输内容</td>
+</tr>
+<tr>
+<td>查看通过WebShell执行的系统命令</td>
+<td><strong>TCP流</strong></td>
+<td>命令数据在HTTP POST参数中，需TCP流解码</td>
+</tr>
+<tr>
+<td>HTTPS加密通信</td>
+<td><strong>TCP流</strong></td>
+<td>HTTP流无法解密，TCP流可分析TLS握手</td>
+</tr>
+<tr>
+<td>非标准端口服务</td>
+<td><strong>TCP流</strong></td>
+<td>HTTP协议解析可能失败，TCP流显示原始数据</td>
+</tr>
+<tr>
+<td>需要保存二进制文件（rar&#x2F;jpg）</td>
+<td><strong>TCP流</strong></td>
+<td>可导出原始字节，避免编码问题</td>
+</tr>
+</tbody></table>
+<hr>
+<p>选择依据核心在于——<strong>HTTP流关注”应用层说了什么”，TCP流关注”底层实际传输了什么”</strong>。在电子取证中，两者结合才能完整还原攻击行为。</p>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#1-%E9%AB%98%E9%A2%91%E4%BD%BF%E7%94%A8%E7%9A%84-Wireshark-%E8%BF%87%E6%BB%A4%E8%AF%AD%E5%8F%A5"><span class="toc-list-text">1.高频使用的 Wireshark 过滤语句</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E4%B8%80%E3%80%81%EF%BC%88tcp%EF%BC%89%E5%9F%BA%E7%A1%80%E5%8D%8F%E8%AE%AE%E4%B8%8E%E8%BF%9E%E6%8E%A5%E5%88%86%E6%9E%90"><span class="toc-list-text">一、（tcp）基础协议与连接分析</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E4%BA%8C%E3%80%81%EF%BC%88http%EF%BC%89HTTP-Web%E5%8F%96%E8%AF%81"><span class="toc-list-text">二、（http）HTTP Web取证</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E4%B8%89%E3%80%81%EF%BC%88dns%EF%BC%89DNS-%E9%9A%A7%E9%81%93%E4%B8%8E%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B"><span class="toc-list-text">三、（dns）DNS 隧道与异常检测</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%9B%9B%E3%80%81%E6%81%B6%E6%84%8F%E6%B5%81%E9%87%8F%E4%B8%8E%E6%94%BB%E5%87%BB%E7%97%95%E8%BF%B9"><span class="toc-list-text">四、恶意流量与攻击痕迹</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E4%BA%94%E3%80%81%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E6%A3%80%E6%B5%8B"><span class="toc-list-text">五、文件传输检测</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%85%AD%E3%80%81%EF%BC%88ip%E6%BA%90%E5%92%8C%E7%9B%AE%E7%9A%84%E5%9C%B0%EF%BC%89%E9%AB%98%E7%BA%A7%E7%BB%84%E5%90%88%E8%BF%87%E6%BB%A4"><span class="toc-list-text">六、（ip源和目的地）高级组合过滤</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E4%B8%83%E3%80%81%E5%BF%AB%E6%8D%B7%E7%BB%9F%E8%AE%A1%E6%8A%80%E5%B7%A7"><span class="toc-list-text">七、快捷统计技巧</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#2-%E8%BF%BD%E8%B8%AA%E6%B5%81%EF%BC%9Ahttp%E6%B5%81%E5%92%8Ctcp%E6%B5%81"><span class="toc-list-text">2.追踪流：http流和tcp流</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E4%B8%80%E3%80%81%E8%BF%BD%E8%B8%AAHTTP%E6%B5%81%E7%9A%84%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-list-text">一、追踪HTTP流的适用场景</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E4%BA%8C%E3%80%81%E8%BF%BD%E8%B8%AATCP%E6%B5%81%E7%9A%84%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-list-text">二、追踪TCP流的适用场景</span></a></li></ol></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from 电子取证</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E7%BE%8E%E4%BA%9A%E6%9D%AF/%E4%B8%AA%E4%BA%BA%E8%B5%9B/">
+              <strong>个人赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%9124%E6%95%B0%E8%AF%81%E5%86%B3-%E5%9B%A2/">
+              <strong>【转载】24数证决-团</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/2024%E6%95%B0%E8%AF%81%E6%9D%AF%E5%88%9D%E8%B5%9B/">
+              <strong>2024数证杯初赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/2024%E6%95%B0%E8%AF%81%E6%9D%AF%E5%86%B3%E8%B5%9B-%E4%B8%AA%E4%BA%BA%E8%B5%9B/">
+              <strong>2024数证杯决赛-个人赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

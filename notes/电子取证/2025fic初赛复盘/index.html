@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2025fic初赛复盘 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2025fic初赛复盘 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/电子取证/2025fic初赛复盘/">
+  <link rel="canonical" href="https://jerryxie.top/notes/电子取证/2025fic初赛复盘/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/">电子取证</a>
+          
+        
+      </div>
+      <h1>2025fic初赛复盘</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>3 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>电子取证/2025fic初赛复盘.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <p>对的题目我就不多写了，有就只写困难和错的部分。</p>
+<h1 id="1-第三部分介质取证"><a href="#1-第三部分介质取证" class="headerlink" title="1.第三部分介质取证"></a>1.<strong>第三部分介质取证</strong></h1><h2 id="2-请分析检材三，请分析”电脑”检材，并回答，嫌疑人的备用机号码是多少？"><a href="#2-请分析检材三，请分析”电脑”检材，并回答，嫌疑人的备用机号码是多少？" class="headerlink" title="2. 请分析检材三，请分析”电脑”检材，并回答，嫌疑人的备用机号码是多少？"></a><strong>2. 请分析检材三，请分析”电脑”检材，并回答，嫌疑人的备用机号码是多少？</strong></h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1745924655267-3bf29176-7514-4a50-8cd1-21f5083c40d4.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>这道题我是没啥思路的，一开始也被问的云里雾里的，所以就没管，后面看别人的wp之后才发现是便签贴有问题，不能完全相信于火眼里面的东西。。。</p>
+<h2 id="3-请分析检材三，请分析”电脑”检材，并回答，域名dgy02-com曾保存过一个密码，该密码是多少？"><a href="#3-请分析检材三，请分析”电脑”检材，并回答，域名dgy02-com曾保存过一个密码，该密码是多少？" class="headerlink" title="3. 请分析检材三，请分析”电脑”检材，并回答，域名dgy02.com曾保存过一个密码，该密码是多少？"></a><strong>3. 请分析检材三，请分析”电脑”检材，并回答，域名dgy02.com曾保存过一个密码，该密码是多少？</strong><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1745925165512-7706a2f8-3432-479d-b126-792dc575cec4.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></h2><p>这里的密码是手机取证部分得出来的1qaz2wsx3edc，输入之后类似于进入了某一个账户状态下的chrome，这样才能在密码部分看到密码。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1745925156787-ebde5894-9a9a-4dbb-9f4f-989cea537ca5.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>这个东西就是吃了点亏，我没有看任何题目的背景就开始做，导致说我没有把几个检材的东西联系起来，所以在这道题卡了很久，当时的思路是找到存储chrome密码的表login data，但是这里面的密码部分是加密的，所以要找东西来解密，后来又查到Local State里面有密钥，所以还需要用Python去解密反正来来回回兜了几圈没解出来。教训是要联系上下文！</p>
+<h2 id="8-请分析检材三，请分析”电脑”检材，并回答，某文件的MD5值为“2bdfcdbd6c63efc094ac154a28968b7d”，该文件名为"><a href="#8-请分析检材三，请分析”电脑”检材，并回答，某文件的MD5值为“2bdfcdbd6c63efc094ac154a28968b7d”，该文件名为" class="headerlink" title="8. 请分析检材三，请分析”电脑”检材，并回答，某文件的MD5值为“2bdfcdbd6c63efc094ac154a28968b7d”，该文件名为"></a><strong>8. 请分析检材三，请分析”电脑”检材，并回答，某文件的MD5值为“2bdfcdbd6c63efc094ac154a28968b7d”，该文件名为</strong></h2><p>其实这个道题如果看仔细点的话应该直接能找到是那个important.docx，但是我没找到</p>
+<p>看了其中一个wp是用xway forensics软件算每个分区的md5值之后再到每个分区进行筛选，最后查到这个文件<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1745927882583-97bfb4c2-6a80-4569-82da-a8ddd866c50b.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h2 id="9-请分析检材三，请分析”电脑”检材，据调查，上述文件存放了钱包助记词，第一个单词是什么？"><a href="#9-请分析检材三，请分析”电脑”检材，据调查，上述文件存放了钱包助记词，第一个单词是什么？" class="headerlink" title="9. 请分析检材三，请分析”电脑”检材，据调查，上述文件存放了钱包助记词，第一个单词是什么？"></a><strong>9. 请分析检材三，请分析”电脑”检材，据调查，上述文件存放了钱包助记词，第一个单词是什么？</strong></h2><p>这个important文件打开发现就几个字 当时比赛我看这个文档的大小也不大所以也没深想这里面还会有文件，通过自建一个word输入同样的内容之后发现大小不一样，而且差得多，所以有问题</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1745928320588-28363603-c83c-4d8b-8bd3-148eff240307.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>通过winhex看，ai分析说这是<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1745928560872-ebaa397b-935a-441a-a09f-7ef71cdf4bed.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>.docx文件的ZIP封装头，于是改后缀、找文件，解压如下：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1745928916442-63b60892-716a-46bd-9cb6-6cab1fbb7b02.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>后发现微信把其中一个.xml文件自动转成图片了（其实用winhex一个个看也可以），发现了助记词</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1745928904590-0aded6b5-d75f-4483-aa25-dbc0fb7e9684.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h2 id="15-请分析检材三（“我的测试机”）中的音频内容，并回答，嫌疑人银行密码是多少？"><a href="#15-请分析检材三（“我的测试机”）中的音频内容，并回答，嫌疑人银行密码是多少？" class="headerlink" title="15. 请分析检材三（“我的测试机”）中的音频内容，并回答，嫌疑人银行密码是多少？"></a><strong>15. 请分析检材三（“我的测试机”）中的音频内容，并回答，嫌疑人银行密码是多少？</strong></h2><p>解题思路是每一段音频的第一个字组成的藏头<br> 07145924</p>
+<h1 id="2-第四部分互联网取证"><a href="#2-第四部分互联网取证" class="headerlink" title="2.第四部分互联网取证"></a>2.<strong>第四部分互联网取证</strong></h1><h2 id="1-请分析检材二，找到李某上游人员陈某博客宣传所用域名为"><a href="#1-请分析检材二，找到李某上游人员陈某博客宣传所用域名为" class="headerlink" title="1. 请分析检材二，找到李某上游人员陈某博客宣传所用域名为"></a><strong>1. 请分析检材二，找到李某上游人员陈某博客宣传所用域名为</strong></h2><p>chen.foren6</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1746244259623-2d7db26c-0a65-4792-beb8-a20943ebadb0.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h2 id="2-请分析陈某宣传所用域名，该域名的顶级域名在以下那个区块链注册？"><a href="#2-请分析陈某宣传所用域名，该域名的顶级域名在以下那个区块链注册？" class="headerlink" title="2. 请分析陈某宣传所用域名，该域名的顶级域名在以下那个区块链注册？"></a><strong>2. 请分析陈某宣传所用域名，该域名的顶级域名在以下那个区块链注册？</strong></h2><p>A. ETH（<a target="_blank" rel="noopener" href="https://ens.domains/%EF%BC%89">https://ens.domains/）</a></p>
+<p>B. HNS（<a target="_blank" rel="noopener" href="https://handshake.org/%EF%BC%89">https://handshake.org/）</a></p>
+<p>C. BTC（<a target="_blank" rel="noopener" href="https://bitcoin.org/%EF%BC%89">https://bitcoin.org/）</a></p>
+<p>D. Namecoin（<a target="_blank" rel="noopener" href="https://www.namecoin.org/%EF%BC%89">https://www.namecoin.org/）</a></p>
+<p>A. ETH（ENS）：ENS（Ethereum Name Service）的顶级域名为 <code>.eth</code>（如 <code>myname.eth</code>）。题目中域名的顶级域为 <code>foren6</code>，与 <code>.eth</code> 无关，因此排除。</p>
+<p><strong>B. HNS（Handshake）：Handshake 是一个去中心化的命名协议，允许用户通过拍卖注册自定义的顶级域名（如 <strong><code>**.example**</code></strong>）。若 <strong><code>**foren6**</code></strong> 是 Handshake 上的顶级域名，则其注册需通过 HNS 链。</strong></p>
+<p>C. BTC（比特币）：比特币本身不涉及域名服务，仅作为点对点货币系统，因此排除。</p>
+<p>D. Namecoin：Namecoin 支持 <code>.bit</code> 顶级域名（如 <code>myname.bit</code>），但题目中域名的顶级域为 <code>foren6</code>，非 <code>.bit</code>，因此排除。</p>
+<h2 id="3-请分析陈某宣传所用域名的顶级域名的域名解析服务器（DNS）共有几个"><a href="#3-请分析陈某宣传所用域名的顶级域名的域名解析服务器（DNS）共有几个" class="headerlink" title="3. 请分析陈某宣传所用域名的顶级域名的域名解析服务器（DNS）共有几个"></a><strong>3. 请分析陈某宣传所用域名的顶级域名的域名解析服务器（DNS）共有几个</strong></h2><p> <img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1746620852974-058f8786-09c7-4c13-b76d-be45b39fdefc.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"><br>查到有2个</p>
+<h2 id="4-请分析陈某宣传所用域名的顶级域名的NS1服务器ip为"><a href="#4-请分析陈某宣传所用域名的顶级域名的NS1服务器ip为" class="headerlink" title="4. 请分析陈某宣传所用域名的顶级域名的NS1服务器ip为"></a>4. 请分析陈某宣传所用域名的顶级域名的NS1服务器ip为</h2><p>查询.varo后发现其ip</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1746701540961-ff526739-38d1-4b0b-af35-8b75a6f79eac.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><strong>45.79.133.98</strong></p>
+<h2 id="5-请分析陈某宣传所用域名，该域名DNS记录指向邮件服务器域名为"><a href="#5-请分析陈某宣传所用域名，该域名DNS记录指向邮件服务器域名为" class="headerlink" title="5. 请分析陈某宣传所用域名，该域名DNS记录指向邮件服务器域名为"></a><strong>5. 请分析陈某宣传所用域名，该域名DNS记录指向邮件服务器域名为</strong></h2><p>用ai查到操作如下</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1746702174020-a834f0fc-3d96-4f9a-b89c-5da00fcb6640.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1746702131539-a863dca9-8e8d-44b2-814e-64d8de16c4ea.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>mail.163.com</p>
+<h2 id="6-请分析陈某宣传所用域名，该域名的txt记录中chen的值为"><a href="#6-请分析陈某宣传所用域名，该域名的txt记录中chen的值为" class="headerlink" title="6. 请分析陈某宣传所用域名，该域名的txt记录中chen的值为"></a><strong>6. 请分析陈某宣传所用域名，该域名的txt记录中chen的值为</strong></h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1746703069779-3f00d6e8-aded-4f8a-b701-5e0d1c6e9dcd.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>fengbaoliejiu</p>
+<h2 id="7-请分析陈某宣传所用域名，该域名DNS记录没有以下那个域名"><a href="#7-请分析陈某宣传所用域名，该域名DNS记录没有以下那个域名" class="headerlink" title="7. 请分析陈某宣传所用域名，该域名DNS记录没有以下那个域名"></a><strong>7. 请分析陈某宣传所用域名，该域名DNS记录没有以下那个域名</strong></h2><p><strong>A. admin.chen.foren6</strong></p>
+<p><strong>B. caidan.chen.foren6</strong></p>
+<p><strong>C. fichen.foren6</strong></p>
+<p><strong>D. hl.chen.foren6</strong></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1746703900264-4c6c14fd-4c36-42dc-bd11-91740ca28bec.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>每一个域名查找一遍发现只有d没查到</p>
+<h2 id="8-请分析陈某宣传所用域名，该博客域名最终DNS解析指向的github仓库名为"><a href="#8-请分析陈某宣传所用域名，该博客域名最终DNS解析指向的github仓库名为" class="headerlink" title="8. 请分析陈某宣传所用域名，该博客域名最终DNS解析指向的github仓库名为"></a><strong>8. 请分析陈某宣传所用域名，该博客域名最终DNS解析指向的github仓库名为</strong></h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1747047707625-21fc001a-990a-4a41-90c2-9ad1292b5cbb.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>找了外援之后发现是要把电脑的dns设置成该区块链顶级域名的dns<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1747047752570-c093d2b5-5127-4566-bf11-237e30494f64.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>之后发现访问chen.foren6之后会直接跳转到blog.chen.foren6</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1747048338084-30a98ce7-34ea-4a43-8860-7c94828e5fef.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>顺便查了一下啥是dig</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1747048705730-2f31fa61-77a0-458a-a42e-1ae0fd39721c.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>得出答案：chewhaoN.github.io</p>
+<h2 id="9-请分析陈某github账号，陈某对jkroepke-2Moons项目增改了几个文件"><a href="#9-请分析陈某github账号，陈某对jkroepke-2Moons项目增改了几个文件" class="headerlink" title="9. 请分析陈某github账号，陈某对jkroepke&#x2F;2Moons项目增改了几个文件"></a><strong>9. 请分析陈某github账号，陈某对jkroepke&#x2F;2Moons项目增改了几个文件</strong><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1747052018689-30da7436-ea61-429b-8dab-fdcf1dbf8505.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></h2><p>原本的仓库🈚️了，用这个网站做的，<a target="_blank" rel="noopener" href="http://forensix2025.work.gd/">http://forensix2025.work.gd</a></p>
+<p>主办方把这些网站和github 的东西都删掉了 做不了了</p>
+<p>。。。</p>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#1-%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86%E4%BB%8B%E8%B4%A8%E5%8F%96%E8%AF%81"><span class="toc-list-text">1.第三部分介质取证</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-%E8%AF%B7%E5%88%86%E6%9E%90%E6%A3%80%E6%9D%90%E4%B8%89%EF%BC%8C%E8%AF%B7%E5%88%86%E6%9E%90%E2%80%9D%E7%94%B5%E8%84%91%E2%80%9D%E6%A3%80%E6%9D%90%EF%BC%8C%E5%B9%B6%E5%9B%9E%E7%AD%94%EF%BC%8C%E5%AB%8C%E7%96%91%E4%BA%BA%E7%9A%84%E5%A4%87%E7%94%A8%E6%9C%BA%E5%8F%B7%E7%A0%81%E6%98%AF%E5%A4%9A%E5%B0%91%EF%BC%9F"><span class="toc-list-text">2. 请分析检材三，请分析”电脑”检材，并回答，嫌疑人的备用机号码是多少？</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-%E8%AF%B7%E5%88%86%E6%9E%90%E6%A3%80%E6%9D%90%E4%B8%89%EF%BC%8C%E8%AF%B7%E5%88%86%E6%9E%90%E2%80%9D%E7%94%B5%E8%84%91%E2%80%9D%E6%A3%80%E6%9D%90%EF%BC%8C%E5%B9%B6%E5%9B%9E%E7%AD%94%EF%BC%8C%E5%9F%9F%E5%90%8Ddgy02-com%E6%9B%BE%E4%BF%9D%E5%AD%98%E8%BF%87%E4%B8%80%E4%B8%AA%E5%AF%86%E7%A0%81%EF%BC%8C%E8%AF%A5%E5%AF%86%E7%A0%81%E6%98%AF%E5%A4%9A%E5%B0%91%EF%BC%9F"><span class="toc-list-text">3. 请分析检材三，请分析”电脑”检材，并回答，域名dgy02.com曾保存过一个密码，该密码是多少？</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#8-%E8%AF%B7%E5%88%86%E6%9E%90%E6%A3%80%E6%9D%90%E4%B8%89%EF%BC%8C%E8%AF%B7%E5%88%86%E6%9E%90%E2%80%9D%E7%94%B5%E8%84%91%E2%80%9D%E6%A3%80%E6%9D%90%EF%BC%8C%E5%B9%B6%E5%9B%9E%E7%AD%94%EF%BC%8C%E6%9F%90%E6%96%87%E4%BB%B6%E7%9A%84MD5%E5%80%BC%E4%B8%BA%E2%80%9C2bdfcdbd6c63efc094ac154a28968b7d%E2%80%9D%EF%BC%8C%E8%AF%A5%E6%96%87%E4%BB%B6%E5%90%8D%E4%B8%BA"><span class="toc-list-text">8. 请分析检材三，请分析”电脑”检材，并回答，某文件的MD5值为“2bdfcdbd6c63efc094ac154a28968b7d”，该文件名为</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#9-%E8%AF%B7%E5%88%86%E6%9E%90%E6%A3%80%E6%9D%90%E4%B8%89%EF%BC%8C%E8%AF%B7%E5%88%86%E6%9E%90%E2%80%9D%E7%94%B5%E8%84%91%E2%80%9D%E6%A3%80%E6%9D%90%EF%BC%8C%E6%8D%AE%E8%B0%83%E6%9F%A5%EF%BC%8C%E4%B8%8A%E8%BF%B0%E6%96%87%E4%BB%B6%E5%AD%98%E6%94%BE%E4%BA%86%E9%92%B1%E5%8C%85%E5%8A%A9%E8%AE%B0%E8%AF%8D%EF%BC%8C%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%95%E8%AF%8D%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-list-text">9. 请分析检材三，请分析”电脑”检材，据调查，上述文件存放了钱包助记词，第一个单词是什么？</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#15-%E8%AF%B7%E5%88%86%E6%9E%90%E6%A3%80%E6%9D%90%E4%B8%89%EF%BC%88%E2%80%9C%E6%88%91%E7%9A%84%E6%B5%8B%E8%AF%95%E6%9C%BA%E2%80%9D%EF%BC%89%E4%B8%AD%E7%9A%84%E9%9F%B3%E9%A2%91%E5%86%85%E5%AE%B9%EF%BC%8C%E5%B9%B6%E5%9B%9E%E7%AD%94%EF%BC%8C%E5%AB%8C%E7%96%91%E4%BA%BA%E9%93%B6%E8%A1%8C%E5%AF%86%E7%A0%81%E6%98%AF%E5%A4%9A%E5%B0%91%EF%BC%9F"><span class="toc-list-text">15. 请分析检材三（“我的测试机”）中的音频内容，并回答，嫌疑人银行密码是多少？</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#2-%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%E4%BA%92%E8%81%94%E7%BD%91%E5%8F%96%E8%AF%81"><span class="toc-list-text">2.第四部分互联网取证</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E8%AF%B7%E5%88%86%E6%9E%90%E6%A3%80%E6%9D%90%E4%BA%8C%EF%BC%8C%E6%89%BE%E5%88%B0%E6%9D%8E%E6%9F%90%E4%B8%8A%E6%B8%B8%E4%BA%BA%E5%91%98%E9%99%88%E6%9F%90%E5%8D%9A%E5%AE%A2%E5%AE%A3%E4%BC%A0%E6%89%80%E7%94%A8%E5%9F%9F%E5%90%8D%E4%B8%BA"><span class="toc-list-text">1. 请分析检材二，找到李某上游人员陈某博客宣传所用域名为</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-%E8%AF%B7%E5%88%86%E6%9E%90%E9%99%88%E6%9F%90%E5%AE%A3%E4%BC%A0%E6%89%80%E7%94%A8%E5%9F%9F%E5%90%8D%EF%BC%8C%E8%AF%A5%E5%9F%9F%E5%90%8D%E7%9A%84%E9%A1%B6%E7%BA%A7%E5%9F%9F%E5%90%8D%E5%9C%A8%E4%BB%A5%E4%B8%8B%E9%82%A3%E4%B8%AA%E5%8C%BA%E5%9D%97%E9%93%BE%E6%B3%A8%E5%86%8C%EF%BC%9F"><span class="toc-list-text">2. 请分析陈某宣传所用域名，该域名的顶级域名在以下那个区块链注册？</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-%E8%AF%B7%E5%88%86%E6%9E%90%E9%99%88%E6%9F%90%E5%AE%A3%E4%BC%A0%E6%89%80%E7%94%A8%E5%9F%9F%E5%90%8D%E7%9A%84%E9%A1%B6%E7%BA%A7%E5%9F%9F%E5%90%8D%E7%9A%84%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%88DNS%EF%BC%89%E5%85%B1%E6%9C%89%E5%87%A0%E4%B8%AA"><span class="toc-list-text">3. 请分析陈某宣传所用域名的顶级域名的域名解析服务器（DNS）共有几个</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4-%E8%AF%B7%E5%88%86%E6%9E%90%E9%99%88%E6%9F%90%E5%AE%A3%E4%BC%A0%E6%89%80%E7%94%A8%E5%9F%9F%E5%90%8D%E7%9A%84%E9%A1%B6%E7%BA%A7%E5%9F%9F%E5%90%8D%E7%9A%84NS1%E6%9C%8D%E5%8A%A1%E5%99%A8ip%E4%B8%BA"><span class="toc-list-text">4. 请分析陈某宣传所用域名的顶级域名的NS1服务器ip为</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#5-%E8%AF%B7%E5%88%86%E6%9E%90%E9%99%88%E6%9F%90%E5%AE%A3%E4%BC%A0%E6%89%80%E7%94%A8%E5%9F%9F%E5%90%8D%EF%BC%8C%E8%AF%A5%E5%9F%9F%E5%90%8DDNS%E8%AE%B0%E5%BD%95%E6%8C%87%E5%90%91%E9%82%AE%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9F%9F%E5%90%8D%E4%B8%BA"><span class="toc-list-text">5. 请分析陈某宣传所用域名，该域名DNS记录指向邮件服务器域名为</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#6-%E8%AF%B7%E5%88%86%E6%9E%90%E9%99%88%E6%9F%90%E5%AE%A3%E4%BC%A0%E6%89%80%E7%94%A8%E5%9F%9F%E5%90%8D%EF%BC%8C%E8%AF%A5%E5%9F%9F%E5%90%8D%E7%9A%84txt%E8%AE%B0%E5%BD%95%E4%B8%ADchen%E7%9A%84%E5%80%BC%E4%B8%BA"><span class="toc-list-text">6. 请分析陈某宣传所用域名，该域名的txt记录中chen的值为</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#7-%E8%AF%B7%E5%88%86%E6%9E%90%E9%99%88%E6%9F%90%E5%AE%A3%E4%BC%A0%E6%89%80%E7%94%A8%E5%9F%9F%E5%90%8D%EF%BC%8C%E8%AF%A5%E5%9F%9F%E5%90%8DDNS%E8%AE%B0%E5%BD%95%E6%B2%A1%E6%9C%89%E4%BB%A5%E4%B8%8B%E9%82%A3%E4%B8%AA%E5%9F%9F%E5%90%8D"><span class="toc-list-text">7. 请分析陈某宣传所用域名，该域名DNS记录没有以下那个域名</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#8-%E8%AF%B7%E5%88%86%E6%9E%90%E9%99%88%E6%9F%90%E5%AE%A3%E4%BC%A0%E6%89%80%E7%94%A8%E5%9F%9F%E5%90%8D%EF%BC%8C%E8%AF%A5%E5%8D%9A%E5%AE%A2%E5%9F%9F%E5%90%8D%E6%9C%80%E7%BB%88DNS%E8%A7%A3%E6%9E%90%E6%8C%87%E5%90%91%E7%9A%84github%E4%BB%93%E5%BA%93%E5%90%8D%E4%B8%BA"><span class="toc-list-text">8. 请分析陈某宣传所用域名，该博客域名最终DNS解析指向的github仓库名为</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#9-%E8%AF%B7%E5%88%86%E6%9E%90%E9%99%88%E6%9F%90github%E8%B4%A6%E5%8F%B7%EF%BC%8C%E9%99%88%E6%9F%90%E5%AF%B9jkroepke-2Moons%E9%A1%B9%E7%9B%AE%E5%A2%9E%E6%94%B9%E4%BA%86%E5%87%A0%E4%B8%AA%E6%96%87%E4%BB%B6"><span class="toc-list-text">9. 请分析陈某github账号，陈某对jkroepke&#x2F;2Moons项目增改了几个文件</span></a></li></ol></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from 电子取证</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E7%BE%8E%E4%BA%9A%E6%9D%AF/%E4%B8%AA%E4%BA%BA%E8%B5%9B/">
+              <strong>个人赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%9124%E6%95%B0%E8%AF%81%E5%86%B3-%E5%9B%A2/">
+              <strong>【转载】24数证决-团</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/2024%E6%95%B0%E8%AF%81%E6%9D%AF%E5%88%9D%E8%B5%9B/">
+              <strong>2024数证杯初赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/2024%E6%95%B0%E8%AF%81%E6%9D%AF%E5%86%B3%E8%B5%9B-%E4%B8%AA%E4%BA%BA%E8%B5%9B/">
+              <strong>2024数证杯决赛-个人赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

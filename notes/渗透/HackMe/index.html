@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HackMe | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackMe | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/渗透/HackMe/">
+  <link rel="canonical" href="https://jerryxie.top/notes/渗透/HackMe/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/%E6%B8%97%E9%80%8F/">渗透</a>
+          
+        
+      </div>
+      <h1>HackMe</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>11 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>渗透/HackMe.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <p><img src="https://cdn.nlark.com/yuque/0/2026/png/54208227/1774874425406-406bc610-dbdd-498e-9b37-f3fb3f2b478a.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"><br>扫出来80端口</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/54208227/1774874451151-67067621-a110-44ce-838e-43148f73b124.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"><br><img src="https://cdn.nlark.com/yuque/0/2026/png/54208227/1774874461179-9aa12e98-3e4e-467c-8e51-5ce4adb85a8c.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>保存图片发现尾部有信息</p>
+<figure class="highlight php" data-language="php" data-language-label="PHP"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Starter</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$obj</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">execute</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable language_">$this</span>-&gt;obj;  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Middle</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$target</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">$this</span>-&gt;target-&gt;<span class="title function_ invoke__">run</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Runner</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$command</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="title function_ invoke__">system</span>(<span class="variable">$this</span>-&gt;command);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;data&#x27;</span>])) &#123;</span><br><span class="line">    <span class="variable">$data</span> = <span class="title function_ invoke__">base64_decode</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;data&#x27;</span>]);</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$data</span> !== <span class="literal">false</span>) &#123;</span><br><span class="line">        <span class="variable">$obj</span> = <span class="title function_ invoke__">unserialize</span>(<span class="variable">$data</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">is_object</span>(<span class="variable">$obj</span>) &amp;&amp; <span class="title function_ invoke__">method_exists</span>(<span class="variable">$obj</span>, <span class="string">&#x27;execute&#x27;</span>)) &#123;</span><br><span class="line">            <span class="variable">$obj</span>-&gt;<span class="title function_ invoke__">execute</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">exit</span>;</span><br><span class="line">&#125;</span><br><span class="line">--!&gt;</span><br><span class="line"></span><br><span class="line">joker:@-joker-@-<span class="number">123421</span>-@</span><br><span class="line">&lt;pre&gt;&lt;code style=<span class="string">&quot;color: #000000&quot;</span>&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;&amp;lt;?php</span><br><span class="line">&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #FF8000&quot;</span>&gt;<span class="comment">// 关闭错误输出</span></span><br><span class="line">&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;ini_set&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;(&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #DD0000&quot;</span>&gt;<span class="string">&#x27;display_errors&#x27;</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;, &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;<span class="number">0</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;);</span><br><span class="line">&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;error_reporting&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;(&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;<span class="number">0</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> &lt;/<span class="title">span</span>&gt;&lt;<span class="title">span</span> <span class="title">style</span>=&quot;<span class="title">color</span>: #0000<span class="title">BB</span>&quot;&gt;<span class="title">Starter</span> &lt;/<span class="title">span</span>&gt;&lt;<span class="title">span</span> <span class="title">style</span>=&quot;<span class="title">color</span>: #007700&quot;&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;<span class="variable">$obj</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> &lt;/<span class="title">span</span>&gt;&lt;<span class="title">span</span> <span class="title">style</span>=&quot;<span class="title">color</span>: #0000<span class="title">BB</span>&quot;&gt;<span class="title">execute</span>&lt;/<span class="title">span</span>&gt;&lt;<span class="title">span</span> <span class="title">style</span>=&quot;<span class="title">color</span>: #007700&quot;&gt;(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;<span class="variable language_">$this</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;-&amp;gt;&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;obj&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;;  &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #FF8000&quot;</span>&gt;<span class="comment">// 触发__toString</span></span><br><span class="line">    &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> &lt;/<span class="title">span</span>&gt;&lt;<span class="title">span</span> <span class="title">style</span>=&quot;<span class="title">color</span>: #0000<span class="title">BB</span>&quot;&gt;<span class="title">Middle</span> &lt;/<span class="title">span</span>&gt;&lt;<span class="title">span</span> <span class="title">style</span>=&quot;<span class="title">color</span>: #007700&quot;&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;<span class="variable">$target</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> &lt;/<span class="title">span</span>&gt;&lt;<span class="title">span</span> <span class="title">style</span>=&quot;<span class="title">color</span>: #0000<span class="title">BB</span>&quot;&gt;<span class="title">__toString</span>&lt;/<span class="title">span</span>&gt;&lt;<span class="title">span</span> <span class="title">style</span>=&quot;<span class="title">color</span>: #007700&quot;&gt;(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;<span class="variable language_">$this</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;-&amp;gt;&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;target&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;-&amp;gt;&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;run&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> &lt;/<span class="title">span</span>&gt;&lt;<span class="title">span</span> <span class="title">style</span>=&quot;<span class="title">color</span>: #0000<span class="title">BB</span>&quot;&gt;<span class="title">Runner</span> &lt;/<span class="title">span</span>&gt;&lt;<span class="title">span</span> <span class="title">style</span>=&quot;<span class="title">color</span>: #007700&quot;&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;<span class="variable">$command</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> &lt;/<span class="title">span</span>&gt;&lt;<span class="title">span</span> <span class="title">style</span>=&quot;<span class="title">color</span>: #0000<span class="title">BB</span>&quot;&gt;<span class="title">run</span>&lt;/<span class="title">span</span>&gt;&lt;<span class="title">span</span> <span class="title">style</span>=&quot;<span class="title">color</span>: #007700&quot;&gt;(<span class="params"></span>) </span>&#123;</span><br><span class="line">        &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;system&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;(&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;<span class="variable language_">$this</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;-&amp;gt;&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;command&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;<span class="variable">$_POST</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;[&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #DD0000&quot;</span>&gt;<span class="string">&#x27;data&#x27;</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;])) &#123;</span><br><span class="line">    &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;<span class="variable">$data</span> &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;= &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;base64_decode&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;(&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;<span class="variable">$_POST</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;[&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #DD0000&quot;</span>&gt;<span class="string">&#x27;data&#x27;</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;]);</span><br><span class="line">    <span class="keyword">if</span> (&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;<span class="variable">$data</span> &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;!== &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;<span class="literal">false</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;) &#123;</span><br><span class="line">        &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;<span class="variable">$obj</span> &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;= &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;unserialize&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;(&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;<span class="variable">$data</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;);</span><br><span class="line">        <span class="keyword">if</span> (&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;is_object&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;(&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;<span class="variable">$obj</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;) &amp;amp;&amp;amp; &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;method_exists&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;(&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;<span class="variable">$obj</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;, &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #DD0000&quot;</span>&gt;<span class="string">&#x27;execute&#x27;</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;)) &#123;</span><br><span class="line">            &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;<span class="variable">$obj</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;-&amp;gt;&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;execute&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">exit</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #FF8000&quot;</span>&gt;<span class="comment">// 输出图片</span></span><br><span class="line">&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;<span class="variable">$image</span> &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;= &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #DD0000&quot;</span>&gt;<span class="string">&#x27;joker.jpg&#x27;</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;;</span><br><span class="line"><span class="keyword">if</span> (&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;file_exists&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;(&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;<span class="variable">$image</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;)) &#123;</span><br><span class="line">    &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;header&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;(&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #DD0000&quot;</span>&gt;<span class="string">&#x27;Content-Type: image/jpeg&#x27;</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;);</span><br><span class="line">    &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;readfile&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;(&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;<span class="variable">$image</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span> &lt;/span&gt;&lt;span style=<span class="string">&quot;color: #DD0000&quot;</span>&gt;<span class="string">&quot;Image not found&quot;</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;highlight_file&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;(&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;<span class="keyword">__FILE__</span>&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #007700&quot;</span>&gt;);</span><br><span class="line">&lt;/span&gt;&lt;span style=<span class="string">&quot;color: #0000BB&quot;</span>&gt;?&amp;gt;</span><br><span class="line">&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>joker:@-joker-@-123421-@</code>试了一下 <code>joker</code>和<code>@-joker-@-123421-@</code>就是账密；至于中间的php</p>
+<figure class="highlight php" data-language="php" data-language-label="PHP"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;data&#x27;</span>])) &#123;</span><br><span class="line">    <span class="variable">$data</span> = <span class="title function_ invoke__">base64_decode</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;data&#x27;</span>]);</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$data</span> !== <span class="literal">false</span>) &#123;</span><br><span class="line">        <span class="variable">$obj</span> = <span class="title function_ invoke__">unserialize</span>(<span class="variable">$data</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">is_object</span>(<span class="variable">$obj</span>) &amp;&amp; <span class="title function_ invoke__">method_exists</span>(<span class="variable">$obj</span>, <span class="string">&#x27;execute&#x27;</span>)) &#123;</span><br><span class="line">            <span class="variable">$obj</span>-&gt;<span class="title function_ invoke__">execute</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">exit</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 如果有人通过表单提交了一个叫 <code>data</code> 的参数，就把它当成 Base64 编码的数据解码，再把解码后的内容“还原成 PHP 对象”，如果这个对象里有 <code>execute()</code> 方法，就立刻执行它。  （翻译一下嗯）</p>
+<p>@joker-@-123421-@</p>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <p class="muted-copy">No heading outline is available for this note.</p>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from 渗透</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/%E6%B8%97%E9%80%8F/%E5%A5%BD%E9%9D%B6%E5%9C%BA/sql%E6%B3%A8%E5%85%A5/">
+              <strong>sql注入</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E6%B8%97%E9%80%8F/%E6%B8%97%E9%80%8F%E4%B8%8A%E6%89%8B/">
+              <strong>渗透上手</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E6%B8%97%E9%80%8F/%E6%97%A0%E6%A0%87%E9%A2%98%E6%96%87%E6%A1%A3/">
+              <strong>无标题文档</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E6%B8%97%E9%80%8F/Banner/">
+              <strong>Banner</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

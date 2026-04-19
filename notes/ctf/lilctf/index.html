@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>lilctf | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lilctf | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/lilctf/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/lilctf/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+        
+      </div>
+      <h1>lilctf</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>10 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/lilctf.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <h1 id="crypto"><a href="#crypto" class="headerlink" title="crypto"></a>crypto</h1><h2 id="1-mid-math"><a href="#1-mid-math" class="headerlink" title="1.mid_math"></a>1.<strong>mid_math</strong></h2><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">from sage.all import *</span><br><span class="line">from Crypto.Util.number import *</span><br><span class="line">from tqdm import tqdm</span><br><span class="line">from random import randint</span><br><span class="line">from Crypto.Cipher import AES</span><br><span class="line">from Crypto.Util.Padding import pad</span><br><span class="line"></span><br><span class="line">flag = b&#x27;LILCTF&#123;test_flag&#125;&#x27;</span><br><span class="line"></span><br><span class="line">p = getPrime(64)</span><br><span class="line">P = GF(p)</span><br><span class="line"></span><br><span class="line">key = randint(2**62, p)</span><br><span class="line"></span><br><span class="line">def mul(vector, c):</span><br><span class="line">    return [vector[0]*c, vector[1]*c, vector[2]*c, vector[3]*c, vector[4]*c]</span><br><span class="line"></span><br><span class="line">v1 = [getPrime(64), getPrime(64), getPrime(64), getPrime(64), getPrime(64)]</span><br><span class="line">v2 = [getPrime(64), getPrime(64), getPrime(64), getPrime(64), getPrime(64)]</span><br><span class="line">v3 = [getPrime(64), getPrime(64), getPrime(64), getPrime(64), getPrime(64)]</span><br><span class="line">v4 = [getPrime(64), getPrime(64), getPrime(64), getPrime(64), getPrime(64)]</span><br><span class="line">v5 = [getPrime(64), getPrime(64), getPrime(64), getPrime(64), getPrime(64)]</span><br><span class="line">a, b, c, d, e = getPrime(64), getPrime(64), getPrime(64), getPrime(64),  0</span><br><span class="line"></span><br><span class="line">A = matrix(P, [v1, v2, v3, v4, v5])</span><br><span class="line">B = matrix(P, [mul(v1,a), mul(v2,b), mul(v3, c), mul(v4, d), mul(v5, e)])</span><br><span class="line">C = A.inverse() * B</span><br><span class="line">D = C**key</span><br><span class="line"></span><br><span class="line">key = pad(long_to_bytes(key), 16)</span><br><span class="line">aes = AES.new(key,AES.MODE_ECB)</span><br><span class="line">msg = aes.encrypt(pad(flag, 64))</span><br><span class="line"></span><br><span class="line">print(f&quot;p = &#123;p&#125;&quot;)</span><br><span class="line">print(f&#x27;C = &#123;[i for i in C]&#125;&#x27;.replace(&#x27;(&#x27;, &#x27;[&#x27;).replace(&#x27;)&#x27;, &#x27;]&#x27;))</span><br><span class="line">print(f&#x27;D = &#123;[i for i in D]&#125;&#x27;.replace(&#x27;(&#x27;, &#x27;[&#x27;).replace(&#x27;)&#x27;, &#x27;]&#x27;))</span><br><span class="line">print(f&quot;msg = &#123;msg&#125;&quot;)</span><br><span class="line"></span><br><span class="line">#p = 14668080038311483271</span><br><span class="line">#C = [[11315841881544731102, 2283439871732792326, 6800685968958241983, 6426158106328779372, 9681186993951502212], [4729583429936371197, 9934441408437898498, 12454838789798706101, 1137624354220162514, 8961427323294527914], [12212265161975165517, 8264257544674837561, 10531819068765930248, 4088354401871232602, 14653951889442072670], [6045978019175462652, 11202714988272207073, 13562937263226951112, 6648446245634067896, 13902820281072641413], [1046075193917103481, 3617988773170202613, 3590111338369894405, 2646640112163975771, 5966864698750134707]]</span><br><span class="line">#D = [[1785348659555163021, 3612773974290420260, 8587341808081935796, 4393730037042586815, 10490463205723658044], [10457678631610076741, 1645527195687648140, 13013316081830726847, 12925223531522879912, 5478687620744215372], [9878636900393157276, 13274969755872629366, 3231582918568068174, 7045188483430589163, 5126509884591016427], [4914941908205759200, 7480989013464904670, 5860406622199128154, 8016615177615097542, 13266674393818320551], [3005316032591310201, 6624508725257625760, 7972954954270186094, 5331046349070112118, 6127026494304272395]]</span><br><span class="line">#msg = b&quot;\xcc]B:\xe8\xbc\x91\xe2\x93\xaa\x88\x17\xc4\xe5\x97\x87@\x0fd\xb5p\x81\x1e\x98,Z\xe1n`\xaf\xe0%:\xb7\x8aD\x03\xd2Wu5\xcd\xc4#m&#x27;\xa7\xa4\x80\x0b\xf7\xda8\x1b\x82k#\xc1gP\xbd/\xb5j&quot;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">from sage.all import *</span><br><span class="line"></span><br><span class="line">p = 14668080038311483271</span><br><span class="line">F = GF(p)</span><br><span class="line"></span><br><span class="line"># 定义矩阵 C 和 D</span><br><span class="line">C = matrix(F, [</span><br><span class="line">    [11315841881544731102, 2283439871732792326, 6800685968958241983, 6426158106328779372, 9681186993951502212],</span><br><span class="line">    [4729583429936371197, 9934441408437898498, 12454838789798706101, 1137624354220162514, 8961427323294527914],</span><br><span class="line">    [12212265161975165517, 8264257544674837561, 10531819068765930248, 4088354401871232602, 14653951889442072670],</span><br><span class="line">    [6045978019175462652, 11202714988272207073, 13562937263226951112, 6648446245634067896, 13902820281072641413],</span><br><span class="line">    [1046075193917103481, 3617988773170202613, 3590111338369894405, 2646640112163975771, 5966864698750134707]</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">D = matrix(F, [</span><br><span class="line">    [1785348659555163021, 3612773974290420260, 8587341808081935796, 4393730037042586815, 10490463205723658044],</span><br><span class="line">    [10457678631610076741, 1645527195687648140, 13013316081830726847, 12925223531522879912, 5478687620744215372],</span><br><span class="line">    [9878636900393157276, 13274969755872629366, 3231582918568068174, 7045188483430589163, 5126509884591016427],</span><br><span class="line">    [4914941908205759200, 7480989013464904670, 5860406622199128154, 8016615177615097542, 13266674393818320551],</span><br><span class="line">    [3005316032591310201, 6624508725257625760, 7972954954270186094, 5331046349070112118, 6127026494304272395]</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"># 计算特征值（忽略0）</span><br><span class="line">eig_C = [x for x in C.eigenvalues() if x != 0]  # 提取C的非零特征值</span><br><span class="line">eig_D = [x for x in D.eigenvalues() if x != 0]  # 提取D的非零特征值</span><br><span class="line"></span><br><span class="line"># 对每一对特征值解离散对数</span><br><span class="line">for lambda_i, mu_i in zip(eig_C, eig_D):  # 将非零特征值配对</span><br><span class="line">    try:</span><br><span class="line">        # 在指定范围内求解离散对数: μ_i ≡ λ_i^key mod p</span><br><span class="line">        key = discrete_log(mu_i, F(lambda_i), bounds=(2**62, p))</span><br><span class="line">        print(f&quot;Potential key from eigenvalues: &#123;key&#125;&quot;)</span><br><span class="line">        </span><br><span class="line">        # 验证 key 是否正确</span><br><span class="line">        if C**key == D:  # 检查 C^key 是否等于 D</span><br><span class="line">            print(f&quot;Verified key: &#123;key&#125;&quot;)</span><br><span class="line">            break  # 找到正确密钥则停止</span><br><span class="line">    except ValueError:  # 处理离散对数无解的情况</span><br><span class="line">        continue</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Potential key from eigenvalues: 977169478748826373</span><br><span class="line">Potential key from eigenvalues: 9711059833940755678</span><br><span class="line">Potential key from eigenvalues: 96997216499095342</span><br><span class="line">Potential key from eigenvalues: 5273966641785501202</span><br><span class="line">Verified key: 5273966641785501202</span><br></pre></td></tr></table></figure>
+
+<p>这个key我也验算过了，没有问题，但是正常AES-ECB解密没办法解，ai写的也不行，于是我去查了一下key未满16字节的填充方式：缺几个字节就补成几，比如缺8个字节，就补08*8（转成16进制之后）</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">from Cryptodome.Cipher import AES</span><br><span class="line">from Cryptodome.Util.Padding import unpad</span><br><span class="line">from Cryptodome.Util.number import long_to_bytes</span><br><span class="line"></span><br><span class="line"># 原始密文</span><br><span class="line">msg = b&quot;\xcc]B:\xe8\xbc\x91\xe2\x93\xaa\x88\x17\xc4\xe5\x97\x87@\x0fd\xb5p\x81\x1e\x98,Z\xe1n`\xaf\xe0%:\xb7\x8aD\x03\xd2Wu5\xcd\xc4#m&#x27;\xa7\xa4\x80\x0b\xf7\xda8\x1b\x82k#\xc1gP\xbd/\xb5j&quot;</span><br><span class="line"></span><br><span class="line"># 已知的密钥数值</span><br><span class="line">key_int = 5273966641785501202</span><br><span class="line"></span><br><span class="line"># 将整数密钥转换为字节</span><br><span class="line">key_bytes = long_to_bytes(key_int)</span><br><span class="line"></span><br><span class="line"># 已知密钥字节长度(5273966641785501202 = 0x493A4EEDB9EC0F2 -&gt; 7字节)</span><br><span class="line">key_len = len(key_bytes)  # 应该是7字节</span><br><span class="line"></span><br><span class="line"># 尝试所有可能的填充长度(1-16字节)</span><br><span class="line">for pad_len in range(1, 17):</span><br><span class="line">    # 构建可能的密钥(原始密钥 + PKCS#7填充)</span><br><span class="line">    possible_key = key_bytes + bytes([pad_len]) * pad_len</span><br><span class="line"></span><br><span class="line">    # 取前16字节作为密钥</span><br><span class="line">    if len(possible_key) &lt; 16:</span><br><span class="line">        aes_key = possible_key.ljust(16, b&#x27;\x00&#x27;)  # 确保长度16</span><br><span class="line">    else:</span><br><span class="line">        aes_key = possible_key[:16]</span><br><span class="line"></span><br><span class="line">    # 尝试解密</span><br><span class="line">    try:</span><br><span class="line">        cipher = AES.new(aes_key, AES.MODE_ECB)</span><br><span class="line">        decrypted = cipher.decrypt(msg)</span><br><span class="line"></span><br><span class="line">        # 尝试解填充</span><br><span class="line">        unpadded = unpad(decrypted, 64)  # 原始块大小64</span><br><span class="line"></span><br><span class="line">        # 检查flag前缀</span><br><span class="line">        if unpadded.startswith(b&#x27;LILCTF&#123;&#x27;) and b&#x27;&#125;&#x27; in unpadded:</span><br><span class="line">            flag = unpadded.decode(&#x27;utf-8&#x27;)</span><br><span class="line">            print(f&quot;✓ 成功解密! 填充长度: &#123;pad_len&#125;&quot;)</span><br><span class="line">            print(f&quot;使用的密钥: &#123;aes_key.hex()&#125;&quot;)</span><br><span class="line">            print(f&quot;Flag: &#123;flag&#125;&quot;)</span><br><span class="line">            break</span><br><span class="line"></span><br><span class="line">    except (ValueError, UnicodeDecodeError):</span><br><span class="line">        # 尝试不解填充直接检查</span><br><span class="line">        if b&#x27;LILCTF&#123;&#x27; in decrypted:</span><br><span class="line">            # 找到flag的起始位置</span><br><span class="line">            start_idx = decrypted.index(b&#x27;LILCTF&#123;&#x27;)</span><br><span class="line">            end_idx = decrypted.find(b&#x27;&#125;&#x27;, start_idx)</span><br><span class="line">            if end_idx != -1:</span><br><span class="line">                flag = decrypted[start_idx:end_idx + 1].decode(&#x27;utf-8&#x27;)</span><br><span class="line">                print(f&quot;✓ 找到flag! 填充长度: &#123;pad_len&#125;&quot;)</span><br><span class="line">                print(f&quot;使用的密钥: &#123;aes_key.hex()&#125;&quot;)</span><br><span class="line">                print(f&quot;Flag: &#123;flag&#125;&quot;)</span><br><span class="line">                break</span><br><span class="line">            else:</span><br><span class="line">                print(f&quot;⚠ 发现部分flag但没有结束符: &#123;decrypted[start_idx:].decode(&#x27;utf-8&#x27;, errors=&#x27;replace&#x27;)&#125;&quot;)</span><br><span class="line">        else:</span><br><span class="line">            # 检查常见的填充错误</span><br><span class="line">            last_byte = decrypted[-1]</span><br><span class="line">            if 0 &lt; last_byte &lt;= 64:</span><br><span class="line">                # 可能是无效的PKCS#7填充</span><br><span class="line">                possible_unpadded = decrypted[:-last_byte]</span><br><span class="line">                if b&#x27;LILCTF&#123;&#x27; in possible_unpadded:</span><br><span class="line">                    print(f&quot;⚠ 可能有效: 填充长度 &#123;pad_len&#125;, 解密数据后&#123;len(decrypted)&#125;字节&quot;)</span><br><span class="line">                    # 进一步检查</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0x4930e4b7d0e27612</span><br><span class="line">✓ 成功解密! 填充长度: 8</span><br><span class="line">使用的密钥: 4930e4b7d0e276120808080808080808</span><br><span class="line">Flag: LILCTF&#123;Are_y0u_5till_4wake_que5t1on_m4ker!&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#crypto"><span class="toc-list-text">crypto</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-mid-math"><span class="toc-list-text">1.mid_math</span></a></li></ol></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

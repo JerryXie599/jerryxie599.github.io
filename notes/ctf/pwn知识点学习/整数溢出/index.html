@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>整数溢出 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="整数溢出 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/pwn知识点学习/整数溢出/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/pwn知识点学习/整数溢出/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+            <a class="category-chip" href="/categories/ctf/pwn%E7%9F%A5%E8%AF%86%E7%82%B9%E5%AD%A6%E4%B9%A0/">pwn知识点学习</a>
+          
+        
+      </div>
+      <h1>整数溢出</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>5 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/pwn知识点学习/整数溢出.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>在C语言中，整数的基本数据类型分为短整型(short)，整型(int)，长整型(long)，这三个数据类型还分为有符号和无符号，每种数据类型都有各自的大小范围，(因为数据类型的大小范围是编译器决定的，所以之后所述都默认是 64 位下使用 gcc-5.4)，如下所示:</p>
+<table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">字节</th>
+<th align="center">范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">short int</td>
+<td align="center">2byte(word)</td>
+<td align="center">0<del>32767(0</del>0x7fff)    -32768<del>-1(0x8000</del>0xffff)</td>
+</tr>
+<tr>
+<td align="center">unsigned short int</td>
+<td align="center">2byte(word)</td>
+<td align="center">0<del>65535(0</del>0xffff)</td>
+</tr>
+<tr>
+<td align="center">int</td>
+<td align="center">4byte(dword)</td>
+<td align="center">0<del>2147483647(0</del>0x7fffffff)    -2147483648<del>-1(0x80000000</del>0xffffffff)</td>
+</tr>
+<tr>
+<td align="center">unsigned int</td>
+<td align="center">4byte(dword)</td>
+<td align="center">0<del>4294967295(0</del>0xffffffff)</td>
+</tr>
+<tr>
+<td align="center">long int</td>
+<td align="center">8byte(qword)</td>
+<td align="center">正: 0<del>0x7fffffffffffffff    负:0x8000000000000000</del>0xffffffffffffffff</td>
+</tr>
+<tr>
+<td align="center">unsigned long int</td>
+<td align="center">8byte(qword)</td>
+<td align="center">0~0xffffffffffffffff</td>
+</tr>
+</tbody></table>
+<p>当程序中的数据超过其数据类型的范围，则会造成溢出，整数类型的溢出被称为整数溢出。</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>接下来简单阐述下整数溢出的原理</p>
+<h3 id="上界溢出"><a href="#上界溢出" class="headerlink" title="上界溢出"></a>上界溢出</h3><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 伪代码</span><br><span class="line">short int a;</span><br><span class="line"></span><br><span class="line">a = a + 1;</span><br><span class="line"># 对应的汇编</span><br><span class="line">movzx  eax, word ptr [rbp - 0x1c]</span><br><span class="line">add    eax, 1</span><br><span class="line">mov    word ptr [rbp - 0x1c], ax</span><br><span class="line"></span><br><span class="line">unsigned short int b;</span><br><span class="line"></span><br><span class="line">b = b + 1;</span><br><span class="line"># assembly code</span><br><span class="line">add    word ptr [rbp - 0x1a], 1</span><br></pre></td></tr></table></figure>
+
+<p>上界溢出有两种情况，一种是 <code>0x7fff + 1</code>， 另一种是 <code>0xffff + 1</code>。</p>
+<p>因为计算机底层指令是不区分有符号和无符号的，数据都是以二进制形式存在(编译器的层面才对有符号和无符号进行区分，产生不同的汇编指令)。</p>
+<p>所以 <code>add 0x7fff, 1 == 0x8000</code>，这种上界溢出对无符号整型就没有影响，但是在有符号短整型中，<code>0x7fff</code> 表示的是 <code>32767</code>，但是 <code>0x8000</code> 表示的是 <code>-32768</code>，用数学表达式来表示就是在有符号短整型中 <code>32767+1 == -32768</code>。</p>
+<p>第二种情况是 <code>add 0xffff, 1</code>，这种情况需要考虑的是第一个操作数。</p>
+<p>比如上面的有符号型加法的汇编代码是 <code>add eax, 1</code>，因为 <code>eax=0xffff</code>，所以 <code>add eax, 1 == 0x10000</code>，但是无符号的汇编代码是对内存进行加法运算 <code>add word ptr [rbp - 0x1a], 1 == 0x0000</code>。</p>
+<p>在有符号的加法中，虽然 <code>eax</code> 的结果为 0x10000，但是只把 <code>ax=0x0000</code> 的值储存到了内存中，从结果看和无符号是一样的。</p>
+<p>再从数字层面看看这种溢出的结果，在有符号短整型中，<code>0xffff==-1，-1 + 1 == 0</code>，从有符号看这种计算没问题。</p>
+<p>但是在无符号短整型中，<code>0xffff == 65535, 65535 + 1 == 0</code>。</p>
+<h3 id="下界溢出"><a href="#下界溢出" class="headerlink" title="下界溢出"></a>下界溢出</h3><p>下届溢出的道理和上界溢出一样，在汇编代码中，只是把 <code>add</code> 替换成了 <code>sub</code>。</p>
+<p>一样也是有两种情况：</p>
+<p>第一种是 <code>sub 0x0000, 1 == 0xffff</code>，对于有符号来说 <code>0 - 1 == -1</code> 没问题，但是对于无符号来说就成了 <code>0 - 1 == 65535</code>。</p>
+<p>第二种是 <code>sub 0x8000, 1 == 0x7fff</code>，对于无符号来说是 <code>32768 - 1 == 32767</code> 是正确的，但是对于有符号来说就变成了 <code>-32768 - 1 = 32767</code>。</p>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>在我见过的整数溢出的漏洞中，我认为可以总结为两种情况。</p>
+<h3 id="未限制范围"><a href="#未限制范围" class="headerlink" title="未限制范围"></a>未限制范围</h3><p>这种情况很好理解，比如有一个固定大小的桶，往里面倒水，如果你没有限制倒入多少水，那么水则会从桶中溢出来。</p>
+<p>一个有固定大小的东西，你没有对其进行约束，就会造成不可预期的后果。</p>
+<p>简单的写一个示例:</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$ cat test.c</span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stddef.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> len;</span><br><span class="line">    <span class="type">int</span> data_len;</span><br><span class="line">    <span class="type">int</span> header_len;</span><br><span class="line">    <span class="type">char</span> *buf;</span><br><span class="line">    </span><br><span class="line">    header_len = <span class="number">0x10</span>;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%uld&quot;</span>, &amp;data_len);</span><br><span class="line">    </span><br><span class="line">    len = data_len+header_len</span><br><span class="line">    buf = <span class="built_in">malloc</span>(len);</span><br><span class="line">    read(<span class="number">0</span>, buf, data_len);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">$ gcc test.c</span><br><span class="line">$ ./a.out</span><br><span class="line"><span class="number">-1</span></span><br><span class="line">asdfasfasdfasdfafasfasfasdfasdf</span><br><span class="line"><span class="meta"># gdb a.out</span></span><br><span class="line">► <span class="number">0x40066d</span> &lt;main+<span class="number">71</span>&gt;    call   <span class="built_in">malloc</span>@plt &lt;<span class="number">0x400500</span>&gt;</span><br><span class="line">        size: <span class="number">0xf</span></span><br></pre></td></tr></table></figure>
+
+<p>只申请 <code>0x20</code> 大小的堆，但是却能输入 <code>0xffffffff</code> 长度的数据，从整型溢出到堆溢出</p>
+<h3 id="错误的类型转换"><a href="#错误的类型转换" class="headerlink" title="错误的类型转换"></a>错误的类型转换</h3><p>即使正确的对变量进行约束，也仍然有可能出现整数溢出漏洞，我认为可以概括为错误的类型转换，如果继续细分下去，可以分为：</p>
+<ol>
+<li>范围大的变量赋值给范围小的变量</li>
+</ol>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$ cat test2.c</span><br><span class="line"><span class="type">void</span> <span class="title function_">check</span><span class="params">(<span class="type">int</span> n)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (!n)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;vuln&quot;</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;OK&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">long</span> <span class="type">int</span> a;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%ld&quot;</span>, &amp;a);</span><br><span class="line">    <span class="keyword">if</span> (a == <span class="number">0</span>)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Bad&quot;</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        check(a);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">$ gcc test2.c</span><br><span class="line">$ ./a.out</span><br><span class="line"><span class="number">4294967296</span></span><br><span class="line">vuln</span><br></pre></td></tr></table></figure>
+
+<p>上述代码就是一个范围大的变量(长整型a)，传入 check 函数后变为范围小的变量(整型变量n)，造成整数溢出的例子。</p>
+<p>已经长整型的占有 8 byte 的内存空间，而整型只有 4 byte 的内存空间，所以当 long -&gt; int，将会造成截断，只把长整型的低 4byte 的值传给整型变量。</p>
+<p>在上述例子中，就是把 <code>long: 0x100000000 -&gt; int: 0x00000000</code>。</p>
+<p>但是当范围更小的变量就能完全的把值传递给范围更大的变量，而不会造成数据丢失。</p>
+<ol start="2">
+<li>只做了单边限制</li>
+</ol>
+<p>这种情况只针对有符号类型</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ cat test3.c</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> len, l;</span><br><span class="line">    <span class="type">char</span> buf[<span class="number">11</span>];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;len);</span><br><span class="line">    <span class="keyword">if</span> (len &lt; <span class="number">10</span>) &#123;</span><br><span class="line">        l = read(<span class="number">0</span>, buf, len);</span><br><span class="line">        *(buf+l) = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">puts</span>(buf);</span><br><span class="line">    &#125; <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Please len &lt; 10&quot;</span>);        </span><br><span class="line">&#125;</span><br><span class="line">$ gcc test3.c</span><br><span class="line">$ ./a.out</span><br><span class="line"><span class="number">-1</span></span><br><span class="line">aaaaaaaaaaaa</span><br><span class="line">aaaaaaaaaaaa</span><br></pre></td></tr></table></figure>
+
+<p>从表面上看，我们对变量 len 进行了限制，但是仔细思考可以发现，len 是有符号整型，所以 len 的长度可以为负数，但是在 read 函数中，第三个参数的类型是 <code>size_t</code>，该类型相当于 <code>unsigned long int</code>，属于无符号长整型</p>
+<p>上面举例的两种情况都有一个共性，就是函数的形参和实参的类型不同，所以我认为可以总结为错误的类型转换</p>
+<h2 id="CTF例题"><a href="#CTF例题" class="headerlink" title="CTF例题"></a>CTF例题</h2><p>题目：<a target="_blank" rel="noopener" href="http://atum.li/2016/12/05/calc/">Pwnhub 故事的开始 calc</a></p>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-list-text">介绍</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-list-text">原理</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E4%B8%8A%E7%95%8C%E6%BA%A2%E5%87%BA"><span class="toc-list-text">上界溢出</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E4%B8%8B%E7%95%8C%E6%BA%A2%E5%87%BA"><span class="toc-list-text">下界溢出</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-list-text">例子</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E6%9C%AA%E9%99%90%E5%88%B6%E8%8C%83%E5%9B%B4"><span class="toc-list-text">未限制范围</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E9%94%99%E8%AF%AF%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-list-text">错误的类型转换</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#CTF%E4%BE%8B%E9%A2%98"><span class="toc-list-text">CTF例题</span></a></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

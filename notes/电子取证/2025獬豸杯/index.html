@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2025獬豸杯 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2025獬豸杯 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/电子取证/2025獬豸杯/">
+  <link rel="canonical" href="https://jerryxie.top/notes/电子取证/2025獬豸杯/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/">电子取证</a>
+          
+        
+      </div>
+      <h1>2025獬豸杯</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>2 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>电子取证/2025獬豸杯.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <p><strong>服务器取证（2025獬豸杯）</strong><br><strong>1.该集群创建时间是？</strong><br>用火眼创建好了虚拟机之后就开始查相关指令之后<br><strong>kubectl get nodes -o yaml | grep creationTimestamp</strong>  </p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1745328966099-072419ae-f0a7-4c18-9c1a-6d73a3745a95.png?x-oss-process=image/format,webp" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>虚拟机输出了三个时间，第一个时间和答案很相近但是有1秒的出入，后面两个则有几个小时的出入<br>网上查课wp发现使用这个代码：<strong>kubectl get namespace default -o yaml</strong>  </p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1745329458466-16521a7c-920d-4132-bbd5-d4d2dc695d0a.png?x-oss-process=image/format,webp" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>也就是说namespace是比nodes要更早的，所以应该是用<strong>kubectl get namespace default -o yaml</strong>来获取<br>什么是nodes？什么是namespace？<br><strong>1. Node（节点）</strong><br>Kubernetes 集群中的 <strong>工作机器</strong>（物理服务器或虚拟机），用来运行你的应用程序。<br>e.g.你的 Kubernetes 集群有 3 个节点，相当于 3 台服务器在干活。<br><strong>2. Namespace（命名空间）</strong><br>Kubernetes 里的 <strong>逻辑分组</strong>，用来隔离不同的项目、团队或环境。  </p>
+<p><strong>2.该集群共有多少个命名空间？</strong><br><strong>kubectl get namespaces –no-headers <strong>_</strong><u>| wc -l（可加可不加，加了会自动计数）</u></strong>_  </p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1745404407148-05934b45-562f-48e1-a68d-bb3998afa92a.png?x-oss-process=image/format,webp" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1745404463647-71431d1a-91d5-4878-b89c-238b01a8b29c.png?x-oss-process=image/format,webp" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>计数版<br>**3.**<strong>该集群所有命名空间内总共有多少个pod？</strong><br><strong>kubectl get pods -A –no-headers <strong>_</strong><u>| wc -l</u></strong>_  </p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1745405748904-b64cb6a5-a9d8-49a5-9205-68759f776afb.png?x-oss-process=image/format,webp" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>**4.**<strong>请给出该集群所使用的cni网络插件及其版本？[标准格式：abc-V1.1.1]</strong><br>一开始用的是在etc中的cni插件中找flannel的版本，然后答案不对，又在opt中找答案最后找到了名字和版本  </p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1745409811334-11c1e2bb-02be-4def-a9f8-f7fa0ea6f969.png?x-oss-process=image/format,webp" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>后来查ai发现应该是查询opt文件夹下的版本（因为这文件夹下的是当前运行的版本，可能会更准确些吧！）</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1745409986963-39080450-5ecc-408c-becf-c69c195eb351.png?x-oss-process=image/format,webp" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><strong>5.其中打金平台的后台登录地址跳转文件是？[标准格式：abc.php]</strong>  </p>
+<p>7.其中打金平台密码加密算法是？[标准格式：abc]<br>8.其中打金平台中”13067137585”用户的累计产量有多少？[标准格式：100.00]<br>9.其中打金平台会员组最高溢价比例是多少？[标准格式：10.00]<br>10.其中打金平台会员推广人数最多的会员其姓名是？[标准格式：名字]<br>11.其中打金平台最早一次备份数据库的时间（Asia&#x2F;Shanghai）是？[标准格式：2024-01-01-01:01:01]<br>12.其中金瑞币（JINRUI COIN）平台图片上传平台是哪种类型？[标准格式：腾讯云ABC]<br>13.其中金瑞币平台手机直充接口是什么？[标准格式：<a target="_blank" rel="noopener" href="http://xxx.xxx.xxx/xxx]">http://xxx.xxx.xxx/xxx]</a><br>14.其中金瑞币平台后台登录地址是？[标准格式：<a target="_blank" rel="noopener" href="http://xxx/xxx/xxx.xxx]">http://xxx/xxx/xxx.xxx]</a><br>15.其中金瑞币平台中密码加密盐值是？[标准格式：AbC1d]<br>16.其中金瑞币平台中交易手续费是百分之多少？[标准格式：100]<br>17.其中金瑞币平台中目前有几种充值方式？[标准格式：100]<br>18.二号集群节点有源代码的网站目录有几个？（正在运行的除外）[标准格式：1]<br>19.二号集群节点memcached端口是？[标准格式：100]<br>20.盲盒平台中余额最多的用户是？[标准格式：AbC1d]<br>21.盲盒平台可选二级域名有多少个？[标准格式：100]<br>22.盲盒平台的支付密钥是？[标准格式：AbC1d]<br>23.盲盒平台中拥有分站的用户名是？[标准格式：123abc]<br>24.借贷平台（<a href="http://www.jiedai0rmr.com）中验证码发送接口域名是？[标准格式：http://xxx.xxx.xxx/]">www.jiedai0rmr.com）中验证码发送接口域名是？[标准格式：http://xxx.xxx.xxx/]</a><br>25.借贷平台后台登录密码的加密算法中共使用了多少次hash函数加密？[标准格式：10]<br>26.接上题，借贷平台中后台登录的密码额外加密字符串？[标准格式：123ABc+]<br>27.借贷平台中一共有多少借款订单？[标准格式：100]<br>28.借贷平台中”包玉莲”的收款卡号是？[标准格式：1000]<br>29.借贷平台中贷款最大限额是多少？[标准格式：100]<br>30.请综合该集群一共有多少个网站数？[标准格式：100]  </p>
+<p>若有收获，就点个赞吧</p>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <p class="muted-copy">No heading outline is available for this note.</p>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from 电子取证</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E7%BE%8E%E4%BA%9A%E6%9D%AF/%E4%B8%AA%E4%BA%BA%E8%B5%9B/">
+              <strong>个人赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%9124%E6%95%B0%E8%AF%81%E5%86%B3-%E5%9B%A2/">
+              <strong>【转载】24数证决-团</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/2024%E6%95%B0%E8%AF%81%E6%9D%AF%E5%88%9D%E8%B5%9B/">
+              <strong>2024数证杯初赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/2024%E6%95%B0%E8%AF%81%E6%9D%AF%E5%86%B3%E8%B5%9B-%E4%B8%AA%E4%BA%BA%E8%B5%9B/">
+              <strong>2024数证杯决赛-个人赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SPCCTF | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SPCCTF | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/SPCCTF/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/SPCCTF/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+        
+      </div>
+      <h1>SPCCTF</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>7 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/SPCCTF.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <p>简单题目我直接跳过了~</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Jsy050906/article/details/137167432?ops_request_misc=&request_id=&biz_id=102&utm_term=rc4%E5%8A%A0%E5%AF%86&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-0-137167432.142%5Ev102%5Epc_search_result_base5">https://blog.csdn.net/Jsy050906/article/details/137167432?ops_request_misc&#x3D;&amp;request_id&#x3D;&amp;biz_id&#x3D;102&amp;utm_term&#x3D;rc4%E5%8A%A0%E5%AF%86&amp;utm_medium&#x3D;distribute.pc_search_result.none-task-blog-2<del>all</del>sobaiduweb~default-0-137167432.142^v102^pc_search_result_base5</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/vanarrow/article/details/105605253?ops_request_misc=%257B%2522request%255Fid%2522%253A%25220422b28ef2b976a155dd2c0f3ff56e0e%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=0422b28ef2b976a155dd2c0f3ff56e0e&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-105605253-null-null.142%5Ev102%5Epc_search_result_base5&utm_term=ctf%20Forensics">https://blog.csdn.net/vanarrow/article/details/105605253?ops_request_misc&#x3D;%257B%2522request%255Fid%2522%253A%25220422b28ef2b976a155dd2c0f3ff56e0e%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id&#x3D;0422b28ef2b976a155dd2c0f3ff56e0e&amp;biz_id&#x3D;0&amp;utm_medium&#x3D;distribute.pc_search_result.none-task-blog-2<del>all</del>sobaiduend~default-1-105605253-null-null.142^v102^pc_search_result_base5&amp;utm_term&#x3D;ctf%20Forensics</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_68012373/article/details/129520318">https://blog.csdn.net/m0_68012373&#x2F;article&#x2F;details&#x2F;129520318</a></p>
+<h1 id="crypto"><a href="#crypto" class="headerlink" title="crypto"></a>crypto</h1><h2 id="1-偷渡者前传"><a href="#1-偷渡者前传" class="headerlink" title="1.偷渡者前传"></a>1.偷渡者前传</h2><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">flag = &quot;flag&#123;???&#125;&quot;</span><br><span class="line">assert len(flag) == 36</span><br><span class="line"></span><br><span class="line">new_flag = &#x27;&#x27;.join(str(ord(c)) for c in flag)</span><br><span class="line"></span><br><span class="line">t = []</span><br><span class="line">for i in new_flag:</span><br><span class="line">    s = ord(i)</span><br><span class="line">    sh = s&gt;&gt;4</span><br><span class="line">    sl = s%16</span><br><span class="line">    t.append(sh^sl)</span><br><span class="line"></span><br><span class="line">b64_table = &#x27;SPCctfabdeghijklmnopqrsuvwxyzABDEFGHIJKLMNOQRTUVWXYZ0123456789+/=&#x27;</span><br><span class="line"></span><br><span class="line">enc = []</span><br><span class="line">for i in range(len(t)//6):</span><br><span class="line">    a1 = (t[i*6]&lt;&lt;2) + (t[i*6+1]&gt;&gt;2)</span><br><span class="line">    a2 = ((t[i*6+1]%4)&lt;&lt;4) + t[i*6+2]</span><br><span class="line">    a3 = (t[i*6+3]&lt;&lt;2) + (t[i*6+4]&gt;&gt;2)</span><br><span class="line">    a4 = ((t[i*6+4]%4)&lt;&lt;4) + t[i*6+5]</span><br><span class="line">    enc.append(b64_table[a1])</span><br><span class="line">    enc.append(b64_table[a2])</span><br><span class="line">    enc.append(b64_table[a3])</span><br><span class="line">    enc.append(b64_table[a4])</span><br><span class="line"></span><br><span class="line">print(&quot;&quot;.join(enc))</span><br><span class="line"></span><br><span class="line"># enc = &#x27;dXd7NCiCtfmGzFdGtGqGgKd2dKNGgYiGeYtOvHgIdKdoNGeodOvFdGdGoKd3NCjY&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>详细解释</p>
+<p><strong>1. 把 flag 字符串变成 ASCII 数字串</strong></p>
+<p><code>new_flag = &#39;&#39;.join(str(ord(c)) for c in flag)</code></p>
+<p>你有一个字符串 flag，比如 “flag{…}”，每个字符都是字母或者符号。</p>
+<p>ord(c) 返回字符 c 的 ASCII 码数字，例如 ‘f’ 是 102。</p>
+<p>把所有字符转成对应的数字，并拼接成一个长字符串。例如：</p>
+<p><code>flag{a}  -&gt; &#39;f&#39;,&#39;l&#39;,&#39;a&#39;,&#39;g&#39;,&#39;{&#39;,&#39;a&#39;,&#39;}&#39;  -&gt; ASCII: 102 108 97 103 123 97 125</code></p>
+<p>拼接成字符串: “<code>1021089710312397125</code>“</p>
+<p>这一步把可读的字符串转成纯数字字符串。</p>
+<p><strong>2. 对数字字符串的每个字符做处理</strong></p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for i in new_flag:</span><br><span class="line">    s = ord(i)       # i是字符 &#x27;0&#x27;~&#x27;9&#x27;，ASCII码是48~57</span><br><span class="line">    sh = s &gt;&gt; 4      # s的高4位，等于 s // 16</span><br><span class="line">    sl = s % 16      # s的低4位</span><br><span class="line">    t.append(sh ^ sl) # 高4位和低4位做异或</span><br></pre></td></tr></table></figure>
+
+<p>i 是数字字符，比如 ‘1’，ord(‘1’)&#x3D;49</p>
+<p>对 s 做两步操作：</p>
+<p>高4位（sh）：比如 49 的二进制是 00110001，右移4位得到 0011（十进制3）</p>
+<p>低4位（sl）：低4位是 0001（十进制1）</p>
+<p>异或 sh ^ sl，如 3 ^ 1 &#x3D; 2</p>
+<p>将每个字符都转换成一个 0-15 范围的数加入列表 t</p>
+<p>这样做相当于给原始数字字符做了一种轻度混淆，产生一个新的小数字列表</p>
+<p>3**. 定义自定义 Base64 字符表**</p>
+<p><code>b64_table = &#39;SPCctfabdeghijklmnopqrsuvwxyzABDEFGHIJKLMNOQRTUVWXYZ0123456789+/=&#39;</code></p>
+<p>标准 Base64 表通常是 <code>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/</code></p>
+<p>这里用的是自己定义的映射表 b64_table</p>
+<p>这个表用于后续把数字索引映射成对应的字符，做最终加密字符</p>
+<p><strong>4. 将列表 t 每6个元素一组，编码成4个字符</strong></p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">for i in range(len(t)//6):</span><br><span class="line">    a1 = (t[i*6]&lt;&lt;2) + (t[i*6+1]&gt;&gt;2)</span><br><span class="line">    a2 = ((t[i*6+1]%4)&lt;&lt;4) + t[i*6+2]</span><br><span class="line">    a3 = (t[i*6+3]&lt;&lt;2) + (t[i*6+4]&gt;&gt;2)</span><br><span class="line">    a4 = ((t[i*6+4]%4)&lt;&lt;4) + t[i*6+5]</span><br><span class="line">    enc.append(b64_table[a1])</span><br><span class="line">    enc.append(b64_table[a2])</span><br><span class="line">    enc.append(b64_table[a3])</span><br><span class="line">    enc.append(b64_table[a4])</span><br></pre></td></tr></table></figure>
+
+<p>这部分代码把每6个 t 中的数，重新组合成4个索引 a1, a2, a3, a4</p>
+<p>位操作说明：</p>
+<p><code>t[i*6]&lt;&lt;2 左移2位</code></p>
+<p><code>t[i*6+1]&gt;&gt;2 右移2位</code></p>
+<p><code>%4 相当于取2位低位</code></p>
+<p>目的是将 6 个 4bit 小数重新拼成 4 个 6bit 数字，这跟 Base64 编码把 3 字节变成 4 个6bit片段的原理类似</p>
+<p>然后用自定义的 b64_table 把每个数字转成字符</p>
+<p>最终得到加密字符串 enc</p>
+<p><strong>总结</strong></p>
+<p>这段代码的核心是将字符串先转成ASCII数字串，再对数字字符串的每个数字字符用特殊位运算做轻度混淆，生成一个数字列表 t</p>
+<p>然后将 t 按照 Base64 编码的思想，把每6个4bit数字拼成4个6bit数字</p>
+<p>用自定义 Base64 字符表将这4个6bit数字映射成字符，得到加密后的字符串</p>
+<p>整体是一个自定义变体的 Base64 加密过程，带了一个基于字符 ASCII 位运算的“预处理”层，增加复杂度防止直接Base64解码</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">enc = &#x27;dXd7NCiCtfmGzFdGtGqGgKd2dKNGgYiGeYtOvHgIdKdoNGeodOvFdGdGoKd3NCjY&#x27;</span><br><span class="line">b64_table = &#x27;SPCctfabdeghijklmnopqrsuvwxyzABDEFGHIJKLMNOQRTUVWXYZ0123456789+/=&#x27;</span><br><span class="line"></span><br><span class="line">b64_dict = &#123;c: i for i, c in enumerate(b64_table)&#125;</span><br><span class="line"></span><br><span class="line">t = []</span><br><span class="line"></span><br><span class="line">for i in range(0, len(enc), 4):</span><br><span class="line">    a1 = b64_dict[enc[i]]</span><br><span class="line">    a2 = b64_dict[enc[i+1]]</span><br><span class="line">    a3 = b64_dict[enc[i+2]]</span><br><span class="line">    a4 = b64_dict[enc[i+3]]</span><br><span class="line"></span><br><span class="line">    t0 = a1 &gt;&gt; 2</span><br><span class="line">    t1 = ((a1 &amp; 3) &lt;&lt; 2) | (a2 &gt;&gt; 4)</span><br><span class="line">    t2 = a2 &amp; 15</span><br><span class="line">    t3 = a3 &gt;&gt; 2</span><br><span class="line">    t4 = ((a3 &amp; 3) &lt;&lt; 2) | (a4 &gt;&gt; 4)</span><br><span class="line">    t5 = a4 &amp; 15</span><br><span class="line"></span><br><span class="line">    t.extend([t0, t1, t2, t3, t4, t5])</span><br><span class="line"></span><br><span class="line">ascii_chars = []</span><br><span class="line">for val in t:</span><br><span class="line">    found = False</span><br><span class="line">    for s in range(48, 58):</span><br><span class="line">        sh = s &gt;&gt; 4</span><br><span class="line">        sl = s &amp; 15</span><br><span class="line">        if (sh ^ sl) == val:</span><br><span class="line">            ascii_chars.append(chr(s))</span><br><span class="line">            found = True</span><br><span class="line">            break</span><br><span class="line">    if not found:</span><br><span class="line">        ascii_chars.append(&#x27;?&#x27;)</span><br><span class="line"></span><br><span class="line">ascii_str = &quot;&quot;.join(ascii_chars)</span><br><span class="line"></span><br><span class="line">def decode_ascii_string(s):</span><br><span class="line">    res = []</span><br><span class="line">    i = 0</span><br><span class="line">    while i &lt; len(s):</span><br><span class="line">        if i + 3 &lt;= len(s):</span><br><span class="line">            num = int(s[i:i+3])</span><br><span class="line">            if 32 &lt;= num &lt;= 126:</span><br><span class="line">                res.append(chr(num))</span><br><span class="line">                i += 3</span><br><span class="line">                continue</span><br><span class="line">        if i + 2 &lt;= len(s):</span><br><span class="line">            num = int(s[i:i+2])</span><br><span class="line">            if 32 &lt;= num &lt;= 126:</span><br><span class="line">                res.append(chr(num))</span><br><span class="line">                i += 2</span><br><span class="line">                continue</span><br><span class="line">        res.append(&#x27;?&#x27;)</span><br><span class="line">        i += 1</span><br><span class="line">    return &quot;&quot;.join(res)</span><br><span class="line"></span><br><span class="line">flag = decode_ascii_string(ascii_str)</span><br><span class="line">print(&quot;解密得到的flag是：&quot;, flag)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Reverse"><a href="#Reverse" class="headerlink" title="Reverse"></a>Reverse</h2><h2 id="1-ezMaze（迷宫-花指令）"><a href="#1-ezMaze（迷宫-花指令）" class="headerlink" title="1.ezMaze（迷宫+花指令）"></a>1.ezMaze（迷宫+花指令）</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Sciurdae/article/details/133750478">CTF逆向Reverse 花指令介绍 and NSSCTF靶场入门题目复现_ctf逆向工程基础题-CSDN博客</a></p>
+<p>一下是详细解释（适合初学仔细看）</p>
+<p><a target="_blank" rel="noopener" href="https://spc-pwn.yuque.com/org-wiki-spc-pwn-xo4p0b/gwccxa/kymnswlqr0b4eau0?singleDoc#">ezmaze解题思路</a></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1749122066969-8e4359d4-ebbc-4cd6-8ad1-e7a2394d75ba.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>跳转到14000185F</p>
+<p>然后看到<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1749123849425-8f8f2de3-7a41-43d1-bfe5-da9089f62221.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>这里有call而没有ret出现“栈不平衡”，把这里的十六进制码的call（E8）转成90（nop啥也不做）就不会出现“栈不平衡”</p>
+<p>修改后就直接看到伪代码了：<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1749123980221-723310ac-34c2-475b-80ab-84057c1709cc.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>迷宫到手，flag：flag{aassddssaasssddwddddsdddd}</p>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#crypto"><span class="toc-list-text">crypto</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E5%81%B7%E6%B8%A1%E8%80%85%E5%89%8D%E4%BC%A0"><span class="toc-list-text">1.偷渡者前传</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#Reverse"><span class="toc-list-text">Reverse</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-ezMaze%EF%BC%88%E8%BF%B7%E5%AE%AB-%E8%8A%B1%E6%8C%87%E4%BB%A4%EF%BC%89"><span class="toc-list-text">1.ezMaze（迷宫+花指令）</span></a></li></ol></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

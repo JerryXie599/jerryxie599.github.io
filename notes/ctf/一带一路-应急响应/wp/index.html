@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>wp | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wp | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/一带一路-应急响应/wp/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/一带一路-应急响应/wp/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+            <a class="category-chip" href="/categories/ctf/%E4%B8%80%E5%B8%A6%E4%B8%80%E8%B7%AF-%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">一带一路-应急响应</a>
+          
+        
+      </div>
+      <h1>wp</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>4 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/一带一路-应急响应/wp.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <p>1.linux服务安全加固</p>
+<p>一台Linux服务器近期遭受多次安全扫描攻击,作为企业安全团队的一员,请对该服务器进行加固,以防止潜在的安全风险。详细安全加固要</p>
+<p>求如下:</p>
+<p>1、请对服务器设置定期更换密码和定期提示选项以防止黑客爆破密码,以下为密码设置要求:</p>
+<p>密码最长使用天数为90天,最短使用天数为1天,到期提醒天数为7</p>
+<p><code>sudo nano /etc/login.defs</code></p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PASS_MAX_DAYS   90   </span><br><span class="line">PASS_MIN_DAYS   1     </span><br><span class="line">PASS_WARN_AGE   7</span><br></pre></td></tr></table></figure>
+
+<p>2、sudo 可以授予普通用户执行特权命令的权限。为了防止滥用,只允许admins用户可以使用sudo权限</p>
+<figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> groupadd admins</span><br><span class="line"><span class="built_in">sudo</span> useradd -m newusername</span><br><span class="line"><span class="built_in">sudo</span> usermod -aG admins newusername</span><br><span class="line"><span class="built_in">sudo</span> visudo</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1764140218437-fe7b3ba7-b1cc-43a5-a8d6-0ad20e2e8d6f.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>注释掉</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1764140306309-5e944446-355a-4329-8fca-829bc3106170.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>3、禁用IPv6可以减少系统受到攻击的机会。您可以使用以下命令编辑&#x2F;etc&#x2F;sysctl.conf文件:</p>
+<p>添加</p>
+<p>net.ipv6.conf.all.disable_ipv6 &#x3D; 1</p>
+<p>net.ipv6.conf.default.disable_ipv6 &#x3D; 1</p>
+<p>net.ipv6.conf.lo.disable_ipv6 &#x3D; 1</p>
+<p>4、限制登陆超时,限制为600s</p>
+<figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ClientAliveInterval 600</span><br></pre></td></tr></table></figure>
+
+<p>5、设置访问控制列表:设置ftp服务访问控制白名单(非防火墙设置),只允许ip:192.168.0.2访问,减少被入侵的风险</p>
+<p>6、打开syncookie:缓解syn flood攻击</p>
+<p>1.当你确认所有安全加固操作都完成后,请执行&#x2F;home&#x2F;admins&#x2F;Desktop下的check程序进行检测并使用 – linux参数,详细命令为</p>
+<p>&#x2F;check – linux’,如加固操作正确完成,将会输出flag信息。请提交此flag信息</p>
+<p>2.ssh安全加固</p>
+<p>SSH(Secure Shell)是一种能够让用户安全访问远程系统的网络协议,它为不安全网络中的两台主机提供了一个强加密数据通信通道。SSH是Linux、UNIX系统</p>
+<p>管理员操作和管理主机的首选方式。虽然SSH比其他通信方式更加安全,但是错误的配置也可能导致其出现安全问题</p>
+<p>1、结束空闲的SSH会话</p>
+<p>无限期地将SSH会话保持打开状态不是一个好主意,因为用户可能离开他们的工作站,这给了一个未授权用户在无人看管的工作站上执行命令的好机会。最</p>
+<p>好的办法是在短时间内终止空闲的SSH会话,不给他人留机会,要在十五分钟(900秒)后关闭不活动的会话且设置存活次数为3</p>
+<figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+
+<p>修改</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ClientAliveInterval 900</span><br><span class="line">ClientAliveCountMax 3</span><br></pre></td></tr></table></figure>
+
+<p>2、禁用基于受信主机的无密码登录</p>
+<p>文件是一种控制系统间信任的关系的方法,如果一个系统信任另一个系统,则这个系统不需要密码就允许来自受信认系统的登录。这是一个老旧</p>
+<p>的配置,应当在SSH配置中明确禁用。</p>
+<p>3使用iptables过滤SSH连接:仅允许特定的子网172.16.20.0&#x2F;24</p>
+<p>rhosts</p>
+<h1 id="渗透"><a href="#渗透" class="headerlink" title="渗透"></a>渗透</h1><p>任务内容</p>
+<p>1.首页的信息收集</p>
+<p>对网站首页的扫描检测中,发现存在隐藏的敏感信息(flag1信息),请找到这个信息并进行提交</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1764143282583-f760e10c-e50a-43e8-8909-af49d57b38e6.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nmap -p 80,8080 172.16.110.121,137,205,223,231</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1764143295962-27526c00-d5ee-425e-be37-53ee216644a0.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>访问<a target="_blank" rel="noopener" href="http://172.16.110.223/">http://172.16.110.223</a>，</p>
+<p>2.敏感文件泄露</p>
+<p>经过安全团队扫描发现平台的配置文件</p>
+<p>内容中的flag信息(flag2)进行提交</p>
+<p>3.未鉴权的后台路径</p>
+<p>是平台的后台路径地址前缀,通常需要管理员账号登录后,才能访问。但是其中一个路径由于未添加装饰器,导致普通用户也可以直接访问,权限提</p>
+<p>示。请访问这个未鉴权的后台路径拿到flag信息并提交。</p>
+<p>4.不安全的备份加密</p>
+<p>平台会周期备份后台数据信息并加密写入文件后提供下载,但是加密后的文件内容是完整的Fernet tocken信息,这将会导致加密信息通过key解密成明文信息,</p>
+<p>最终泄露备份的数据内容。请找到这个加密备份文件并解密文件中的内容,将内容中的flag进行提交</p>
+<p>5.命令执行漏洞</p>
+<p>平台的资产管理相关功能中,其中一个功能由于未完全对用户输入作出限制,导致能够执行意外的系统命令,请找到存在漏洞的功能页面,并利用漏洞读取项目</p>
+<p>根目录下名称为</p>
+<p>6.SQL注入漏洞</p>
+<p>企业的安全团队在平台的工单管理、提交等相关功能中,发现在工单列表页面存在一个SQL注入漏洞,此漏洞会导致数据库信息泄露。请利用此漏洞,拿到数据</p>
+<p>库的表信息,并提交隐藏在表信息中的flag(注:其中一个表的名称就是flag信息,格式和之前题目的flag格式一致,即flag(xxxxxxxxxxxx}长度18个字符,本题</p>
+<p>中x由大小写字母数字组成)</p>
+<h2 id="资产梳理"><a href="#资产梳理" class="headerlink" title="资产梳理"></a>资产梳理</h2><p>任务内容</p>
+<p>172.16.110.205</p>
+<p>1.云服务器实例信息获取</p>
+<p>在一台云服务器上,你需要找到该主机的云平台生成环境实例ID,并将实例ID进行md4小写加密后提交,提交格式为</p>
+<p>例如,实例ID为</p>
+<p>2.测试端口服务识别</p>
+<p>在服务器开放的多个端口中,有一个非标准测试端口运行着ES服务,请找到该服务名称(全是小写),并将名称进行md4小写加密后提交。例如</p>
+<p>服务名称为name,那么提交范例为:flag(5e81364cd43748d64cb49f58d62b295b}</p>
+<p>3.应用框架信息获取</p>
+<p>某Web服务使用Java&#x2F;Spring Boot 框架运行,请找到完整框架名称及版本号(如Java 1.1.1),并将其进行md4小写加密后提交。例如框架版</p>
+<p>本为Java 1.1.1,那么提交范例为:flag{05b15b6d579bd2bf821ee5e7416410b6}</p>
+<ol start="4">
+<li>证书签发机构信息</li>
+</ol>
+<p>服务器的HTTPS服务证书为自签证书,存在安全隐患,请你找到服务器的证书中的flag数值。</p>
+<p>5.敏感数据资产识别与分类</p>
+<p>对目标服务器进行敏感数据资产梳理,重点关注未授权访问的数据资产。需找出包含技术部经理的电话号码,将完整电话号码进行md4小写加密后</p>
+<p>提交。例如电话号码为12345678,那么提交范例为:flag{012d73eOfab8d26e0f4d65e36077511e}</p>
+<p>6.日志资产配置审计</p>
+<p>请对目标服务器的日志资产进行全面梳理,重点关注未授权访问的数据资产,存在某个泄露的部分日志信息,是攻击者进行攻击测试的日志信息,</p>
+<p>需找出攻击者使用python3进行提权的完整命令,将其完整命令进行md4小写加密后提交。例提权命令为sudo su,那么提交范例为flag(3a4a6</p>
+<p>293a88441507696caea839a0340}</p>
+<p>日志识别分析</p>
+<p>与外部通信频率最高的IP:攻击者持续与外部服务器保持通信。请结web_combined.log与system_events.log为攻击者C2地址</p>
+<p>,找出最频繁出现的公网IP,推测</p>
+<p>转成csv之后，分列，用countif(A:A,A2)，筛选最大数字即可</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1764147657334-dce08101-02a4-4c0f-97fb-345dbb8ed5d0.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E6%B8%97%E9%80%8F"><span class="toc-list-text">渗透</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E8%B5%84%E4%BA%A7%E6%A2%B3%E7%90%86"><span class="toc-list-text">资产梳理</span></a></li></ol></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

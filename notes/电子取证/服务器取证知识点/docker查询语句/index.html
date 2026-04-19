@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>docker查询语句 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker查询语句 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/电子取证/服务器取证知识点/docker查询语句/">
+  <link rel="canonical" href="https://jerryxie.top/notes/电子取证/服务器取证知识点/docker查询语句/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/">电子取证</a>
+          
+            <a class="category-chip" href="/categories/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81%E7%9F%A5%E8%AF%86%E7%82%B9/">服务器取证知识点</a>
+          
+        
+      </div>
+      <h1>docker查询语句</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>3 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>电子取证/服务器取证知识点/docker查询语句.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <p>没问题！我用人话重新讲一遍。想象Docker就像一个个”透明箱子”，里面装着运行中的程序。取证就是检查这些箱子里有没有”犯罪痕迹”。</p>
+<h2 id="一、先看看有几个”箱子”在跑"><a href="#一、先看看有几个”箱子”在跑" class="headerlink" title="一、先看看有几个”箱子”在跑"></a>一、先看看有几个”箱子”在跑</h2><figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看正在运行的箱子</span></span><br><span class="line">docker ps</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看所有箱子（包括已经停掉的，这个很重要！）</span></span><br><span class="line">docker ps -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看更详细的信息（不截断显示）</span></span><br><span class="line">docker ps --no-trunc</span><br></pre></td></tr></table></figure>
+
+<p><strong>简单解释</strong>：就像看仓库里哪些箱子还在动，哪些已经不动了。犯罪份子可能用完就停了，所以要看全部。</p>
+<hr>
+<h2 id="二、检查”箱子”里装了什么"><a href="#二、检查”箱子”里装了什么" class="headerlink" title="二、检查”箱子”里装了什么"></a>二、检查”箱子”里装了什么</h2><figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看某个箱子的&quot;档案&quot;（配置、网络、挂载等所有信息）</span></span><br><span class="line">docker inspect 箱子ID或名字</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果想看更友好的格式</span></span><br><span class="line">docker inspect 箱子ID --format=<span class="string">&#x27;&#123;&#123;json .&#125;&#125;&#x27;</span> | python -m json.tool</span><br></pre></td></tr></table></figure>
+
+<p><strong>举例</strong>：<code>docker inspect my_nginx</code> 就能看到这个nginx箱子的一切秘密。</p>
+<hr>
+<h2 id="三、查看”箱子”的监控录像（日志）"><a href="#三、查看”箱子”的监控录像（日志）" class="headerlink" title="三、查看”箱子”的监控录像（日志）"></a>三、查看”箱子”的监控录像（日志）</h2><figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 看某个箱子的所有历史记录</span></span><br><span class="line">docker logs 箱子ID</span><br><span class="line"></span><br><span class="line"><span class="comment"># 带时间戳的日志（取证必备）</span></span><br><span class="line">docker logs --timestamps 箱子ID</span><br><span class="line"></span><br><span class="line"><span class="comment"># 只看最近100条</span></span><br><span class="line">docker logs --<span class="built_in">tail</span> 100 箱子ID</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存日志到文件</span></span><br><span class="line">docker logs 箱子ID &gt; 证据.<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>通俗讲</strong>：就像查监控，看箱子里发生过什么事。</p>
+<hr>
+<h2 id="四、检查”箱子”的网络通话记录"><a href="#四、检查”箱子”的网络通话记录" class="headerlink" title="四、检查”箱子”的网络通话记录"></a>四、检查”箱子”的网络通话记录</h2><figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 看箱子用了哪些&quot;电话线&quot;（端口）</span></span><br><span class="line">docker port 箱子ID</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看所有箱子的IP地址</span></span><br><span class="line">docker inspect -f <span class="string">&#x27;&#123;&#123;.Name&#125;&#125; - &#123;&#123;.NetworkSettings.IPAddress&#125;&#125;&#x27;</span> $(docker ps -aq)</span><br></pre></td></tr></table></figure>
+
+<p><strong>简单理解</strong>：箱子有没有和外面”打电话”，联系了谁。</p>
+<hr>
+<h2 id="五、查看”箱子”的”设计图纸”（镜像）"><a href="#五、查看”箱子”的”设计图纸”（镜像）" class="headerlink" title="五、查看”箱子”的”设计图纸”（镜像）"></a>五、查看”箱子”的”设计图纸”（镜像）</h2><figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 看本地有哪些图纸</span></span><br><span class="line">docker images</span><br><span class="line"></span><br><span class="line"><span class="comment"># 看图纸上每一层写了什么（可能藏有恶意代码）</span></span><br><span class="line">docker <span class="built_in">history</span> 镜像ID</span><br><span class="line"></span><br><span class="line"><span class="comment"># 把图纸打包带走分析</span></span><br><span class="line">docker save 镜像ID -o 图纸备份.tar</span><br></pre></td></tr></table></figure>
+
+<p><strong>类比</strong>：就像拿到盖房子的图纸，看哪一层加了”暗门”。</p>
+<hr>
+<h2 id="六、现场勘查：箱子里的文件"><a href="#六、现场勘查：箱子里的文件" class="headerlink" title="六、现场勘查：箱子里的文件"></a>六、现场勘查：箱子里的文件</h2><figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不进入箱子，直接列出里面的文件变化</span></span><br><span class="line">docker diff 箱子ID</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从箱子里复制文件出来（不破坏现场）</span></span><br><span class="line">docker <span class="built_in">cp</span> 箱子ID:/etc/passwd ./证据文件</span><br></pre></td></tr></table></figure>
+
+<p><strong>重点</strong>：就像用X光扫箱子，不打开也能看到里面有啥变化。</p>
+<hr>
+<h2 id="七、一键收集所有证据（推荐新手用）"><a href="#七、一键收集所有证据（推荐新手用）" class="headerlink" title="七、一键收集所有证据（推荐新手用）"></a>七、一键收集所有证据（推荐新手用）</h2><figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建取证文件夹</span></span><br><span class="line"><span class="built_in">mkdir</span> docker_证据_$(<span class="built_in">date</span> +%Y%m%d)</span><br><span class="line"><span class="built_in">cd</span> docker_证据_$(<span class="built_in">date</span> +%Y%m%d)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存所有箱子清单</span></span><br><span class="line">docker ps -a &gt; 箱子清单.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存所有图纸清单</span></span><br><span class="line">docker images &gt; 图纸清单.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对每个箱子收集档案（简单版）</span></span><br><span class="line"><span class="keyword">for</span> 箱子 <span class="keyword">in</span> $(docker ps -aq); <span class="keyword">do</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;正在取证箱子: $箱子&quot;</span></span><br><span class="line">  docker inspect $箱子 &gt; 箱子_<span class="variable">$&#123;箱子&#125;</span>_档案.json</span><br><span class="line">  docker logs --timestamps $箱子 &gt; 箱子_<span class="variable">$&#123;箱子&#125;</span>_日志.txt 2&gt;&amp;1</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>操作提示</strong>：复制粘贴就行，会自动给每个箱子生成报告。</p>
+<hr>
+<h2 id="八、小白特别注意"><a href="#八、小白特别注意" class="headerlink" title="八、小白特别注意"></a>八、小白特别注意</h2><ol>
+<li><strong>只看不改</strong>：优先用<code>docker inspect</code>和<code>docker logs</code>，不要用<code>exec</code>进入箱子，会”污染现场”</li>
+<li><strong>时间很重要</strong>：加<code>--timestamps</code>就像给监控加上时间水印</li>
+<li><strong>停掉的箱子也要看</strong>：犯罪份子可能用完就停了：<code>docker ps -a</code>是关键</li>
+<li><strong>最常用三句话</strong>：<ul>
+<li><code>docker ps -a</code>（看所有箱子）</li>
+<li><code>docker logs 箱子ID</code>（看监控）</li>
+<li><code>docker inspect 箱子ID</code>（看档案）</li>
+</ul>
+</li>
+</ol>
+<p><strong>遇到可疑情况，先拍照（导出日志），再分析！</strong></p>
+<hr>
+<h2 id="九、超简单记忆口诀"><a href="#九、超简单记忆口诀" class="headerlink" title="九、超简单记忆口诀"></a>九、超简单记忆口诀</h2><ul>
+<li><strong>箱子列表</strong>：<code>docker ps -a</code></li>
+<li><strong>查监控</strong>：<code>docker logs 箱子ID</code></li>
+<li><strong>看档案</strong>：<code>docker inspect 箱子ID</code></li>
+<li><strong>拷证据</strong>：<code>docker cp 箱子ID:路径 ./</code></li>
+</ul>
+<p>记住这四条，基本就能应对80%的取证场景了！</p>
+<p>需要我详细解释哪条命令，或者举具体例子吗？</p>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E7%9C%8B%E7%9C%8B%E6%9C%89%E5%87%A0%E4%B8%AA%E2%80%9D%E7%AE%B1%E5%AD%90%E2%80%9D%E5%9C%A8%E8%B7%91"><span class="toc-list-text">一、先看看有几个”箱子”在跑</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E4%BA%8C%E3%80%81%E6%A3%80%E6%9F%A5%E2%80%9D%E7%AE%B1%E5%AD%90%E2%80%9D%E9%87%8C%E8%A3%85%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-list-text">二、检查”箱子”里装了什么</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E4%B8%89%E3%80%81%E6%9F%A5%E7%9C%8B%E2%80%9D%E7%AE%B1%E5%AD%90%E2%80%9D%E7%9A%84%E7%9B%91%E6%8E%A7%E5%BD%95%E5%83%8F%EF%BC%88%E6%97%A5%E5%BF%97%EF%BC%89"><span class="toc-list-text">三、查看”箱子”的监控录像（日志）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E5%9B%9B%E3%80%81%E6%A3%80%E6%9F%A5%E2%80%9D%E7%AE%B1%E5%AD%90%E2%80%9D%E7%9A%84%E7%BD%91%E7%BB%9C%E9%80%9A%E8%AF%9D%E8%AE%B0%E5%BD%95"><span class="toc-list-text">四、检查”箱子”的网络通话记录</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E4%BA%94%E3%80%81%E6%9F%A5%E7%9C%8B%E2%80%9D%E7%AE%B1%E5%AD%90%E2%80%9D%E7%9A%84%E2%80%9D%E8%AE%BE%E8%AE%A1%E5%9B%BE%E7%BA%B8%E2%80%9D%EF%BC%88%E9%95%9C%E5%83%8F%EF%BC%89"><span class="toc-list-text">五、查看”箱子”的”设计图纸”（镜像）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E5%85%AD%E3%80%81%E7%8E%B0%E5%9C%BA%E5%8B%98%E6%9F%A5%EF%BC%9A%E7%AE%B1%E5%AD%90%E9%87%8C%E7%9A%84%E6%96%87%E4%BB%B6"><span class="toc-list-text">六、现场勘查：箱子里的文件</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E4%B8%83%E3%80%81%E4%B8%80%E9%94%AE%E6%94%B6%E9%9B%86%E6%89%80%E6%9C%89%E8%AF%81%E6%8D%AE%EF%BC%88%E6%8E%A8%E8%8D%90%E6%96%B0%E6%89%8B%E7%94%A8%EF%BC%89"><span class="toc-list-text">七、一键收集所有证据（推荐新手用）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E5%85%AB%E3%80%81%E5%B0%8F%E7%99%BD%E7%89%B9%E5%88%AB%E6%B3%A8%E6%84%8F"><span class="toc-list-text">八、小白特别注意</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E4%B9%9D%E3%80%81%E8%B6%85%E7%AE%80%E5%8D%95%E8%AE%B0%E5%BF%86%E5%8F%A3%E8%AF%80"><span class="toc-list-text">九、超简单记忆口诀</span></a></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from 电子取证</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E7%BE%8E%E4%BA%9A%E6%9D%AF/%E4%B8%AA%E4%BA%BA%E8%B5%9B/">
+              <strong>个人赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%9124%E6%95%B0%E8%AF%81%E5%86%B3-%E5%9B%A2/">
+              <strong>【转载】24数证决-团</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/2024%E6%95%B0%E8%AF%81%E6%9D%AF%E5%88%9D%E8%B5%9B/">
+              <strong>2024数证杯初赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/2024%E6%95%B0%E8%AF%81%E6%9D%AF%E5%86%B3%E8%B5%9B-%E4%B8%AA%E4%BA%BA%E8%B5%9B/">
+              <strong>2024数证杯决赛-个人赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

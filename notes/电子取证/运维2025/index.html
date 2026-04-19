@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>运维2025 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="运维2025 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/电子取证/运维2025/">
+  <link rel="canonical" href="https://jerryxie.top/notes/电子取证/运维2025/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/">电子取证</a>
+          
+        
+      </div>
+      <h1>运维2025</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>9 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>电子取证/运维2025.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <p>线上初赛官方writeup发布，见 </p>
+<p><a target="_blank" rel="noopener" href="https://contest.pku.edu.cn/#/info/announcements">高校网络安全管理运维赛</a></p>
+<h1 id="1-电子数据提取与固定-Fitness"><a href="#1-电子数据提取与固定-Fitness" class="headerlink" title="1.电子数据提取与固定-Fitness"></a>1.电子数据提取与固定-Fitness</h1><h1 id="一、电子数据提取与固定-Fitness"><a href="#一、电子数据提取与固定-Fitness" class="headerlink" title="一、电子数据提取与固定-Fitness"></a>一、电子数据提取与固定-Fitness</h1><h2 id="1-镜像中用户“berserker”的密码哈希是多少"><a href="#1-镜像中用户“berserker”的密码哈希是多少" class="headerlink" title="1.镜像中用户“berserker”的密码哈希是多少"></a>1.镜像中用户“berserker”的密码哈希是多少</h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1760954307182-47a5f8af-5d1f-47e8-9e26-3443e39b9164.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>13844b0cc3aa353c8df3fbf8c6aa68f8</code></p>
+<h2 id="2-镜像中是否安装了Linux环境，若有，请给出Linux发行版名称-（全小写）"><a href="#2-镜像中是否安装了Linux环境，若有，请给出Linux发行版名称-（全小写）" class="headerlink" title="2.镜像中是否安装了Linux环境，若有，请给出Linux发行版名称 （全小写）"></a>2.镜像中是否安装了Linux环境，若有，请给出Linux发行版名称 （全小写）</h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1760954415197-86e341e8-1354-411f-b5c8-e31f8d225e12.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>opensuse</p>
+<h2 id="3-用户桌面上存在一个从运动设备中导出的运动记录文件，该文件存在损坏，请尝试修复并给出修复后的SM3校验值-（全大写）"><a href="#3-用户桌面上存在一个从运动设备中导出的运动记录文件，该文件存在损坏，请尝试修复并给出修复后的SM3校验值-（全大写）" class="headerlink" title="3.用户桌面上存在一个从运动设备中导出的运动记录文件，该文件存在损坏，请尝试修复并给出修复后的SM3校验值 （全大写）"></a>3.用户桌面上存在一个从运动设备中导出的运动记录文件，该文件存在损坏，请尝试修复并给出修复后的SM3校验值 （全大写）</h2><p><a target="_blank" rel="noopener" href="https://developer.garmin.com/fit/download/">Download the FIT SDK | Garmin Developers</a></p>
+<p>下载sdk，在java中找到<code>ActivityRepairTool.jar</code>，用以下指令恢复</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1760951357764-89d60f6f-affa-466a-a6df-c06bab58ebeb.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></h2><p>把文件扔到sm3运算中即可</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1760951431714-c24b1300-ce93-436c-b6f4-05bda59dffc7.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h2 id="4-解析修复后的文件，请给出该运动记录中最高时速（单位KM-H，保留两位小数）"><a href="#4-解析修复后的文件，请给出该运动记录中最高时速（单位KM-H，保留两位小数）" class="headerlink" title="4.解析修复后的文件，请给出该运动记录中最高时速（单位KM&#x2F;H，保留两位小数）"></a>4.解析修复后的文件，请给出该运动记录中最高时速（单位KM&#x2F;H，保留两位小数）<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1760952078288-c7f9f06b-949c-48ba-8ae0-29d7a8b05a62.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1760952171926-979e15ed-0b67-498c-b8c7-ecd62aeb66a2.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>转成csv</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1760952166801-09e7e8a3-cdbe-49ae-b97b-8376b51af0b0.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>26.60转换即可</p>
+<h2 id="5-解析修复后的文件，文件中记录的该设备的制造商名称为（全小写）"><a href="#5-解析修复后的文件，文件中记录的该设备的制造商名称为（全小写）" class="headerlink" title="5.解析修复后的文件，文件中记录的该设备的制造商名称为（全小写）"></a>5.解析修复后的文件，文件中记录的该设备的制造商名称为（全小写）</h2><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import fitparse</span><br><span class="line"># 加载FIT文件</span><br><span class="line">fitfile = fitparse.FitFile(r&quot;E:\电子取证\运维2025\检材1\1_repaired.fit&quot;)</span><br><span class="line"></span><br><span class="line"># 遍历所有消息</span><br><span class="line">for message in fitfile.messages:</span><br><span class="line">    # 文件ID信息，通常在第一条</span><br><span class="line">    if message.name == &#x27;file_id&#x27;:</span><br><span class="line">        print(f&quot;文件ID信息: &#123;message.as_dict()&#125;&quot;)</span><br><span class="line"></span><br><span class="line">    # 会话信息，包含运动的统计摘要</span><br><span class="line">    elif message.name == &#x27;session&#x27;:</span><br><span class="line">        sport = message.get_value(&#x27;sport&#x27;, &#x27;未知运动&#x27;) # 获取运动类型</span><br><span class="line">        start_time = message.get_value(&#x27;start_time&#x27;) # 开始时间</span><br><span class="line">        total_distance = message.get_value(&#x27;total_distance&#x27;) # 总距离</span><br><span class="line">        avg_heart_rate = message.get_value(&#x27;avg_heart_rate&#x27;) # 平均心率</span><br><span class="line">        print(f&quot;运动类型: &#123;sport&#125;, 开始时间: &#123;start_time&#125;, 总距离: &#123;total_distance&#125;米, 平均心率: &#123;avg_heart_rate&#125;&quot;)</span><br><span class="line"></span><br><span class="line">    # 记录信息，包含每个时间点的详细数据（如每秒一条）</span><br><span class="line">    elif message.name == &#x27;record&#x27;:</span><br><span class="line">        # 将GPS的“圆度值”转换为常用的度数[1](@ref)</span><br><span class="line">        try:</span><br><span class="line">            lat = message.get_value(&#x27;position_lat&#x27;) * (180 / 2**31) if message.get_value(&#x27;position_lat&#x27;) is not None else None</span><br><span class="line">            lon = message.get_value(&#x27;position_long&#x27;) * (180 / 2**31) if message.get_value(&#x27;position_long&#x27;) is not None else None</span><br><span class="line">        except TypeError:</span><br><span class="line">            lat, lon = None, None</span><br><span class="line">        altitude = message.get_value(&#x27;altitude&#x27;)</span><br><span class="line">        heart_rate = message.get_value(&#x27;heart_rate&#x27;)</span><br><span class="line">        print(f&quot;位置: (&#123;lat&#125;, &#123;lon&#125;), 海拔: &#123;altitude&#125;, 瞬时心率: &#123;heart_rate&#125;&quot;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1760952380881-d8c1b424-b6a8-42fd-8f94-d5514fd1914d.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>在输出中能看得到<code>strava</code></p>
+<h1 id="2-网络运维小助手"><a href="#2-网络运维小助手" class="headerlink" title="2.网络运维小助手"></a>2.网络运维小助手</h1><h2 id="1"><a href="#1" class="headerlink" title="1."></a>1.</h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1760952626709-2f420780-1fa1-4f9a-b988-757babf82622.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1760952641697-49e3c010-594e-4fcc-ad10-05fd358aa66b.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1760952670188-73f55949-4228-4b20-990a-ae2a48f18455.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h1 id="3-校园网络保卫战"><a href="#3-校园网络保卫战" class="headerlink" title="3.校园网络保卫战"></a>3.校园网络保卫战</h1><h2 id="1-1"><a href="#1-1" class="headerlink" title="1."></a>1.</h2><p>找到主函数<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761012775911-c42dde51-c828-4dd6-aeed-7d2864b0124b.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>运行逻辑是输入Flag1（存储在<code>Buf1</code>中）。<code>sub_401EB0</code>函数从GitHub下载一个数据块（存储在<code>v12</code>中，长度存储在<code>Buffer[0]</code>中）。<code>sub_4021B0</code>函数对用户输入的Flag1进行异或操作（使用一个6字节的密钥<code>byte_40A14C</code>），然后将结果与下载的数据块比较。如果比较成功，Flag1正确；否则，失败。</p>
+<p>追踪<code>sub_4021B0</code>：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">BOOL __cdecl sub_4021B0(char *Str, void *Buf2, int a3)</span><br><span class="line">&#123;</span><br><span class="line">  size_t Size; // esi</span><br><span class="line">  _BYTE *v4; // ebx</span><br><span class="line">  unsigned int i; // ecx</span><br><span class="line">  BOOL v6; // esi</span><br><span class="line"></span><br><span class="line">  if ( !Buf2 )</span><br><span class="line">    return 0;</span><br><span class="line">  if ( !a3 )</span><br><span class="line">    return 0;</span><br><span class="line">  Size = strlen(Str);</span><br><span class="line">  v4 = malloc(Size);</span><br><span class="line">  if ( !v4 )</span><br><span class="line">    return 0;</span><br><span class="line">  if ( Size )</span><br><span class="line">  &#123;</span><br><span class="line">    for ( i = 0; i != Size; ++i )</span><br><span class="line">      v4[i] = Str[i] ^ byte_40A14C[i % 6];</span><br><span class="line">  &#125;</span><br><span class="line">  v6 = memcmp(v4, Buf2, Size) == 0;</span><br><span class="line">  free(v4);</span><br><span class="line">  return v6;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>发现异或算法，异或值：<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761013447983-7e98f601-be96-4d63-b641-bf8436a1b032.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>[0x42, 0x35, 0x78, 0x9A, 0xCD, 0xEF]</code></p>
+<p>打断点动调：</p>
+<p>观察函数<code>sub_501880</code>，追踪后发现改数据为异或加密获取<code>unk_50A0F4</code>的原始字节</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761015315978-e4d45520-2a0d-4c35-897b-4afbf47dfccb.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>strcpy(&amp;v4[0].m128i_i8[14], &quot;6 * 7 l!-/&quot;);</code></p>
+<p><code>v4[0] = _mm_xor_si128(_mm_shuffle_epi32(_mm_cvtsi32_si128(0x42424242u), 0), v4[0]);</code></p>
+<p>每个字节<code>0x42</code>异或回去，然后拼接获得github地址；</p>
+<p>在<code>sub_501A00</code>中找到token生成函数，从<code>xmmword_50A060</code>和<code>xmmword_50A070</code>加载数据获取token，使用相同的异或解密，将结果复制到Destination</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761016072569-8e3b5cfc-bbba-4995-bd2c-0f9041d82901.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>下载好用key异或解密即可</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">key = bytes.fromhex(&quot;4235789ACDEF&quot;)  # 密钥</span><br><span class="line">with open(&#x27;cipher.bin&#x27;, &#x27;rb&#x27;) as f:</span><br><span class="line">    cipher = f.read()</span><br><span class="line">flag1 = bytes(c ^ key[i % len(key)] for i, c in enumerate(cipher))</span><br><span class="line">print(&quot;Flag1:&quot;, flag1.decode())</span><br></pre></td></tr></table></figure>
+
+<h2 id="2"><a href="#2" class="headerlink" title="2."></a>2.</h2><p>flag2</p>
+<p>追踪<code>sub_502270</code>加密函数：对输入字节进行0x33的异或操作，然后通过一个由SIMD指令生成的256字节查找表进行替换，接着对每个字节循环右移3位，最后根据字节位置进行异或操作（每个字节与位置值减86异或），最终生成密文。解密时需要逆向这些步骤，包括获取查找表、逆向异或和循环移位</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761017774997-e0c4e916-6036-498b-996b-f0b16ef38952.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>追踪v48，解密即可</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">inv_v48 = [0] * 256</span><br><span class="line">for i in range(256):</span><br><span class="line">    inv_v48[v48[i]] = i</span><br><span class="line"></span><br><span class="line">decrypted = bytearray()</span><br><span class="line">for i in range(len(cipher)):</span><br><span class="line">    byte = cipher[i] ^ ((i - 86) &amp; 0xFF)</span><br><span class="line">    byte = ((byte &lt;&lt; 5) | (byte &gt;&gt; 3)) &amp; 0xFF</span><br><span class="line">    byte = inv_v48[byte]</span><br><span class="line">    byte ^= 0x33</span><br><span class="line">    decrypted.append(byte)</span><br><span class="line">    </span><br><span class="line">flag2 = decrypted.decode()</span><br><span class="line">print(f&quot;Flag2: &#123;flag2&#125;&quot;)</span><br></pre></td></tr></table></figure>
+
+<h1 id="4-电子数据分析-aipowah（检材4）"><a href="#4-电子数据分析-aipowah（检材4）" class="headerlink" title="4.电子数据分析-aipowah（检材4）"></a>4.电子数据分析-aipowah（检材4）</h1><h2 id="1-服务器rootfs采用的文件系统格式"><a href="#1-服务器rootfs采用的文件系统格式" class="headerlink" title="1.服务器rootfs采用的文件系统格式"></a>1.服务器rootfs采用的文件系统格式</h2><p>输入<code>mount | grep &#39; / &#39;</code></p>
+<h2 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1760954081639-4d522489-8107-4edb-82cf-288f01db03e6.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></h2><p><code>xfs</code></p>
+<h2 id="2-AI诈骗站点的域名"><a href="#2-AI诈骗站点的域名" class="headerlink" title="2.AI诈骗站点的域名"></a>2.AI诈骗站点的域名</h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1760954219620-571112ea-8985-475e-b223-809b158958e4.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h2 id="3-服务器运维人员的主机名"><a href="#3-服务器运维人员的主机名" class="headerlink" title="3.服务器运维人员的主机名"></a>3.服务器运维人员的主机名</h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761632740103-e2131737-eaa7-4fdc-8540-741de4a54cce.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>ip a 发现ens33没有分配ip地址没办法ssh连接，所以用<code>dhclient ens33</code>分配一个地址，即可ssh连接。</p>
+<p>回到本题，查看用户，发现除了root以外，其他还有一个oper：<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761632917198-991fbdf5-058d-4515-b955-14b89d9f9e8b.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761632871085-6e850042-ab36-4222-bc94-3edd9cd12b44.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>在路径<code>/home/oper/.ssh/authorized_keys</code>中能找到一下内容</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761633376711-11745e41-307e-4d29-9e2b-2df5d8d5add7.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h3 id="authorized-keys文件存的是什么"><a href="#authorized-keys文件存的是什么" class="headerlink" title="authorized_keys文件存的是什么?"></a><code>authorized_keys</code>文件存的是什么?</h3><p><code>home/oper/.ssh/authorized_keys</code>文件是 <strong>SSH 公钥认证的核心文件</strong>，它的作用是：</p>
+<p><strong>存储允许远程登录该用户（oper）的 SSH 公钥列表</strong></p>
+<p>当客户端尝试通过 SSH 密钥登录时，服务器会检查此文件中的公钥是否与客户端提供的私钥匹配。</p>
+<p><code>ecdsa-sha2-nistp521</code>是密钥的加密算法，后面是公钥的加密算法。</p>
+<p><code>mzk@akiyamachine</code>表示此密钥是由用户 <code>mzk</code>在主机 <code>akiyamachine</code>上生成的。</p>
+<p>所以主机名是<code>akiyamachine</code></p>
+<h3 id="-2"><a href="#-2" class="headerlink" title=""></a></h3><h2 id="4-用于诈骗聊天的AI模型名称"><a href="#4-用于诈骗聊天的AI模型名称" class="headerlink" title="4.用于诈骗聊天的AI模型名称"></a>4.用于诈骗聊天的AI模型名称</h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1760954640068-0aaaba44-a5fd-46b3-872a-d4ff2a0f9ef4.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1760954725672-c2bbc63f-94fb-42b5-a740-7f0d8f7ead88.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>Qwen3-30B-A3B-Instruct-2507</code></p>
+<p>还有种办法</p>
+<details class="lake-collapse"><summary id="uee96cae9"><span class="ne-text">docker取证参考（这个取证好像用不到。。）：</span></summary><div id="Ic2tT" class="ne-bookmark"><a href="https://blog.csdn.net/Gherbirthday0916/article/details/145556664?ops_request_misc=%257B%2522request%255Fid%2522%253A%25227ed30fcd182f9368e6453e1caea82297%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=7ed30fcd182f9368e6453e1caea82297&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-145556664-null-null.142^v102^pc_search_result_base7&amp;utm_term=docker%E5%8F%96%E8%AF%81" target="_blank">https://blog.csdn.net/Gherbirthday0916/article/details/145556664?ops_request_misc=%257B%2522request%255Fid%2522%253A%25227ed30fcd182f9368e6453e1caea82297%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=7ed30fcd182f9368e6453e1caea82297&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-145556664-null-null.142^v102^pc_search_result_base7&amp;utm_term=docker%E5%8F%96%E8%AF%81</a></div><p id="u9f954f16" class="ne-p"><span class="ne-text"> 把docker导出来</span><code class="ne-code"><span class="ne-text">docker save -o docker.tar aipowah </span></code></p><p id="ud3a0aeff" class="ne-p"><span class="ne-text">然后</span><code class="ne-code"><span class="ne-text">dive docker-archive://docker.tar</span></code><span class="ne-text">即可使用</span></p></details>
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761637949354-e1b53f5c-8f83-409e-a9f5-191e5c75b8c6.png)
+
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761648452245-5893c3b3-29ee-417a-bc62-3c1f4bdeb4db.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>有看到<code>app.py</code>和<code>run.sh</code></p>
+<p><code>run.sh</code>是关键入口，发现了它运行了<code>app.py</code></p>
+<p>搜到<code>app.py</code>查看之后发现大语言模型：<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761637383159-57cb95d4-ed90-4b2d-b6d3-58134dc6df62.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h2 id="5-操作系统日志外发的服务器IP地址"><a href="#5-操作系统日志外发的服务器IP地址" class="headerlink" title="5.操作系统日志外发的服务器IP地址"></a>5.操作系统日志外发的服务器IP地址</h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761637501883-14b23138-e7f2-492d-8611-1b1ed11ebfe5.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>所以找文件：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761637514882-919c88f6-f7bf-46cc-a219-9357556ca33b.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>搜索@</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761637538551-7dc1a74b-0ecb-4ad4-b58c-a5e5754ed514.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>10.0.38.211</code></p>
+<h2 id="6-开发人员调用AI模型服务所使用的密钥"><a href="#6-开发人员调用AI模型服务所使用的密钥" class="headerlink" title="6.开发人员调用AI模型服务所使用的密钥"></a>6.开发人员调用AI模型服务所使用的密钥</h2><p>分析run.sh</p>
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line">TOKEN_FILE=<span class="string">&quot;/app/.ak&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. 在后台启动 Python AI 网关服务</span></span><br><span class="line">echo <span class="string">&quot;Launching AI Gateway service in the background...&quot;</span></span><br><span class="line">cd /app</span><br><span class="line">python /app/app.py &amp;</span><br><span class="line"></span><br><span class="line">APP_PID=<span class="string">&quot;$!&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo <span class="string">&quot;Waiting for the service to initialize...&quot;</span></span><br><span class="line">sleep <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -f <span class="string">&quot;$TOKEN_FILE&quot;</span> ]; then</span><br><span class="line">    echo <span class="string">&quot;Performing post-startup cleanup...&quot;</span></span><br><span class="line">    rm -f <span class="string">&quot;$TOKEN_FILE&quot;</span></span><br><span class="line">    echo <span class="string">&quot;file has been removed.&quot;</span></span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo <span class="string">&quot;Service is running. Entrypoint script is now monitoring the application process.&quot;</span></span><br><span class="line">wait $APP_PID</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761647145894-e1a3749c-cf01-49ce-9a61-a1e4595808c5.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>最后是删掉了.ak文件</p>
+<p>搜一下.ak文件，直接能看到密钥</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761648018318-c31727ff-ec3a-4c8b-8493-b80c8b304410.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h2 id="7-开发人员的邮箱"><a href="#7-开发人员的邮箱" class="headerlink" title="7.开发人员的邮箱"></a>7.开发人员的邮箱</h2><p><code>docker inspect &lt;docker name&gt;</code>作用如下：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761648522418-583759f4-8991-4d88-9f8e-a89362ec68e7.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761648963837-7487be92-515b-4c89-967a-075fbbd6043e.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>能查到创建时间，然后在重点目录下搜索 <strong>状态变更时间（ctime）晚于指定时间点</strong> 的文件或目录</p>
+<p><code>find /home /root /opt -newerct &quot;2025-10-16 05:55:00&quot;</code></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761649169147-7f469772-f208-4d64-9a9c-c6776dc8bca0.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>发现了下载了一个zip</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761649521203-8d8e22c4-20f5-4b9d-b96c-973f4fe203d8.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>搜一下有没有同名的已解压的文件看看能不能爆破</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761649498893-4a65ad7f-838c-418d-ba31-0a8613f6df84.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>尝试爆破：</p>
+<blockquote>
+<p>bkcrack -p plain.zip -p aipowah&#x2F;requirements.txt -C 202510.zip -c aipowah&#x2F;requirements.txt</p>
+<p>bkcrack -k 92af89d5 82ab98a1 cfcabb4c -D 202510.d.zip -C 202510.zip</p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761650509977-8a8d1749-69ed-45be-85fe-b277b102f5e3.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>爆出来了：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761650994447-2b8ff901-78d2-4733-adb4-cf46618bf2c9.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h2 id="8-“机票退款”类型诈骗页的域名"><a href="#8-“机票退款”类型诈骗页的域名" class="headerlink" title="8.“机票退款”类型诈骗页的域名"></a>8.“机票退款”类型诈骗页的域名</h2><h1 id="磁盘阵列的文件系统"><a href="#磁盘阵列的文件系统" class="headerlink" title="磁盘阵列的文件系统"></a>磁盘阵列的文件系统</h1>
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#1-%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96%E4%B8%8E%E5%9B%BA%E5%AE%9A-Fitness"><span class="toc-list-text">1.电子数据提取与固定-Fitness</span></a></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E4%B8%80%E3%80%81%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96%E4%B8%8E%E5%9B%BA%E5%AE%9A-Fitness"><span class="toc-list-text">一、电子数据提取与固定-Fitness</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E9%95%9C%E5%83%8F%E4%B8%AD%E7%94%A8%E6%88%B7%E2%80%9Cberserker%E2%80%9D%E7%9A%84%E5%AF%86%E7%A0%81%E5%93%88%E5%B8%8C%E6%98%AF%E5%A4%9A%E5%B0%91"><span class="toc-list-text">1.镜像中用户“berserker”的密码哈希是多少</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-%E9%95%9C%E5%83%8F%E4%B8%AD%E6%98%AF%E5%90%A6%E5%AE%89%E8%A3%85%E4%BA%86Linux%E7%8E%AF%E5%A2%83%EF%BC%8C%E8%8B%A5%E6%9C%89%EF%BC%8C%E8%AF%B7%E7%BB%99%E5%87%BALinux%E5%8F%91%E8%A1%8C%E7%89%88%E5%90%8D%E7%A7%B0-%EF%BC%88%E5%85%A8%E5%B0%8F%E5%86%99%EF%BC%89"><span class="toc-list-text">2.镜像中是否安装了Linux环境，若有，请给出Linux发行版名称 （全小写）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-%E7%94%A8%E6%88%B7%E6%A1%8C%E9%9D%A2%E4%B8%8A%E5%AD%98%E5%9C%A8%E4%B8%80%E4%B8%AA%E4%BB%8E%E8%BF%90%E5%8A%A8%E8%AE%BE%E5%A4%87%E4%B8%AD%E5%AF%BC%E5%87%BA%E7%9A%84%E8%BF%90%E5%8A%A8%E8%AE%B0%E5%BD%95%E6%96%87%E4%BB%B6%EF%BC%8C%E8%AF%A5%E6%96%87%E4%BB%B6%E5%AD%98%E5%9C%A8%E6%8D%9F%E5%9D%8F%EF%BC%8C%E8%AF%B7%E5%B0%9D%E8%AF%95%E4%BF%AE%E5%A4%8D%E5%B9%B6%E7%BB%99%E5%87%BA%E4%BF%AE%E5%A4%8D%E5%90%8E%E7%9A%84SM3%E6%A0%A1%E9%AA%8C%E5%80%BC-%EF%BC%88%E5%85%A8%E5%A4%A7%E5%86%99%EF%BC%89"><span class="toc-list-text">3.用户桌面上存在一个从运动设备中导出的运动记录文件，该文件存在损坏，请尝试修复并给出修复后的SM3校验值 （全大写）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link"><span class="toc-list-text"></span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4-%E8%A7%A3%E6%9E%90%E4%BF%AE%E5%A4%8D%E5%90%8E%E7%9A%84%E6%96%87%E4%BB%B6%EF%BC%8C%E8%AF%B7%E7%BB%99%E5%87%BA%E8%AF%A5%E8%BF%90%E5%8A%A8%E8%AE%B0%E5%BD%95%E4%B8%AD%E6%9C%80%E9%AB%98%E6%97%B6%E9%80%9F%EF%BC%88%E5%8D%95%E4%BD%8DKM-H%EF%BC%8C%E4%BF%9D%E7%95%99%E4%B8%A4%E4%BD%8D%E5%B0%8F%E6%95%B0%EF%BC%89"><span class="toc-list-text">4.解析修复后的文件，请给出该运动记录中最高时速（单位KM&#x2F;H，保留两位小数）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#5-%E8%A7%A3%E6%9E%90%E4%BF%AE%E5%A4%8D%E5%90%8E%E7%9A%84%E6%96%87%E4%BB%B6%EF%BC%8C%E6%96%87%E4%BB%B6%E4%B8%AD%E8%AE%B0%E5%BD%95%E7%9A%84%E8%AF%A5%E8%AE%BE%E5%A4%87%E7%9A%84%E5%88%B6%E9%80%A0%E5%95%86%E5%90%8D%E7%A7%B0%E4%B8%BA%EF%BC%88%E5%85%A8%E5%B0%8F%E5%86%99%EF%BC%89"><span class="toc-list-text">5.解析修复后的文件，文件中记录的该设备的制造商名称为（全小写）</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#2-%E7%BD%91%E7%BB%9C%E8%BF%90%E7%BB%B4%E5%B0%8F%E5%8A%A9%E6%89%8B"><span class="toc-list-text">2.网络运维小助手</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1"><span class="toc-list-text">1.</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#3-%E6%A0%A1%E5%9B%AD%E7%BD%91%E7%BB%9C%E4%BF%9D%E5%8D%AB%E6%88%98"><span class="toc-list-text">3.校园网络保卫战</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-1"><span class="toc-list-text">1.</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2"><span class="toc-list-text">2.</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#4-%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90-aipowah%EF%BC%88%E6%A3%80%E6%9D%904%EF%BC%89"><span class="toc-list-text">4.电子数据分析-aipowah（检材4）</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E6%9C%8D%E5%8A%A1%E5%99%A8rootfs%E9%87%87%E7%94%A8%E7%9A%84%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%A0%BC%E5%BC%8F"><span class="toc-list-text">1.服务器rootfs采用的文件系统格式</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#-1"><span class="toc-list-text"></span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-AI%E8%AF%88%E9%AA%97%E7%AB%99%E7%82%B9%E7%9A%84%E5%9F%9F%E5%90%8D"><span class="toc-list-text">2.AI诈骗站点的域名</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4%E4%BA%BA%E5%91%98%E7%9A%84%E4%B8%BB%E6%9C%BA%E5%90%8D"><span class="toc-list-text">3.服务器运维人员的主机名</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#authorized-keys%E6%96%87%E4%BB%B6%E5%AD%98%E7%9A%84%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-list-text">authorized_keys文件存的是什么?</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#-2"><span class="toc-list-text"></span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4-%E7%94%A8%E4%BA%8E%E8%AF%88%E9%AA%97%E8%81%8A%E5%A4%A9%E7%9A%84AI%E6%A8%A1%E5%9E%8B%E5%90%8D%E7%A7%B0"><span class="toc-list-text">4.用于诈骗聊天的AI模型名称</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#5-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%97%A5%E5%BF%97%E5%A4%96%E5%8F%91%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8IP%E5%9C%B0%E5%9D%80"><span class="toc-list-text">5.操作系统日志外发的服务器IP地址</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#6-%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E8%B0%83%E7%94%A8AI%E6%A8%A1%E5%9E%8B%E6%9C%8D%E5%8A%A1%E6%89%80%E4%BD%BF%E7%94%A8%E7%9A%84%E5%AF%86%E9%92%A5"><span class="toc-list-text">6.开发人员调用AI模型服务所使用的密钥</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#7-%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E7%9A%84%E9%82%AE%E7%AE%B1"><span class="toc-list-text">7.开发人员的邮箱</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#8-%E2%80%9C%E6%9C%BA%E7%A5%A8%E9%80%80%E6%AC%BE%E2%80%9D%E7%B1%BB%E5%9E%8B%E8%AF%88%E9%AA%97%E9%A1%B5%E7%9A%84%E5%9F%9F%E5%90%8D"><span class="toc-list-text">8.“机票退款”类型诈骗页的域名</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E7%A3%81%E7%9B%98%E9%98%B5%E5%88%97%E7%9A%84%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-list-text">磁盘阵列的文件系统</span></a></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from 电子取证</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E7%BE%8E%E4%BA%9A%E6%9D%AF/%E4%B8%AA%E4%BA%BA%E8%B5%9B/">
+              <strong>个人赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%9124%E6%95%B0%E8%AF%81%E5%86%B3-%E5%9B%A2/">
+              <strong>【转载】24数证决-团</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/2024%E6%95%B0%E8%AF%81%E6%9D%AF%E5%88%9D%E8%B5%9B/">
+              <strong>2024数证杯初赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/2024%E6%95%B0%E8%AF%81%E6%9D%AF%E5%86%B3%E8%B5%9B-%E4%B8%AA%E4%BA%BA%E8%B5%9B/">
+              <strong>2024数证杯决赛-个人赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

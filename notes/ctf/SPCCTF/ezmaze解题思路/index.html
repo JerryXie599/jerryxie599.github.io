@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ezmaze解题思路 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ezmaze解题思路 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/SPCCTF/ezmaze解题思路/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/SPCCTF/ezmaze解题思路/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+            <a class="category-chip" href="/categories/ctf/SPCCTF/">SPCCTF</a>
+          
+        
+      </div>
+      <h1>ezmaze解题思路</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>12 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/SPCCTF/ezmaze解题思路.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <h2 id="1-汇编、机器码、寄存器和栈"><a href="#1-汇编、机器码、寄存器和栈" class="headerlink" title="1. 汇编、机器码、寄存器和栈"></a>1. 汇编、机器码、寄存器和栈</h2><h3 id="1-1-什么是汇编语言（Assembly）？"><a href="#1-1-什么是汇编语言（Assembly）？" class="headerlink" title="1.1 什么是汇编语言（Assembly）？"></a>1.1 什么是汇编语言（Assembly）？</h3><ul>
+<li>电脑最底层其实只能执行“机器码”（machine code），即一连串的二进制数（0 和 1），每组固定长度代表一个指令。</li>
+<li><strong>汇编</strong> 就是人类可读形式的机器码，用助记符（mnemonic）把机器指令翻译成类似 <code>mov eax, 1</code>、<code>call 0x1000</code> 的文本。</li>
+<li>在 x86&#x2F;x64 架构下，每一个助记符（比如 <code>mov</code>、<code>add</code>、<code>call</code>）实际上对应底层一个或多个字节（十六进制形式）编码。</li>
+<li>当 CPU 运行时，先把这些十六进制字节读到指令译码器里，再执行相应动作（把数字放到寄存器、改写内存、跳转到别的地方……）。</li>
+</ul>
+<h3 id="1-2-寄存器（Registers）和栈（Stack）的概念"><a href="#1-2-寄存器（Registers）和栈（Stack）的概念" class="headerlink" title="1.2 寄存器（Registers）和栈（Stack）的概念"></a>1.2 寄存器（Registers）和栈（Stack）的概念</h3><ul>
+<li><strong>寄存器</strong>：CPU 内部的“小抽屉”，用来存放临时数据或地址。x86&#x2F;x64 常见的寄存器有 <code>RAX/EAX</code>、<code>RBX/EBX</code>、<code>RSP/ESP</code>（栈指针）等等。</li>
+<li><strong>栈（Stack）</strong>：它是一块特殊的内存区域，遵从“后进先出”（LIFO）原则。常见的操作有“压栈”（push）和“弹栈”（pop）。</li>
+<li>栈通常与 <code>RSP</code>（在 64 位下，用 64 位的 RSP；在 32 位下，用 32 位的 ESP）寄存器配合：<ul>
+<li>当执行 <code>push xx</code> 时，CPU 会先把 <code>RSP</code> 减去相应字节数（在 x64 下通常是减 8），然后把数据写入新 <code>RSP</code> 指向的内存；</li>
+<li>当执行 <code>pop xx</code> 时，CPU 先从 <code>RSP</code> 指向的内存读出一个值，再把 <code>RSP</code> 增加相应字节数（x64 下通常是加 8），完成“弹出”操作。</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-3-为什么要用栈？"><a href="#1-3-为什么要用栈？" class="headerlink" title="1.3 为什么要用栈？"></a>1.3 为什么要用栈？</h3><ul>
+<li>最常见的场景是在函数调用时保存“返回地址”以及函数内部的局部变量。</li>
+<li><strong>CALL</strong> 指令会把“下一条指令的地址”压到栈里，作为返回地址；然后跳到函数入口执行。</li>
+<li>在函数尾部必须执行 <strong>RET</strong>，它会从栈顶弹出一个地址（当做返回地址），跳回到那个地方继续执行外层代码。</li>
+</ul>
+<p>如果你省略了 <code>RET</code>，或者你让 “CALL 把地址压进去” 之后，却没有与之对应的 “从栈里弹出来” 操作，CPU 的栈指针 <code>RSP</code>（或 <code>ESP</code>）就会“向下”（数值变小）而没有“向上”弹回原位。反过来，如果把某个值放到栈里之后，反汇编器没有找到对应的“弹出”动作，就会认为“栈不平衡”–– 这就是 IDA 说“positive sp value has been found”的根本原因（我们后面会具体解释）。</p>
+<hr>
+<h2 id="2-x86-x64-里的-CALL-与-RET-指令"><a href="#2-x86-x64-里的-CALL-与-RET-指令" class="headerlink" title="2. x86&#x2F;x64 里的 CALL 与 RET 指令"></a>2. x86&#x2F;x64 里的 <code>CALL</code> 与 <code>RET</code> 指令</h2><h3 id="2-1-CALL-rel32-指令"><a href="#2-1-CALL-rel32-指令" class="headerlink" title="2.1 CALL rel32 指令"></a>2.1 <code>CALL rel32</code> 指令</h3><p>在 x86-64 架构下，最常见的函数调用指令形式是：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E8 xx xx xx xx    ; CALL rel32</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>其中 <code>E8</code> 是这个指令的 opcode（操作码）。</li>
+<li>紧跟的 4 个字节 <code>xx xx xx xx</code> 是一个有符号 32 位立即数（signed 32-bit immediate），我们叫它 <code>rel32</code>。</li>
+<li>执行这条指令时，CPU 会做两件事：<ol>
+<li><strong>压栈</strong>：把“当前指令末尾下一条要执行的指令地址”(RIP+5)压入栈顶；（压栈动作对应 <code>push (RIP+5)</code>，RIP 是当前 instruction pointer）</li>
+<li><strong>跳转</strong>：计算跳转目标地址 &#x3D; （当前指令末尾地址 RIP+5） + <code>rel32</code>，然后把 <code>RIP</code> 指向那个地址开始执行。</li>
+</ol>
+</li>
+</ul>
+<p>举个简单例子，如果当前 <code>RIP = 0x1000</code>，代码是 <code>E8 FC FF FF FF</code>：</p>
+<ol>
+<li>指令长度是 5 个字节（<code>E8</code> + 4 字节 immediate）。</li>
+<li>下一条指令地址就是 <code>0x1000 + 5 = 0x1005</code>。</li>
+<li>immediate &#x3D; <code>FC FF FF FF</code>，这是一个有符号数，十六进制的 <code>0xFFFFFFFC</code> 等于十进制 -4。</li>
+<li>跳转目标 &#x3D; <code>0x1005 + (-4) = 0x1001</code>。</li>
+<li>CPU 把 <code>0x1005</code> 压入栈，然后把 RIP 改成 <code>0x1001</code>，从 <code>0x1001</code> 开始执行下面的指令。</li>
+</ol>
+<p>注意：这条 <code>CALL</code> 里面，压到栈里的“返回地址”是 <code>0x1005</code>，后面必须要有一个对应的 <code>RET</code>，才会从栈里弹出 <code>0x1005</code> 并返回到 <code>0x1005</code> 处继续执行。</p>
+<h3 id="2-2-RET-指令"><a href="#2-2-RET-指令" class="headerlink" title="2.2 RET 指令"></a>2.2 <code>RET</code> 指令</h3><ul>
+<li>在 x86-64 下，最基本的 <code>RET</code>（有时会写成 <code>C3</code>）表示“弹出一个 8 字节（64 位）的值做为返回地址，然后跳到那个地址继续执行”。</li>
+<li>如果你在 <code>CALL</code> 之后没有紧跟一个 <code>RET</code>，那栈里就会多留一个返回地址。反汇编器就会报错：它“看见 CALL 把一个返回地址压进来，可是源码里没看到 RET 会把它弹回去”。</li>
+</ul>
+<p>这就造成了“栈指针（RSP）”的“正&#x2F;负”变化不平衡的问题，IDA 反编译器对此非常敏感，它一旦发现“在函数体里出现了多余的压栈却没有匹配的弹栈”，就会放弃生成伪代码，并提示“positive sp value has been found”（意思是“发现栈指针向上增长后并未恢复”）。</p>
+<hr>
+<h2 id="3-IDA-反编译报错-“positive-sp-value-has-been-found”-的含义"><a href="#3-IDA-反编译报错-“positive-sp-value-has-been-found”-的含义" class="headerlink" title="3. IDA 反编译报错 “positive sp value has been found” 的含义"></a>3. IDA 反编译报错 “positive sp value has been found” 的含义</h2><p>当 IDA 试图把一段汇编翻译成 C 风格的伪代码时，它背后要做的事情包括：</p>
+<ol>
+<li><strong>控制流分析</strong>：跟踪所有可能的跳转（jmp）、调用（call）、条件&#x2F;无条件分支（je、jne、jz 等），把整个函数的“执行流程”连成一张箭头图。</li>
+<li><strong>栈平衡检查</strong>：在进入函数时，IDA 假定函数的栈是平衡的（RSP 指向某个固定位置）。对于每条 <code>push</code>&#x2F;<code>pop</code>、<code>call</code>&#x2F;<code>ret</code>、<code>sub rsp, xxx</code>&#x2F;<code>add rsp, xxx</code>，IDA 都会更新它对栈指针的“当前预期值”。</li>
+<li><strong>生成伪代码</strong>：当控制流和栈平衡都满足“合法函数”的条件时，IDA 才会把小块汇编转换成类似 C 语法的语句。</li>
+</ol>
+<p>如果 IDA 在函数体里看到一条 <code>CALL</code> 指令，然后到函数尾部都没找到相应的 <code>RET</code>，就会认为“栈指针向上（push）了却没有向下（pop）”，也就是“positive sp value has been found”（直译：找到了正的栈指针偏移），它就会中断反编译，并给出错误提示。原因是：IDA 认为反编译器无法在这样的不平衡栈里安全地生成正确的伪代码。</p>
+<hr>
+<h2 id="4-你所看到的那段真实汇编-机器码"><a href="#4-你所看到的那段真实汇编-机器码" class="headerlink" title="4. 你所看到的那段真实汇编 &#x2F; 机器码"></a>4. 你所看到的那段真实汇编 &#x2F; 机器码</h2><p>让我们回到你的三张截图对应的位置和字节流（以十六进制表示）：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">地址 0x14000185F （文件偏移 0xE5F）处的原始字节：</span><br><span class="line">  E8 FC FF FF FF  C6 05 A2 78 00 00  26  C6 05 8D 78</span><br><span class="line">  ↓</span><br><span class="line">  [其余可能还有其他字节，但主要就看这些]</span><br></pre></td></tr></table></figure>
+
+<p>把它拆分开来，逐字节对照：</p>
+<ol>
+<li><code>E8 FC FF FF FF</code><ul>
+<li><code>E8</code>：CALL rel32 的 opcode。</li>
+<li>接下来的 4 字节 <code>FC FF FF FF</code> 组成有符号 32 位立即数 <code>0xFFFFFFFC</code>，等于十进制 -4。</li>
+<li>如前面所说，如果当前指令在 <code>0x14000185F</code>，它会把“返回地址”<code>0x14000185F+5 = 0x140001864</code>压栈，然后跳转到 <code>0x140001864 + (-4) = 0x140001860</code> 处。</li>
+</ul>
+</li>
+<li><code>C6 05 A2 78 00 00 26</code><ul>
+<li>这是一条 <code>mov byte ptr [0x000078A2], 0x26</code></li>
+<li><em>拆解</em>:<ul>
+<li><code>C6 05</code>：这两个字节的前缀是“mov 一个字节到绝对内存地址”的编码，后面紧跟 4 字节代表内存地址，再跟 1 字节表示要写入的立即数。</li>
+<li><code>A2 78 00 00</code>：低字节在前，所以是地址 <code>0x000078A2</code>。</li>
+<li><code>26</code>：要写入的数值（0x26）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>C6 05 8D 78 00 00 ??</code><ul>
+<li>类似地，也是 <code>mov byte ptr [0x0000788D], XX</code> 形式，只是 XX 可能是另一常量。</li>
+</ul>
+</li>
+</ol>
+<p>如果把这条 <code>CALL</code> 当作普通指令执行，执行流程会是：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">0x14000185F: CALL 0x140001860       ; 压栈返回地址 0x140001864，跳转到 0x140001860</span><br><span class="line">0x140001860: mov [0x78A2], 0x26     ; 写内存</span><br><span class="line">0x140001867: mov [0x788D], XX       ; 写内存</span><br><span class="line">……             </span><br><span class="line">0x14000186x: RET                     ; 或者后续代码里才有 ret</span><br></pre></td></tr></table></figure>
+
+<p>但是注意，<code>CALL</code> 立刻跳到 <code>0x140001860</code>，<strong>并不会</strong>先把下面的 <code>C6 05 …</code> 当成真正指令去线性执行（在 CPU 看到这行字节时，的确会跳到 <code>0x140001860</code> 开始执行那里的 <code>mov [0x78A2],0x26</code>）。唯一问题在于：CPU 在执行 <code>CALL</code> 时把返回地址 <code>0x140001864</code> 压到栈上，可是如果在 <code>0x140001860</code> 那里执行完 <code>mov [0x78A2],0x26</code> 这类写内存指令后，<strong>直接就往下走</strong>，却从未在合适位置“用 RET 把 0x140001864 弹回去”； 最后如果程序遇到的第一个 <code>RET</code>（假设在更后面）并不会把它弹到原来调用处，而是把栈顶当做另一个地址来跳，可能导致崩溃或不可预知的行为。<strong>这是程序员有意“搞”的一种“控制流迷惑”或“反调试手段”。</strong></p>
+<p>从 IDA 角度看，它在反编译时会说：“好像在这里有一次 <code>CALL</code>，把返回地址压栈了，但我找不到对应的 <code>RET</code> 把它弹出去，这就意味着栈平衡被破坏了”。于是它标记 “positive sp value has been found”，拒绝继续生成伪代码。</p>
+<h3 id="补充：什么是“控制流迷惑”？"><a href="#补充：什么是“控制流迷惑”？" class="headerlink" title="补充：什么是“控制流迷惑”？"></a>补充：什么是“控制流迷惑”？</h3><ul>
+<li>很多加密保护或者作者为了防止静态分析，会故意故弄玄虚地用“CALL → 跳到自己内部写数据 → 再跳回来”这种技巧：看起来像一个正常的函数调用，但实际上它跳到自己后面的数据区，把那些数据解释成指令来执行，再靠某个跳转或其他手段回到正常流程。</li>
+<li>对分析者来说，<code>CALL</code> 后面没有 <code>RET</code>，就报错；对程序本身来说，如果它自己在写好的二进制里偷偷“跳回”并用别的方法平衡栈，也可以正常运行，但 IDA 这儿跟不清楚它是什么逻辑。</li>
+</ul>
+<hr>
+<h2 id="5-为什么把-E8-改成-90（NOP）就能让-IDA-看到伪代码？"><a href="#5-为什么把-E8-改成-90（NOP）就能让-IDA-看到伪代码？" class="headerlink" title="5. 为什么把 E8 改成 90（NOP）就能让 IDA 看到伪代码？"></a>5. 为什么把 <code>E8</code> 改成 <code>90</code>（NOP）就能让 IDA 看到伪代码？</h2><p>回想一下：原先的字节流是：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E8 FC FF FF FF   C6 05 A2 78 00 00   26   C6 05 8D 78 …</span><br></pre></td></tr></table></figure>
+
+<p>把第一个字节 <code>E8</code>（CALL）的 opcode 换为 <code>90</code>，就变成：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">90 FC FF FF FF   C6 05 A2 78 00 00   26   C6 05 8D 78 …</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>**90**</code>** 在 x86&#x2F;x64 里是 <strong><code>**NOP**</code></strong>（No Operation）** 的意思，表示“什么都不做，仅仅走过这一字节，执行下一个地址”。</li>
+<li>换掉之后，IDA 就会从 <code>0x14000185F</code> 开始把这几字节当作：<ol>
+<li><code>90</code> → 执行 NOP，不管栈；</li>
+<li>然后看到 <code>FC</code>、<code>FF</code>、<code>FF</code>、<code>FF</code>……这几个字节就会被当成零散的“数据”或“立即数”去继续配合下一个合法的指令前缀解析，最终可能就匹配成 <code>mov [0x78A2], 0x26</code> 这样的指令。</li>
+</ol>
+</li>
+<li>关键是：<strong>此时并没有任何“CALL”把返回地址压到栈</strong>，所以 IDA 就不会说“栈不平衡”了。</li>
+<li>反过来，只要栈操作对称（每次压栈都有弹栈），IDA 的反编译器就可以顺利进行“控制流和栈平衡”分析，最终输出伪 C 代码。</li>
+</ul>
+<p>用一句话总结：</p>
+<p>把 <code>E8</code> 改成 <code>90</code>，就相当于把那条“压栈又跳走到后面数据区再执行”的“反调试陷阱”给干掉了，底层变成了“正常线性编码”，IDA 得以继续往下看，伪代码自然就跑出来了。</p>
+<hr>
+<h2 id="6-从头到尾的“知识点串讲”"><a href="#6-从头到尾的“知识点串讲”" class="headerlink" title="6. 从头到尾的“知识点串讲”"></a>6. 从头到尾的“知识点串讲”</h2><p>下面我再把上面几个关键点按逻辑顺序串起来，帮助你从零基础理解：</p>
+<ol>
+<li><strong>CPU 执行过程</strong><ul>
+<li>CPU 按照 <code>RIP</code>（指令指针）中记录的地址去取下一条指令的机器码（字节流）。</li>
+<li>取到一个操作码（opcode）后，CPU 会解析后面若干字节做为“立即数”或“操作数地址”。</li>
+<li>比如看到 <code>E8 XX XX XX XX</code>，CPU 就知道：“我要做一次相对调用（CALL rel32）。”</li>
+</ul>
+</li>
+<li><strong>CALL rel32 是如何工作的</strong><ul>
+<li>CPU 先把“下一条要执行的指令地址”压到栈（RSP 寄存器指向的位置），让这次调用能记得“该跳回来这里”。</li>
+<li>然后再把 <code>RIP = (下一指令地址) + rel32</code> 跳转到新的位置执行。</li>
+</ul>
+</li>
+<li><strong>RET 是如何工作的</strong><ul>
+<li>CPU 看到 <code>RET</code> 后，就从栈顶“弹出”一个值（当成新的 <code>RIP</code>），于是程序就跳回到那个值处继续执行。</li>
+<li>这样，CALL 和 RET 才配成“一对”，保证函数调用结束后返回正确的地方，栈顶同时平衡回到调用前的状态。</li>
+</ul>
+</li>
+<li><strong>什么是“栈平衡被破坏”</strong><ul>
+<li>如果程序里有一个 <code>CALL</code>，却找不到对应的 <code>RET</code>；或者对比 <code>push</code>&#x2F;<code>pop</code>不对称；IDA 反编译器会认为“栈指针向下（压栈）后并未向上（弹栈）回去”，出现“positive sp value” 或者“negative sp value”之类的警告。</li>
+<li>它会直接拒绝生成伪代码，因为不确定下一步栈里是什么，也不知道正确的控制流走向。</li>
+</ul>
+</li>
+<li><strong>作者为什么要这么写？</strong><ul>
+<li>这段二进制的原作者（可能是一个加壳、混淆工具或人为加的“反调试陷阱”），刻意用 <code>CALL (rel=-4)</code> 这种“跳回自己附近再执行数据”的写法，使 IDA 无法追踪，屏蔽了函数内容。</li>
+<li>当你在 IDA 里看到 “createMaze:label0↑p” 这种红色的标签时，就是在告诉你：“这里有一个本地跳转目标，你要非常小心，这里并不是正常的从函数入口到函数出口的直线流程。”</li>
+</ul>
+</li>
+<li><strong>如何破解？</strong><ul>
+<li>最简单粗暴的方法，就是把那条 <code>E8 FC FF FF FF</code> 指令的第一个字节（<code>E8</code>）改成 <code>90</code>（NOP）。</li>
+<li><code>**90**</code><strong>（NOP）含义是“无操作”</strong>，让 CPU 把它忽略掉，不做任何跳转。后面的 <code>FC FF FF FF</code> 就剩下“孤零零”的数据，但这时 IDA 可以把它跟后面的字节一起解析，看出下一条合法的 <code>mov [0x78A2], 0x26</code> 指令。</li>
+<li>这样一来，就没有“压栈”动作，IDA 校验栈时发现没有异常，反编译即可继续往下，成功输出伪代码。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="7-回答你几个“为什么”细节"><a href="#7-回答你几个“为什么”细节" class="headerlink" title="7. 回答你几个“为什么”细节"></a>7. 回答你几个“为什么”细节</h2><ul>
+<li><strong>为什么“CALL rel32” 会把返回地址压栈？</strong><br>这是 x86&#x2F;x64 硬件调用约定的一部分：当你调用一个函数时，CPU 需要知道“函数执行完毕后应该跳回哪儿继续”。CPU 就把“下一条指令的地址”压到栈（RSP 寄存器）里，让 <code>RET</code> 去弹这个地址。</li>
+<li><strong>什么叫“rel32 &#x3D; -4” 为什么跳到自己身上？</strong><br>在 <code>E8 FC FF FF FF</code> 里，<code>FC FF FF FF</code>（小端存储）等价于十进制 <code>-4</code>。<ul>
+<li>如果这条 <code>CALL</code> 位于 <code>0x14000185F</code>，那么压栈的“返回地址”是 <code>0x14000185F + 5 = 0x140001864</code>。</li>
+<li>跳转目标 &#x3D; <code>(0x14000185F + 5) + (-4) = 0x140001860</code>。</li>
+<li>注意 <code>0x140001860</code> 正好是这条 <code>CALL</code> 之后第 2 个字节的位置 —— 也就是说，这条 <code>CALL</code> 实际就是“压栈后回到自己后面的位置继续执行”，以此把后面几字节当作真正要执行的指令。</li>
+</ul>
+</li>
+<li><strong>为什么 IDA 会提示“positive sp value” 并无法反编译？</strong><br>IDA 看到这条 <code>CALL</code>，它会把 <code>RSP</code> 想象成“从 A 变到 A−8”（x64 下每个 call&#x2F;ret 会自动减&#x2F;加 8 字节）。如果在正常函数体里要平衡，IDA 必须找到一个与之配对的 <code>RET</code> 才行。但在你的二进制里，从 <code>0x140001860</code> 开始执行 <code>mov [0x78A2],0x26</code>、<code>mov [0x788D],XX</code> ……一直到函数结束，这条最早的 <code>CALL</code> 压的那 8 字节从没被弹出，IDA 检测到“函数体里出现了一个正的 SP 偏移（压栈多了 8）却没看到对应的弹出”，就干脆放弃反编译。</li>
+<li><strong>为什么单纯改成 <strong><code>**NOP**</code></strong>（</strong><code>**90**</code><strong>）就能让 IDA 反编译通过？</strong><br>把 <code>E8</code> 换成 <code>90</code> 以后，IDA 跟踪到：<ol>
+<li><code>0x14000185F: 90</code> → 做什么都不做，RSP 不变</li>
+<li><code>0x140001860: FC</code> 这时 <code>FC</code>、<code>FF</code>、<code>FF</code>、<code>FF</code> 会被 IDA 当作“剩余的字节”去尝试与下一条合法指令前缀匹配，很快就能拼出 <code>mov [0x78A2],0x26</code>（<code>C6 05 A2 78 00 00 26</code>）。</li>
+<li>接下来 <code>mov [0x78A2],0x26</code> → 并不会影响栈；<code>mov [0x788D],XX</code> → 也不影响栈。</li>
+<li>如此一来，栈从头到尾都没被动过（IDA 看到的都是正常写内存指令、也许最后才有一次 <code>RET</code>），完全“栈平衡”，反编译器就可以把这些指令逐行推导出伪 C 代码。</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h2 id="8-结合截图说明那些红色的提醒"><a href="#8-结合截图说明那些红色的提醒" class="headerlink" title="8. 结合截图说明那些红色的提醒"></a>8. 结合截图说明那些红色的提醒</h2><p>在你贴出的第二张截图里，IDA 把 <code>createMaze:label0↑p</code> 这行显示成红色：</p>
+<ul>
+<li><code>createMaze</code> 是函数名。</li>
+<li><code>label0</code> 是 IDA 自动生成的“本地标签”，表示函数体里某个“跳转目标”。</li>
+<li><code>↑p</code> 是 IDA 另一个提示，意味着这儿有一次“尾调用” 或“push-prologue” 等不常规的控制流。</li>
+<li>IDA 用 <strong>红色</strong> 来标记：<ol>
+<li>这是一个“本地标签”，不是函数入口（函数入口通常是蓝色或绿色）。</li>
+<li>背后可能有不对称的栈操作（如这例中那条奇怪的 <code>CALL</code> → 跳到自己），需要开发者额外注意。</li>
+</ol>
+</li>
+</ul>
+<p>当你把 <code>E8</code> 换成 <code>90</code> 以后，那一行对应的“跳转”就没有了，IDA 自然不会再把 <code>label0</code> 标成红色，因为此时不会再有“异常的栈偏移”或“奇怪的跳转”了。</p>
+<hr>
+<h2 id="9-总结"><a href="#9-总结" class="headerlink" title="9. 总结"></a>9. 总结</h2><ul>
+<li><strong>CALL（E8）</strong>：会把“返回地址”压栈，然后按相对偏移跳转。一定要有后面的 <strong>RET</strong> 才能保持栈平衡。</li>
+<li><strong>RET（C3）</strong>：会把栈顶的地址弹出来，跳回到那个地址。配合 CALL 确保函数调用后回到正确位置。</li>
+<li><strong>栈平衡</strong>：IDA 反编译时会追踪每次“压栈”和“弹栈”，如果不对称，就会报 “positive sp value has been found” 并中断。</li>
+<li><strong>反调试&#x2F;混淆技巧</strong>：有人会用 <code>CALL rel = -4</code>（比如 <code>E8 FC FF FF FF</code>）跳到自己后面当作真正指令段，一来让 IDA 的“压栈”与“弹栈”不平衡，二来降低静态分析的可读性。</li>
+<li><strong>破解思路</strong>：直接把那条 “CALL” 的 opcode（<code>E8</code>）改成 “NOP”（<code>90</code>），这样就没有“压栈”动作，IDA 反编译器一看到栈平衡了，就顺利把后续指令还原成伪代码。</li>
+</ul>
+<p>至此，你应该可以把所有步骤串起来了：</p>
+<ol>
+<li>看到 IDA 报 error，说“positive sp value” → 意味着它在这儿发现了一个“压栈”但没找到匹配的“弹栈”。</li>
+<li>定位到那条 <code>E8 FC FF FF FF</code> → 这是一个“CALL 跳回自己后面的数据区”，只要删掉或改成 <code>NOP</code>，IDA 就能恢复正常分析。</li>
+<li>把 <code>E8</code>（CALL）改 <code>90</code>（NOP） → 原本的“压栈+跳转”就被干掉了 → 栈平衡恢复 → IDA 成功反编译并显示伪代码。</li>
+</ol>
+<p>希望这段从最基础原理到具体例子的讲解，能帮助你彻底搞懂“为什么这条 CALL 会让 IDA 报错”，以及“把它改成 NOP 为何可以让伪代码重现”。如果你还有任何更细节的疑问，欢迎继续提问！</p>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E6%B1%87%E7%BC%96%E3%80%81%E6%9C%BA%E5%99%A8%E7%A0%81%E3%80%81%E5%AF%84%E5%AD%98%E5%99%A8%E5%92%8C%E6%A0%88"><span class="toc-list-text">1. 汇编、机器码、寄存器和栈</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AF%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%EF%BC%88Assembly%EF%BC%89%EF%BC%9F"><span class="toc-list-text">1.1 什么是汇编语言（Assembly）？</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#1-2-%E5%AF%84%E5%AD%98%E5%99%A8%EF%BC%88Registers%EF%BC%89%E5%92%8C%E6%A0%88%EF%BC%88Stack%EF%BC%89%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-list-text">1.2 寄存器（Registers）和栈（Stack）的概念</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#1-3-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%E6%A0%88%EF%BC%9F"><span class="toc-list-text">1.3 为什么要用栈？</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-x86-x64-%E9%87%8C%E7%9A%84-CALL-%E4%B8%8E-RET-%E6%8C%87%E4%BB%A4"><span class="toc-list-text">2. x86&#x2F;x64 里的 CALL 与 RET 指令</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#2-1-CALL-rel32-%E6%8C%87%E4%BB%A4"><span class="toc-list-text">2.1 CALL rel32 指令</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#2-2-RET-%E6%8C%87%E4%BB%A4"><span class="toc-list-text">2.2 RET 指令</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-IDA-%E5%8F%8D%E7%BC%96%E8%AF%91%E6%8A%A5%E9%94%99-%E2%80%9Cpositive-sp-value-has-been-found%E2%80%9D-%E7%9A%84%E5%90%AB%E4%B9%89"><span class="toc-list-text">3. IDA 反编译报错 “positive sp value has been found” 的含义</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4-%E4%BD%A0%E6%89%80%E7%9C%8B%E5%88%B0%E7%9A%84%E9%82%A3%E6%AE%B5%E7%9C%9F%E5%AE%9E%E6%B1%87%E7%BC%96-%E6%9C%BA%E5%99%A8%E7%A0%81"><span class="toc-list-text">4. 你所看到的那段真实汇编 &#x2F; 机器码</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9A%E4%BB%80%E4%B9%88%E6%98%AF%E2%80%9C%E6%8E%A7%E5%88%B6%E6%B5%81%E8%BF%B7%E6%83%91%E2%80%9D%EF%BC%9F"><span class="toc-list-text">补充：什么是“控制流迷惑”？</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#5-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%8A%8A-E8-%E6%94%B9%E6%88%90-90%EF%BC%88NOP%EF%BC%89%E5%B0%B1%E8%83%BD%E8%AE%A9-IDA-%E7%9C%8B%E5%88%B0%E4%BC%AA%E4%BB%A3%E7%A0%81%EF%BC%9F"><span class="toc-list-text">5. 为什么把 E8 改成 90（NOP）就能让 IDA 看到伪代码？</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#6-%E4%BB%8E%E5%A4%B4%E5%88%B0%E5%B0%BE%E7%9A%84%E2%80%9C%E7%9F%A5%E8%AF%86%E7%82%B9%E4%B8%B2%E8%AE%B2%E2%80%9D"><span class="toc-list-text">6. 从头到尾的“知识点串讲”</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#7-%E5%9B%9E%E7%AD%94%E4%BD%A0%E5%87%A0%E4%B8%AA%E2%80%9C%E4%B8%BA%E4%BB%80%E4%B9%88%E2%80%9D%E7%BB%86%E8%8A%82"><span class="toc-list-text">7. 回答你几个“为什么”细节</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#8-%E7%BB%93%E5%90%88%E6%88%AA%E5%9B%BE%E8%AF%B4%E6%98%8E%E9%82%A3%E4%BA%9B%E7%BA%A2%E8%89%B2%E7%9A%84%E6%8F%90%E9%86%92"><span class="toc-list-text">8. 结合截图说明那些红色的提醒</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#9-%E6%80%BB%E7%BB%93"><span class="toc-list-text">9. 总结</span></a></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

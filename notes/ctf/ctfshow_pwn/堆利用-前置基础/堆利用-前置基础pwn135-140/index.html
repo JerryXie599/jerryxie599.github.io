@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>堆利用-前置基础pwn135-140 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="堆利用-前置基础pwn135-140 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/ctfshow_pwn/堆利用-前置基础/堆利用-前置基础pwn135-140/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/ctfshow_pwn/堆利用-前置基础/堆利用-前置基础pwn135-140/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+            <a class="category-chip" href="/categories/ctf/ctfshow-pwn/">ctfshow_pwn</a>
+          
+            <a class="category-chip" href="/categories/ctf/ctfshow-pwn/%E5%A0%86%E5%88%A9%E7%94%A8-%E5%89%8D%E7%BD%AE%E5%9F%BA%E7%A1%80/">堆利用-前置基础</a>
+          
+        
+      </div>
+      <h1>堆利用-前置基础pwn135-140</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>26 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/ctfshow_pwn/堆利用-前置基础/堆利用-前置基础pwn135-140.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <h2 id="Pwn135"><a href="#Pwn135" class="headerlink" title="Pwn135"></a>Pwn135</h2><figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">menu</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;Choose a function to allocate heap memory:&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;1. malloc&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;2. calloc&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;3. realloc&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">printf</span>(<span class="string">&quot;Enter your choice: &quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> __int64 <span class="title function_">ctfshow</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> n4; <span class="comment">// [rsp+4h] [rbp-1Ch] BYREF</span></span><br><span class="line">  <span class="type">size_t</span> size; <span class="comment">// [rsp+8h] [rbp-18h] BYREF</span></span><br><span class="line">  <span class="type">void</span> *ptr; <span class="comment">// [rsp+10h] [rbp-10h]</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v4; <span class="comment">// [rsp+18h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v4 = __readfsqword(<span class="number">0x28u</span>);</span><br><span class="line">  ptr = <span class="number">0</span>;</span><br><span class="line">  __isoc99_scanf(<span class="string">&quot;%d&quot;</span>, &amp;n4);</span><br><span class="line">  <span class="keyword">if</span> ( n4 == <span class="number">2</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Enter the size to allocate using calloc: &quot;</span>);</span><br><span class="line">    __isoc99_scanf(<span class="string">&quot;%lu&quot;</span>, &amp;size);</span><br><span class="line">    ptr = <span class="built_in">calloc</span>(<span class="number">1u</span>, size);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> ( n4 &gt; <span class="number">2</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( n4 != <span class="number">3</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span> ( n4 == <span class="number">4</span> )</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Here is you want: &quot;</span>);</span><br><span class="line">        system(<span class="string">&quot;cat /ctfshow_flag&quot;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">goto</span> LABEL_12;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Enter the size to allocate using realloc: &quot;</span>);</span><br><span class="line">    __isoc99_scanf(<span class="string">&quot;%lu&quot;</span>, &amp;size);</span><br><span class="line">    ptr = <span class="built_in">realloc</span>(ptr, size);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( n4 != <span class="number">1</span> )</span><br><span class="line">    &#123;</span><br><span class="line">LABEL_12:</span><br><span class="line">      <span class="built_in">puts</span>(<span class="string">&quot;Invalid choice.&quot;</span>);</span><br><span class="line">      <span class="keyword">return</span> __readfsqword(<span class="number">0x28u</span>) ^ v4;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Enter the size to allocate using malloc: &quot;</span>);</span><br><span class="line">    __isoc99_scanf(<span class="string">&quot;%lu&quot;</span>, &amp;size);</span><br><span class="line">    ptr = <span class="built_in">malloc</span>(size);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( ptr )</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Memory allocated at address: %p\n&quot;</span>, ptr);</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Memory allocation failed.&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> __readfsqword(<span class="number">0x28u</span>) ^ v4;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里是展示里如何开辟内存区域：</p>
+<p><code>malloc</code></p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scanf(&quot;%lu&quot;, &amp;size);</span><br><span class="line">ptr = malloc(size);</span><br></pre></td></tr></table></figure>
+
+<p>作用：申请 <code>size</code> 字节堆内存，返回首地址给 <code>ptr</code>；内存内容未清零、这里只申请，不写内容</p>
+<p><code>calloc</code></p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scanf(&quot;%lu&quot;, &amp;size);</span><br><span class="line">ptr = calloc(1, size);</span><br></pre></td></tr></table></figure>
+
+<p>作用：申请 <code>1 * size</code> 字节内存，返回首地址给 <code>ptr</code>，内存自动清零</p>
+<p><code>realloc</code></p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scanf(&quot;%lu&quot;, &amp;size);</span><br><span class="line">ptr = realloc(ptr, size);</span><br></pre></td></tr></table></figure>
+
+<p>因为此时 <code>ptr</code> 初值是 <code>NULL</code>，所以等价于：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ptr = malloc(size);</span><br></pre></td></tr></table></figure>
+
+<h2 id="pwn136"><a href="#pwn136" class="headerlink" title="pwn136"></a>pwn136</h2><figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">menu</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;Choose a pointer to free:&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;1. ptr_malloc&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;2. ptr_calloc&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;3. ptr_realloc&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">printf</span>(<span class="string">&quot;Enter your choice: &quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> __int64 <span class="title function_">ctfshow</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> n2; <span class="comment">// [rsp+Ch] [rbp-24h] BYREF</span></span><br><span class="line">    <span class="type">void</span> *ptr; <span class="comment">// [rsp+10h] [rbp-20h]</span></span><br><span class="line">    <span class="type">void</span> *ptr_1; <span class="comment">// [rsp+18h] [rbp-18h]</span></span><br><span class="line">    <span class="type">void</span> *ptr_2; <span class="comment">// [rsp+20h] [rbp-10h]</span></span><br><span class="line">    <span class="type">unsigned</span> __int64 v5; <span class="comment">// [rsp+28h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">    v5 = __readfsqword(<span class="number">0x28u</span>);</span><br><span class="line">    ptr_1 = <span class="number">0</span>;</span><br><span class="line">    ptr_2 = <span class="number">0</span>;</span><br><span class="line">    ptr = <span class="built_in">malloc</span>(<span class="number">4u</span>);</span><br><span class="line">    <span class="keyword">if</span> ( ptr )</span><br><span class="line">    &#123;</span><br><span class="line">        ptr_1 = <span class="built_in">calloc</span>(<span class="number">1u</span>, <span class="number">4u</span>);</span><br><span class="line">        <span class="keyword">if</span> ( ptr_1 )</span><br><span class="line">        &#123;</span><br><span class="line">            ptr_2 = <span class="built_in">realloc</span>(<span class="number">0</span>, <span class="number">4u</span>);</span><br><span class="line">            <span class="keyword">if</span> ( ptr_2 )</span><br><span class="line">            &#123;</span><br><span class="line">                __isoc99_scanf(<span class="string">&quot;%d&quot;</span>, &amp;n2);</span><br><span class="line">                <span class="keyword">if</span> ( n2 == <span class="number">2</span> )</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="built_in">free</span>(ptr_1);</span><br><span class="line">                    <span class="built_in">puts</span>(<span class="string">&quot;ptr_calloc freed.&quot;</span>);</span><br><span class="line">                    <span class="keyword">return</span> __readfsqword(<span class="number">0x28u</span>) ^ v5;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> ( n2 &gt; <span class="number">2</span> )</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> ( n2 == <span class="number">3</span> )</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="built_in">free</span>(ptr_2);</span><br><span class="line">                        <span class="built_in">puts</span>(<span class="string">&quot;ptr_realloc freed.&quot;</span>);</span><br><span class="line">                        <span class="keyword">return</span> __readfsqword(<span class="number">0x28u</span>) ^ v5;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> ( n2 == <span class="number">4</span> )</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="built_in">printf</span>(<span class="string">&quot;Here is you want: &quot;</span>);</span><br><span class="line">                        system(<span class="string">&quot;cat /ctfshow_flag&quot;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> ( n2 == <span class="number">1</span> )</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="built_in">free</span>(ptr);</span><br><span class="line">                    <span class="built_in">puts</span>(<span class="string">&quot;ptr_malloc freed.&quot;</span>);</span><br><span class="line">                    <span class="keyword">return</span> __readfsqword(<span class="number">0x28u</span>) ^ v5;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="built_in">puts</span>(<span class="string">&quot;Invalid choice.&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> __readfsqword(<span class="number">0x28u</span>) ^ v5;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">puts</span>(<span class="string">&quot;Memory allocation failed for ptr_realloc.&quot;</span>);</span><br><span class="line">            <span class="built_in">free</span>(ptr);</span><br><span class="line">            <span class="built_in">free</span>(ptr_1);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">puts</span>(<span class="string">&quot;Memory allocation failed for ptr_calloc.&quot;</span>);</span><br><span class="line">            <span class="built_in">free</span>(ptr);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">&quot;Memory allocation failed for ptr_malloc.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> __readfsqword(<span class="number">0x28u</span>) ^ v5;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>相对于Pwn135来说，pwn136就是在于释放堆块。下面我们来详细看看函数。</p>
+<p>函数一开始会做三次清零：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ptr_malloc = NULL;</span><br><span class="line">ptr_calloc = NULL;</span><br><span class="line">ptr_realloc = NULL;</span><br></pre></td></tr></table></figure>
+
+<p>这样做的意义是：保证变量一开始处于明确状态，避免使用未初始化指针，这是很常见的基础写法。</p>
+<p>**第一次分配：**第一块堆内存来自</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ptr_malloc = <span class="built_in">malloc</span>(<span class="number">4</span>);</span><br></pre></td></tr></table></figure>
+
+<p>含义：向堆申请 4 字节，返回值是这块内存的起始地址，如果失败，返回 <code>NULL</code>；后面紧接着就是失败检查：</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!ptr_malloc) &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Memory allocation failed for ptr_malloc.&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>逻辑非常直接：如果第一块都申请失败，后面的流程没法继续，所以直接结束函数</p>
+<p><strong>第二次分配</strong>：第二块堆内存来自</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ptr_calloc = <span class="built_in">calloc</span>(<span class="number">1</span>, <span class="number">4</span>);</span><br></pre></td></tr></table></figure>
+
+<p>它和 <code>malloc(4)</code> 的区别是：</p>
+<ul>
+<li><code>malloc(4)</code> 只申请空间</li>
+<li><code>calloc(1, 4)</code> 申请 <code>1 * 4 = 4</code> 字节，并且把内容清零</li>
+</ul>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!ptr_calloc) &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Memory allocation failed for ptr_calloc.&quot;</span>);</span><br><span class="line">    <span class="built_in">free</span>(ptr_malloc);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里要先 <code>free(ptr_malloc)</code>的原因是：</p>
+<p>第一块已经申请成功了，第二块失败时，如果不释放第一块，就会留下未回收资源；这里想表达的是出错时要把已经拿到的资源主动清理掉。</p>
+<p><strong>第三次分配</strong>：第三块堆内存来自</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ptr_realloc = <span class="built_in">realloc</span>(<span class="literal">NULL</span>, <span class="number">4</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这是这题最需要记住的点之一。这里不是“扩容已有堆块”，因为传进去的是 <code>NULL</code>。所以这句的实际语义是：</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ptr_realloc = <span class="built_in">malloc</span>(<span class="number">4</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这里只是用 <code>realloc</code> 的另一种合法用法来演示接口行为。后面的失败分支是：</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!ptr_realloc) &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Memory allocation failed for ptr_realloc.&quot;</span>);</span><br><span class="line">    <span class="built_in">free</span>(ptr_malloc);</span><br><span class="line">    <span class="built_in">free</span>(ptr_calloc);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里的清理逻辑比前一个分支多一步，因为此时已经成功拿到过两块内存：</p>
+<pre><code>- `ptr_malloc`
+- `ptr_calloc`
+</code></pre>
+<p>所以第三次失败时，要把前两块一起释放。</p>
+<p>**如果输入 <strong><code>**1**</code></strong>，程序释放 **<code>**ptr_malloc**</code></p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">free</span>(ptr_malloc);</span><br><span class="line"><span class="built_in">puts</span>(<span class="string">&quot;ptr_malloc freed.&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>释放由 <code>malloc</code> 得到的那块内存</p>
+<p>**如果输入 <strong><code>**2**</code></strong>，程序释放 **<code>**ptr_calloc**</code></p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">free</span>(ptr_calloc);</span><br><span class="line"><span class="built_in">puts</span>(<span class="string">&quot;ptr_calloc freed.&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>释放由 <code>calloc</code> 得到的那块内存</p>
+<p>**如果输入 <strong><code>**3**</code></strong>，程序释放 **<code>**ptr_realloc**</code></p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">free</span>(ptr_realloc);</span><br><span class="line"><span class="built_in">puts</span>(<span class="string">&quot;ptr_realloc freed.&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>“释放由 <code>realloc(NULL, 4)</code> 得到的那块内存”。虽然它来自 <code>realloc</code>，但本质上还是一块普通的堆内存，所以最终仍然是用 <code>free</code> 来释放。</p>
+<h2 id="pwn137"><a href="#pwn137" class="headerlink" title="pwn137"></a>pwn137</h2><p>在此之前可以研读一下这篇文章<a target="_blank" rel="noopener" href="https://ctf-wiki.org/pwn/linux/user-mode/heap/ptmalloc2/heap-overview/#_4">堆概述 - CTF Wiki</a>，本题和文章中的示例代码本质一样。</p>
+<p><code>**sbrk**</code>** 就是把进程堆顶（program break）往上或往下挪，返回堆顶地址。**</p>
+<p><code>**brk(addr)**</code><strong>：把 program break 改到新的地址。</strong></p>
+<p>这里有一个示例代码：</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="type">void</span> *old = sbrk(<span class="number">0</span>);	<span class="comment">//sbrk(0)就是读当前堆顶的位置</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;before: %p\n&quot;</span>, old);</span><br><span class="line"></span><br><span class="line">brk(old + <span class="number">0x1000</span>);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;after grow: %p\n&quot;</span>, sbrk(<span class="number">0</span>));</span><br><span class="line"></span><br><span class="line">brk(old);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;after restore: %p\n&quot;</span>, sbrk(<span class="number">0</span>));</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/54208227/1776222614379-2522a66a-6004-4938-931d-f3f2667dfa60.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">sbrk_brk</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">__pid_t</span> pid; <span class="comment">// eax</span></span><br><span class="line">  <span class="type">void</span> *v1; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">char</span> *addr; <span class="comment">// [rsp+0h] [rbp-10h]</span></span><br><span class="line">  <span class="type">void</span> *v4; <span class="comment">// [rsp+8h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  pid = getpid();</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;sbrk example:%d\n&quot;</span>, pid);</span><br><span class="line">  addr = (<span class="type">char</span> *)sbrk(<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Program Break Location1:%p\n&quot;</span>, addr);</span><br><span class="line">  getchar();</span><br><span class="line">  brk(addr + <span class="number">4096</span>);</span><br><span class="line">  v1 = sbrk(<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Program Break Location2:%p\n&quot;</span>, v1);</span><br><span class="line">  getchar();</span><br><span class="line">  brk(addr);</span><br><span class="line">  v4 = sbrk(<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Program Break Location3:%p\n&quot;</span>, v4);</span><br><span class="line">  getchar();</span><br><span class="line">  <span class="keyword">return</span> system(<span class="string">&quot;cat /ctfshow_flag&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码逻辑是程序先用 <code>sbrk(0)</code> 读出当前 break，再用 <code>brk</code> 把 break 上移 <code>0x1000</code>，然后再次读取确认变化，最后再把 break 恢复回原位置并再次读取确认。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/54208227/1776224223457-2d99839c-ebed-4271-83ff-af4b17f1a4c6.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h2 id="pwn138"><a href="#pwn138" class="headerlink" title="pwn138"></a>pwn138</h2><p>同样可以参考ctfwiki。mmap的作用是将文件或设备映射到进程的地址空间，从而减少内核与用户空间的数据拷贝次数。函数原型如下：</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span>* <span class="title function_">mmap</span><span class="params">(<span class="type">void</span>* addr, <span class="type">size_t</span> length, <span class="type">int</span> prot, <span class="type">int</span> flags, <span class="type">int</span> fd, <span class="type">off_t</span> offset)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<ul>
+<li>addr：由用户设置的映射地址。通常设置为NULL，表示让操作系统选择合适的地址。</li>
+<li>length：映射的内存长度。</li>
+<li>prot：内存区域的保护标志，如PROT_READ（可读）、PROT_WRITE（可写）、 PROT_EXEC（可执行）。</li>
+<li>flags：映射标志，如MAP_SHARED（共享映射）、MAP_PRIVATE（私有映射）、 MAP_ANONYMOUS（匿名映射）。</li>
+<li>fd：文件描述符，用于文件映射。如果是匿名映射，可以设置为-1。</li>
+<li>offset：文件的偏移量，指定从文件的哪个位置开始映射。</li>
+</ul>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __fastcall <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> **argv, <span class="type">const</span> <span class="type">char</span> **envp)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">__pid_t</span> pid; <span class="comment">// eax</span></span><br><span class="line">  <span class="type">void</span> *addr; <span class="comment">// [rsp+8h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  init(argc, argv, envp);</span><br><span class="line">  logo();</span><br><span class="line">  pid = getpid();</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Welcome to private anonymous mapping example::PID:%d\n&quot;</span>, pid);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;Before mmap&quot;</span>);</span><br><span class="line">  getchar();</span><br><span class="line">  addr = mmap(<span class="number">0</span>, <span class="number">0x21000u</span>, <span class="number">3</span>, <span class="number">34</span>, <span class="number">-1</span>, <span class="number">0</span>);</span><br><span class="line">  <span class="keyword">if</span> ( addr == (<span class="type">void</span> *)<span class="number">-1LL</span> )</span><br><span class="line">    errExit(<span class="string">&quot;mmap&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;After mmap&quot;</span>);</span><br><span class="line">  getchar();</span><br><span class="line">  <span class="keyword">if</span> ( munmap(addr, <span class="number">0x21000u</span>) == <span class="number">-1</span> )</span><br><span class="line">    errExit(<span class="string">&quot;munmap&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;After munmap&quot;</span>);</span><br><span class="line">  getchar();</span><br><span class="line">  system(<span class="string">&quot;cat /ctfshow_flag&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>addr = mmap(0, 0x21000u, 3, 34, -1, 0);</code></p>
+<p>第一个参数是 <code>NULL</code>，意思是让内核自己决定映射到哪里；第二个参数 <code>0x21000</code> 是映射长度，也就是申请一块这么大的地址区间；第三个参数 <code>3</code> 其实是 <code>PROT_READ | PROT_WRITE</code>，表示这段内存可读可写；第四个参数 <code>0x22</code> 其实是 <code>MAP_PRIVATE | MAP_ANONYMOUS</code>，表示这是匿名的、私有的映射，不依赖真实文件；第五个参数是 <code>-1</code>，因为既然是匿名映射，文件描述符就没有意义，按约定填 <code>-1</code>；第六个参数是 <code>0</code>，表示偏移为 0。</p>
+<p>程序运行一下长这样</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Welcome to private anonymous mapping example::PID:<span class="number">889243</span></span><br><span class="line">Before mmap</span><br><span class="line"></span><br><span class="line">After mmap</span><br><span class="line"></span><br><span class="line">After munmap</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>我们看一下进程PID:889243的<strong>内存映射表</strong></p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">a1gorithms@A1gorithm:~$ cat /proc/<span class="number">889243</span>/maps	<span class="comment">//Before mmap</span></span><br><span class="line">...</span><br><span class="line"><span class="number">7</span>c42b3a1c000<span class="number">-7</span>c42b3a29000 rw-p <span class="number">00000000</span> <span class="number">00</span>:<span class="number">00</span> <span class="number">0</span> </span><br><span class="line"><span class="number">7</span>c42b3a63000<span class="number">-7</span>c42b3a66000 rw-p <span class="number">00000000</span> <span class="number">00</span>:<span class="number">00</span> <span class="number">0</span> </span><br><span class="line"><span class="number">7</span>c42b3a79000<span class="number">-7</span>c42b3a7b000 rw-p <span class="number">00000000</span> <span class="number">00</span>:<span class="number">00</span> <span class="number">0</span> </span><br><span class="line">...</span><br><span class="line">a1gorithms@A1gorithm:~$ cat /proc/<span class="number">889243</span>/maps	<span class="comment">//After mmap</span></span><br><span class="line">...</span><br><span class="line"><span class="number">7</span>c42b3a1c000<span class="number">-7</span>c42b3a29000 rw-p <span class="number">00000000</span> <span class="number">00</span>:<span class="number">00</span> <span class="number">0</span> </span><br><span class="line"><span class="number">7</span>c42b3a42000<span class="number">-7</span>c42b3a66000 rw-p <span class="number">00000000</span> <span class="number">00</span>:<span class="number">00</span> <span class="number">0</span> </span><br><span class="line"><span class="number">7</span>c42b3a79000<span class="number">-7</span>c42b3a7b000 rw-p <span class="number">00000000</span> <span class="number">00</span>:<span class="number">00</span> <span class="number">0</span> </span><br><span class="line">...</span><br><span class="line">a1gorithms@A1gorithm:~$ cat /proc/<span class="number">889243</span>/maps	<span class="comment">//After munmap</span></span><br><span class="line">...</span><br><span class="line"><span class="number">7</span>c42b3a1c000<span class="number">-7</span>c42b3a29000 rw-p <span class="number">00000000</span> <span class="number">00</span>:<span class="number">00</span> <span class="number">0</span> </span><br><span class="line"><span class="number">7</span>c42b3a63000<span class="number">-7</span>c42b3a66000 rw-p <span class="number">00000000</span> <span class="number">00</span>:<span class="number">00</span> <span class="number">0</span> </span><br><span class="line"><span class="number">7</span>c42b3a79000<span class="number">-7</span>c42b3a7b000 rw-p <span class="number">00000000</span> <span class="number">00</span>:<span class="number">00</span> <span class="number">0</span> </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p><code>0x7c42b3a63000 - 0x7c42b3a42000 = 0x21000</code>也就是我们申请的映射长度。</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">7</span>c42b3a63000 是相应堆的起始地址</span><br><span class="line">rw-p 表明堆具有可读可写权限，并且属于隐私数据。</span><br><span class="line"><span class="number">00000000</span> 表明文件偏移，由于这部分内容并不是从文件中映射得到的，所以为 <span class="number">0</span>。这是匿名映射。</span><br><span class="line"><span class="number">00</span>:<span class="number">00</span> 是主从 (Major/mirror) 的设备号，这部分内容也不是从文件中映射得到的，所以也都为 <span class="number">0</span>。</span><br><span class="line"><span class="number">0</span> 表示着 Inode 号。由于这部分内容并不是从文件中映射得到的，所以为 <span class="number">0</span>。</span><br></pre></td></tr></table></figure>
+
+<p>能明显看到这里给的地址变大了。</p>
+<p>好了，我们来看一下(s)brk和mmap扩内存区域方式：</p>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th><code>brk / sbrk</code></th>
+<th><code>mmap</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>本质</td>
+<td>调整 <strong>program break</strong></td>
+<td>新建一段 <strong>内存映射区</strong></td>
+</tr>
+<tr>
+<td>作用对象</td>
+<td><strong>主堆（heap）</strong> 的顶部</td>
+<td><strong>独立的一段虚拟内存区域</strong></td>
+</tr>
+<tr>
+<td>地址形态</td>
+<td>通常接着原 heap 往上长，偏连续</td>
+<td>单独找一块地址映射，不要求接着 heap</td>
+</tr>
+<tr>
+<td>是否直接操作 heap 顶</td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td>能否映射文件</td>
+<td>不能</td>
+<td>能</td>
+</tr>
+<tr>
+<td>能否做匿名内存</td>
+<td>不叫匿名映射，本质是扩堆</td>
+<td>能，<code>MAP_ANONYMOUS</code></td>
+</tr>
+<tr>
+<td>常见用途</td>
+<td>传统小块堆扩展</td>
+<td>大块内存、文件映射、匿名映射</td>
+</tr>
+<tr>
+<td>释放方式</td>
+<td>缩 <code>program break</code><br/>，但通常只有堆顶部分容易真还给内核</td>
+<td><code>munmap</code><br/> 可直接整段归还</td>
+</tr>
+<tr>
+<td>灵活性</td>
+<td>低</td>
+<td>高</td>
+</tr>
+<tr>
+<td>是否容易产生主堆碎片问题</td>
+<td>容易受主堆管理影响</td>
+<td>相对更独立</td>
+</tr>
+<tr>
+<td>和 <code>malloc</code><br/> 的关系</td>
+<td>常作为小块分配的底层来源</td>
+<td>常作为大块分配的底层来源</td>
+</tr>
+<tr>
+<td>现代 glibc 是否使用</td>
+<td>会</td>
+<td>也会</td>
+</tr>
+<tr>
+<td>在 <code>/proc/pid/maps</code><br/> 里常见样子</td>
+<td>常能看到 <code>[heap]</code></td>
+<td>常见一段 <code>rw-p ... 00:00 0</code><br/> 的匿名映射</td>
+</tr>
+<tr>
+<td>关键词</td>
+<td><strong>扩主堆</strong></td>
+<td><strong>开新映射</strong></td>
+</tr>
+</tbody></table>
+<h2 id="pwn139"><a href="#pwn139" class="headerlink" title="pwn139"></a>pwn139</h2><p>这一篇讲动态缓冲区：</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">flag_demo</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  __int64 i; <span class="comment">// [rsp+0h] [rbp-20h]</span></span><br><span class="line">  FILE *stream; <span class="comment">// [rsp+8h] [rbp-18h]</span></span><br><span class="line">  __int64 size; <span class="comment">// [rsp+10h] [rbp-10h]</span></span><br><span class="line">  <span class="type">char</span> *ptr; <span class="comment">// [rsp+18h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  stream = fopen(<span class="string">&quot;/ctfshow_flag&quot;</span>, <span class="string">&quot;rb&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> ( stream )</span><br><span class="line">  &#123;</span><br><span class="line">    fseek(stream, <span class="number">0</span>, <span class="number">2</span>);</span><br><span class="line">    size = ftell(stream);</span><br><span class="line">    fseek(stream, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Allocate heap memory:&quot;</span>);</span><br><span class="line">    sleep(<span class="number">3u</span>);</span><br><span class="line">    ptr = (<span class="type">char</span> *)<span class="built_in">malloc</span>(size);</span><br><span class="line">    <span class="keyword">if</span> ( ptr )</span><br><span class="line">    &#123;</span><br><span class="line">      sleep(<span class="number">1u</span>);</span><br><span class="line">      <span class="built_in">puts</span>(<span class="string">&quot;Read ctfshow_flag&quot;</span>);</span><br><span class="line">      sleep(<span class="number">3u</span>);</span><br><span class="line">      <span class="keyword">if</span> ( fread(ptr, <span class="number">1u</span>, size, stream) == size )</span><br><span class="line">      &#123;</span><br><span class="line">        fclose(stream);</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">&quot;Here is your flag:&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt; size; ++i )</span><br><span class="line">          <span class="built_in">putchar</span>(ptr[i]);</span><br><span class="line">        sleep(<span class="number">1u</span>);</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">&quot;free&quot;</span>);</span><br><span class="line">        <span class="built_in">free</span>(ptr);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">      &#123;</span><br><span class="line">        perror(<span class="string">&quot;Failed to read file&quot;</span>);</span><br><span class="line">        fclose(stream);</span><br><span class="line">        <span class="built_in">free</span>(ptr);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      perror(<span class="string">&quot;Memory allocation failed&quot;</span>);</span><br><span class="line">      fclose(stream);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    perror(<span class="string">&quot;Failed to open file&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当数据大小在运行前并不确定时，heap 非常适合用来承载这类数据。文件有多大，就先算出来，再申请多大的 heap，这才是本题最核心的思路。</p>
+<p><code>**fseek + ftell + fseek**</code>** **</p>
+<p>程序会先 <code>fseek(fp, 0, SEEK_END)</code>，再 <code>ftell(fp)</code>，然后再 <code>fseek(fp, 0, SEEK_SET)</code>。这个组合的逻辑非常标准：先把文件位置移到末尾，这样 <code>ftell()</code> 读出的就是文件总长度；得到长度以后，再把文件位置重新移回开头，准备真正读取内容。</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fseek(stream, <span class="number">0</span>, <span class="number">2</span>);</span><br><span class="line"><span class="comment">//函数原型如下：</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">fseek</span><span class="params">(FILE *stream, <span class="type">long</span> offset, <span class="type">int</span> whence)</span>;</span><br><span class="line"><span class="comment">//修改 fp 这个流的当前位置，也就是决定“下一次从哪里读 / 往哪里写”，不是把文件本身整体移动。</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>“文件类型指针”指向被移动的文件；</li>
+<li>“位移量”表示移动的字节数，一般为 long 型数据，以保证文件长度大于 64KB 时不会出错；</li>
+<li>“起始点”表示从何处开始计算位移量，一般是文件首、文件当前位置和文件尾，其表示方法如下表所示。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>起始点</th>
+<th>表示符号</th>
+<th>数字表示</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>文件首</td>
+<td>SEEK_SET</td>
+<td>0</td>
+</tr>
+<tr>
+<td>文件当前位置</td>
+<td>SEEK_CUR</td>
+<td>1</td>
+</tr>
+<tr>
+<td>文件尾</td>
+<td>SEEK_END</td>
+<td>2</td>
+</tr>
+</tbody></table>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">size = ftell(stream);</span><br><span class="line"><span class="comment">//函数原型如下：</span></span><br><span class="line"><span class="type">long</span> <span class="title function_">ftell</span><span class="params">(FILE *stream)</span>;</span><br><span class="line"><span class="comment">//C 库函数 long int ftell(FILE *stream) 返回给定流 stream 的当前文件位置。</span></span><br><span class="line"><span class="comment">//返回值：该函数返回位置标识符的当前值，即当前文件指针距离文件开头的字节偏移</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fread(ptr, <span class="number">1u</span>, size, stream)</span><br><span class="line"><span class="comment">//函数原型如下：</span></span><br><span class="line"><span class="type">size_t</span> <span class="title function_">fread</span><span class="params">(<span class="type">void</span> *ptr, <span class="type">size_t</span> size, <span class="type">size_t</span> count, FILE *stream)</span>;</span><br><span class="line"><span class="comment">//函数返回一个 size_t 类型的值，表示成功读取的数据项数目</span></span><br></pre></td></tr></table></figure>
+
+<p>ptr：指向要读取数据的缓冲区；</p>
+<p>size：每个数据项的字节数；</p>
+<p>count：要读取的数据项数目；</p>
+<p>stream：指向文件流的指针。</p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fseek(fp, <span class="number">0</span>, SEEK_END);</span><br><span class="line">size = ftell(fp);</span><br><span class="line">fseek(fp, <span class="number">0</span>, SEEK_SET);</span><br></pre></td></tr></table></figure>
+
+<p>程序是这样的：先fseek吧fp移动到stream尾部，然后用ftell算出偏移，也就是size，然后再把fp移动到文件开头。</p>
+<h2 id="pwn140"><a href="#pwn140" class="headerlink" title="pwn140"></a>pwn140</h2><p>同样可以读一下ctfwiki：<a target="_blank" rel="noopener" href="https://ctf-wiki.org/pwn/linux/user-mode/heap/ptmalloc2/heap-overview/#_5">https://ctf-wiki.org/pwn/linux/user-mode/heap/ptmalloc2/heap-overview/#_5</a></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/54208227/1776236840997-47616d23-f503-40ae-848d-4e7c93e0ce90.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>程序给了个提示：<strong>arena</strong>是一块预先管理好的内存区域。程序申请小块内存时，不是每次都直接找操作系统要，而是先从某个 arena 里切。这样更快，也能减少锁竞争。  </p>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __fastcall <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> **argv, <span class="type">const</span> <span class="type">char</span> **envp)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">__pid_t</span> pid; <span class="comment">// eax</span></span><br><span class="line">  <span class="type">pthread_t</span> newthread; <span class="comment">// [rsp+10h] [rbp-20h] BYREF</span></span><br><span class="line">  <span class="type">void</span> *thread_return; <span class="comment">// [rsp+18h] [rbp-18h] BYREF</span></span><br><span class="line">  <span class="type">void</span> *ptr; <span class="comment">// [rsp+20h] [rbp-10h]</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v8; <span class="comment">// [rsp+28h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v8 = __readfsqword(<span class="number">0x28u</span>);</span><br><span class="line">  init(argc, argv, envp);</span><br><span class="line">  logo();</span><br><span class="line">  pid = getpid();</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Welcome to per thread arena example::%d\n&quot;</span>, pid);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;Before malloc in main thread&quot;</span>);</span><br><span class="line">  getchar();</span><br><span class="line">  ptr = <span class="built_in">malloc</span>(<span class="number">0x3E8u</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;After malloc and before free in main thread&quot;</span>);</span><br><span class="line">  getchar();</span><br><span class="line">  <span class="built_in">free</span>(ptr);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;After free in main thread&quot;</span>);</span><br><span class="line">  getchar();</span><br><span class="line">  <span class="keyword">if</span> ( pthread_create(&amp;newthread, <span class="number">0</span>, threadFunc, <span class="number">0</span>) )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Thread creation error&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> ( pthread_join(newthread, &amp;thread_return) )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Thread join error&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    system(<span class="string">&quot;cat /ctfshow_flag&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>ret = pthread_create(&amp;tid, NULL, threadFunc, NULL);</code></p>
+<p>这句的含义是创建一个新线程，并让新线程从 <code>threadFunc</code> 开始执行。如果返回值不为 0，程序就打印 <code>Thread creation error</code> 并直接退出。</p>
+<p>我们可以来看一下<strong>内存映射表</strong>来进一步理解**，**以下摘自ctfwiki：</p>
+<p><strong>第一次申请之前</strong>， 没有任何任何堆段。</p>
+<figure class="highlight shell" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sploitfun@sploitfun-VirtualBox:~/ptmalloc.ppt/mthread$ ./mthread</span><br><span class="line">Welcome to per thread arena example::6501</span><br><span class="line">Before malloc in main thread</span><br><span class="line">...</span><br><span class="line">sploitfun@sploitfun-VirtualBox:~/ptmalloc.ppt/mthread$ cat /proc/6501/maps</span><br><span class="line">08048000-08049000 r-xp 00000000 08:01 539625     /home/sploitfun/ptmalloc.ppt/mthread/mthread</span><br><span class="line">08049000-0804a000 r--p 00000000 08:01 539625     /home/sploitfun/ptmalloc.ppt/mthread/mthread</span><br><span class="line">0804a000-0804b000 rw-p 00001000 08:01 539625     /home/sploitfun/ptmalloc.ppt/mthread/mthread</span><br><span class="line">b7e05000-b7e07000 rw-p 00000000 00:00 0</span><br><span class="line">...</span><br><span class="line">sploitfun@sploitfun-VirtualBox:~/ptmalloc.ppt/mthread$</span><br></pre></td></tr></table></figure>
+
+<p><strong>第一次申请后</strong>， 从下面的输出可以看出，堆段被建立了，并且它就紧邻着数据段，这说明malloc的背后是用brk函数来实现的。同时，需要注意的是，我们虽然只是申请了1000个字节，但是我们却得到了0x0806c000-0x0804b000&#x3D;0x21000个字节的堆。**这说明虽然程序可能只是向操作系统申请很小的内存，但是为了方便，操作系统会把很大的内存分配给程序。这样的话，就避免了多次内核态与用户态的切换，提高了程序的效率。**我们称这一块连续的内存区域为 arena。此外，我们称由主线程申请的内存为 main_arena。后续的申请的内存会一直从这个 arena 中获取，直到空间不足。当 arena 空间不足时，它可以通过增加brk的方式来增加堆的空间。类似地，arena 也可以通过减小 brk 来缩小自己的空间。</p>
+<figure class="highlight shell" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sploitfun@sploitfun-VirtualBox:~/ptmalloc.ppt/mthread$ ./mthread</span><br><span class="line">Welcome to per thread arena example::6501</span><br><span class="line">Before malloc in main thread</span><br><span class="line">After malloc and before free in main thread</span><br><span class="line">...</span><br><span class="line">sploitfun@sploitfun-VirtualBox:~/lsploits/hof/ptmalloc.ppt/mthread$ cat /proc/6501/maps</span><br><span class="line">08048000-08049000 r-xp 00000000 08:01 539625     /home/sploitfun/ptmalloc.ppt/mthread/mthread</span><br><span class="line">08049000-0804a000 r--p 00000000 08:01 539625     /home/sploitfun/ptmalloc.ppt/mthread/mthread</span><br><span class="line">0804a000-0804b000 rw-p 00001000 08:01 539625     /home/sploitfun/ptmalloc.ppt/mthread/mthread</span><br><span class="line">0804b000-0806c000 rw-p 00000000 00:00 0          [heap]</span><br><span class="line">b7e05000-b7e07000 rw-p 00000000 00:00 0</span><br><span class="line">...</span><br><span class="line">sploitfun@sploitfun-VirtualBox:~/ptmalloc.ppt/mthread$</span><br></pre></td></tr></table></figure>
+
+<p><strong>在主线程释放内存后</strong>，我们从下面的输出可以看出，其对应的 arena 并没有进行回收，而是交由glibc来进行管理。当后面程序再次申请内存时，在 glibc 中管理的内存充足的情况下，glibc 就会根据堆分配的算法来给程序分配相应的内存。</p>
+<figure class="highlight shell" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">sploitfun@sploitfun-VirtualBox:~/ptmalloc.ppt/mthread$ ./mthread</span><br><span class="line">Welcome to per thread arena example::6501</span><br><span class="line">Before malloc in main thread</span><br><span class="line">After malloc and before free in main thread</span><br><span class="line">After free in main thread</span><br><span class="line">...</span><br><span class="line">sploitfun@sploitfun-VirtualBox:~/lsploits/hof/ptmalloc.ppt/mthread$ cat /proc/6501/maps</span><br><span class="line">08048000-08049000 r-xp 00000000 08:01 539625     /home/sploitfun/ptmalloc.ppt/mthread/mthread</span><br><span class="line">08049000-0804a000 r--p 00000000 08:01 539625     /home/sploitfun/ptmalloc.ppt/mthread/mthread</span><br><span class="line">0804a000-0804b000 rw-p 00001000 08:01 539625     /home/sploitfun/ptmalloc.ppt/mthread/mthread</span><br><span class="line">0804b000-0806c000 rw-p 00000000 00:00 0          [heap]</span><br><span class="line">b7e05000-b7e07000 rw-p 00000000 00:00 0</span><br><span class="line">...</span><br><span class="line">sploitfun@sploitfun-VirtualBox:~/ptmalloc.ppt/mthread$</span><br></pre></td></tr></table></figure>
+
+<p><strong>在第一个线程malloc之前</strong>，我们可以看到并没有出现与线程1相关的堆，但是出现了与线程1相关的栈。</p>
+<figure class="highlight shell" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">sploitfun@sploitfun-VirtualBox:~/ptmalloc.ppt/mthread$ ./mthread</span><br><span class="line">Welcome to per thread arena example::6501</span><br><span class="line">Before malloc in main thread</span><br><span class="line">After malloc and before free in main thread</span><br><span class="line">After free in main thread</span><br><span class="line">Before malloc in thread 1</span><br><span class="line">...</span><br><span class="line">sploitfun@sploitfun-VirtualBox:~/ptmalloc.ppt/mthread$ cat /proc/6501/maps</span><br><span class="line">08048000-08049000 r-xp 00000000 08:01 539625     /home/sploitfun/ptmalloc.ppt/mthread/mthread</span><br><span class="line">08049000-0804a000 r--p 00000000 08:01 539625     /home/sploitfun/ptmalloc.ppt/mthread/mthread</span><br><span class="line">0804a000-0804b000 rw-p 00001000 08:01 539625     /home/sploitfun/ptmalloc.ppt/mthread/mthread</span><br><span class="line">0804b000-0806c000 rw-p 00000000 00:00 0          [heap]</span><br><span class="line">b7604000-b7605000 ---p 00000000 00:00 0</span><br><span class="line">b7605000-b7e07000 rw-p 00000000 00:00 0          [stack:6594]</span><br><span class="line">...</span><br><span class="line">sploitfun@sploitfun-VirtualBox:~/ptmalloc.ppt/mthread$</span><br></pre></td></tr></table></figure>
+
+<p><strong>第一个线程malloc后</strong>， 我们可以从下面输出看出线程1的堆段被建立了。而且它所在的位置为内存映射段区域，同样大小也是132KB(b7500000-b7521000)。因此这表明该线程申请的堆时，背后对应的函数为mmap函数。同时，我们可以看出实际真的分配给程序的内存为1M(b7500000-b7600000)。而且，只有132KB的部分具有可读可写权限，这一块连续的区域成为thread arena。</p>
+<p>注意：</p>
+<blockquote>
+<p>当用户请求的内存大于128KB时，并且没有任何arena有足够的空间时，那么系统就会执行mmap函数来分配相应的内存空间。这与这个请求来自于主线程还是从线程无关。</p>
+</blockquote>
+<figure class="highlight shell" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">sploitfun@sploitfun-VirtualBox:~/ptmalloc.ppt/mthread$ ./mthread</span><br><span class="line">Welcome to per thread arena example::6501</span><br><span class="line">Before malloc in main thread</span><br><span class="line">After malloc and before free in main thread</span><br><span class="line">After free in main thread</span><br><span class="line">Before malloc in thread 1</span><br><span class="line">After malloc and before free in thread 1</span><br><span class="line">...</span><br><span class="line">sploitfun@sploitfun-VirtualBox:~/ptmalloc.ppt/mthread$ cat /proc/6501/maps</span><br><span class="line">08048000-08049000 r-xp 00000000 08:01 539625     /home/sploitfun/ptmalloc.ppt/mthread/mthread</span><br><span class="line">08049000-0804a000 r--p 00000000 08:01 539625     /home/sploitfun/ptmalloc.ppt/mthread/mthread</span><br><span class="line">0804a000-0804b000 rw-p 00001000 08:01 539625     /home/sploitfun/ptmalloc.ppt/mthread/mthread</span><br><span class="line">0804b000-0806c000 rw-p 00000000 00:00 0          [heap]</span><br><span class="line">b7500000-b7521000 rw-p 00000000 00:00 0					 #thread arena</span><br><span class="line">b7521000-b7600000 ---p 00000000 00:00 0</span><br><span class="line">b7604000-b7605000 ---p 00000000 00:00 0</span><br><span class="line">b7605000-b7e07000 rw-p 00000000 00:00 0          [stack:6594]</span><br><span class="line">...</span><br><span class="line">sploitfun@sploitfun-VirtualBox:~/ptmalloc.ppt/mthread$</span><br></pre></td></tr></table></figure>
+
+<p><strong>在第一个线程释放内存后</strong>， 我们可以从下面的输出看到，这样释放内存同样不会把内存重新给系统。</p>
+<figure class="highlight shell" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">sploitfun@sploitfun-VirtualBox:~/ptmalloc.ppt/mthread$ ./mthread</span><br><span class="line">Welcome to per thread arena example::6501</span><br><span class="line">Before malloc in main thread</span><br><span class="line">After malloc and before free in main thread</span><br><span class="line">After free in main thread</span><br><span class="line">Before malloc in thread 1</span><br><span class="line">After malloc and before free in thread 1</span><br><span class="line">After free in thread 1</span><br><span class="line">...</span><br><span class="line">sploitfun@sploitfun-VirtualBox:~/ptmalloc.ppt/mthread$ cat /proc/6501/maps</span><br><span class="line">08048000-08049000 r-xp 00000000 08:01 539625     /home/sploitfun/ptmalloc.ppt/mthread/mthread</span><br><span class="line">08049000-0804a000 r--p 00000000 08:01 539625     /home/sploitfun/ptmalloc.ppt/mthread/mthread</span><br><span class="line">0804a000-0804b000 rw-p 00001000 08:01 539625     /home/sploitfun/ptmalloc.ppt/mthread/mthread</span><br><span class="line">0804b000-0806c000 rw-p 00000000 00:00 0          [heap]</span><br><span class="line">b7500000-b7521000 rw-p 00000000 00:00 0					 #还在这儿</span><br><span class="line">b7521000-b7600000 ---p 00000000 00:00 0</span><br><span class="line">b7604000-b7605000 ---p 00000000 00:00 0</span><br><span class="line">b7605000-b7e07000 rw-p 00000000 00:00 0          [stack:6594]</span><br><span class="line">...</span><br><span class="line">sploitfun@sploitfun-VirtualBox:~/ptmalloc.ppt/mthread$</span><br></pre></td></tr></table></figure>
+
+<p>以上示例说明了heap 使用并不只发生在主线程里，多线程程序里的各个线程也会正常进行分配和释放，而分配器为了支持多线程高效工作，内部往往会有额外设计，<code>per thread arena</code> 就是在引导你去认识这件事。</p>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#Pwn135"><span class="toc-list-text">Pwn135</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#pwn136"><span class="toc-list-text">pwn136</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#pwn137"><span class="toc-list-text">pwn137</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#pwn138"><span class="toc-list-text">pwn138</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#pwn139"><span class="toc-list-text">pwn139</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#pwn140"><span class="toc-list-text">pwn140</span></a></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

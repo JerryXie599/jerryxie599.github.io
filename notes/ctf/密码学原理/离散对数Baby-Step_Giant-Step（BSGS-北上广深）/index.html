@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>离散对数Baby-Step_Giant-Step（BSGS-北上广深） | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="离散对数Baby-Step_Giant-Step（BSGS-北上广深） | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/密码学原理/离散对数Baby-Step_Giant-Step（BSGS-北上广深）/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/密码学原理/离散对数Baby-Step_Giant-Step（BSGS-北上广深）/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+            <a class="category-chip" href="/categories/ctf/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/">密码学原理</a>
+          
+        
+      </div>
+      <h1>离散对数Baby-Step_Giant-Step（BSGS-北上广深）</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>4 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/密码学原理/离散对数Baby-Step_Giant-Step（BSGS-北上广深）.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <p>好的，我来给你系统梳理一下 <strong>BSGS 算法（Baby-Step Giant-Step，常用来解离散对数问题）</strong>，结合你贴的解释。</p>
+<hr>
+<h2 id="1-问题背景"><a href="#1-问题背景" class="headerlink" title="1. 问题背景"></a>1. 问题背景</h2><p>离散对数问题的形式是：</p>
+<p>$ A^x \equiv B \pmod{C} $</p>
+<p>其中：</p>
+<ul>
+<li>$ A $ 是底数（与模数 $ C $ 互质），</li>
+<li>$ B $ 是目标值，</li>
+<li>$ C $ 是模数，通常是质数，</li>
+<li>要求解未知的指数 $ x $。</li>
+</ul>
+<p>这是密码学里很多问题的核心难点（比如 Diffie-Hellman、ElGamal）。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757251607333-885ee053-d79c-40cd-8367-0d69b5e82f25.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<hr>
+<h2 id="2-思路拆分：平方分割"><a href="#2-思路拆分：平方分割" class="headerlink" title="2. 思路拆分：平方分割"></a>2. 思路拆分：平方分割</h2><p>直接暴力枚举 $ x $ 要花 $ O(C) $ 时间，太大。</p>
+<p>BSGS 的核心思想：<br><strong>把指数 <strong>$ x $</strong> 分成两部分：</strong></p>
+<p>$ x &#x3D; i \cdot m - j $</p>
+<p>其中：</p>
+<ul>
+<li>$ m &#x3D; \lceil \sqrt{C} \rceil $，</li>
+<li>$ i, j $ 都在 $ 0 \sim m $ 的范围内。</li>
+</ul>
+<p>这样就把大问题转化成两个“较小区间”的枚举。</p>
+<hr>
+<h2 id="3-推导过程"><a href="#3-推导过程" class="headerlink" title="3. 推导过程"></a>3. 推导过程</h2><p>把原式：</p>
+<p>$ A^x \equiv B \pmod{C} $</p>
+<p>代入 $ x &#x3D; i \cdot m - j $：</p>
+<p>$ A^{i m - j} \equiv B \pmod{C} $</p>
+<p>化简为：</p>
+<p>$ A^{i m} \equiv A^j \cdot B \pmod{C} $</p>
+<hr>
+<h2 id="4-算法步骤"><a href="#4-算法步骤" class="headerlink" title="4. 算法步骤"></a>4. 算法步骤</h2><ol>
+<li><strong>预处理（Baby Step）</strong><br>遍历 $ j &#x3D; 0 \dots m $，计算：</li>
+</ol>
+<p>$ A^j \cdot B \pmod{C} $</p>
+<p>   存入哈希表（key &#x3D; 结果，value &#x3D; j）。</p>
+<ol start="2">
+<li><strong>大步枚举（Giant Step）</strong><br>遍历 $ i &#x3D; 1 \dots m $，计算：</li>
+</ol>
+<p>$ A^{i \cdot m} \pmod{C} $</p>
+<p>   然后看它是否在哈希表中出现。</p>
+<ul>
+<li>如果出现，设匹配时的 $ j $ 为哈希表中的值，则：</li>
+</ul>
+<p>$  x &#x3D; i \cdot m - j<br> $</p>
+<p> 即为所求解。</p>
+<hr>
+<h2 id="5-时间复杂度"><a href="#5-时间复杂度" class="headerlink" title="5. 时间复杂度"></a>5. 时间复杂度</h2><ul>
+<li><strong>Baby Step</strong>：计算 $ m \approx \sqrt{C} $ 次，存入哈希表。</li>
+<li><strong>Giant Step</strong>：也只需计算 $ m $ 次，每次查表 O(1)。</li>
+</ul>
+<p>所以整体复杂度：</p>
+<p>$ O(\sqrt{C}) $</p>
+<p>这比暴力 O(C) 快得多，是 <strong>子指数级别</strong>。</p>
+<hr>
+<h2 id="6-你提到的细节"><a href="#6-你提到的细节" class="headerlink" title="6. 你提到的细节"></a>6. 你提到的细节</h2><ul>
+<li>有的版本用 $ x &#x3D; i \cdot m + j $。<ul>
+<li>这样需要算逆元，因为要把公式变形为 $ A^{i m} \cdot A^j &#x3D; B $。</li>
+<li>所以更复杂。</li>
+</ul>
+</li>
+<li>你看到的这种写法 $ x &#x3D; i m - j $，<ul>
+<li>避免了求逆元，</li>
+<li>逻辑更直观，常用于实际实现。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="7-为什么只要算到-m-lceil-sqrt-C-rceil-？-我去这个是上取整符"><a href="#7-为什么只要算到-m-lceil-sqrt-C-rceil-？-我去这个是上取整符" class="headerlink" title="7. 为什么只要算到 $ m &#x3D; \lceil \sqrt{C} \rceil $？#我去这个是上取整符"></a>7. 为什么只要算到 $ m &#x3D; \lceil \sqrt{C} \rceil $？#我去这个是上取整符</h2><p>因为指数的取值范围最大是 $ C $，<br>把它拆分成两段 $ \sqrt{C} $，总覆盖范围是：</p>
+<p>$ i \cdot m - j \quad (i, j \leq m) $</p>
+<p>这能保证所有 $ 0 \leq x &lt; C $ 的情况都能被覆盖到。<br>再结合 <strong>费马小定理</strong>（如果 $ C $ 是质数，则 $ A^{C-1} \equiv 1 \pmod C $），<br>即指数超过 $ C-1 $ 时，可以对 $ C-1 $ 取模，因此不需要再枚举更大范围。</p>
+<hr>
+<h2 id="8-总结"><a href="#8-总结" class="headerlink" title="8. 总结"></a>8. 总结</h2><ul>
+<li><strong>问题</strong>：解 $ A^x \equiv B \pmod C $。</li>
+<li><strong>思想</strong>：平方分割，把 $ x $ 拆成两部分。</li>
+<li><strong>步骤</strong>：<ol>
+<li>预处理 $ A^j \cdot B $，存表。</li>
+<li>枚举 $ A^{i m} $，查表。</li>
+<li>找到匹配时得到解。</li>
+</ol>
+</li>
+<li><strong>复杂度</strong>：$ O(\sqrt{C}) $。</li>
+<li><strong>关键点</strong>：选用 $ x &#x3D; i m - j $ 可以避免逆元。</li>
+</ul>
+<hr>
+<h1 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h1><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">a = 13</span><br><span class="line">c = 114514</span><br><span class="line">P = 100000000000099</span><br><span class="line"></span><br><span class="line">import math</span><br><span class="line"></span><br><span class="line">def bsgs(a, c, P):</span><br><span class="line">    # 确定互素</span><br><span class="line">    assert math.gcd(a, P) == 1</span><br><span class="line">    m = math.ceil(math.sqrt(P))</span><br><span class="line">    step_dict = &#123;&#125;  # 字典</span><br><span class="line"></span><br><span class="line">    # right_val = a^j*c % P</span><br><span class="line">    right_val = c % P  # 计算幂次为0时的c对P取模的值</span><br><span class="line">    for j in range(m + 1):</span><br><span class="line">        step_dict[right_val] = j  # 构建字典</span><br><span class="line">        right_val = right_val * a % P  # 累乘</span><br><span class="line"></span><br><span class="line">    # left_val = a^im%p</span><br><span class="line">    am = pow(a, m, P)</span><br><span class="line">    for i in range(1, m + 1):</span><br><span class="line">        left_val = pow(am, i, P)</span><br><span class="line">        if left_val in step_dict:  # 找到了左右两边同余的i和j</span><br><span class="line">            j = step_dict[left_val]</span><br><span class="line">            return m * i - j</span><br><span class="line">    return None  # 无解</span><br><span class="line"></span><br><span class="line">x = bsgs(a, c, P)</span><br><span class="line">assert pow(a, x, P) == c % P</span><br><span class="line">print(x)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>顺带学一下字典：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 创建一个空字典</span><br><span class="line">student_scores = &#123;&#125;</span><br><span class="line"></span><br><span class="line"># 往字典里加内容：键是名字，值是分数</span><br><span class="line">student_scores[&quot;小明&quot;] = 95</span><br><span class="line">student_scores[&quot;小红&quot;] = 88</span><br><span class="line">student_scores[&quot;小刚&quot;] = 76</span><br><span class="line"></span><br><span class="line">print(student_scores)</span><br><span class="line"></span><br><span class="line">#&#123;&#x27;小明&#x27;: 95, &#x27;小红&#x27;: 88, &#x27;小刚&#x27;: 76&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(student_scores[&quot;小明&quot;])   # 95</span><br><span class="line">print(student_scores[&quot;小红&quot;])   # 88</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">for name, score in student_scores.items():</span><br><span class="line">    print(name, &quot;的分数是&quot;, score)</span><br><span class="line"></span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">小明 的分数是 95</span><br><span class="line">小红 的分数是 88</span><br><span class="line">小刚 的分数是 76</span><br><span class="line">&#x27;&#x27;&#x27;</span><br></pre></td></tr></table></figure>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E9%97%AE%E9%A2%98%E8%83%8C%E6%99%AF"><span class="toc-list-text">1. 问题背景</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-%E6%80%9D%E8%B7%AF%E6%8B%86%E5%88%86%EF%BC%9A%E5%B9%B3%E6%96%B9%E5%88%86%E5%89%B2"><span class="toc-list-text">2. 思路拆分：平方分割</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B"><span class="toc-list-text">3. 推导过程</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4-%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="toc-list-text">4. 算法步骤</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#5-%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-list-text">5. 时间复杂度</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#6-%E4%BD%A0%E6%8F%90%E5%88%B0%E7%9A%84%E7%BB%86%E8%8A%82"><span class="toc-list-text">6. 你提到的细节</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#7-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AA%E8%A6%81%E7%AE%97%E5%88%B0-m-lceil-sqrt-C-rceil-%EF%BC%9F-%E6%88%91%E5%8E%BB%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%8A%E5%8F%96%E6%95%B4%E7%AC%A6"><span class="toc-list-text">7. 为什么只要算到 $ m &#x3D; \lceil \sqrt{C} \rceil $？#我去这个是上取整符</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#8-%E6%80%BB%E7%BB%93"><span class="toc-list-text">8. 总结</span></a></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="toc-list-text">示例代码</span></a></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

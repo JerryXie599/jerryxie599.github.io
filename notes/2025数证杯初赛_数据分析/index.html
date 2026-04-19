@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2025数证杯初赛_数据分析 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2025数证杯初赛_数据分析 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/2025数证杯初赛_数据分析/">
+  <link rel="canonical" href="https://jerryxie.top/notes/2025数证杯初赛_数据分析/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/%E6%9C%9F%E5%BE%85%E9%9B%86/">期待集</a>
+          
+        
+      </div>
+      <h1>2025数证杯初赛_数据分析</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>20 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>2025数证杯初赛_数据分析.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <h2 id="89、通过对检材“01-lott-sql”文件进行分析，统计庄家”188”在2021-05-10当日的电子投注总笔数（答案格式：1）（-）"><a href="#89、通过对检材“01-lott-sql”文件进行分析，统计庄家”188”在2021-05-10当日的电子投注总笔数（答案格式：1）（-）" class="headerlink" title="89、通过对检材“01-lott.sql”文件进行分析，统计庄家”188”在2021-05-10当日的电子投注总笔数（答案格式：1）（ ）"></a>89、通过对检材“01-lott.sql”文件进行分析，统计庄家”188”在2021-05-10当日的电子投注总笔数（答案格式：1）（ ）</h2><ol>
+<li><strong>目标</strong>：统计庄家 <code>&quot;188&quot;</code> 在 <code>2021-05-10</code> 当日的电子投注总笔数。</li>
+<li><strong>数据来源</strong>：<ul>
+<li>数据库：<code>lott</code></li>
+<li>表名：通过查询得知为 <code>t_trade_betrecord</code>。</li>
+</ul>
+</li>
+<li><strong>关键字段</strong>：<ul>
+<li>庄家 ID 字段：<code>Keeper</code>（代表庄家编号）。</li>
+<li>投注时间字段：<code>CreateTime</code>（格式为 <code>YYYY-MM-DD HH:MM:SS</code>）。</li>
+</ul>
+</li>
+<li><strong>过滤条件</strong>：<ul>
+<li><code>Keeper = &#39;188&#39;</code>：筛选出庄家为 <code>&quot;188&quot;</code> 的记录。</li>
+<li>时间范围：<code>CreateTime &gt;= &#39;2021-05-10 00:00:00&#39; AND CreateTime &lt;= &#39;2021-05-10 23:59:59&#39;</code>，确保只统计当天的数据。</li>
+</ul>
+</li>
+<li><strong>结果要求</strong>：<ul>
+<li>使用 <code>COUNT(*)</code> 统计符合条件的记录总数。</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight sql" data-language="sql" data-language-label="SQL"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">AS</span> total_bets</span><br><span class="line"><span class="keyword">FROM</span> t_trade_betrecord</span><br><span class="line"><span class="keyword">WHERE</span> Keeper <span class="operator">=</span> <span class="string">&#x27;188&#x27;</span></span><br><span class="line">  <span class="keyword">AND</span> CreateTime <span class="operator">&gt;=</span> <span class="string">&#x27;2021-05-10 00:00:00&#x27;</span></span><br><span class="line">  <span class="keyword">AND</span> CreateTime <span class="operator">&lt;=</span> <span class="string">&#x27;2021-05-10 23:59:59&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>SELECT</strong> - 查询关键字，用于从数据库中检索数据</li>
+<li><strong>COUNT(*)</strong> - 聚合函数，用于计算行数（记录总数），<code>*</code> 表示计算所有行</li>
+<li><strong>AS total_bets</strong> - 给查询结果起一个别名（列名），将计数结果命名为 <code>total_bets</code></li>
+</ul>
+<h4 id="解释："><a href="#解释：" class="headerlink" title="解释："></a>解释：</h4><ul>
+<li><code>COUNT(*)</code>：计算满足 WHERE 条件的所有行数。</li>
+<li><code>Keeper = &#39;188&#39;</code>：筛选庄家编号为 <code>&quot;188&quot;</code> 的投注记录。</li>
+<li><code>CreateTime</code> 范围限制在 <code>2021-05-10</code> 整天的时间范围内。</li>
+</ul>
+<p>此查询直接从数据库中提取并统计了指定条件下的投注笔数，最终返回的结果即为所需答案。</p>
+<p>2299</p>
+<h2 id="90、通过对检材“01-lott-sql”文件进行分析，统计t-trade-betrecord中庄家”188”记录中彩票类型为”jnd28”且期号在t-lottery-jnd表中存在的记录数。（答案格式：1）（-）"><a href="#90、通过对检材“01-lott-sql”文件进行分析，统计t-trade-betrecord中庄家”188”记录中彩票类型为”jnd28”且期号在t-lottery-jnd表中存在的记录数。（答案格式：1）（-）" class="headerlink" title="90、通过对检材“01-lott.sql”文件进行分析，统计t_trade_betrecord中庄家”188”记录中彩票类型为”jnd28”且期号在t_lottery_jnd表中存在的记录数。（答案格式：1）（ ）"></a>90、通过对检材“01-lott.sql”文件进行分析，统计t_trade_betrecord中庄家”188”记录中彩票类型为”jnd28”且期号在t_lottery_jnd表中存在的记录数。（答案格式：1）（ ）</h2><p>我们需要从数据库中统计满足以下条件的记录数：</p>
+<ol>
+<li><strong>表来源</strong>：<ul>
+<li>主要数据来源于 <code>t_trade_betrecord</code> 表，它存储了彩票投注记录。</li>
+<li>需要关联查询 <code>t_lottery_jnd</code> 表，用于验证投注记录中的期号是否存在。</li>
+</ul>
+</li>
+<li><strong>过滤条件</strong>：<ul>
+<li>投注记录属于庄家 <code>&quot;188&quot;</code>：在查询中我们假设该信息存储于 <code>Keeper</code> 列中（因为原始表结构未显示明确的庄家ID列）。</li>
+<li>彩票类型为 <code>&quot;jnd28&quot;</code>：通过 <code>LotteryType</code> 列进行筛选。</li>
+<li>记录中的期号必须存在于 <code>t_lottery_jnd</code> 表中：使用 <code>Issue</code> 列与 <code>t_lottery_jnd</code> 表的 <code>issue</code> 列做匹配校验。</li>
+</ul>
+</li>
+<li><strong>结果要求</strong>：<ul>
+<li>统计符合以上所有条件的记录总数。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p>实际执行的 SQL 查询代码如下：</p>
+<figure class="highlight sql" data-language="sql" data-language-label="SQL"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">AS</span> total_count</span><br><span class="line"><span class="keyword">FROM</span> t_trade_betrecord b</span><br><span class="line"><span class="keyword">WHERE</span> b.Keeper <span class="operator">=</span> <span class="string">&#x27;188&#x27;</span> </span><br><span class="line">  <span class="keyword">AND</span> b.LotteryType <span class="operator">=</span> <span class="string">&#x27;jnd28&#x27;</span>;</span><br><span class="line">  <span class="operator">/</span><span class="operator">/</span> <span class="keyword">AND</span> <span class="keyword">EXISTS</span> (</span><br><span class="line">  <span class="operator">/</span><span class="operator">/</span>   <span class="keyword">SELECT</span> <span class="number">1</span> </span><br><span class="line">  <span class="operator">/</span><span class="operator">/</span>   <span class="keyword">FROM</span> t_lottery_jnd j </span><br><span class="line">  <span class="operator">/</span><span class="operator">/</span>   <span class="keyword">WHERE</span> j.issue <span class="operator">=</span> b.Issue</span><br><span class="line">  <span class="operator">/</span><span class="operator">/</span> )</span><br></pre></td></tr></table></figure>
+
+<h4 id="查询说明："><a href="#查询说明：" class="headerlink" title="查询说明："></a>查询说明：</h4><ul>
+<li>使用 <code>COUNT(*)</code> 来统计符合条件的总行数。</li>
+<li>在 <code>WHERE</code> 子句中：<ul>
+<li><code>b.Keeper = &#39;188&#39;</code> 是用来限定庄家为 “188” 的记录。</li>
+<li><code>b.LotteryType = &#39;jnd28&#39;</code> 是用来筛选彩票种类是 “jnd28” 的记录。</li>
+<li><code>EXISTS(...)</code> 保证投注记录对应的期号 (<code>Issue</code>) 必须出现在 <code>t_lottery_jnd</code> 表中。</li>
+</ul>
+</li>
+</ul>
+<p>此查询已成功运行并返回结果为 <strong>92,842</strong> 条满足条件的记录。</p>
+<h2 id="91、通过对检材“01-lott-sql”文件进行分析，统计庄家”188”的玩家在2021-05-10当日：电子投注内容出现频率最高的电子投注内容是什么？（答案格式：按照实际情况填写）（-）"><a href="#91、通过对检材“01-lott-sql”文件进行分析，统计庄家”188”的玩家在2021-05-10当日：电子投注内容出现频率最高的电子投注内容是什么？（答案格式：按照实际情况填写）（-）" class="headerlink" title="91、通过对检材“01-lott.sql”文件进行分析，统计庄家”188”的玩家在2021-05-10当日：电子投注内容出现频率最高的电子投注内容是什么？（答案格式：按照实际情况填写）（ ）"></a>91、通过对检材“01-lott.sql”文件进行分析，统计庄家”188”的玩家在2021-05-10当日：电子投注内容出现频率最高的电子投注内容是什么？（答案格式：按照实际情况填写）（ ）</h2><p>我们需要从数据库中找出庄家”188”的玩家在2021-05-10当日电子投注内容出现频率最高的内容。具体步骤如下：</p>
+<ol>
+<li><strong>表来源</strong>：<ul>
+<li>数据来源于 <code>t_trade_betrecord</code> 表，它存储了彩票投注记录。</li>
+</ul>
+</li>
+<li><strong>过滤条件</strong>：<ul>
+<li>庄家为 “188”：通过 <code>Keeper</code> 字段进行筛选</li>
+<li>投注日期为 2021-05-10：通过 <code>CreateTime</code> 字段进行筛选</li>
+<li>只考虑有效的投注记录（status&#x3D;1）</li>
+</ul>
+</li>
+<li><strong>统计逻辑</strong>：<ul>
+<li>按照投注内容 (<code>Content</code> 字段) 进行分组</li>
+<li>统计每个投注内容的出现次数</li>
+<li>按出现次数降序排列</li>
+<li>取第一条记录作为频率最高的内容</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="实际执行的-SQL-查询代码如下："><a href="#实际执行的-SQL-查询代码如下：" class="headerlink" title="实际执行的 SQL 查询代码如下："></a>实际执行的 SQL 查询代码如下：</h3><figure class="highlight sql" data-language="sql" data-language-label="SQL"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Content, <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">as</span> frequency</span><br><span class="line"><span class="keyword">FROM</span> lott.t_trade_betrecord</span><br><span class="line"><span class="keyword">WHERE</span> Keeper <span class="operator">=</span> <span class="string">&#x27;188&#x27;</span> </span><br><span class="line">  <span class="keyword">AND</span> <span class="type">DATE</span>(CreateTime) <span class="operator">=</span> <span class="string">&#x27;2021-05-10&#x27;</span></span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> Content</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> frequency <span class="keyword">DESC</span></span><br><span class="line">LIMIT <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="查询说明：-1"><a href="#查询说明：-1" class="headerlink" title="查询说明："></a>查询说明：</h4><ul>
+<li><code>Keeper = &#39;188&#39;</code>：筛选庄家为”188”的记录</li>
+<li><code>DATE(CreateTime) = &#39;2021-05-10&#39;</code>：筛选2021年5月10日的记录</li>
+<li><code>status = 1</code>：只考虑有效状态的投注记录</li>
+<li><code>GROUP BY Content</code>：按投注内容分组</li>
+<li><code>COUNT(*) as frequency</code>：计算每种投注内容的出现频次</li>
+<li><code>ORDER BY frequency DESC</code>：按频次降序排列</li>
+<li><code>LIMIT 1</code>：只取频率最高的第一条记录</li>
+</ul>
+<p>此查询已成功运行并返回结果为 <strong>“500单”</strong>，出现了39次，是2021-05-10当日庄家”188”玩家中最常见的电子投注内容。</p>
+<h2 id="92、通过对检材“01-lott-sql”文件进行分析，关联t-trade-betrecord与t-lottery-jnd表，分析庄家”188”在2021-05-10投注”jnd28”时：当开奖结果为”大”时，玩家投注包含”小”的笔数占比（使用双位数格式，答案格式：11-11-）（-）"><a href="#92、通过对检材“01-lott-sql”文件进行分析，关联t-trade-betrecord与t-lottery-jnd表，分析庄家”188”在2021-05-10投注”jnd28”时：当开奖结果为”大”时，玩家投注包含”小”的笔数占比（使用双位数格式，答案格式：11-11-）（-）" class="headerlink" title="92、通过对检材“01-lott.sql”文件进行分析，关联t_trade_betrecord与t_lottery_jnd表，分析庄家”188”在2021-05-10投注”jnd28”时：当开奖结果为”大”时，玩家投注包含”小”的笔数占比（使用双位数格式，答案格式：11.11%）（ ）"></a>92、通过对检材“01-lott.sql”文件进行分析，关联t_trade_betrecord与t_lottery_jnd表，分析庄家”188”在2021-05-10投注”jnd28”时：当开奖结果为”大”时，玩家投注包含”小”的笔数占比（使用双位数格式，答案格式：11.11%）（ ）</h2><p>我们需要分析庄家”188”在2021-05-10投注”jnd28”时，当开奖结果为”大”时玩家投注包含”小”的笔数占比。具体步骤如下：</p>
+<ol>
+<li><strong>表关联</strong>：<ul>
+<li>关联 <code>t_trade_betrecord</code> 和 <code>t_lottery_jnd</code> 表，通过 <code>Issue</code> 字段进行连接</li>
+</ul>
+</li>
+<li><strong>过滤条件</strong>：<ul>
+<li>庄家为 “188”：通过 <code>Keeper</code> 字段筛选</li>
+<li>彩票类型为 “jnd28”：通过 <code>LotteryType</code> 字筛选</li>
+<li>投注日期为 2021-05-10：通过 <code>CreateTime</code> 字段筛选</li>
+<li>开奖结果为”大”：通过 <code>t_lottery_jnd.R_B_M</code> 字段筛选</li>
+</ul>
+</li>
+<li><strong>计算逻辑</strong>：<ul>
+<li>统计开奖结果为”大”时的总投注笔数</li>
+<li>统计其中投注内容包含”小”的笔数</li>
+<li>计算占比并格式化为双位数百分比</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="实际执行的-SQL-查询代码如下：-1"><a href="#实际执行的-SQL-查询代码如下：-1" class="headerlink" title="实际执行的 SQL 查询代码如下："></a>实际执行的 SQL 查询代码如下：</h3><figure class="highlight sql" data-language="sql" data-language-label="SQL"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    CONCAT(FORMAT((<span class="built_in">SUM</span>(<span class="keyword">CASE</span> <span class="keyword">WHEN</span> b.Content <span class="keyword">LIKE</span> <span class="string">&#x27;%小%&#x27;</span> <span class="keyword">THEN</span> <span class="number">1</span> <span class="keyword">ELSE</span> <span class="number">0</span> <span class="keyword">END</span>) <span class="operator">*</span> <span class="number">100.0</span> <span class="operator">/</span> <span class="built_in">COUNT</span>(<span class="operator">*</span>)), <span class="number">2</span>), <span class="string">&#x27;%&#x27;</span>) <span class="keyword">AS</span> percentage</span><br><span class="line"><span class="keyword">FROM</span> lott.t_trade_betrecord b</span><br><span class="line"><span class="keyword">JOIN</span> lott.t_lottery_jnd j <span class="keyword">ON</span> b.Issue <span class="operator">=</span> j.Issue</span><br><span class="line"><span class="keyword">WHERE</span> b.Keeper <span class="operator">=</span> <span class="string">&#x27;188&#x27;</span> </span><br><span class="line">  <span class="keyword">AND</span> b.LotteryType <span class="operator">=</span> <span class="string">&#x27;jnd28&#x27;</span></span><br><span class="line">  <span class="keyword">AND</span> <span class="type">DATE</span>(b.CreateTime) <span class="operator">=</span> <span class="string">&#x27;2021-05-10&#x27;</span></span><br><span class="line">  <span class="keyword">AND</span> j.R_B_M <span class="operator">=</span> <span class="string">&#x27;大&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>CASE WHEN b.Content LIKE &#39;%小%&#39; THEN 1 ELSE 0 END</code></p>
+<p>R_B_M大小</p>
+<h4 id="查询说明：-2"><a href="#查询说明：-2" class="headerlink" title="查询说明："></a>查询说明：</h4><ul>
+<li><code>JOIN lott.t_lottery_jnd j ON b.Issue = j.Issue</code>：关联两个表，通过期号连接</li>
+<li><code>b.Keeper = &#39;188&#39;</code>：筛选庄家为”188”的记录</li>
+<li><code>b.LotteryType = &#39;jnd28&#39;</code>：筛选彩票类型为”jnd28”的记录</li>
+<li><code>DATE(b.CreateTime) = &#39;2021-05-10&#39;</code>：筛选2021年5月10日的记录</li>
+<li><code>j.R_B_M = &#39;大&#39;</code>：筛选开奖结果为”大”的记录</li>
+<li><code>CASE WHEN b.Content LIKE &#39;%小%&#39; THEN 1 ELSE 0 END</code>：判断投注内容是否包含”小”</li>
+<li><code>SUM(...) * 100.0 / COUNT(*)</code>：计算包含”小”的投注笔数占总笔数的百分比</li>
+<li><code>FORMAT(..., 2)</code>：格式化为保留两位小数的数值</li>
+<li><code>CONCAT(..., &#39;%&#39;)</code>：添加百分号</li>
+</ul>
+<p>根据验证查询，开奖结果为”大”时总投注笔数为1161笔，其中包含”小”的投注笔数为521笔，占比为 <strong>44.88%</strong>。</p>
+<p>答案：44.88%</p>
+<h2 id="93、通过对检材“02-crime-records-sql”分析，统计相邻两次作案时间间隔在1天之内的城市和该城市两次作案时间间隔在1天之内的案件总数量，找出案件总数最多的城市名。（答案格式：按照实际情况填写）（-）"><a href="#93、通过对检材“02-crime-records-sql”分析，统计相邻两次作案时间间隔在1天之内的城市和该城市两次作案时间间隔在1天之内的案件总数量，找出案件总数最多的城市名。（答案格式：按照实际情况填写）（-）" class="headerlink" title="93、通过对检材“02-crime_records.sql”分析，统计相邻两次作案时间间隔在1天之内的城市和该城市两次作案时间间隔在1天之内的案件总数量，找出案件总数最多的城市名。（答案格式：按照实际情况填写）（ ）"></a>93、通过对检材“02-crime_records.sql”分析，统计相邻两次作案时间间隔在1天之内的城市和该城市两次作案时间间隔在1天之内的案件总数量，找出案件总数最多的城市名。（答案格式：按照实际情况填写）（ ）</h2><p>我们需要找出相邻两次作案时间间隔在1天之内的城市，并统计每个城市中这样的案件对数量，最后找出案件对总数最多的城市。具体步骤如下：</p>
+<ol>
+<li><strong>数据预处理</strong>：<ul>
+<li>使用CTE（公用表表达式）<code>ordered_crimes</code>对每个城市的犯罪记录按时间排序</li>
+<li>使用<code>STR_TO_DATE</code>函数将字符串格式的时间转换为日期时间格式</li>
+<li>使用<code>ROW_NUMBER()</code>为每个城市的记录分配序号</li>
+</ul>
+</li>
+<li><strong>关联相邻记录</strong>：<ul>
+<li>使用CTE<code>crime_pairs</code>将同一城市中相邻的两条记录关联起来</li>
+<li>计算相邻案件之间的时间差（小时）</li>
+</ul>
+</li>
+<li><strong>筛选和统计</strong>：<ul>
+<li>筛选时间差在24小时（1天）之内的案件对</li>
+<li>按城市分组统计符合条件的案件对数量</li>
+<li>按数量降序排列，找出最多的那个城市</li>
+</ul>
+</li>
+</ol>
+<hr>
+<figure class="highlight sql" data-language="sql" data-language-label="SQL"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">02</span><span class="operator">-</span>crime_records.sql</span><br><span class="line">    │</span><br><span class="line">    ├── 提取 crime_records 表数据</span><br><span class="line">    │</span><br><span class="line">    ├── 过滤空值（crime_time、city）</span><br><span class="line">    │</span><br><span class="line">    ├── 将 crime_time 转为 datetime</span><br><span class="line">    │</span><br><span class="line">    ├── 按 city 分组、按作案时间排序</span><br><span class="line">    │</span><br><span class="line">    ├── 用 <span class="built_in">ROW_NUMBER</span>() 生成顺序编号</span><br><span class="line">    │</span><br><span class="line">    ├── 关联同一城市内相邻两条记录</span><br><span class="line">    │</span><br><span class="line">    ├── 计算相邻两次作案时间差</span><br><span class="line">    │</span><br><span class="line">    ├── 筛选时间差 ≤ <span class="number">1</span>天 的案件对</span><br><span class="line">    │</span><br><span class="line">    ├── 按城市统计案件对数量</span><br><span class="line">    │</span><br><span class="line">    ├── 按数量降序取第一名</span><br><span class="line">    │</span><br><span class="line">    └── 得出结果：福州</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="实际执行的-SQL-查询代码如下：-2"><a href="#实际执行的-SQL-查询代码如下：-2" class="headerlink" title="实际执行的 SQL 查询代码如下："></a>实际执行的 SQL 查询代码如下：</h3><figure class="highlight sql" data-language="sql" data-language-label="SQL"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">WITH</span> ordered_crimes <span class="keyword">AS</span> (</span><br><span class="line">  <span class="keyword">SELECT</span> </span><br><span class="line">  city,</span><br><span class="line">  STR_TO_DATE(crime_time, <span class="string">&#x27;%Y/%m/%d %H:%i&#x27;</span>) <span class="keyword">as</span> crime_datetime,</span><br><span class="line">  <span class="built_in">ROW_NUMBER</span>() <span class="keyword">OVER</span> (<span class="keyword">PARTITION</span> <span class="keyword">BY</span> city <span class="keyword">ORDER</span> <span class="keyword">BY</span> STR_TO_DATE(crime_time, <span class="string">&#x27;%Y/%m/%d %H:%i&#x27;</span>)) <span class="keyword">as</span> rn</span><br><span class="line">  <span class="keyword">FROM</span> crime_records.crime_records</span><br><span class="line">  <span class="keyword">WHERE</span> crime_time <span class="keyword">IS</span> <span class="keyword">NOT NULL</span> <span class="keyword">AND</span> city <span class="keyword">IS</span> <span class="keyword">NOT NULL</span></span><br><span class="line">),</span><br><span class="line">crime_pairs <span class="keyword">AS</span> (</span><br><span class="line">  <span class="keyword">SELECT</span> </span><br><span class="line">  c1.city,</span><br><span class="line">  c1.crime_datetime <span class="keyword">as</span> first_crime_time,</span><br><span class="line">  c2.crime_datetime <span class="keyword">as</span> second_crime_time,</span><br><span class="line">  TIMESTAMPDIFF(<span class="keyword">HOUR</span>, c1.crime_datetime, c2.crime_datetime) <span class="keyword">as</span> hours_diff</span><br><span class="line">  <span class="keyword">FROM</span> ordered_crimes c1</span><br><span class="line">  <span class="keyword">JOIN</span> ordered_crimes c2 <span class="keyword">ON</span> c1.city <span class="operator">=</span> c2.city <span class="keyword">AND</span> c1.rn <span class="operator">=</span> c2.rn <span class="operator">-</span> <span class="number">1</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    city,</span><br><span class="line">    <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">as</span> pair_count</span><br><span class="line"><span class="keyword">FROM</span> crime_pairs</span><br><span class="line"><span class="keyword">WHERE</span> <span class="built_in">ABS</span>(hours_diff) <span class="operator">&lt;=</span> <span class="number">24</span></span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> city</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> pair_count <span class="keyword">DESC</span></span><br><span class="line">LIMIT <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql" data-language="sql" data-language-label="SQL"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 第一步：使用公用表表达式（CTE）ordered_crimes</span></span><br><span class="line"><span class="comment">-- 作用：</span></span><br><span class="line"><span class="comment">-- 1. 筛选出 crime_time 和 city 都不为空的数据</span></span><br><span class="line"><span class="comment">-- 2. 把字符串格式的 crime_time 转成真正的日期时间类型</span></span><br><span class="line"><span class="comment">-- 3. 按照 city 分组后，根据案件发生时间排序</span></span><br><span class="line"><span class="comment">-- 4. 给每个城市内的案件按时间顺序编号（rn）</span></span><br><span class="line"><span class="keyword">WITH</span> ordered_crimes <span class="keyword">AS</span> (</span><br><span class="line">  <span class="keyword">SELECT</span> </span><br><span class="line">    city,</span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 将字符串格式的 crime_time 转换为 DATETIME</span></span><br><span class="line">    <span class="comment">-- 原始格式示例：&#x27;2024/01/15 13:45&#x27;</span></span><br><span class="line">    <span class="comment">-- 转换格式说明：</span></span><br><span class="line">    <span class="comment">-- %Y = 四位年份</span></span><br><span class="line">    <span class="comment">-- %m = 两位月份</span></span><br><span class="line">    <span class="comment">-- %d = 两位日期</span></span><br><span class="line">    <span class="comment">-- %H = 24小时制小时</span></span><br><span class="line">    <span class="comment">-- %i = 分钟</span></span><br><span class="line">    STR_TO_DATE(crime_time, <span class="string">&#x27;%Y/%m/%d %H:%i&#x27;</span>) <span class="keyword">AS</span> crime_datetime,</span><br><span class="line"></span><br><span class="line">    <span class="comment">-- ROW_NUMBER() 窗口函数：</span></span><br><span class="line">    <span class="comment">-- 按 city 分区，每个城市内部再按案件发生时间升序排序</span></span><br><span class="line">    <span class="comment">-- 给每条记录生成顺序号 rn</span></span><br><span class="line">    <span class="comment">-- 这样就可以拿到“同一城市中前后相邻的案件”</span></span><br><span class="line">    <span class="built_in">ROW_NUMBER</span>() <span class="keyword">OVER</span> (</span><br><span class="line">      <span class="keyword">PARTITION</span> <span class="keyword">BY</span> city</span><br><span class="line">      <span class="keyword">ORDER</span> <span class="keyword">BY</span> STR_TO_DATE(crime_time, <span class="string">&#x27;%Y/%m/%d %H:%i&#x27;</span>)</span><br><span class="line">    ) <span class="keyword">AS</span> rn</span><br><span class="line"></span><br><span class="line">  <span class="keyword">FROM</span> crime_records.crime_records</span><br><span class="line"></span><br><span class="line">  <span class="comment">-- 过滤掉 crime_time 或 city 为空的记录</span></span><br><span class="line">  <span class="comment">-- 因为后面要做时间转换和分组比较，这些字段不能为空</span></span><br><span class="line">  <span class="keyword">WHERE</span> crime_time <span class="keyword">IS</span> <span class="keyword">NOT NULL</span> </span><br><span class="line">    <span class="keyword">AND</span> city <span class="keyword">IS</span> <span class="keyword">NOT NULL</span></span><br><span class="line">),</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 第二步：构造相邻案件对 crime_pairs</span></span><br><span class="line"><span class="comment">-- 作用：</span></span><br><span class="line"><span class="comment">-- 1. 把同一个城市中“按时间排序后相邻的两条案件记录”配对</span></span><br><span class="line"><span class="comment">-- 2. 计算这两个相邻案件之间相差多少小时</span></span><br><span class="line">crime_pairs <span class="keyword">AS</span> (</span><br><span class="line">  <span class="keyword">SELECT</span> </span><br><span class="line">    c1.city,</span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 当前案件时间（前一个案件）</span></span><br><span class="line">    c1.crime_datetime <span class="keyword">AS</span> first_crime_time,</span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 紧挨着的下一个案件时间</span></span><br><span class="line">    c2.crime_datetime <span class="keyword">AS</span> second_crime_time,</span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 计算两个案件之间相差多少小时</span></span><br><span class="line">    <span class="comment">-- TIMESTAMPDIFF(HOUR, start, end) 返回 end - start 的小时差</span></span><br><span class="line">    TIMESTAMPDIFF(<span class="keyword">HOUR</span>, c1.crime_datetime, c2.crime_datetime) <span class="keyword">AS</span> hours_diff</span><br><span class="line"></span><br><span class="line">  <span class="keyword">FROM</span> ordered_crimes c1</span><br><span class="line">  <span class="keyword">JOIN</span> ordered_crimes c2 </span><br><span class="line">    <span class="keyword">ON</span> c1.city <span class="operator">=</span> c2.city       <span class="comment">-- 必须是同一个城市</span></span><br><span class="line">   <span class="keyword">AND</span> c1.rn <span class="operator">=</span> c2.rn <span class="operator">-</span> <span class="number">1</span>       <span class="comment">-- c2 是 c1 的下一条记录，即“相邻案件”</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 第三步：统计每个城市中，相邻案件发生时间差在24小时以内的案件对数量</span></span><br><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">  city,</span><br><span class="line"></span><br><span class="line">  <span class="comment">-- 统计满足条件的相邻案件对数量</span></span><br><span class="line">  <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">AS</span> pair_count</span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> crime_pairs</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 只保留时间差绝对值在24小时以内的案件对</span></span><br><span class="line"><span class="comment">-- 虽然按照 rn 顺序连接后通常 hours_diff 不会是负数，</span></span><br><span class="line"><span class="comment">-- 但这里加 ABS() 可以增强健壮性</span></span><br><span class="line"><span class="keyword">WHERE</span> <span class="built_in">ABS</span>(hours_diff) <span class="operator">&lt;=</span> <span class="number">24</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 按城市分组，统计每个城市的符合条件案件对数量</span></span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> city</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 按案件对数量从高到低排序</span></span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> pair_count <span class="keyword">DESC</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 只取数量最多的那个城市</span></span><br><span class="line">LIMIT <span class="number">1</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="查询说明：-3"><a href="#查询说明：-3" class="headerlink" title="查询说明："></a>查询说明：</h4><ul>
+<li><code>STR_TO_DATE(crime_time, &#39;%Y/%m/%d %H:%i&#39;)</code>：将字符串格式的时间转换为日期时间格式</li>
+<li><code>ROW_NUMBER() OVER (PARTITION BY city ORDER BY ...)</code>：为每个城市的记录按时间顺序编号</li>
+<li><code>JOIN ordered_crimes c2 ON c1.city = c2.city AND c1.rn = c2.rn - 1</code>：关联同一城市中相邻的两条记录</li>
+<li><code>TIMESTAMPDIFF(HOUR, c1.crime_datetime, c2.crime_datetime)</code>：计算两条记录之间的时间差（小时）</li>
+<li><code>ABS(hours_diff) &lt;= 24</code>：筛选时间差在24小时（1天）之内的记录对</li>
+<li><code>GROUP BY city</code>：按城市分组</li>
+<li><code>COUNT(*)</code>：统计每个城市的符合条件的记录对数量</li>
+<li><code>ORDER BY pair_count DESC</code>：按数量降序排列</li>
+<li><code>LIMIT 1</code>：只取数量最多的第一个城市</li>
+</ul>
+<p>根据查询结果，<strong>福州</strong>是相邻两次作案时间间隔在1天之内的案件对数量最多的城市，共有2076对。</p>
+<p>答案：福州</p>
+<h2 id="94、通过对检材“02-crime-records-sql”分析，根据案件的损失金额和伤情等级，将案件分为-“轻微案件”“一般案件”“重大案件”“其他”四类（分类规则如下），并统计-2023-年各类型案件的数量。轻微案件：损失金额≤10000-元且无人员受伤（injury-level-为空或未提及）；一般案件：损失金额-10001-50000-元，或有轻微伤；重大案件：损失金额-50000-元，或有轻伤或有重伤；其他：非上述情况。（按照案件数量的降序输出答案，答案格式为：40-30-20-10）（-）好的，我来详细解释查询逻辑和查询语句："><a href="#94、通过对检材“02-crime-records-sql”分析，根据案件的损失金额和伤情等级，将案件分为-“轻微案件”“一般案件”“重大案件”“其他”四类（分类规则如下），并统计-2023-年各类型案件的数量。轻微案件：损失金额≤10000-元且无人员受伤（injury-level-为空或未提及）；一般案件：损失金额-10001-50000-元，或有轻微伤；重大案件：损失金额-50000-元，或有轻伤或有重伤；其他：非上述情况。（按照案件数量的降序输出答案，答案格式为：40-30-20-10）（-）好的，我来详细解释查询逻辑和查询语句：" class="headerlink" title="94、通过对检材“02-crime_records.sql”分析，根据案件的损失金额和伤情等级，将案件分为 “轻微案件”“一般案件”“重大案件”“其他”四类（分类规则如下），并统计 2023 年各类型案件的数量。轻微案件：损失金额≤10000 元且无人员受伤（injury_level 为空或未提及）；一般案件：损失金额 10001-50000 元，或有轻微伤；重大案件：损失金额 &gt; 50000 元，或有轻伤或有重伤；其他：非上述情况。（按照案件数量的降序输出答案，答案格式为：40&#x2F;30&#x2F;20&#x2F;10）（ ）好的，我来详细解释查询逻辑和查询语句："></a>94、通过对检材“02-crime_records.sql”分析，根据案件的损失金额和伤情等级，将案件分为 “轻微案件”“一般案件”“重大案件”“其他”四类（分类规则如下），并统计 2023 年各类型案件的数量。轻微案件：损失金额≤10000 元且无人员受伤（injury_level 为空或未提及）；一般案件：损失金额 10001-50000 元，或有轻微伤；重大案件：损失金额 &gt; 50000 元，或有轻伤或有重伤；其他：非上述情况。（按照案件数量的降序输出答案，答案格式为：40&#x2F;30&#x2F;20&#x2F;10）（ ）好的，我来详细解释查询逻辑和查询语句：</h2><h2 id="查询逻辑"><a href="#查询逻辑" class="headerlink" title="查询逻辑"></a>查询逻辑</h2><h3 id="分类规则理解"><a href="#分类规则理解" class="headerlink" title="分类规则理解"></a>分类规则理解</h3><p>根据题目要求，案件分为四类，需要按<strong>优先级顺序</strong>判断：</p>
+<ol>
+<li><strong>重大案件</strong>（优先级最高）：损失金额 &gt; 50000 元，或伤情等级为”轻伤”或”重伤”</li>
+<li><strong>一般案件</strong>（优先级第二）：损失金额 10001-50000 元，或伤情等级为”轻微伤”</li>
+<li><strong>轻微案件</strong>（优先级第三）：损失金额 ≤ 10000 元，且无人员受伤（injury_level 为空或未提及）</li>
+<li><strong>其他</strong>：不符合以上三类的情况</li>
+</ol>
+<h3 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h3><ul>
+<li>CASE WHEN 语句从上到下依次判断，遇到第一个满足的条件即停止</li>
+<li>因此需要按优先级从高到低排列条件</li>
+<li>“有重伤”包括 injury_level 为 “轻伤” 或 “重伤”</li>
+<li>“无人员受伤”指 injury_level 为 NULL、空字符串，或不包含具体伤情描述</li>
+</ul>
+<hr>
+<h2 id="SQL-查询语句"><a href="#SQL-查询语句" class="headerlink" title="SQL 查询语句"></a>SQL 查询语句</h2><figure class="highlight sql" data-language="sql" data-language-label="SQL"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    <span class="keyword">CASE</span> </span><br><span class="line">        <span class="keyword">WHEN</span> loss_amount <span class="operator">&gt;</span> <span class="number">50000</span> <span class="keyword">OR</span> injury_level <span class="keyword">IN</span> (<span class="string">&#x27;轻伤&#x27;</span>, <span class="string">&#x27;重伤&#x27;</span>) <span class="keyword">THEN</span> <span class="string">&#x27;重大案件&#x27;</span></span><br><span class="line">        <span class="keyword">WHEN</span> loss_amount <span class="keyword">BETWEEN</span> <span class="number">10001</span> <span class="keyword">AND</span> <span class="number">50000</span> <span class="keyword">OR</span> injury_level <span class="operator">=</span> <span class="string">&#x27;轻微伤&#x27;</span> <span class="keyword">THEN</span> <span class="string">&#x27;一般案件&#x27;</span></span><br><span class="line">        <span class="keyword">WHEN</span> loss_amount <span class="operator">&lt;=</span> <span class="number">10000</span> <span class="keyword">AND</span> (injury_level <span class="keyword">IS</span> <span class="keyword">NULL</span> <span class="keyword">OR</span> injury_level <span class="operator">=</span> <span class="string">&#x27;&#x27;</span> <span class="keyword">OR</span> injury_level <span class="keyword">NOT</span> <span class="keyword">IN</span> (<span class="string">&#x27;轻微伤&#x27;</span>, <span class="string">&#x27;轻伤&#x27;</span>, <span class="string">&#x27;重伤&#x27;</span>, <span class="string">&#x27;死亡&#x27;</span>)) <span class="keyword">THEN</span> <span class="string">&#x27;轻微案件&#x27;</span></span><br><span class="line">        <span class="keyword">ELSE</span> <span class="string">&#x27;其他&#x27;</span></span><br><span class="line">    <span class="keyword">END</span> <span class="keyword">AS</span> case_type,</span><br><span class="line">    <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">AS</span> case_count</span><br><span class="line"><span class="keyword">FROM</span> crime_records</span><br><span class="line"><span class="keyword">WHERE</span> STR_TO_DATE(crime_time, <span class="string">&#x27;%Y/%m/%d %H:%i&#x27;</span>) <span class="operator">&gt;=</span> <span class="string">&#x27;2023-01-01 00:00:00&#x27;</span></span><br><span class="line">  <span class="keyword">AND</span> STR_TO_DATE(crime_time, <span class="string">&#x27;%Y/%m/%d %H:%i&#x27;</span>) <span class="operator">&lt;</span> <span class="string">&#x27;2024-01-01 00:00:00&#x27;</span></span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> case_type</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> case_count <span class="keyword">DESC</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<figure class="highlight sql" data-language="sql" data-language-label="SQL"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查询目标：</span></span><br><span class="line"><span class="comment">-- 统计 2023 年内各类案件（重大案件、一般案件、轻微案件、其他）的数量，</span></span><br><span class="line"><span class="comment">-- 并按照案件数量从高到低排序。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    <span class="keyword">CASE</span> </span><br><span class="line">        <span class="comment">-- 第一类：重大案件</span></span><br><span class="line">        <span class="comment">-- 判定条件：</span></span><br><span class="line">        <span class="comment">-- 1. loss_amount（损失金额）大于 50000</span></span><br><span class="line">        <span class="comment">--    或者</span></span><br><span class="line">        <span class="comment">-- 2. injury_level（伤害等级）是“轻伤”或“重伤”</span></span><br><span class="line">        <span class="comment">--</span></span><br><span class="line">        <span class="comment">-- 只要满足其中任意一个条件，就归类为“重大案件”</span></span><br><span class="line">        <span class="keyword">WHEN</span> loss_amount <span class="operator">&gt;</span> <span class="number">50000</span> </span><br><span class="line">             <span class="keyword">OR</span> injury_level <span class="keyword">IN</span> (<span class="string">&#x27;轻伤&#x27;</span>, <span class="string">&#x27;重伤&#x27;</span>) </span><br><span class="line">        <span class="keyword">THEN</span> <span class="string">&#x27;重大案件&#x27;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">-- 第二类：一般案件</span></span><br><span class="line">        <span class="comment">-- 判定条件：</span></span><br><span class="line">        <span class="comment">-- 1. loss_amount 在 10001 到 50000 之间</span></span><br><span class="line">        <span class="comment">--    或者</span></span><br><span class="line">        <span class="comment">-- 2. injury_level 等于“轻微伤”</span></span><br><span class="line">        <span class="comment">--</span></span><br><span class="line">        <span class="comment">-- 注意：</span></span><br><span class="line">        <span class="comment">-- CASE 是从上往下匹配的，</span></span><br><span class="line">        <span class="comment">-- 如果前面已经满足“重大案件”，就不会再进入这一层</span></span><br><span class="line">        <span class="keyword">WHEN</span> loss_amount <span class="keyword">BETWEEN</span> <span class="number">10001</span> <span class="keyword">AND</span> <span class="number">50000</span> </span><br><span class="line">             <span class="keyword">OR</span> injury_level <span class="operator">=</span> <span class="string">&#x27;轻微伤&#x27;</span> </span><br><span class="line">        <span class="keyword">THEN</span> <span class="string">&#x27;一般案件&#x27;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">-- 第三类：轻微案件</span></span><br><span class="line">        <span class="comment">-- 判定条件：</span></span><br><span class="line">        <span class="comment">-- 1. loss_amount 小于等于 10000</span></span><br><span class="line">        <span class="comment">-- 2. 并且 injury_level 满足以下任意一种情况：</span></span><br><span class="line">        <span class="comment">--    - 为 NULL</span></span><br><span class="line">        <span class="comment">--    - 为空字符串 &#x27;&#x27;</span></span><br><span class="line">        <span class="comment">--    - 不属于 (&#x27;轻微伤&#x27;, &#x27;轻伤&#x27;, &#x27;重伤&#x27;, &#x27;死亡&#x27;)</span></span><br><span class="line">        <span class="comment">--</span></span><br><span class="line">        <span class="comment">-- 也就是说：</span></span><br><span class="line">        <span class="comment">-- 金额损失较小，且没有明确伤情、伤情为空、</span></span><br><span class="line">        <span class="comment">-- 或者伤情不在这些常见严重程度分类里，则归为“轻微案件”</span></span><br><span class="line">        <span class="keyword">WHEN</span> loss_amount <span class="operator">&lt;=</span> <span class="number">10000</span> </span><br><span class="line">             <span class="keyword">AND</span> (</span><br><span class="line">                  injury_level <span class="keyword">IS</span> <span class="keyword">NULL</span> </span><br><span class="line">                  <span class="keyword">OR</span> injury_level <span class="operator">=</span> <span class="string">&#x27;&#x27;</span> </span><br><span class="line">                  <span class="keyword">OR</span> injury_level <span class="keyword">NOT</span> <span class="keyword">IN</span> (<span class="string">&#x27;轻微伤&#x27;</span>, <span class="string">&#x27;轻伤&#x27;</span>, <span class="string">&#x27;重伤&#x27;</span>, <span class="string">&#x27;死亡&#x27;</span>)</span><br><span class="line">                 ) </span><br><span class="line">        <span class="keyword">THEN</span> <span class="string">&#x27;轻微案件&#x27;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">-- 其余所有不满足以上条件的情况统一归类为“其他”</span></span><br><span class="line">        <span class="comment">-- 比如：</span></span><br><span class="line">        <span class="comment">-- - loss_amount 为空</span></span><br><span class="line">        <span class="comment">-- - injury_level = &#x27;死亡&#x27;，但金额条件又没有落入前面明确分类</span></span><br><span class="line">        <span class="comment">-- - 或者一些特殊/异常数据</span></span><br><span class="line">        <span class="keyword">ELSE</span> <span class="string">&#x27;其他&#x27;</span></span><br><span class="line">    <span class="keyword">END</span> <span class="keyword">AS</span> case_type,</span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 统计每种案件类型的记录数量</span></span><br><span class="line">    <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">AS</span> case_count</span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> crime_records</span><br><span class="line"></span><br><span class="line"><span class="keyword">WHERE</span> </span><br><span class="line">    <span class="comment">-- 将字符串类型的 crime_time 转换为 DATETIME 格式</span></span><br><span class="line">    <span class="comment">-- 原始时间格式示例：&#x27;2023/05/18 14:30&#x27;</span></span><br><span class="line">    <span class="comment">-- 格式说明：</span></span><br><span class="line">    <span class="comment">-- %Y = 四位年份</span></span><br><span class="line">    <span class="comment">-- %m = 两位月份</span></span><br><span class="line">    <span class="comment">-- %d = 两位日期</span></span><br><span class="line">    <span class="comment">-- %H = 24小时制小时</span></span><br><span class="line">    <span class="comment">-- %i = 分钟</span></span><br><span class="line">    STR_TO_DATE(crime_time, <span class="string">&#x27;%Y/%m/%d %H:%i&#x27;</span>) <span class="operator">&gt;=</span> <span class="string">&#x27;2023-01-01 00:00:00&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 限制结束时间小于 2024-01-01 00:00:00</span></span><br><span class="line">    <span class="comment">-- 这样就能准确筛选出整个 2023 年的数据</span></span><br><span class="line">    <span class="keyword">AND</span> STR_TO_DATE(crime_time, <span class="string">&#x27;%Y/%m/%d %H:%i&#x27;</span>) <span class="operator">&lt;</span> <span class="string">&#x27;2024-01-01 00:00:00&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 按照 CASE 生成的案件类型分组统计</span></span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> case_type</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 按案件数量从高到低排序</span></span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> case_count <span class="keyword">DESC</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="查询结果"><a href="#查询结果" class="headerlink" title="查询结果"></a>查询结果</h2><table>
+<thead>
+<tr>
+<th>case_type</th>
+<th>case_count</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>重大案件</td>
+<td>15712</td>
+</tr>
+<tr>
+<td>其他</td>
+<td>2058</td>
+</tr>
+<tr>
+<td>一般案件</td>
+<td>1985</td>
+</tr>
+<tr>
+<td>轻微案件</td>
+<td>222</td>
+</tr>
+</tbody></table>
+<p><strong>答案：15712&#x2F;2058&#x2F;1985&#x2F;222</strong></p>
+<h2 id="95、通过对检材“02-crime-records-sql”分析，统计-2021-2023-年期间（含2021年和2023年），每年处理结果为-“移送起诉”-的案件里，每一年中损失总额最高的案件类型对应的损失总额为？（按-2021-2023-年顺序连接损失总额，连接符号使用-小数点保留2位，答案格式为-：1-37-2-21-3-45）（-）"><a href="#95、通过对检材“02-crime-records-sql”分析，统计-2021-2023-年期间（含2021年和2023年），每年处理结果为-“移送起诉”-的案件里，每一年中损失总额最高的案件类型对应的损失总额为？（按-2021-2023-年顺序连接损失总额，连接符号使用-小数点保留2位，答案格式为-：1-37-2-21-3-45）（-）" class="headerlink" title="95、通过对检材“02-crime_records.sql”分析，统计 2021-2023 年期间（含2021年和2023年），每年处理结果为 “移送起诉” 的案件里，每一年中损失总额最高的案件类型对应的损失总额为？（按 2021 - 2023 年顺序连接损失总额，连接符号使用&#x2F;,小数点保留2位，答案格式为 ：1.37&#x2F;2.21&#x2F;3.45）（ ）"></a>95、通过对检材“02-crime_records.sql”分析，统计 2021-2023 年期间（含2021年和2023年），每年处理结果为 “移送起诉” 的案件里，每一年中损失总额最高的案件类型对应的损失总额为？（按 2021 - 2023 年顺序连接损失总额，连接符号使用&#x2F;,小数点保留2位，答案格式为 ：1.37&#x2F;2.21&#x2F;3.45）（ ）</h2><p>我来分析这道题目，需要统计2021-2023年期间，每年处理结果为”移送起诉”的案件里，损失总额最高的案件类型对应的损失总额。</p>
+<h2 id="查询逻辑-1"><a href="#查询逻辑-1" class="headerlink" title="查询逻辑"></a>查询逻辑</h2><ol>
+<li>筛选条件：<ul>
+<li>时间范围：2021-2023年（含）</li>
+<li>处理结果 &#x3D; ‘移送起诉’</li>
+</ul>
+</li>
+<li>分析步骤：<ul>
+<li>按年份和案件类型分组</li>
+<li>计算每种案件类型的损失总额（SUM）</li>
+<li>找出每年损失总额最高的案件类型</li>
+<li>按年份顺序输出对应的损失总额</li>
+</ul>
+</li>
+</ol>
+<p>让我先查看一下数据：</p>
+<p>完美！查询结果已经出来了。</p>
+<h2 id="查询逻辑-2"><a href="#查询逻辑-2" class="headerlink" title="查询逻辑"></a>查询逻辑</h2><h3 id="分析步骤"><a href="#分析步骤" class="headerlink" title="分析步骤"></a>分析步骤</h3><ol>
+<li><strong>筛选条件</strong>：<ul>
+<li>时间范围：2021-2023年（含）</li>
+<li>处理结果 &#x3D; ‘移送起诉’</li>
+</ul>
+</li>
+<li><strong>分组统计</strong>：<ul>
+<li>按年份和案件类型分组</li>
+<li>计算每种案件类型的损失总额（SUM）</li>
+</ul>
+</li>
+<li><strong>找出每年最高值</strong>：<ul>
+<li>使用窗口函数 ROW_NUMBER() 按年份分组，按损失总额降序排名</li>
+<li>取每年排名为1的记录</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="SQL-查询语句-1"><a href="#SQL-查询语句-1" class="headerlink" title="SQL 查询语句"></a>SQL 查询语句</h2><figure class="highlight sql" data-language="sql" data-language-label="SQL"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    <span class="keyword">year</span>,</span><br><span class="line">    crime_type,</span><br><span class="line">    ROUND(total_loss, <span class="number">2</span>) <span class="keyword">AS</span> total_loss</span><br><span class="line"><span class="keyword">FROM</span> (</span><br><span class="line">    <span class="keyword">SELECT</span> </span><br><span class="line">        <span class="keyword">YEAR</span>(STR_TO_DATE(crime_time, <span class="string">&#x27;%Y/%m/%d %H:%i&#x27;</span>)) <span class="keyword">AS</span> <span class="keyword">year</span>,</span><br><span class="line">        crime_type,</span><br><span class="line">        <span class="built_in">SUM</span>(loss_amount) <span class="keyword">AS</span> total_loss,</span><br><span class="line">        <span class="built_in">ROW_NUMBER</span>() <span class="keyword">OVER</span> (<span class="keyword">PARTITION</span> <span class="keyword">BY</span> <span class="keyword">YEAR</span>(STR_TO_DATE(crime_time, <span class="string">&#x27;%Y/%m/%d %H:%i&#x27;</span>)) <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="built_in">SUM</span>(loss_amount) <span class="keyword">DESC</span>) <span class="keyword">AS</span> rn</span><br><span class="line">    <span class="keyword">FROM</span> crime_records</span><br><span class="line">    <span class="keyword">WHERE</span> <span class="keyword">YEAR</span>(STR_TO_DATE(crime_time, <span class="string">&#x27;%Y/%m/%d %H:%i&#x27;</span>)) <span class="keyword">BETWEEN</span> <span class="number">2021</span> <span class="keyword">AND</span> <span class="number">2023</span></span><br><span class="line">      <span class="keyword">AND</span> handling_result <span class="operator">=</span> <span class="string">&#x27;移送起诉&#x27;</span></span><br><span class="line">    <span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="keyword">year</span>, crime_type</span><br><span class="line">) ranked</span><br><span class="line"><span class="keyword">WHERE</span> rn <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">year</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql" data-language="sql" data-language-label="SQL"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查询目标：</span></span><br><span class="line"><span class="comment">-- 统计 2021 到 2023 年之间，</span></span><br><span class="line"><span class="comment">-- 在“处理结果”为“移送起诉”的案件中，</span></span><br><span class="line"><span class="comment">-- 每一年总损失金额（loss_amount）最高的案件类型（crime_type），</span></span><br><span class="line"><span class="comment">-- 并输出该年份、案件类型以及对应的总损失金额。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    <span class="keyword">year</span>,                    <span class="comment">-- 年份</span></span><br><span class="line">    crime_type,              <span class="comment">-- 案件类型</span></span><br><span class="line">    ROUND(total_loss, <span class="number">2</span>) <span class="keyword">AS</span> total_loss   <span class="comment">-- 将总损失金额保留两位小数</span></span><br><span class="line"><span class="keyword">FROM</span> (</span><br><span class="line">    <span class="keyword">SELECT</span> </span><br><span class="line">        <span class="comment">-- 从 crime_time 中提取年份</span></span><br><span class="line">        <span class="comment">-- 先用 STR_TO_DATE 将字符串时间转换为 DATETIME，</span></span><br><span class="line">        <span class="comment">-- 再通过 YEAR() 提取年份</span></span><br><span class="line">        <span class="keyword">YEAR</span>(STR_TO_DATE(crime_time, <span class="string">&#x27;%Y/%m/%d %H:%i&#x27;</span>)) <span class="keyword">AS</span> <span class="keyword">year</span>,</span><br><span class="line"></span><br><span class="line">        <span class="comment">-- 案件类型</span></span><br><span class="line">        crime_type,</span><br><span class="line"></span><br><span class="line">        <span class="comment">-- 按“年份 + 案件类型”分组后，计算每组的总损失金额</span></span><br><span class="line">        <span class="built_in">SUM</span>(loss_amount) <span class="keyword">AS</span> total_loss,</span><br><span class="line"></span><br><span class="line">        <span class="comment">-- 使用窗口函数 ROW_NUMBER() 给每一年内的案件类型按总损失金额从高到低排名</span></span><br><span class="line">        <span class="comment">-- PARTITION BY：按年份分区，表示每一年单独排名</span></span><br><span class="line">        <span class="comment">-- ORDER BY SUM(loss_amount) DESC：总损失金额越大，排名越靠前</span></span><br><span class="line">        <span class="built_in">ROW_NUMBER</span>() <span class="keyword">OVER</span> (</span><br><span class="line">            <span class="keyword">PARTITION</span> <span class="keyword">BY</span> <span class="keyword">YEAR</span>(STR_TO_DATE(crime_time, <span class="string">&#x27;%Y/%m/%d %H:%i&#x27;</span>))</span><br><span class="line">            <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="built_in">SUM</span>(loss_amount) <span class="keyword">DESC</span></span><br><span class="line">        ) <span class="keyword">AS</span> rn</span><br><span class="line"></span><br><span class="line">    <span class="keyword">FROM</span> crime_records</span><br><span class="line"></span><br><span class="line">    <span class="keyword">WHERE</span> </span><br><span class="line">        <span class="comment">-- 只统计 2021 到 2023 年的数据</span></span><br><span class="line">        <span class="comment">-- 先将 crime_time 转换成日期时间，再提取年份进行筛选</span></span><br><span class="line">        <span class="keyword">YEAR</span>(STR_TO_DATE(crime_time, <span class="string">&#x27;%Y/%m/%d %H:%i&#x27;</span>)) <span class="keyword">BETWEEN</span> <span class="number">2021</span> <span class="keyword">AND</span> <span class="number">2023</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">-- 只保留处理结果为“移送起诉”的案件</span></span><br><span class="line">        <span class="keyword">AND</span> handling_result <span class="operator">=</span> <span class="string">&#x27;移送起诉&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 按年份和案件类型分组</span></span><br><span class="line">    <span class="comment">-- 这样每一组代表“某一年某一种案件类型”的汇总结果</span></span><br><span class="line">    <span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="keyword">year</span>, crime_type</span><br><span class="line">) ranked</span><br><span class="line"></span><br><span class="line"><span class="keyword">WHERE</span> </span><br><span class="line">    <span class="comment">-- 只取每一年排名第 1 的案件类型</span></span><br><span class="line">    <span class="comment">-- 即：每一年总损失金额最高的案件类型</span></span><br><span class="line">    rn <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 最终结果按年份升序排列</span></span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">year</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="查询结果-1"><a href="#查询结果-1" class="headerlink" title="查询结果"></a>查询结果</h2><table>
+<thead>
+<tr>
+<th>年份</th>
+<th>案件类型</th>
+<th>损失总额（元）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2021</td>
+<td>诈骗</td>
+<td>325806042.91</td>
+</tr>
+<tr>
+<td>2022</td>
+<td>诈骗</td>
+<td>344804883.98</td>
+</tr>
+<tr>
+<td>2023</td>
+<td>盗窃</td>
+<td>352132431.37</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h2><p><strong>325806042.91&#x2F;344804883.98&#x2F;352132431.37</strong></p>
+<h3 id="结果解读"><a href="#结果解读" class="headerlink" title="结果解读"></a>结果解读</h3><ul>
+<li><strong>2021年</strong>：移送起诉案件中，诈骗案件损失总额最高，达 325,806,042.91 元</li>
+<li><strong>2022年</strong>：移送起诉案件中，诈骗案件损失总额最高，达 344,804,883.98 元</li>
+<li><strong>2023年</strong>：移送起诉案件中，盗窃案件损失总额最高，达 352,132,431.37 元</li>
+</ul>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#89%E3%80%81%E9%80%9A%E8%BF%87%E5%AF%B9%E6%A3%80%E6%9D%90%E2%80%9C01-lott-sql%E2%80%9D%E6%96%87%E4%BB%B6%E8%BF%9B%E8%A1%8C%E5%88%86%E6%9E%90%EF%BC%8C%E7%BB%9F%E8%AE%A1%E5%BA%84%E5%AE%B6%E2%80%9D188%E2%80%9D%E5%9C%A82021-05-10%E5%BD%93%E6%97%A5%E7%9A%84%E7%94%B5%E5%AD%90%E6%8A%95%E6%B3%A8%E6%80%BB%E7%AC%94%E6%95%B0%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A1%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">89、通过对检材“01-lott.sql”文件进行分析，统计庄家”188”在2021-05-10当日的电子投注总笔数（答案格式：1）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#90%E3%80%81%E9%80%9A%E8%BF%87%E5%AF%B9%E6%A3%80%E6%9D%90%E2%80%9C01-lott-sql%E2%80%9D%E6%96%87%E4%BB%B6%E8%BF%9B%E8%A1%8C%E5%88%86%E6%9E%90%EF%BC%8C%E7%BB%9F%E8%AE%A1t-trade-betrecord%E4%B8%AD%E5%BA%84%E5%AE%B6%E2%80%9D188%E2%80%9D%E8%AE%B0%E5%BD%95%E4%B8%AD%E5%BD%A9%E7%A5%A8%E7%B1%BB%E5%9E%8B%E4%B8%BA%E2%80%9Djnd28%E2%80%9D%E4%B8%94%E6%9C%9F%E5%8F%B7%E5%9C%A8t-lottery-jnd%E8%A1%A8%E4%B8%AD%E5%AD%98%E5%9C%A8%E7%9A%84%E8%AE%B0%E5%BD%95%E6%95%B0%E3%80%82%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A1%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">90、通过对检材“01-lott.sql”文件进行分析，统计t_trade_betrecord中庄家”188”记录中彩票类型为”jnd28”且期号在t_lottery_jnd表中存在的记录数。（答案格式：1）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#91%E3%80%81%E9%80%9A%E8%BF%87%E5%AF%B9%E6%A3%80%E6%9D%90%E2%80%9C01-lott-sql%E2%80%9D%E6%96%87%E4%BB%B6%E8%BF%9B%E8%A1%8C%E5%88%86%E6%9E%90%EF%BC%8C%E7%BB%9F%E8%AE%A1%E5%BA%84%E5%AE%B6%E2%80%9D188%E2%80%9D%E7%9A%84%E7%8E%A9%E5%AE%B6%E5%9C%A82021-05-10%E5%BD%93%E6%97%A5%EF%BC%9A%E7%94%B5%E5%AD%90%E6%8A%95%E6%B3%A8%E5%86%85%E5%AE%B9%E5%87%BA%E7%8E%B0%E9%A2%91%E7%8E%87%E6%9C%80%E9%AB%98%E7%9A%84%E7%94%B5%E5%AD%90%E6%8A%95%E6%B3%A8%E5%86%85%E5%AE%B9%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A%E6%8C%89%E7%85%A7%E5%AE%9E%E9%99%85%E6%83%85%E5%86%B5%E5%A1%AB%E5%86%99%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">91、通过对检材“01-lott.sql”文件进行分析，统计庄家”188”的玩家在2021-05-10当日：电子投注内容出现频率最高的电子投注内容是什么？（答案格式：按照实际情况填写）（ ）</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%AE%9E%E9%99%85%E6%89%A7%E8%A1%8C%E7%9A%84-SQL-%E6%9F%A5%E8%AF%A2%E4%BB%A3%E7%A0%81%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="toc-list-text">实际执行的 SQL 查询代码如下：</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#92%E3%80%81%E9%80%9A%E8%BF%87%E5%AF%B9%E6%A3%80%E6%9D%90%E2%80%9C01-lott-sql%E2%80%9D%E6%96%87%E4%BB%B6%E8%BF%9B%E8%A1%8C%E5%88%86%E6%9E%90%EF%BC%8C%E5%85%B3%E8%81%94t-trade-betrecord%E4%B8%8Et-lottery-jnd%E8%A1%A8%EF%BC%8C%E5%88%86%E6%9E%90%E5%BA%84%E5%AE%B6%E2%80%9D188%E2%80%9D%E5%9C%A82021-05-10%E6%8A%95%E6%B3%A8%E2%80%9Djnd28%E2%80%9D%E6%97%B6%EF%BC%9A%E5%BD%93%E5%BC%80%E5%A5%96%E7%BB%93%E6%9E%9C%E4%B8%BA%E2%80%9D%E5%A4%A7%E2%80%9D%E6%97%B6%EF%BC%8C%E7%8E%A9%E5%AE%B6%E6%8A%95%E6%B3%A8%E5%8C%85%E5%90%AB%E2%80%9D%E5%B0%8F%E2%80%9D%E7%9A%84%E7%AC%94%E6%95%B0%E5%8D%A0%E6%AF%94%EF%BC%88%E4%BD%BF%E7%94%A8%E5%8F%8C%E4%BD%8D%E6%95%B0%E6%A0%BC%E5%BC%8F%EF%BC%8C%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A11-11-%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">92、通过对检材“01-lott.sql”文件进行分析，关联t_trade_betrecord与t_lottery_jnd表，分析庄家”188”在2021-05-10投注”jnd28”时：当开奖结果为”大”时，玩家投注包含”小”的笔数占比（使用双位数格式，答案格式：11.11%）（ ）</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%AE%9E%E9%99%85%E6%89%A7%E8%A1%8C%E7%9A%84-SQL-%E6%9F%A5%E8%AF%A2%E4%BB%A3%E7%A0%81%E5%A6%82%E4%B8%8B%EF%BC%9A-1"><span class="toc-list-text">实际执行的 SQL 查询代码如下：</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#93%E3%80%81%E9%80%9A%E8%BF%87%E5%AF%B9%E6%A3%80%E6%9D%90%E2%80%9C02-crime-records-sql%E2%80%9D%E5%88%86%E6%9E%90%EF%BC%8C%E7%BB%9F%E8%AE%A1%E7%9B%B8%E9%82%BB%E4%B8%A4%E6%AC%A1%E4%BD%9C%E6%A1%88%E6%97%B6%E9%97%B4%E9%97%B4%E9%9A%94%E5%9C%A81%E5%A4%A9%E4%B9%8B%E5%86%85%E7%9A%84%E5%9F%8E%E5%B8%82%E5%92%8C%E8%AF%A5%E5%9F%8E%E5%B8%82%E4%B8%A4%E6%AC%A1%E4%BD%9C%E6%A1%88%E6%97%B6%E9%97%B4%E9%97%B4%E9%9A%94%E5%9C%A81%E5%A4%A9%E4%B9%8B%E5%86%85%E7%9A%84%E6%A1%88%E4%BB%B6%E6%80%BB%E6%95%B0%E9%87%8F%EF%BC%8C%E6%89%BE%E5%87%BA%E6%A1%88%E4%BB%B6%E6%80%BB%E6%95%B0%E6%9C%80%E5%A4%9A%E7%9A%84%E5%9F%8E%E5%B8%82%E5%90%8D%E3%80%82%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A%E6%8C%89%E7%85%A7%E5%AE%9E%E9%99%85%E6%83%85%E5%86%B5%E5%A1%AB%E5%86%99%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">93、通过对检材“02-crime_records.sql”分析，统计相邻两次作案时间间隔在1天之内的城市和该城市两次作案时间间隔在1天之内的案件总数量，找出案件总数最多的城市名。（答案格式：按照实际情况填写）（ ）</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%AE%9E%E9%99%85%E6%89%A7%E8%A1%8C%E7%9A%84-SQL-%E6%9F%A5%E8%AF%A2%E4%BB%A3%E7%A0%81%E5%A6%82%E4%B8%8B%EF%BC%9A-2"><span class="toc-list-text">实际执行的 SQL 查询代码如下：</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#94%E3%80%81%E9%80%9A%E8%BF%87%E5%AF%B9%E6%A3%80%E6%9D%90%E2%80%9C02-crime-records-sql%E2%80%9D%E5%88%86%E6%9E%90%EF%BC%8C%E6%A0%B9%E6%8D%AE%E6%A1%88%E4%BB%B6%E7%9A%84%E6%8D%9F%E5%A4%B1%E9%87%91%E9%A2%9D%E5%92%8C%E4%BC%A4%E6%83%85%E7%AD%89%E7%BA%A7%EF%BC%8C%E5%B0%86%E6%A1%88%E4%BB%B6%E5%88%86%E4%B8%BA-%E2%80%9C%E8%BD%BB%E5%BE%AE%E6%A1%88%E4%BB%B6%E2%80%9D%E2%80%9C%E4%B8%80%E8%88%AC%E6%A1%88%E4%BB%B6%E2%80%9D%E2%80%9C%E9%87%8D%E5%A4%A7%E6%A1%88%E4%BB%B6%E2%80%9D%E2%80%9C%E5%85%B6%E4%BB%96%E2%80%9D%E5%9B%9B%E7%B1%BB%EF%BC%88%E5%88%86%E7%B1%BB%E8%A7%84%E5%88%99%E5%A6%82%E4%B8%8B%EF%BC%89%EF%BC%8C%E5%B9%B6%E7%BB%9F%E8%AE%A1-2023-%E5%B9%B4%E5%90%84%E7%B1%BB%E5%9E%8B%E6%A1%88%E4%BB%B6%E7%9A%84%E6%95%B0%E9%87%8F%E3%80%82%E8%BD%BB%E5%BE%AE%E6%A1%88%E4%BB%B6%EF%BC%9A%E6%8D%9F%E5%A4%B1%E9%87%91%E9%A2%9D%E2%89%A410000-%E5%85%83%E4%B8%94%E6%97%A0%E4%BA%BA%E5%91%98%E5%8F%97%E4%BC%A4%EF%BC%88injury-level-%E4%B8%BA%E7%A9%BA%E6%88%96%E6%9C%AA%E6%8F%90%E5%8F%8A%EF%BC%89%EF%BC%9B%E4%B8%80%E8%88%AC%E6%A1%88%E4%BB%B6%EF%BC%9A%E6%8D%9F%E5%A4%B1%E9%87%91%E9%A2%9D-10001-50000-%E5%85%83%EF%BC%8C%E6%88%96%E6%9C%89%E8%BD%BB%E5%BE%AE%E4%BC%A4%EF%BC%9B%E9%87%8D%E5%A4%A7%E6%A1%88%E4%BB%B6%EF%BC%9A%E6%8D%9F%E5%A4%B1%E9%87%91%E9%A2%9D-50000-%E5%85%83%EF%BC%8C%E6%88%96%E6%9C%89%E8%BD%BB%E4%BC%A4%E6%88%96%E6%9C%89%E9%87%8D%E4%BC%A4%EF%BC%9B%E5%85%B6%E4%BB%96%EF%BC%9A%E9%9D%9E%E4%B8%8A%E8%BF%B0%E6%83%85%E5%86%B5%E3%80%82%EF%BC%88%E6%8C%89%E7%85%A7%E6%A1%88%E4%BB%B6%E6%95%B0%E9%87%8F%E7%9A%84%E9%99%8D%E5%BA%8F%E8%BE%93%E5%87%BA%E7%AD%94%E6%A1%88%EF%BC%8C%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%E4%B8%BA%EF%BC%9A40-30-20-10%EF%BC%89%EF%BC%88-%EF%BC%89%E5%A5%BD%E7%9A%84%EF%BC%8C%E6%88%91%E6%9D%A5%E8%AF%A6%E7%BB%86%E8%A7%A3%E9%87%8A%E6%9F%A5%E8%AF%A2%E9%80%BB%E8%BE%91%E5%92%8C%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%EF%BC%9A"><span class="toc-list-text">94、通过对检材“02-crime_records.sql”分析，根据案件的损失金额和伤情等级，将案件分为 “轻微案件”“一般案件”“重大案件”“其他”四类（分类规则如下），并统计 2023 年各类型案件的数量。轻微案件：损失金额≤10000 元且无人员受伤（injury_level 为空或未提及）；一般案件：损失金额 10001-50000 元，或有轻微伤；重大案件：损失金额 &gt; 50000 元，或有轻伤或有重伤；其他：非上述情况。（按照案件数量的降序输出答案，答案格式为：40&#x2F;30&#x2F;20&#x2F;10）（ ）好的，我来详细解释查询逻辑和查询语句：</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E6%9F%A5%E8%AF%A2%E9%80%BB%E8%BE%91"><span class="toc-list-text">查询逻辑</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%88%86%E7%B1%BB%E8%A7%84%E5%88%99%E7%90%86%E8%A7%A3"><span class="toc-list-text">分类规则理解</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%85%B3%E9%94%AE%E7%82%B9"><span class="toc-list-text">关键点</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#SQL-%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5"><span class="toc-list-text">SQL 查询语句</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C"><span class="toc-list-text">查询结果</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#95%E3%80%81%E9%80%9A%E8%BF%87%E5%AF%B9%E6%A3%80%E6%9D%90%E2%80%9C02-crime-records-sql%E2%80%9D%E5%88%86%E6%9E%90%EF%BC%8C%E7%BB%9F%E8%AE%A1-2021-2023-%E5%B9%B4%E6%9C%9F%E9%97%B4%EF%BC%88%E5%90%AB2021%E5%B9%B4%E5%92%8C2023%E5%B9%B4%EF%BC%89%EF%BC%8C%E6%AF%8F%E5%B9%B4%E5%A4%84%E7%90%86%E7%BB%93%E6%9E%9C%E4%B8%BA-%E2%80%9C%E7%A7%BB%E9%80%81%E8%B5%B7%E8%AF%89%E2%80%9D-%E7%9A%84%E6%A1%88%E4%BB%B6%E9%87%8C%EF%BC%8C%E6%AF%8F%E4%B8%80%E5%B9%B4%E4%B8%AD%E6%8D%9F%E5%A4%B1%E6%80%BB%E9%A2%9D%E6%9C%80%E9%AB%98%E7%9A%84%E6%A1%88%E4%BB%B6%E7%B1%BB%E5%9E%8B%E5%AF%B9%E5%BA%94%E7%9A%84%E6%8D%9F%E5%A4%B1%E6%80%BB%E9%A2%9D%E4%B8%BA%EF%BC%9F%EF%BC%88%E6%8C%89-2021-2023-%E5%B9%B4%E9%A1%BA%E5%BA%8F%E8%BF%9E%E6%8E%A5%E6%8D%9F%E5%A4%B1%E6%80%BB%E9%A2%9D%EF%BC%8C%E8%BF%9E%E6%8E%A5%E7%AC%A6%E5%8F%B7%E4%BD%BF%E7%94%A8-%E5%B0%8F%E6%95%B0%E7%82%B9%E4%BF%9D%E7%95%992%E4%BD%8D%EF%BC%8C%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%E4%B8%BA-%EF%BC%9A1-37-2-21-3-45%EF%BC%89%EF%BC%88-%EF%BC%89"><span class="toc-list-text">95、通过对检材“02-crime_records.sql”分析，统计 2021-2023 年期间（含2021年和2023年），每年处理结果为 “移送起诉” 的案件里，每一年中损失总额最高的案件类型对应的损失总额为？（按 2021 - 2023 年顺序连接损失总额，连接符号使用&#x2F;,小数点保留2位，答案格式为 ：1.37&#x2F;2.21&#x2F;3.45）（ ）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E6%9F%A5%E8%AF%A2%E9%80%BB%E8%BE%91-1"><span class="toc-list-text">查询逻辑</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E6%9F%A5%E8%AF%A2%E9%80%BB%E8%BE%91-2"><span class="toc-list-text">查询逻辑</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%88%86%E6%9E%90%E6%AD%A5%E9%AA%A4"><span class="toc-list-text">分析步骤</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#SQL-%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5-1"><span class="toc-list-text">SQL 查询语句</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C-1"><span class="toc-list-text">查询结果</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E7%AD%94%E6%A1%88"><span class="toc-list-text">答案</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E7%BB%93%E6%9E%9C%E8%A7%A3%E8%AF%BB"><span class="toc-list-text">结果解读</span></a></li></ol></li></ol></div>
+      
+    </div>
+
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

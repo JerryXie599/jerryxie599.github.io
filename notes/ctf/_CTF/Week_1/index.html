@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week_1 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Week_1 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/_CTF/Week_1/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/_CTF/Week_1/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+            <a class="category-chip" href="/categories/ctf/CTF/">_CTF</a>
+          
+        
+      </div>
+      <h1>Week_1</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>17 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/_CTF/Week_1.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <h1 id="Pwn"><a href="#Pwn" class="headerlink" title="Pwn"></a>Pwn</h1><h2 id="1-ncncnc"><a href="#1-ncncnc" class="headerlink" title="1.ncncnc"></a>1.ncncnc</h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1759558750644-05e30e2e-61c4-4d6f-a51f-01c5507aad9d.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<figure class="highlight http" data-language="http" data-language-label="Http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">ctfshow@ubuntu:~$ nc challenge.ilovectf.cn 30000</span><br><span class="line">Welcome to ?ctf</span><br><span class="line">ncncnc!!!</span><br><span class="line">There are three stages ahead, keep going according to the hints</span><br><span class="line">This is the first stage</span><br><span class="line">Use the &#x27;cat hint&#x27; command to open the hint file, which contains the key to the second stage</span><br><span class="line">You can enter a command, or the key to proceed to the next stage</span><br><span class="line">cat hint</span><br><span class="line">Enter TuT to proceed to the third stage</span><br><span class="line">You can enter a command, or the key to proceed to the next stage</span><br><span class="line">TuT</span><br><span class="line">Final stage. I&#x27;ve added spaces to the blacklist. Can you still do it?</span><br><span class="line">You can enter a command, or the key to proceed to the next stage</span><br><span class="line">c&#x27;at&#x27;$&#123;IFS&#125;hi&#x27;nt&#x27;</span><br><span class="line">Impressive, now enter HaCkEd to get the final hint</span><br><span class="line">You can enter a command, or the key to proceed to the next stage</span><br><span class="line">HaCkEd</span><br><span class="line">flag&#123;555c770b-18d7-43d6-8dc5-ee6cd536f641&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>都行：<code>c&#39;at&#39;${IFS}hi&#39;nt&#39;</code>`ca’t’${IFS}h’int’<code>\</code>ca’t’${IFS?}h’int’&#96;</p>
+<h2 id="2-gdb"><a href="#2-gdb" class="headerlink" title="2.gdb"></a>2.gdb</h2><figure class="highlight http" data-language="http" data-language-label="Http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">🎮 GDB冒险游戏 - 勇者救公主 🎮</span><br><span class="line">===================================</span><br><span class="line"></span><br><span class="line">🏰 =============================== 🏰</span><br><span class="line">   勇者救公主 - GDB冒险之旅</span><br><span class="line">   调试魔法学院</span><br><span class="line">🏰 =============================== 🏰</span><br><span class="line"></span><br><span class="line">✨ 魔法世界初始化完成！</span><br><span class="line">💡 输入 &#x27;help&#x27; 查看可用的调试魔法</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">📖 ======= 背景故事 =======</span><br><span class="line">在遥远的调试王国，美丽的公主被邪恶的BUG巨龙囚禁在城堡中。</span><br><span class="line">作为王国最勇敢的调试骑士，你必须掌握GDB魔法，收集强大的装备，</span><br><span class="line">最终击败巨龙，救出公主！</span><br><span class="line"></span><br><span class="line">🎮 ======= 游戏机制 =======</span><br><span class="line">• 使用 &#x27;b &lt;地址&gt;&#x27; 设置传送点（断点）(但是在你现实生活使用gdb的时候请使用b *地址)</span><br><span class="line">• 使用 &#x27;c&#x27; 前往传送点（继续执行）</span><br><span class="line">• 每个场景都有特定任务，完成后获得装备</span><br><span class="line">• 装备会增加攻击力，足够的攻击力才能击败巨龙</span><br><span class="line">• 需要实际输入查看到的值来验证学习成果</span><br><span class="line"></span><br><span class="line">准备好了吗？让我们开始冒险！</span><br><span class="line">===============================</span><br><span class="line"></span><br><span class="line"><span class="attribute">ps</span><span class="punctuation">: </span> answer &lt;值&gt;   - 提交任务答案</span><br><span class="line"></span><br><span class="line">📍 当前位置: 0x401000 - 新手村</span><br><span class="line">   和平的村庄，调试冒险的起点</span><br><span class="line"></span><br><span class="line">📋 任务: 村长说：&#x27;年轻人，先学会观察自己的状态。使用 &#x27;info registers&#x27; 查看你的魔法值(rsp)，然后告诉我它的值。&#x27;</span><br><span class="line">🎓 技能: info registers</span><br><span class="line"></span><br><span class="line">(gdb) help</span><br><span class="line"></span><br><span class="line">=== 🎮 调试魔法手册 ===</span><br><span class="line"></span><br><span class="line">📍 导航命令:</span><br><span class="line">  b &lt;地址&gt;      - 设置传送点到指定位置</span><br><span class="line">  c             - 前往传送点</span><br><span class="line">  where         - 查看当前位置</span><br><span class="line">  status        - 查看角色状态</span><br><span class="line"></span><br><span class="line">🔍 观察命令:</span><br><span class="line">  i r           - 查看所有寄存器</span><br><span class="line">  x/&lt;n&gt;x &lt;地址&gt; - 查看内存内容</span><br><span class="line">  p &lt;变量&gt;      - 打印变量值或查找符号地址</span><br><span class="line">  disas &lt;地址&gt;  - 反汇编代码</span><br><span class="line">  bt            - 查看调用栈</span><br><span class="line"></span><br><span class="line">🛠️ 修改命令:</span><br><span class="line">  set $reg=&lt;值&gt; - 设置寄存器值</span><br><span class="line"></span><br><span class="line">👣 执行命令:</span><br><span class="line">  s             - 单步执行</span><br><span class="line">  n             - 下一步</span><br><span class="line"></span><br><span class="line">🎯 游戏命令:</span><br><span class="line">  answer &lt;值&gt;   - 提交任务答案</span><br><span class="line">  battle        - 挑战巨龙（需要完成所有场景）</span><br><span class="line">  quit          - 退出游戏</span><br><span class="line"></span><br><span class="line">💡 当前任务提示:</span><br><span class="line">  村长说：&#x27;年轻人，先学会观察自己的状态。使用 &#x27;info registers&#x27; 查看你的魔法值(rsp)，然后告诉我它的值。&#x27;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight http" data-language="http" data-language-label="Http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(gdb) answer 0x7fffffffe000</span><br><span class="line">✅ 正确！ 新手村 场景完成！</span><br><span class="line">🎁 获得装备: 🗡️ 新手之剑 (+20攻击力)</span><br><span class="line">   基础的调试武器</span><br><span class="line">⚔️  当前总攻击力: 30</span><br><span class="line"></span><br><span class="line">🆕 新场景解锁: 迷雾森林</span><br><span class="line">   地址: 0x402000</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight http" data-language="http" data-language-label="Http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">(gdb) b 0x402000</span><br><span class="line">Breakpoint 1 at 0x402000: 迷雾森林</span><br><span class="line"></span><br><span class="line">(gdb) c</span><br><span class="line">Continuing.</span><br><span class="line"></span><br><span class="line">Breakpoint 1, 0x402000 &lt;迷雾森林&gt;</span><br><span class="line"></span><br><span class="line">📍 当前位置: 0x402000 - 迷雾森林</span><br><span class="line">   充满迷雾的神秘森林</span><br><span class="line"></span><br><span class="line">📋 任务: 森林守护者：&#x27;森林深处藏着宝藏。使用 x/1x 0x402100 查看隐藏的宝藏代码，告诉我你看到的值。&#x27;</span><br><span class="line">🎓 技能: x (examine)</span><br><span class="line"></span><br><span class="line">(gdb) x/1x 0x402100</span><br><span class="line"></span><br><span class="line">0x402100:	0x00000000deadbeef	; 森林宝藏</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight http" data-language="http" data-language-label="Http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(gdb) answer 0x00000000deadbeef</span><br><span class="line">✅ 正确！ 迷雾森林 场景完成！</span><br><span class="line">🎁 获得装备: 🏹 森林之弓 (+30攻击力)</span><br><span class="line">   能看穿迷雾的魔法弓</span><br><span class="line">⚔️  当前总攻击力: 60</span><br><span class="line"></span><br><span class="line">🆕 新场景解锁: 神秘洞穴</span><br><span class="line">   地址: 0x403000</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight http" data-language="http" data-language-label="Http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">(gdb) b 0x403000</span><br><span class="line">Breakpoint 1 at 0x403000: 神秘洞穴</span><br><span class="line"></span><br><span class="line">(gdb) c</span><br><span class="line">Continuing.</span><br><span class="line"></span><br><span class="line">Breakpoint 1, 0x403000 &lt;神秘洞穴&gt;</span><br><span class="line"></span><br><span class="line">📍 当前位置: 0x403000 - 神秘洞穴</span><br><span class="line">   黑暗的洞穴，需要勇气才能进入</span><br><span class="line"></span><br><span class="line">📋 任务: 洞穴精灵：&#x27;设置传送点到河流(0x404000)，然后使用continue前往。到达后查看rax寄存器的值告诉我。&#x27;</span><br><span class="line">🎓 技能: break &amp; continue</span><br></pre></td></tr></table></figure>
+
+<p>很无聊的pwn，直接复制粘贴即可</p>
+<h1 id="crypto"><a href="#crypto" class="headerlink" title="crypto"></a>crypto</h1><h2 id="1-two-Es"><a href="#1-two-Es" class="headerlink" title="1.two Es"></a>1.two Es</h2><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line">import random</span><br><span class="line">from secret import flag</span><br><span class="line"></span><br><span class="line">p, q = getPrime(512), getPrime(512)</span><br><span class="line">n = p * q</span><br><span class="line"></span><br><span class="line">e1 = random.getrandbits(32)</span><br><span class="line">e2 = random.getrandbits(32)</span><br><span class="line"></span><br><span class="line">m = bytes_to_long(flag)</span><br><span class="line">c1 = pow(m, e1, n)</span><br><span class="line">c2 = pow(m, e2, n)</span><br><span class="line"></span><br><span class="line">print(f&#x27;&#123;n = &#125;&#x27;)</span><br><span class="line">print(f&#x27;&#123;e1 = &#125;&#x27;)</span><br><span class="line">print(f&#x27;&#123;e2 = &#125;&#x27;)</span><br><span class="line">print(f&#x27;&#123;c1 = &#125;&#x27;)</span><br><span class="line">print(f&#x27;&#123;c2 = &#125;&#x27;)</span><br><span class="line"></span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">n = 118951231851047571559217335117170383889369241506334435506974203511684612137655707364175506626353185266191175920454931743776877868558249224244622243762576178613428854425451444084313631798543697941971483572795632393388563520060136915983419489153783614798844426447471675798105689571205618922034550157013396634443</span><br><span class="line">e1 = 2819786085</span><br><span class="line">e2 = 4203935931</span><br><span class="line">c1 = 104852820628577684483432698430994392212341947538062367608937715761740532036933756841425619664673877530891898779701009843985308556306656168566466318961463247186202599188026358282735716902987474154862267239716349298652942506512193240265260314062483869461033708176350145497191865168924825426478400584516421567974</span><br><span class="line">c2 = 43118977673121220602933248973628727040318421596869003196014836853751584691920445952955467668612608693138227541764934104815818143729167823177291260165694321278079072309885687887255739841571920269405948846600660240154954071184064262133096801059918060973055211029726526524241753473771587909852399763354060832968</span><br><span class="line">&#x27;&#x27;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>如果这定位新生赛我觉得有点小坑，不过这是好事情。</p>
+<p>解题代码参考：</p>
+<p><a target="_blank" rel="noopener" href="https://spc-pwn.yuque.com/org-wiki-spc-pwn-xo4p0b/gwccxa/rrizi9tomomhuobk">nss共模攻击、LLL算法（coppersmith）含crypto1题解</a></p>
+<p>这里如果s≠1，那么要对解出来的m开根。</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">n = 118951231851047571559217335117170383889369241506334435506974203511684612137655707364175506626353185266191175920454931743776877868558249224244622243762576178613428854425451444084313631798543697941971483572795632393388563520060136915983419489153783614798844426447471675798105689571205618922034550157013396634443</span><br><span class="line">e1 = 2819786085</span><br><span class="line">e2 = 4203935931</span><br><span class="line">c1 = 104852820628577684483432698430994392212341947538062367608937715761740532036933756841425619664673877530891898779701009843985308556306656168566466318961463247186202599188026358282735716902987474154862267239716349298652942506512193240265260314062483869461033708176350145497191865168924825426478400584516421567974</span><br><span class="line">c2 = 43118977673121220602933248973628727040318421596869003196014836853751584691920445952955467668612608693138227541764934104815818143729167823177291260165694321278079072309885687887255739841571920269405948846600660240154954071184064262133096801059918060973055211029726526524241753473771587909852399763354060832968</span><br><span class="line"></span><br><span class="line">import gmpy2</span><br><span class="line"></span><br><span class="line">s,s1,s2=gmpy2.gcdext(e1,e2)</span><br><span class="line">print(s,s1,s2)</span><br><span class="line">m=(pow(c1,s1,n)*pow(c2,s2,n))%n</span><br><span class="line">print(&quot;m=&quot;,m)</span><br><span class="line">act_m, torf = gmpy2.iroot(m, 3)</span><br><span class="line">print(&quot;T or F=&quot;,torf)</span><br><span class="line">from Cryptodome.Util.number import long_to_bytes as l2b</span><br><span class="line">print(l2b(act_m))</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-xorRSA"><a href="#2-xorRSA" class="headerlink" title="2.xorRSA"></a>2.<strong>xorRSA</strong></h2><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line">from secret import flag</span><br><span class="line"></span><br><span class="line">p, q = getPrime(1024), getPrime(1024)</span><br><span class="line">n = p * q</span><br><span class="line">e = 65537</span><br><span class="line">m = bytes_to_long(flag)</span><br><span class="line">c = pow(m, e, n)</span><br><span class="line">p_q = p ^ q</span><br><span class="line"></span><br><span class="line">print(f&#x27;&#123;n = &#125;&#x27;)</span><br><span class="line">print(f&#x27;&#123;e = &#125;&#x27;)</span><br><span class="line">print(f&#x27;&#123;c = &#125;&#x27;)</span><br><span class="line">print(f&#x27;&#123;p_q = &#125;&#x27;)</span><br><span class="line"></span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">n = 18061840786617912438996345214060567122008006566608565470922708255493870675991346333993136865435336505071047681829600696007854811200192979026938621307808394735367086257150823868393502421947362103403305323343329530015886676141404847528567199164203106041887980250901224907217271412495658238000428155863230216487699143138174899315041844320680520430921010039515451825289303532974354096690654604842256150621697967106463329359391655215554171614421198047559849727235032270127681416682155240317343037276968357231651722266548626117109961613350614054537118394055824940789414473424585411579459583308685751324937629321503890169493</span><br><span class="line">e = 65537</span><br><span class="line">c = 17953801553187442264071031639061239403375267544951822039441227630063465978993165328404783737755442118967031318698748459837999730471765908918892704038188635488634468552787554559846820727286284092716064629914340869208385181357615817945878013584555521801850998319665267313161882027213027139165137714815505996438717880253578538572193138954426764798279057176765746717949395519605845713927900919261836299232964938356193758253134547047068462259994112344727081440167173365263585740454211244943993795874099027593823941471126840495765154866313478322190748184566075583279428244873773602323938633975628368752872219283896862671494</span><br><span class="line">p_q = 88775678961253172728085584203578801290397779093162231659217341400681830680568426254559677076410830059833478580229352545860384843730990300398061904514493264881401520881423698800064247530838838305224202665605992991627155227589402516343855527142200730379513934493657380099647739065365753038212480664586174926100</span><br><span class="line">&#x27;&#x27;&#x27;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">from Cryptodome.Util.number import long_to_bytes, inverse</span><br><span class="line"></span><br><span class="line">n = int(&quot;18061840786617912438996345214060567122008006566608565470922708255493870675991346333993136865435336505071047681829600696007854811200192979026938621307808394735367086257150823868393502421947362103403305323343329530015886676141404847528567199164203106041887980250901224907217271412495658238000428155863230216487699143138174899315041844320680520430921010039515451825289303532974354096690654604842256150621697967106463329359391655215554171614421198047559849727235032270127681416682155240317343037276968357231651722266548626117109961613350614054537118394055824940789414473424585411579459583308685751324937629321503890169493&quot;)</span><br><span class="line">e = 65537</span><br><span class="line">c = int(&quot;17953801553187442264071031639061239403375267544951822039441227630063465978993165328404783737755442118967031318698748459837999730471765908918892704038188635488634468552787554559846820727286284092716064629914340869208385181357615817945878013584555521801850998319665267313161882027213027139165137714815505996438717880253578538572193138954426764798279057176765746717949395519605845713927900919261836299232964938356193758253134547047068462259994112344727081440167173365263585740454211244943993795874099027593823941471126840495765154866313478322190748184566075583279428244873773602323938633975628368752872219283896862671494&quot;)</span><br><span class="line">x = int(&quot;88775678961253172728085584203578801290397779093162231659217341400681830680568426254559677076410830059833478580229352545860384843730990300398061904514493264881401520881423698800064247530838838305224202665605992991627155227589402516343855527142200730379513934493657380099647739065365753038212480664586174926100&quot;)</span><br><span class="line"></span><br><span class="line">def recover_prime_from_xor(n, x):</span><br><span class="line">    bits = n.bit_length()</span><br><span class="line">    candidates = [0]  # possible low bits of p</span><br><span class="line">    for i in range(bits):</span><br><span class="line">        mask = (1 &lt;&lt; (i+1)) - 1</span><br><span class="line">        a_low = x &amp; mask</span><br><span class="line">        n_low = n &amp; mask</span><br><span class="line">        new = []</span><br><span class="line">        for p_low in candidates:</span><br><span class="line">            for b in (0, 1):</span><br><span class="line">                p_try = p_low | (b &lt;&lt; i)</span><br><span class="line">                q_try = p_try ^ a_low</span><br><span class="line">                if (p_try * q_try) &amp; mask == n_low:</span><br><span class="line">                    new.append(p_try)</span><br><span class="line">        if not new:</span><br><span class="line">            raise ValueError(f&quot;no fit at bit &#123;i&#125;&quot;)</span><br><span class="line">        candidates = new  # 保持所有可能，通常数量很小</span><br><span class="line">    # 尝试哪些候选是真正的质因子</span><br><span class="line">    for p in candidates:</span><br><span class="line">        if p and n % p == 0:</span><br><span class="line">            return p</span><br><span class="line">        q = p ^ x</span><br><span class="line">        if q and n % q == 0:</span><br><span class="line">            return n // q</span><br><span class="line">    raise ValueError(&quot;no factor found&quot;)</span><br><span class="line"></span><br><span class="line">p = recover_prime_from_xor(n, x)</span><br><span class="line">q = n // p</span><br><span class="line">phi = (p-1)*(q-1)</span><br><span class="line">d = inverse(e, phi)</span><br><span class="line">m = pow(c, d, n)</span><br><span class="line">flag = long_to_bytes(m)</span><br><span class="line">print(&quot;p bitlen =&quot;, p.bit_length(), &quot;q bitlen =&quot;, q.bit_length())</span><br><span class="line">print(&quot;flag =&quot;, flag)</span><br></pre></td></tr></table></figure>
+
+<p>原理参考</p>
+<p><a target="_blank" rel="noopener" href="https://spc-pwn.yuque.com/org-wiki-spc-pwn-xo4p0b/gwccxa/fua0xnivpntcb9pg">带有 (p xor q) 信息泄露的 RSA</a></p>
+<h2 id="3-Basic-Number-theory"><a href="#3-Basic-Number-theory" class="headerlink" title="3.Basic Number theory"></a>3.<strong>Basic Number theory</strong></h2><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line">from secret import flag</span><br><span class="line"></span><br><span class="line">def gift(m, prime):</span><br><span class="line">    return pow(m, (prime + 1) // 2, prime)</span><br><span class="line"></span><br><span class="line">m = bytes_to_long(flag)</span><br><span class="line">p = getPrime(256)</span><br><span class="line">q = getPrime(256)</span><br><span class="line"></span><br><span class="line">print(f&#x27;p = &#123;p&#125;&#x27;)</span><br><span class="line">print(f&#x27;q = &#123;q&#125;&#x27;)</span><br><span class="line">print(f&#x27;gift1 = &#123;gift(m, p)&#125;&#x27;)</span><br><span class="line">print(f&#x27;gift2 = &#123;gift(m, q)&#125;&#x27;)</span><br><span class="line"></span><br><span class="line"># p = 71380997427449345634700552609577271052193856747526826598031269184817312570231</span><br><span class="line"># q = 65531748297495117965939047069388412545623909154912018722160805504300279801251</span><br><span class="line"># gift1 = 40365143212042701723922505647865230754866250738391105510918441288000789123995</span><br><span class="line"># gift2 = 10698628345523517254945893573969253712072344217500232111817321788145975103342</span><br></pre></td></tr></table></figure>
+
+<p>费马小定理+CRT即可，注意开方的时候有负数。</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from sympy.ntheory.modular import crt</span><br><span class="line">from Cryptodome.Util.number import long_to_bytes</span><br><span class="line"></span><br><span class="line">p = 71380997427449345634700552609577271052193856747526826598031269184817312570231</span><br><span class="line">q = 65531748297495117965939047069388412545623909154912018722160805504300279801251</span><br><span class="line">gift1 = 40365143212042701723922505647865230754866250738391105510918441288000789123995</span><br><span class="line">gift2 = 10698628345523517254945893573969253712072344217500232111817321788145975103342</span><br><span class="line"></span><br><span class="line">moduli = [p, q]     # 模数列表</span><br><span class="line">remainders = [-gift1, -gift2] </span><br><span class="line"># 余数列表，要试：[-gift1, -gift2]、[gift1, -gift2]、[-gift1, gift2]、[gift1, gift2]</span><br><span class="line">#哪组对了就是哪组</span><br><span class="line">x, M = crt(moduli, remainders)</span><br><span class="line">print(long_to_bytes(x))</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="forensics"><a href="#forensics" class="headerlink" title="forensics"></a>forensics</h1><h2 id="1-取证第一次"><a href="#1-取证第一次" class="headerlink" title="1.取证第一次"></a>1.<strong>取证第一次</strong></h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1759578432998-4cd9fe22-ac72-43a6-98de-b063c7c3bd57.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>扔火眼即可</p>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#Pwn"><span class="toc-list-text">Pwn</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-ncncnc"><span class="toc-list-text">1.ncncnc</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-gdb"><span class="toc-list-text">2.gdb</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#crypto"><span class="toc-list-text">crypto</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-two-Es"><span class="toc-list-text">1.two Es</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-xorRSA"><span class="toc-list-text">2.xorRSA</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-Basic-Number-theory"><span class="toc-list-text">3.Basic Number theory</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#forensics"><span class="toc-list-text">forensics</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E5%8F%96%E8%AF%81%E7%AC%AC%E4%B8%80%E6%AC%A1"><span class="toc-list-text">1.取证第一次</span></a></li></ol></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/pwn/">
+              <strong>pwn</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

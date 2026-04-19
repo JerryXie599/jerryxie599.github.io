@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[转载]Pwntools的context设置与shellcode | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[转载]Pwntools的context设置与shellcode | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/MoeCTF2025/[转载]Pwntools的context设置与shellcode/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/MoeCTF2025/[转载]Pwntools的context设置与shellcode/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+            <a class="category-chip" href="/categories/ctf/MoeCTF2025/">MoeCTF2025</a>
+          
+        
+      </div>
+      <h1>[转载]Pwntools的context设置与shellcode</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>2 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/MoeCTF2025/[转载]Pwntools的context设置与shellcode.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45556441/article/details/114166906">https://blog.csdn.net/weixin_45556441&#x2F;article&#x2F;details&#x2F;114166906</a></p>
+<h4 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45556441/article/details/114166906#context_9">一、context</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45556441/article/details/114166906#shellcode_34">二、汇编与shellcode</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45556441/article/details/114166906#_57">简单的例子🌰</a></li>
+</ul>
+<hr>
+<h2 id="一、context"><a href="#一、context" class="headerlink" title="一、context"></a>一、context</h2><p>context 是 pwntools 用来设置环境的功能。在很多时候，由于二进制文件的情况不同，我们可能需要进行一些环境设置才能够正常运行exp，比如有一些需要进行汇编，但是32的汇编和64的汇编不同，如果不设置context会导致一些问题。</p>
+<p>一般来说我们设置context只需要简单的一句话:</p>
+<p><code>context(os=&#39;linux&#39;, arch=&#39;amd64&#39;, log_level=&#39;debug&#39;)</code></p>
+<p>或者 <code>context(os=&#39;linux&#39;, arch=&#39;amd64&#39;)</code></p>
+<p>这句话的意思是：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1. os设置系统为linux系统，在完成ctf题目的时候，大多数pwn题目的系统都是linux</span><br><span class="line">2. arch设置架构为amd64，可以简单的认为设置为64位的模式，对应的32位模式是’i386’</span><br><span class="line">3. log_level设置日志输出的等级为debug，这句话在调试的时候一般会设置，这样pwntools会将完整的io过程都打印下来，使得调试更加方便，可以避免在完成CTF题目时出现一些和IO相关的错误。</span><br><span class="line">————————————————</span><br><span class="line"></span><br><span class="line">运行项目并下载源码python运行</span><br><span class="line"></span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、汇编与shellcode"><a href="#二、汇编与shellcode" class="headerlink" title="二、汇编与shellcode"></a>二、汇编与shellcode</h2><p>有的时候我们需要在写exp的时候用到简单的shellcode，pwntools提供了对简单的shellcode的支持。<br>首先，常用的，也是最简单的shellcode，即调用<code>/bin/sh</code></p>
+<p>语句: <code>shellcode = asm(shellcraft.sh())</code></p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">print(asm(shellcraft.sh())) # 打印出汇编后的shellcode</span><br><span class="line"></span><br><span class="line">运行项目并下载源码python运行</span><br><span class="line"></span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<p>注意，由于各个平台，特别是32位和64位的shellcode不一样，所以最好先设置context。asm也是架构相关，所以一定要先设置context，避免一些意想不到的错误。</p>
+<p>使用方法即:</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">context(os=&#x27;linux&#x27;, arch=&#x27;amd64(i386)&#x27;)</span><br><span class="line"></span><br><span class="line">shellcode = asm(shellcraft.sh())</span><br><span class="line"></span><br><span class="line">p.sendline(shellcode)</span><br><span class="line"></span><br><span class="line">运行项目并下载源码python运行</span><br><span class="line"></span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td></tr></table></figure>
+
+<h2 id="简单的例子🌰"><a href="#简单的例子🌰" class="headerlink" title="简单的例子🌰"></a>简单的例子🌰</h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1764215472015-6ff917d0-7d18-420b-ae2d-c547bf5d00d2.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"><br><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1764215472032-e97c4e94-edcd-4bd9-9130-c4f329b70125.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E4%B8%80%E3%80%81context"><span class="toc-list-text">一、context</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E4%BA%8C%E3%80%81%E6%B1%87%E7%BC%96%E4%B8%8Eshellcode"><span class="toc-list-text">二、汇编与shellcode</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90%F0%9F%8C%B0"><span class="toc-list-text">简单的例子🌰</span></a></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

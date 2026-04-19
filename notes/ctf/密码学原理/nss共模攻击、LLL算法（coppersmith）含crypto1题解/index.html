@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>nss共模攻击、LLL算法（coppersmith）含crypto1题解 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nss共模攻击、LLL算法（coppersmith）含crypto1题解 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/密码学原理/nss共模攻击、LLL算法（coppersmith）含crypto1题解/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/密码学原理/nss共模攻击、LLL算法（coppersmith）含crypto1题解/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+            <a class="category-chip" href="/categories/ctf/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/">密码学原理</a>
+          
+        
+      </div>
+      <h1>nss共模攻击、LLL算法（coppersmith）含crypto1题解</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>30 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/密码学原理/nss共模攻击、LLL算法（coppersmith）含crypto1题解.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <h1 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h1><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1755579747994-ea4096fb-0e8b-425d-85ad-d7c1efb20b87.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wandervogel/p/16805988.html">共模攻击 - 明客 - 博客园</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45564150/article/details/124656223?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522ef7c23647c1cdebc87df6b3d182b026d%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=ef7c23647c1cdebc87df6b3d182b026d&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-124656223-null-null.142%5Ev102%5Epc_search_result_base8&utm_term=%E5%85%B1%E6%A8%A1%E6%94%BB%E5%87%BB">RSA共模攻击(包括原理)-CSDN博客</a></p>
+<h1 id="原理："><a href="#原理：" class="headerlink" title="原理："></a>原理：</h1><ol>
+<li></li>
+</ol>
+<p><strong>已知：</strong></p>
+<p>$ c_1 \equiv m^{e_1}\pmod n,\qquad<br>c_2 \equiv m^{e_2}\pmod n, $</p>
+<p>且存在整数 $ s_1,s_2 $ 使</p>
+<p>$ e_1s_1+e_2s_2&#x3D;1. $</p>
+<p><strong>证明：</strong></p>
+<p>$ \begin{aligned}<br>c_1^{,s_1}c_2^{,s_2}<br>&amp;\equiv \bigl(m^{e_1}\bigr)^{s_1},\bigl(m^{e_2}\bigr)^{s_2}\pmod n \[2mm]<br>&amp;\equiv m^{e_1s_1},m^{e_2s_2}\pmod n \[2mm]<br>&amp;\equiv m^{,e_1s_1+e_2s_2}\pmod n \[2mm]<br>&amp;\equiv m^{,1}\pmod n \[2mm]<br>&amp;\equiv m \pmod n.<br>\end{aligned} $</p>
+<p>因此</p>
+<p>$ \boxed{,c_1^{,s_1}c_2^{,s_2}\equiv m \pmod n, }. $</p>
+<p>共模攻击的基础在于有：<strong>两个公钥且互质</strong>（一般来说就是互质、因为是大素数）</p>
+<p>所以这里引入一个函数：<code>gcdext(e1, e2)</code>是一个计算**扩展最大公约数（Extended GCD）**的函数</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1755585468179-d0c3092e-a151-473f-98e2-fbc3ea0005c6.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>运行结果如上，这里常返回一个三元组 <code>(d, x, y)</code>，其中：</p>
+<p><code>d</code>：<code>e1</code>和 <code>e2</code>的最大公约数。</p>
+<p><code>x</code>, <code>y</code>：满足上述等式的整数系数（可能为负数）。</p>
+<ol start="2">
+<li></li>
+</ol>
+<h1 id="例题1："><a href="#例题1：" class="headerlink" title="例题1："></a>例题1：</h1><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">n= 13275539468515927122668657418826962202430467408860484765898568663156503527396473586233806355289560759234484646820604878130245116609025833260834734249490247181739187091798406386899992249647283296098046635078998806241008947511489965043592342640904960118547695431908152475613663532406184101144164645776485026634520190801390504479902674438381031902988558383334546358843335032069110257941561153526273905221509504939058454345020402752203190691148266740216247933791900283468212865430165408235093857626104437061213452413564723765040442767798563232901124229044449065445046888956215682366228655047929453110805914555163635510419</span><br><span class="line">e1= 2333</span><br><span class="line">c1= 12839285960223495540837529365339640783021439899108155136321855396508597591195084834231690640732914408618285996134049202996422114737474822115945692760871458165554118169402663520900701296114704740122786806542520699905862239914946533647899715822828542560800418499031431014437887839597676472165537391472198221714363610491291038442463223575122912669355380941374075599322428985304893846875110708290551186273543362765115647684956793570841630280930991407077401574158296542671529832884549202417721050055128956160795181219321381962644469613816746657814407025821523489911167830470453075666809891234756979759785607614579837734082</span><br><span class="line">e2= 23333</span><br><span class="line">c2= 3354756678232940495821979239801458007420410531822100812188898131516917749604851255269716527378343349516173106916414335163414268865824921119788877047553519631159949070051858008087712664995111487663781337726742683963116894637201549928831686056701870685405950856250977197910095810076403861881931015074416123490624856112462001350590171001296114611866177706693234039596982711256182797885834942186618425452535848339326240931859796433390218112045498069663580377366715346261942151557866185723732917427377138450852758541378023643134160677508933773941402646042004431292764888647202090679358894168736017515947373729257142729574</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">n= 13275539468515927122668657418826962202430467408860484765898568663156503527396473586233806355289560759234484646820604878130245116609025833260834734249490247181739187091798406386899992249647283296098046635078998806241008947511489965043592342640904960118547695431908152475613663532406184101144164645776485026634520190801390504479902674438381031902988558383334546358843335032069110257941561153526273905221509504939058454345020402752203190691148266740216247933791900283468212865430165408235093857626104437061213452413564723765040442767798563232901124229044449065445046888956215682366228655047929453110805914555163635510419</span><br><span class="line">e1= 2333</span><br><span class="line">c1= 12839285960223495540837529365339640783021439899108155136321855396508597591195084834231690640732914408618285996134049202996422114737474822115945692760871458165554118169402663520900701296114704740122786806542520699905862239914946533647899715822828542560800418499031431014437887839597676472165537391472198221714363610491291038442463223575122912669355380941374075599322428985304893846875110708290551186273543362765115647684956793570841630280930991407077401574158296542671529832884549202417721050055128956160795181219321381962644469613816746657814407025821523489911167830470453075666809891234756979759785607614579837734082</span><br><span class="line">e2= 23333</span><br><span class="line">c2= 3354756678232940495821979239801458007420410531822100812188898131516917749604851255269716527378343349516173106916414335163414268865824921119788877047553519631159949070051858008087712664995111487663781337726742683963116894637201549928831686056701870685405950856250977197910095810076403861881931015074416123490624856112462001350590171001296114611866177706693234039596982711256182797885834942186618425452535848339326240931859796433390218112045498069663580377366715346261942151557866185723732917427377138450852758541378023643134160677508933773941402646042004431292764888647202090679358894168736017515947373729257142729574</span><br><span class="line"></span><br><span class="line">import gmpy2</span><br><span class="line">s,s1,s2=gmpy2.gcdext(e1,e2)</span><br><span class="line">print(s,s1,s2)</span><br><span class="line">assert s==1 #!!!!注意</span><br><span class="line"></span><br><span class="line">#错误算法</span><br><span class="line">m = (c1**s1*c2**s2) % n</span><br><span class="line">print(&quot;m=&quot;,m)</span><br><span class="line"></span><br><span class="line">#正常算法</span><br><span class="line">m=(pow(c1,s1,n)*pow(c2,s2,n))%n</span><br><span class="line">print(&quot;m=&quot;,m)</span><br><span class="line">act_m, torf = gmpy2.iroot(m, 3)</span><br><span class="line">print(&quot;T or F=&quot;,torf)</span><br><span class="line"></span><br><span class="line">from Cryptodome.Util.number import long_to_bytes as l2b</span><br><span class="line">print(l2b(act_m))</span><br><span class="line"></span><br><span class="line">//</span><br><span class="line">1 -7781 778</span><br><span class="line">act_m= 13040004482820198698847089094244152075790400869393100003271655421286266920976016007292478845</span><br><span class="line">b&#x27;flag&#123;6ed4c74e022cb18c8039e96de93aa9ce&#125;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>这是一道最最基础的共模攻击。我先自己写了一个算法（错误算法，根据数学公式直接写的），但是没有做对，原因如下：</p>
+<blockquote>
+<ul>
+<li><code>gcdext(e1,e2)</code> 得到的 s,s1,s2 里至少有一个是<strong>负数</strong></li>
+<li>在 Python &#x2F; gmpy2 里：<ul>
+<li><code>pow(c, s, n)</code> 会把 <code>s&lt;0</code> 解释为<strong>模逆</strong>（前提 gcd⁡(c,n)&#x3D;1，整个过程都在整数环 Zn\mathbb{Z}_nZn 里进行，这是你 m1 的做法 → <strong>正确</strong>。</li>
+<li><code>c**s</code> 当 <code>s&lt;0</code> 时，不是“模逆幂”，而是<strong>实数幂</strong>：等价于 <code>1/(c**|s|)</code>。对巨大整数 <code>c</code> 和巨大指数 <code>|s|</code>，这会变成一个极小的<strong>浮点数</strong>，下溢成 <code>~0.0</code>，随后</li>
+</ul>
+</li>
+</ul>
+<p><code>(c1**s1 * c2**s2) % n</code></p>
+<p>是在浮点语义下的 <code>%</code>，得到你看到的 <code>2.557...e-4315062</code> 这种值 → <strong>与模运算无关</strong>。</p>
+<p>即：m2 错在<strong>错误的数学对象与数值域</strong>（浮点域 vs. 模 nnn 的整数域），不是“等价变形”的实现问题。</p>
+</blockquote>
+<p>这是ai的回复，我的理解是<code>py解释器</code>会把负指数先算出来，<code>gmpy2/pow函数</code>会把负指数解释成逆元。</p>
+<h1 id="例题2"><a href="#例题2" class="headerlink" title="例题2"></a>例题2</h1><p>好我们接下来看另外一道例题：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">from gmpy2 import *</span><br><span class="line">from Crypto.Util.number import *</span><br><span class="line">from secret import hint</span><br><span class="line"></span><br><span class="line">hint=******</span><br><span class="line">m = bytes_to_long(hint)</span><br><span class="line">p = getPrime(256)</span><br><span class="line">c = pow(m, 256, p)</span><br><span class="line">print(p)</span><br><span class="line"></span><br><span class="line">p, q = getPrime(256), getPrime(256)</span><br><span class="line">n = p * q</span><br><span class="line">e1, e2 = getPrime(32), getPrime(32)</span><br><span class="line">c1, c2 = pow(c, e1, n), pow(c, e2, n)</span><br><span class="line">print(n)</span><br><span class="line">print(e1, c1)</span><br><span class="line">print(e2, c2)</span><br><span class="line"></span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">(p=)107316975771284342108362954945096489708900302633734520943905283655283318535709</span><br><span class="line">(n=)6807492006219935335233722232024809784434293293172317282814978688931711423939629682224374870233587969960713638310068784415474535033780772766171320461281579</span><br><span class="line">(e1=)2303413961 (c1=)1754421169036191391717309256938035960912941109206872374826444526733030696056821731708193270151759843780894750696642659795452787547355043345348714129217723</span><br><span class="line">(e2=)622163991 (c2=)1613454015951555289711148366977297613624544025937559371784736059448454437652633847111272619248126613500028992813732842041018588707201458398726700828844249</span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">#加粗的是用到的参数</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">from gmpy2 import *</span><br><span class="line">from Crypto.Util.number import *</span><br><span class="line">from secret import flag</span><br><span class="line"></span><br><span class="line">flag = flag.strip(b&quot;npuctf&#123;&quot;).strip(b&quot;&#125;&quot;)</span><br><span class="line">m = bytes_to_long(flag)</span><br><span class="line"></span><br><span class="line">p, q = getPrime(512), getPrime(512)</span><br><span class="line">n = p * q</span><br><span class="line">e1, e2 = p, q</span><br><span class="line">c1, c2 = pow(m, e1, n), pow(m, e2, n)</span><br><span class="line"></span><br><span class="line">print(n)</span><br><span class="line">print(c1)</span><br><span class="line">print(c2)</span><br><span class="line"></span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">128205304743751985889679351195836799434324346996129753896234917982647254577214018524580290192396070591032007818847697193260130051396080104704981594190602854241936777324431673564677900773992273463534717009587530152480725448774018550562603894883079711995434332008363470321069097619786793617099517770260029108149</span><br><span class="line">96860654235275202217368130195089839608037558388884522737500611121271571335123981588807994043800468529002147570655597610639680977780779494880330669466389788497046710319213376228391138021976388925171307760030058456934898771589435836261317283743951614505136840364638706914424433566782044926111639955612412134198</span><br><span class="line">9566853166416448316408476072940703716510748416699965603380497338943730666656667456274146023583837768495637484138572090891246105018219222267465595710692705776272469703739932909158740030049375350999465338363044226512016686534246611049299981674236577960786526527933966681954486377462298197949323271904405241585</span><br><span class="line">&#x27;&#x27;&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="解题："><a href="#解题：" class="headerlink" title="解题："></a>解题：</h2><h3 id="hint题解"><a href="#hint题解" class="headerlink" title="hint题解"></a>hint题解</h3><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">s = gmpy2.gcdext(e1,e2)		#拓展欧几里得算法，s会有两个值，一个正一个负</span><br><span class="line">cc1 = pow(c1,s[1],n)	#幂取模:(m1=（c1^s1）mod n)</span><br><span class="line">cc2 = pow(c2,s[2],n)	#幂取模:(m2=（c2^s2）mod n)</span><br><span class="line">c = (cc1*cc2)%n  </span><br><span class="line">print(c)</span><br><span class="line">#c=19384002358725759679198917686763310349050988223627625096050800369760484237557</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">e=256</span><br><span class="line">m = sympy.nthroot_mod(c,e,p)</span><br><span class="line">print(&quot;m=&quot;,m)</span><br><span class="line">print(long_to_bytes(m))</span><br></pre></td></tr></table></figure>
+
+<p>解释一下<code>nthroot_mod</code>函数：</p>
+<p><code>nthroots_mod(a, n, m)</code> 求的是 <strong>模 <strong>$ m $</strong> 的 n 次方根集合</strong>：$ {,x \mid a \equiv x^n \pmod m,}. $</p>
+<blockquote>
+<p>数学原理：</p>
+<p>给定整数 $ a, n, m $，所谓“模 $ m $ 的 n 次方根”就是解方程：</p>
+<p>$ x^n \equiv a \pmod m $</p>
+<p>的整数解 $ x $。</p>
+<p>例如：</p>
+<p>模 $ 7 $ 下，解方程 $ x^2 \equiv 2 \pmod 7 $。<br>$ 3^2&#x3D;9\equiv 2 $，$ 4^2&#x3D;16\equiv 2 $。所以 $ 3,4 $ 是平方根。<br><code>nthroots_mod(2, 2, 7)</code> 就会返回 $ {3,4} $。</p>
+</blockquote>
+<p>运行结果如下：</p>
+<blockquote>
+<p><code>m= 623314401187286670257694436875298172611109072944</code>（这里只是出来一个）</p>
+<p><code>b&#39;m.bit_length() &lt; 400&#39;</code></p>
+</blockquote>
+<h3 id="flag题解"><a href="#flag题解" class="headerlink" title="flag题解"></a>flag题解</h3><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">from gmpy2 import *</span><br><span class="line">from Crypto.Util.number import *</span><br><span class="line">from secret import flag</span><br><span class="line"></span><br><span class="line">flag = flag.strip(b&quot;npuctf&#123;&quot;).strip(b&quot;&#125;&quot;)</span><br><span class="line">m = bytes_to_long(flag)</span><br><span class="line"></span><br><span class="line">p, q = getPrime(512), getPrime(512)</span><br><span class="line">n = p * q</span><br><span class="line">e1, e2 = p, q</span><br><span class="line">c1, c2 = pow(m, e1, n), pow(m, e2, n)</span><br><span class="line"></span><br><span class="line">print(n)</span><br><span class="line">print(c1)</span><br><span class="line">print(c2)</span><br><span class="line"></span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">128205304743751985889679351195836799434324346996129753896234917982647254577214018524580290192396070591032007818847697193260130051396080104704981594190602854241936777324431673564677900773992273463534717009587530152480725448774018550562603894883079711995434332008363470321069097619786793617099517770260029108149</span><br><span class="line">96860654235275202217368130195089839608037558388884522737500611121271571335123981588807994043800468529002147570655597610639680977780779494880330669466389788497046710319213376228391138021976388925171307760030058456934898771589435836261317283743951614505136840364638706914424433566782044926111639955612412134198</span><br><span class="line">9566853166416448316408476072940703716510748416699965603380497338943730666656667456274146023583837768495637484138572090891246105018219222267465595710692705776272469703739932909158740030049375350999465338363044226512016686534246611049299981674236577960786526527933966681954486377462298197949323271904405241585</span><br><span class="line">&#x27;&#x27;&#x27;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>这里引入数论的内容:</p>
+<ul>
+<li><strong>同余的基本性质：</strong></li>
+</ul>
+<p>$ n &#x3D; p \cdot q $且$ a \equiv b \pmod{n} $，那么$ a \equiv b \pmod{p}, \quad a \equiv b \pmod{q}. $</p>
+<blockquote>
+<p>证明：</p>
+<p>若 $ n &#x3D; p \cdot q $，且 $ p, q $ 都是 $ n $ 的因子。<br>如果</p>
+<p>$ a \equiv b \pmod{n}, $</p>
+<p>即 $ n \mid (a-b) $，<br>那么必然有</p>
+<p>$ p \mid (a-b), \quad q \mid (a-b), $</p>
+<p>即</p>
+<p>$ a \equiv b \pmod{p}, \quad a \equiv b \pmod{q}. $</p>
+</blockquote>
+<ul>
+<li><strong>中国剩余定理的逆定理  ：</strong></li>
+</ul>
+<p>如果</p>
+<p>$ a \equiv b \ (\text{mod} \ p) $ 且 $ a \equiv b \ (\text{mod} \ q) $</p>
+<p><strong>那么</strong></p>
+<p> $ （如果p、q互素）a \equiv b \ (\text{mod} \ p·q) $</p>
+<p>$ （如果p、q不互素）a \equiv b \ (\text{mod} \ lcm(p·q)) $</p>
+<ul>
+<li><strong>费马小定理：</strong></li>
+</ul>
+<p>如果 p 是素数，且 a 是整数，且 a 不被 p 整除（即 a 与 p 互质），那么：</p>
+<p>$ a^{p-1} \equiv 1 \ (\text{mod} \ p) $</p>
+<p>在模 $ N $ 的同余方程</p>
+<ul>
+<li><hr>
+</li>
+</ul>
+<p>$ f(x) \equiv 0 \pmod N $</p>
+<p>  中，我们通常很难找到解，因为 $ N $ 很大（例如 RSA 的模数）。<br>如果 $ f(x) $ 是一个次数为 $ d $ 的整系数多项式，并且它在模 $ N $ 下有一个根 $ x_0 $，并且</p>
+<p>$ |x_0| &lt; N^{1&#x2F;d}, $</p>
+<p>  那么可以在<strong>多项式时间内</strong>（LLL 算法）找到这个小根 $ x_0 $。</p>
+<ul>
+<li><strong>本题逻辑：</strong></li>
+</ul>
+<p>$ c_1 \equiv m^p \ \ (mod\ n) \ \ \ \ \ \ \ \ ,\ \ \ \ \ \ \ \ c_2 \equiv m^q \ \ (mod\ n)<br> $</p>
+<p>$ n&#x3D;p·q $</p>
+<p>所以</p>
+<p>$ c_1 \equiv m^p \ \ (mod\ p) \ \ \ \ \ \ \ \ ,\ \ \ \ \ \ \ \ c_2 \equiv m^q \ \ (mod\ q)<br> $</p>
+<p>由费马小定理得</p>
+<p>$ m^{p-1}\equiv1  \ \ (mod\ p) $</p>
+<p>$ m^{q-1}\equiv1  \ \ (mod\ q) $</p>
+<p>$ m^{p}\equiv m  \ \ (mod\ p) $</p>
+<p>$ m^{q}\equiv m  \ \ (mod\ q) $</p>
+<p>所以</p>
+<p>$ c_1 \equiv m \ \ (mod\ p) $</p>
+<p>$ c_2 \equiv m \ \ (mod\ q) $</p>
+<p>所以</p>
+<p>$ c_1 -m \equiv0 \ \ (mod\ p) $</p>
+<p>$ c_2 -m \equiv0 \ \ (mod\ q) $</p>
+<p>假设</p>
+<p>$ f(x)&#x3D;(c_1-x)·(c_2-x) $</p>
+<blockquote>
+<p>构造的原因是因为要用到<strong>中国剩余定理的逆定理</strong></p>
+</blockquote>
+<p>有</p>
+<p>$ f(m)&#x3D;0\ (mod\ p) $</p>
+<p>$ f(m)&#x3D;0\ (mod\ q) $</p>
+<p>由中国剩余定理逆定理可得</p>
+<p>$ f(m)&#x3D;0\ (mod\ n) $</p>
+<p>在得出这样的式子之后就可以用LLL解m了：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">n=128205304743751985889679351195836799434324346996129753896234917982647254577214018524580290192396070591032007818847697193260130051396080104704981594190602854241936777324431673564677900773992273463534717009587530152480725448774018550562603894883079711995434332008363470321069097619786793617099517770260029108149</span><br><span class="line">c1=96860654235275202217368130195089839608037558388884522737500611121271571335123981588807994043800468529002147570655597610639680977780779494880330669466389788497046710319213376228391138021976388925171307760030058456934898771589435836261317283743951614505136840364638706914424433566782044926111639955612412134198</span><br><span class="line">c2=9566853166416448316408476072940703716510748416699965603380497338943730666656667456274146023583837768495637484138572090891246105018219222267465595710692705776272469703739932909158740030049375350999465338363044226512016686534246611049299981674236577960786526527933966681954486377462298197949323271904405241585</span><br><span class="line">a=c1+c2</span><br><span class="line">b=c1*c2</span><br><span class="line">R.&lt;x&gt;=Zmod(n)[]</span><br><span class="line">f = x^2-a*x+b</span><br><span class="line">f.small_roots(X=2^400)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#m=4242839043019782000788118887372132807371568279472499477998758466224002905442227156537788110520335652385855</span><br></pre></td></tr></table></figure>
+
+<p><code>py</code>里面<code>l2b</code>即可：<code>verrrrrrry_345yyyyyyy_rsaaaaaaa_righttttttt?</code></p>
+<h1 id="crypto1"><a href="#crypto1" class="headerlink" title="crypto1"></a>crypto1</h1><p>来看这里遇到的crypto1：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">from gmpy2 import *</span><br><span class="line">from Crypto.Util.number import *</span><br><span class="line"></span><br><span class="line">flag  = &#x27;****************************&#x27;</span><br><span class="line">flag = &#123;&quot;asfajgfbiagbwe&quot;&#125;</span><br><span class="line">p = getPrime(2048)</span><br><span class="line">q = getPrime(2048)</span><br><span class="line">m1 = bytes_to_long(bytes(flag.encode()))</span><br><span class="line"></span><br><span class="line">e1e2 = 3087</span><br><span class="line">n = p*q</span><br><span class="line">print()</span><br><span class="line"></span><br><span class="line">flag1 = pow(m1,e1,n)</span><br><span class="line">flag2 = pow(m1,e2,n)</span><br><span class="line">print(&#x27;flag1= &#x27;+str(flag1))</span><br><span class="line">print(&#x27;flag2= &#x27;+str(flag2))</span><br><span class="line">print(&#x27;n= &#x27;+str(n))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#flag1= 463634070971821449698012827631572665302589213868521491855038966879005784397309389922926838028598122795187584361359142761652619958273094398420314927073008031088375892957173280915904309949716842152249806486027920136603248454946737961650252641668562626310035983343018705370077783879047584582817271215517599531278507300104564011142229942160380563527291388260832749808727470291331902902518196932928128107067117198707209620169906575791373793854773799564060536121390593687449884988936522369331738199522700261116496965863870682295858957952661531894477603953742494526632841396338388879198270913523572980574440793543571757278020533565628285714358815083303489096524318164071888139412436112963845619981511061231001617406815056986634680975142352197476024575809514978857034477688443230263761729039797859697947454810551009108031457294164840611157524719173343259485881089252938664456637673337362424443150013961181619441267926981848009107466576314685961478748352388452114042115892243272514245081604607798243817586737546663059737344687130881861357423084448027959893402445303299089606081931041217035955143939567456782107203447898345284731038150377722447329202078375870541529539840051415759436083384408203659613313535094343772238691393447475364806171594</span><br><span class="line">#flag2= 130959534275704453216282334815034647265875632781798750901627773826812657339274362406246297925411291822193191483409847323315110393729020700526946712786793380991675008128561863631081095222226285788412970362518398757423705216112313533155390315204875516645459370629706277876211656753247984282379731850770447978537855070379324935282789327428625259945250066774049650951465043700088958965762054418615838049340724639373351248933494355591934236360506778496741051064156771092798005112534162050165095430065000827916096893408569751085550379620558282942254606978819033885539221416335848319082054806148859427713144286777516251724474319613960327799643723278205969253636514684757409059003348229151341200451785288395596484563480261212963114071064979559812327582474674812225260616757099890896900340007990585501470484762752362734968297532533654846190900571017635959385883945858334995884341767905619567505341752047589731815868489295690574109758825021386698440670611361127170896689015108432408490763723594673299472336065575301681055583084547847733168801030191262122130369687497236959760366874106043801542493392227424890925595734150487586757484304609945827925762382889592743709682485229267604771944535469557860120878491329984792448597107256325783346904408</span><br><span class="line">#n= 609305637099654478882754880905638123124918364116173050874864700996165096776233155524277418132679727857702738043786588380577485490575591029930152718828075976000078971987922107645530323356525126496562423491563365836491753476840795804040219013880969539154444387313029522565456897962200817021423704204077133003361140660038327458057898764857872645377236870759691588009666047187685654297678987435769051762120388537868493789773766688347724903911796741124237476823452505450704989455260077833828660552130714794889208291939055406292476845194489525212129635173284301782141617878483740788532998492403101324795726865866661786740345862631916793208037250277376942046905892342213663197755010315060990871143919384283302925469309777769989798197913048813940747488087191697903624669415774198027063997058701217124640082074789591591494106726857376728759663074734040755438623372683762856958888826373151815914621262862750497078245369680378038995425628467728412953392359090775734440671874387905724083226246587924716226512631671786591611586774947156657178654343092123117255372954798131265566301316033414311712092913492774989048057650627801991277862963173961355088082419091848569675686058581383542877982979697235829206442087786927939745804017455244315305118437</span><br></pre></td></tr></table></figure>
+
+<p>这里有两个加密过程、可以用共模攻击：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import gmpy2</span><br><span class="line">from Cryptodome.Util.number import long_to_bytes as l2b</span><br><span class="line"></span><br><span class="line">E=3087</span><br><span class="line">flag1= 463634070971821449698012827631572665302589213868521491855038966879005784397309389922926838028598122795187584361359142761652619958273094398420314927073008031088375892957173280915904309949716842152249806486027920136603248454946737961650252641668562626310035983343018705370077783879047584582817271215517599531278507300104564011142229942160380563527291388260832749808727470291331902902518196932928128107067117198707209620169906575791373793854773799564060536121390593687449884988936522369331738199522700261116496965863870682295858957952661531894477603953742494526632841396338388879198270913523572980574440793543571757278020533565628285714358815083303489096524318164071888139412436112963845619981511061231001617406815056986634680975142352197476024575809514978857034477688443230263761729039797859697947454810551009108031457294164840611157524719173343259485881089252938664456637673337362424443150013961181619441267926981848009107466576314685961478748352388452114042115892243272514245081604607798243817586737546663059737344687130881861357423084448027959893402445303299089606081931041217035955143939567456782107203447898345284731038150377722447329202078375870541529539840051415759436083384408203659613313535094343772238691393447475364806171594</span><br><span class="line">flag2= 130959534275704453216282334815034647265875632781798750901627773826812657339274362406246297925411291822193191483409847323315110393729020700526946712786793380991675008128561863631081095222226285788412970362518398757423705216112313533155390315204875516645459370629706277876211656753247984282379731850770447978537855070379324935282789327428625259945250066774049650951465043700088958965762054418615838049340724639373351248933494355591934236360506778496741051064156771092798005112534162050165095430065000827916096893408569751085550379620558282942254606978819033885539221416335848319082054806148859427713144286777516251724474319613960327799643723278205969253636514684757409059003348229151341200451785288395596484563480261212963114071064979559812327582474674812225260616757099890896900340007990585501470484762752362734968297532533654846190900571017635959385883945858334995884341767905619567505341752047589731815868489295690574109758825021386698440670611361127170896689015108432408490763723594673299472336065575301681055583084547847733168801030191262122130369687497236959760366874106043801542493392227424890925595734150487586757484304609945827925762382889592743709682485229267604771944535469557860120878491329984792448597107256325783346904408</span><br><span class="line">n= 609305637099654478882754880905638123124918364116173050874864700996165096776233155524277418132679727857702738043786588380577485490575591029930152718828075976000078971987922107645530323356525126496562423491563365836491753476840795804040219013880969539154444387313029522565456897962200817021423704204077133003361140660038327458057898764857872645377236870759691588009666047187685654297678987435769051762120388537868493789773766688347724903911796741124237476823452505450704989455260077833828660552130714794889208291939055406292476845194489525212129635173284301782141617878483740788532998492403101324795726865866661786740345862631916793208037250277376942046905892342213663197755010315060990871143919384283302925469309777769989798197913048813940747488087191697903624669415774198027063997058701217124640082074789591591494106726857376728759663074734040755438623372683762856958888826373151815914621262862750497078245369680378038995425628467728412953392359090775734440671874387905724083226246587924716226512631671786591611586774947156657178654343092123117255372954798131265566301316033414311712092913492774989048057650627801991277862963173961355088082419091848569675686058581383542877982979697235829206442087786927939745804017455244315305118437</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">for i in range(2,E):</span><br><span class="line">    if E%i == 0:</span><br><span class="line">        e1=i</span><br><span class="line">        e2=E//e1</span><br><span class="line">        print(e1,e2)</span><br><span class="line">        s,s1,s2=gmpy2.gcdext(e1,e2)</span><br><span class="line">        print(&quot;s=&quot;,s)</span><br><span class="line">        m = (pow(flag1,s1,n)*pow(flag2,s2,n))%n</span><br><span class="line">        m1 = gmpy2.iroot(m, s)[0]   //如果说e1和e2不互素，就用iroot，开方</span><br><span class="line">        print(l2b(m1))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><code>**iroot()**</code><strong>函数</strong></p>
+<p><code>gmpy2.iroot()</code> 是 <strong>gmpy2</strong> 库中用于计算 <strong>整数的 s 次方根</strong>（即求整数的 s 次方根的最大整数解）的函数。  这里m1 &#x3D; gmpy2.iroot(m, s)[0]中的[0]是指读取iroot函数返回的第一个值。iroot返回两个值，第一个是开方值，一个是是否精确，以下是示例：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1756568609552-332abe2d-0077-4555-8c86-104b9bf37302.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>至此讲解完毕。8&#x2F;30&#x2F;25.</p>
+<p>9&#x2F;4调整排版。</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3>
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E5%8F%82%E8%80%83%EF%BC%9A"><span class="toc-list-text">参考：</span></a></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="toc-list-text">原理：</span></a></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E4%BE%8B%E9%A2%981%EF%BC%9A"><span class="toc-list-text">例题1：</span></a></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E4%BE%8B%E9%A2%982"><span class="toc-list-text">例题2</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E8%A7%A3%E9%A2%98%EF%BC%9A"><span class="toc-list-text">解题：</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#hint%E9%A2%98%E8%A7%A3"><span class="toc-list-text">hint题解</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#flag%E9%A2%98%E8%A7%A3"><span class="toc-list-text">flag题解</span></a></li></ol></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#crypto1"><span class="toc-list-text">crypto1</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link"><span class="toc-list-text"></span></a></li></ol></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

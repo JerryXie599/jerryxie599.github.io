@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>spc选拔赛 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spc选拔赛 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/电子取证/spc选拔赛/">
+  <link rel="canonical" href="https://jerryxie.top/notes/电子取证/spc选拔赛/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="/js/main.js"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/">电子取证</a>
+          
+        
+      </div>
+      <h1>spc选拔赛</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>24 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>电子取证/spc选拔赛.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <p>有点犯蠢。太忙了最近，一件一件事情结束。</p>
+<h1 id="服务器"><a href="#服务器" class="headerlink" title="服务器"></a>服务器</h1><h2 id="重构"><a href="#重构" class="headerlink" title="重构"></a>重构</h2><blockquote>
+<p>这里看丁学长的wp选择弄了一张新的卡，没成功，我于是乎直接选择重置了：</p>
+<h1 id="删除现有配置（连接会断开！）"><a href="#删除现有配置（连接会断开！）" class="headerlink" title="删除现有配置（连接会断开！）"></a>删除现有配置（连接会断开！）</h1><p>sudo nmcli con delete “ens33”  </p>
+</blockquote>
+<h1 id="重建默认配置"><a href="#重建默认配置" class="headerlink" title="重建默认配置"></a>重建默认配置</h1><p>sudo nmcli con add type ethernet con-name ens33 ifname ens33 autoconnect yes  </p>
+<h1 id="重启服务"><a href="#重启服务" class="headerlink" title="重启服务"></a>重启服务</h1><p>sudo systemctl restart NetworkManager</p>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761383517951-370b0993-c292-4331-a626-bcd7f4bdf0c5.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>成功打开宝塔</p>
+</blockquote>
+<p>丁老师发视频了，学着弄一下：</p>
+<p>添加一张网卡的方式如下：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761384104751-3f3a79dc-ed2f-4bc3-865c-0084e9cfcbfe.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761384411699-12ea6621-3f4c-471b-ae18-918f672aac6f.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761384288556-68f7a39f-01cb-4473-98b8-116fe2c60953.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>注意刚才选择的网卡，设置成位置从<code>3-254</code>（因为不能确定具体机器内部有其他主机服务），<code>Apply</code>即可</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761384511300-cff25643-d236-468a-a67f-3ba538e8e5bd.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>可以注意到新的网卡ens37已经设置好了：<code>192.168.100.145</code></p>
+<p>于是就可以用这个登录宝塔了</p>
+<p>ssh连接：</p>
+<p><code>systemctl status sshd</code></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761389893891-0f1f6e0a-b32b-4b5a-9bff-60d6c537183e.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>找到端口号是<code>222</code></p>
+<p>即可连ssh</p>
+<h2 id="1-涉案服务器A的操作系统（Operating-System）的内核版本是什么？-1-2-3-456-abc-efg-123"><a href="#1-涉案服务器A的操作系统（Operating-System）的内核版本是什么？-1-2-3-456-abc-efg-123" class="headerlink" title="1. 涉案服务器A的操作系统（Operating System）的内核版本是什么？(1.2.3-456.abc.efg_123)"></a><strong>1. 涉案服务器A的操作系统（Operating System）的内核版本是什么？(1.2.3-456.abc.efg_123)</strong></h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761216262913-522a75a9-c5e4-4398-a6cb-5edc56a51e9a.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>3.10.0-957.el7.x86_64</code></p>
+<h2 id="2-涉案服务器A的ssh的端口号是多少？"><a href="#2-涉案服务器A的ssh的端口号是多少？" class="headerlink" title="2. 涉案服务器A的ssh的端口号是多少？"></a><strong>2. 涉案服务器A的ssh的端口号是多少？</strong></h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761216897015-b2283505-7402-48c4-84e5-580909e39eba.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h2 id="3-分析服务器镜像A，涉案服务器的ip地址是什么？-答案格式：123-123-123-123）"><a href="#3-分析服务器镜像A，涉案服务器的ip地址是什么？-答案格式：123-123-123-123）" class="headerlink" title="3. 分析服务器镜像A，涉案服务器的ip地址是什么？(答案格式：123.123.123.123）"></a><strong>3. 分析服务器镜像A，涉案服务器的ip地址是什么？(答案格式：123.123.123.123）</strong></h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761216935428-5ade3e44-6f55-4dcc-b000-851f52c33874.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>10.0.0.11</p>
+<h2 id="4-涉案服务器A中使用的nginx版本号是多少？（答案格式：1-2-3）"><a href="#4-涉案服务器A中使用的nginx版本号是多少？（答案格式：1-2-3）" class="headerlink" title="4. 涉案服务器A中使用的nginx版本号是多少？（答案格式：1.2.3）"></a><strong>4. 涉案服务器A中使用的nginx版本号是多少？（答案格式：1.2.3）</strong></h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761216978788-55b16543-d879-4917-b09a-593afb7cf7c7.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>1.18.0</p>
+<h2 id="5-涉案服务器A中mysql的端口号是多少？（答案格式：123）"><a href="#5-涉案服务器A中mysql的端口号是多少？（答案格式：123）" class="headerlink" title="5. 涉案服务器A中mysql的端口号是多少？（答案格式：123）"></a><strong>5. 涉案服务器A中mysql的端口号是多少？（答案格式：123）</strong></h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761217015720-4a1236af-62fe-4c56-b825-8b56c3f068f9.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761217094712-99ac6116-767e-4864-a647-c85b2be82a90.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>sudo ss -tlnp | grep mysqld</code></p>
+<p><code>3340</code></p>
+<h2 id="6-涉案服务器A中宝塔面板绑定的手机号码后四位为？"><a href="#6-涉案服务器A中宝塔面板绑定的手机号码后四位为？" class="headerlink" title="6. 涉案服务器A中宝塔面板绑定的手机号码后四位为？"></a><strong>6. 涉案服务器A中宝塔面板绑定的手机号码后四位为？</strong></h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761391180924-5db9715a-92d2-4678-b7ee-a95bdf77ff80.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>2768</code></p>
+<h2 id="7-涉案服务器A中宝塔面板最早保存的第一次登陆时的ip地址和端口号是什么？（答案格式：123-456-789-123-456）"><a href="#7-涉案服务器A中宝塔面板最早保存的第一次登陆时的ip地址和端口号是什么？（答案格式：123-456-789-123-456）" class="headerlink" title="7. 涉案服务器A中宝塔面板最早保存的第一次登陆时的ip地址和端口号是什么？（答案格式：123.456.789.123:456）"></a><strong>7. 涉案服务器A中宝塔面板最早保存的第一次登陆时的ip地址和端口号是什么？（答案格式：123.456.789.123:456）</strong></h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761217478487-f2ca0129-f593-4827-9e43-3c9e30d14f87.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>登录成功,帐号:2tjrikr2,登录IP:<code>192.168.136.1:60332</code></p>
+<h2 id="8-涉案服务器A前端登录网址是什么？（答案格式：http-xxx-xxx-xxx-xxx-）"><a href="#8-涉案服务器A前端登录网址是什么？（答案格式：http-xxx-xxx-xxx-xxx-）" class="headerlink" title="8. 涉案服务器A前端登录网址是什么？（答案格式：http://xxx.xxx.xxx.xxx/../....）"></a><strong>8. 涉案服务器A前端登录网址是什么？（答案格式：<a target="_blank" rel="noopener" href="http://xxx.xxx.xxx.xxx/....%EF%BC%89">http://xxx.xxx.xxx.xxx/../....）</a></strong></h2><h2 id=""><a href="#" class="headerlink" title=""></a><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761383553954-392e19a6-03a9-40ee-aa92-0d8f83a10f9a.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></h2><p><code>[~~tzs.eqatrad.cn~~](http://tzs.eqatrad.cn/)</code></p>
+<p><code>[http://10.0.0.11/mobile/login.html](http://10.0.0.11/mobile/login.html)</code></p>
+<h2 id="-1"><a href="#-1" class="headerlink" title="**"></a>**</h2><p>**<strong>9. 涉案服务器A平台共成功充值了多少金额？（答案格式：12340.56）</strong><br>这里涉及了数据库，所以我们建立数据库连接：</p>
+<p>进入宝塔后台，获取root密码</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761391893667-9da9039e-7829-4622-ae76-5857bb0358d1.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>navicat：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761392389242-307e4c82-f9bb-4233-b752-1beae8c0a9a2.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>选择ssh，输入linux的账密；然后再转到常规，填入刚才在宝塔查到的密码：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761392520829-09d6df58-0c56-4c92-aea8-a9a5ff840936.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>连接即可：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761392540308-afa3d770-182d-49a7-814d-d787ffb3b6fb.png" referrerpolicy="no-referrer" loading="lazy" decoding="async">前三个都是mysql默认的，所以重点看tzq</p>
+<p>在数据库中找到充值表：<code>recharge</code></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761393366213-d1b14c4f-d967-4353-8988-0406e3a4e0f0.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761393564289-a4aaa7ee-a996-4075-a20f-6469ba805a7d.png" referrerpolicy="no-referrer" loading="lazy" decoding="async">甜心直播甜心直播</p>
+<p>发现有系统充值+银行入款的type:</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761557396256-dd92cd40-1c4d-4662-9018-6c84435c1719.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>30932824.57</code></p>
+<h2 id="10-根据涉案服务器A回答，肖一帆一共发展了多少个用户作为直接下线？（答案格式：123）"><a href="#10-根据涉案服务器A回答，肖一帆一共发展了多少个用户作为直接下线？（答案格式：123）" class="headerlink" title="10. 根据涉案服务器A回答，肖一帆一共发展了多少个用户作为直接下线？（答案格式：123）"></a><strong>10. 根据涉案服务器A回答，肖一帆一共发展了多少个用户作为直接下线？（答案格式：123）</strong></h2><p>在user表中找到这个人</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761393861771-87a7a517-6b0d-45c1-b198-55d463c971a2.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>id</code>&#x3D;<code>11131</code></p>
+<p>在<code>finance</code>表中找到有推荐会员等等的描述<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761394068790-26f24418-fc47-4024-b2b6-16fb6a219484.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>于是导出<code>finance</code>表，筛选uid&#x3D;<code>11131</code></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761394053417-158c1512-2b0d-43e9-8ba2-00b7fdf4abda.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>数一下推荐的号码，7个</p>
+<h2 id="11-根据涉案服务器A中VIP6等级的积分限制是多少？（答案格式：123）"><a href="#11-根据涉案服务器A中VIP6等级的积分限制是多少？（答案格式：123）" class="headerlink" title="11. 根据涉案服务器A中VIP6等级的积分限制是多少？（答案格式：123）"></a><strong>11. 根据涉案服务器A中VIP6等级的积分限制是多少？（答案格式：123）</strong></h2><h2 id="-2"><a href="#-2" class="headerlink" title=""></a><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761398956797-e5f0dec2-e9d6-4061-8c67-089e3e07dc7f.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></h2><p><code>**1000000**</code></p>
+<h2 id="12-根据涉案服务器A分析652301196309100847是谁的银行卡？-答案示例：王五"><a href="#12-根据涉案服务器A分析652301196309100847是谁的银行卡？-答案示例：王五" class="headerlink" title="12. 根据涉案服务器A分析652301196309100847是谁的银行卡？(答案示例：王五)"></a><strong>12. 根据涉案服务器A分析652301196309100847是谁的银行卡？(答案示例：王五)</strong></h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761398998706-e550e740-d4ec-45fe-88d2-c7e5dc913a06.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>李进华</p>
+<h2 id="13-根据涉案服务器A分析商户号为12348888的商户其APPkey是多少？（答案格式：以实际为准，字母小写）"><a href="#13-根据涉案服务器A分析商户号为12348888的商户其APPkey是多少？（答案格式：以实际为准，字母小写）" class="headerlink" title="13. 根据涉案服务器A分析商户号为12348888的商户其APPkey是多少？（答案格式：以实际为准，字母小写）"></a><strong>13. 根据涉案服务器A分析商户号为12348888的商户其APPkey是多少？（答案格式：以实际为准，字母小写）</strong></h2><p>查询语句查：</p>
+<details class="lake-collapse"><summary id="u6afe6a4f"><span class="ne-text">未简化版</span></summary><p id="u1cf3f436" class="ne-p"><span class="ne-text">DELIMITER //</span></p><p id="u0797e0f9" class="ne-p"><span class="ne-text"></span></p><p id="u47a6fce9" class="ne-p"><span class="ne-text">CREATE PROCEDURE FindDataContainingValue()</span></p><p id="u10103e3d" class="ne-p"><span class="ne-text">BEGIN</span></p><p id="u8787d7cb" class="ne-p"><span class="ne-text">    DECLARE done BOOLEAN DEFAULT FALSE;</span></p><p id="ufedaaf06" class="ne-p"><span class="ne-text">    DECLARE tableName VARCHAR(255);</span></p><p id="u6c125a46" class="ne-p"><span class="ne-text">    DECLARE columnName VARCHAR(255);</span></p><p id="u7bf86940" class="ne-p"><span class="ne-text">    DECLARE dataType VARCHAR(255);</span></p><p id="u7bcfa83f" class="ne-p"><span class="ne-text">    DECLARE cur CURSOR FOR </span></p><p id="u37126748" class="ne-p"><span class="ne-text">        SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE </span></p><p id="ud07b338b" class="ne-p"><span class="ne-text">        FROM INFORMATION_SCHEMA.COLUMNS </span></p><p id="u8412635c" class="ne-p"><span class="ne-text">        WHERE TABLE_SCHEMA = DATABASE(); -- 当前数据库</span></p><p id="ua7a1927d" class="ne-p"><span class="ne-text">    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;</span></p><p id="ua82b94f1" class="ne-p"><span class="ne-text"></span></p><p id="u83b16881" class="ne-p"><span class="ne-text">    -- 创建临时表存储结果</span></p><p id="ua34d566f" class="ne-p"><span class="ne-text">    CREATE TEMPORARY TABLE IF NOT EXISTS search_results (</span></p><p id="u7b5cfa85" class="ne-p"><span class="ne-text">        table_name VARCHAR(255),</span></p><p id="u5c77fe13" class="ne-p"><span class="ne-text">        column_name VARCHAR(255),</span></p><p id="ue2156602" class="ne-p"><span class="ne-text">        column_value TEXT</span></p><p id="u267921bb" class="ne-p"><span class="ne-text">    );</span></p><p id="u55699e5d" class="ne-p"><span class="ne-text"></span></p><p id="u0230a75b" class="ne-p"><span class="ne-text">    OPEN cur;</span></p><p id="u2fc3eadb" class="ne-p"><span class="ne-text">    read_loop: LOOP</span></p><p id="uf9e08977" class="ne-p"><span class="ne-text">        FETCH cur INTO tableName, columnName, dataType;</span></p><p id="ud222d753" class="ne-p"><span class="ne-text">        IF done THEN</span></p><p id="ucd2c8431" class="ne-p"><span class="ne-text">            LEAVE read_loop;</span></p><p id="u2f622ac0" class="ne-p"><span class="ne-text">        END IF;</span></p><p id="u6ee69e54" class="ne-p"><span class="ne-text"></span></p><p id="u45d359e6" class="ne-p"><span class="ne-text">        -- 仅处理字符串和数字类型列</span></p><p id="u30cdf23a" class="ne-p"><span class="ne-text">        IF dataType IN ('char', 'varchar', 'text', 'int', 'bigint') THEN</span></p><p id="ud3c5f3b2" class="ne-p"><span class="ne-text">            SET @sql = CONCAT(</span></p><p id="ue721da1f" class="ne-p"><span class="ne-text">                'INSERT INTO search_results ',</span></p><p id="u51143609" class="ne-p"><span class="ne-text">                'SELECT ', QUOTE(tableName), ', ', QUOTE(columnName), ', `', columnName, '` ',</span></p><p id="u4b1d56a3" class="ne-p"><span class="ne-text">                'FROM `', tableName, '` ',</span></p><p id="u5a7c2f7b" class="ne-p"><span class="ne-text">                'WHERE `', columnName, '` LIKE \'%12348888%\' ',</span></p><p id="u6d786ea8" class="ne-p"><span class="ne-text">                'OR `', columnName, '` = 12348888;' -- 数字类型精确匹配</span></p><p id="u608a39c0" class="ne-p"><span class="ne-text">            );</span></p><p id="uec8076a0" class="ne-p"><span class="ne-text">            PREPARE stmt FROM @sql;</span></p><p id="u0a69ab50" class="ne-p"><span class="ne-text">            EXECUTE stmt;</span></p><p id="ub023e0ae" class="ne-p"><span class="ne-text">            DEALLOCATE PREPARE stmt;</span></p><p id="u22c5a7a7" class="ne-p"><span class="ne-text">        END IF;</span></p><p id="u734c3039" class="ne-p"><span class="ne-text">    END LOOP;</span></p><p id="ubf1812fd" class="ne-p"><span class="ne-text">    CLOSE cur;</span></p><p id="u162abfc7" class="ne-p"><span class="ne-text"></span></p><p id="ub1fa5af5" class="ne-p"><span class="ne-text">    -- 输出结果</span></p><p id="u0fcd61cc" class="ne-p"><span class="ne-text">    SELECT * FROM search_results;</span></p><p id="u32f2ebb7" class="ne-p"><span class="ne-text">    DROP TEMPORARY TABLE search_results;</span></p><p id="u5e81da0a" class="ne-p"><span class="ne-text">END //</span></p><p id="u066ab57a" class="ne-p"><span class="ne-text"></span></p><p id="u8f4e8fdf" class="ne-p"><span class="ne-text">DELIMITER ;</span></p><p id="u2bfe5605" class="ne-p"><span class="ne-text"></span></p><p id="ubf365b98" class="ne-p"><span class="ne-text">-- 执行存储过程</span></p><p id="u8bc5196f" class="ne-p"><span class="ne-text">CALL FindDataContainingValue();</span></p><p id="u6c4e658e" class="ne-p"><span class="ne-text"></span></p></details>
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER //</span><br><span class="line"></span><br><span class="line">CREATE PROCEDURE FindDataContainingValue()</span><br><span class="line">BEGIN</span><br><span class="line">    DECLARE done BOOLEAN DEFAULT FALSE;</span><br><span class="line">    DECLARE tName VARCHAR(<span class="number">255</span>);</span><br><span class="line">    DECLARE cName VARCHAR(<span class="number">255</span>);</span><br><span class="line">    DECLARE cur CURSOR FOR </span><br><span class="line">        SELECT TABLE_NAME, COLUMN_NAME </span><br><span class="line">        FROM INFORMATION_SCHEMA.COLUMNS </span><br><span class="line">        WHERE TABLE_SCHEMA = DATABASE()</span><br><span class="line">        AND DATA_TYPE IN (<span class="string">&#x27;char&#x27;</span>, <span class="string">&#x27;varchar&#x27;</span>, <span class="string">&#x27;text&#x27;</span>);</span><br><span class="line">    </span><br><span class="line">    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;</span><br><span class="line"></span><br><span class="line">    CREATE TEMPORARY TABLE IF NOT EXISTS results (</span><br><span class="line">        table_name VARCHAR(<span class="number">255</span>),</span><br><span class="line">        column_name VARCHAR(<span class="number">255</span>),</span><br><span class="line">        found_value TEXT</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    OPEN cur;</span><br><span class="line">    read_loop: LOOP</span><br><span class="line">        FETCH cur INTO tName, cName;</span><br><span class="line">        IF done THEN LEAVE read_loop; END IF;</span><br><span class="line">        </span><br><span class="line">        SET @sql = CONCAT(</span><br><span class="line">            <span class="string">&#x27;INSERT INTO results &#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;SELECT &quot;&#x27;</span>, tName, <span class="string">&#x27;&quot;, &quot;&#x27;</span>, cName, <span class="string">&#x27;&quot;, `&#x27;</span>, cName, <span class="string">&#x27;` &#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;FROM `&#x27;</span>, tName, <span class="string">&#x27;` &#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;WHERE `&#x27;</span>, cName, <span class="string">&#x27;` LIKE &quot;%12348888%&quot;&#x27;</span></span><br><span class="line">        );</span><br><span class="line">        </span><br><span class="line">        PREPARE stmt FROM @sql;</span><br><span class="line">        EXECUTE stmt;</span><br><span class="line">        DEALLOCATE PREPARE stmt;</span><br><span class="line">    END LOOP;</span><br><span class="line">    CLOSE cur;</span><br><span class="line"></span><br><span class="line">    SELECT * FROM results;</span><br><span class="line">    DROP TEMPORARY TABLE results;</span><br><span class="line">END //</span><br><span class="line"></span><br><span class="line">DELIMITER ;</span><br><span class="line"></span><br><span class="line">-- 执行存储过程</span><br><span class="line">CALL FindDataContainingValue();</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761399965871-6f729b11-5fb3-4d7f-b42b-355717c41715.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761400032301-a8c0e1dd-a4c6-4809-b04b-a175a78b5ee6.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>或者直接查询</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761557537013-d75d5249-c49c-4285-ab93-8f6beb234748.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761557505412-579d32b1-afa2-42e0-a4c7-6573d9060926.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>abcdefg</code></p>
+<h2 id="14-根据涉案服务器A分析佐维创投集团有限公司的具体地址是什么？（答案格式：以实际为准）"><a href="#14-根据涉案服务器A分析佐维创投集团有限公司的具体地址是什么？（答案格式：以实际为准）" class="headerlink" title="14. 根据涉案服务器A分析佐维创投集团有限公司的具体地址是什么？（答案格式：以实际为准）"></a><strong>14. 根据涉案服务器A分析佐维创投集团有限公司的具体地址是什么？（答案格式：以实际为准）</strong></h2><p>用上面的查询指令查：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761402940142-1ebb5181-55f0-429d-9222-e7d0ccdb6836.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>澳门中环夏悫道12号美国银行中心30楼</code></p>
+<h2 id="15-根据涉案服务器A分析阿里云接口API的银行卡接口地址是多少？（答案格式：以实际为准）"><a href="#15-根据涉案服务器A分析阿里云接口API的银行卡接口地址是多少？（答案格式：以实际为准）" class="headerlink" title="15. 根据涉案服务器A分析阿里云接口API的银行卡接口地址是多少？（答案格式：以实际为准）"></a><strong>15. 根据涉案服务器A分析阿里云接口API的银行卡接口地址是多少？（答案格式：以实际为准）</strong></h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761403748371-433093fe-4f2c-48d9-bfed-72c4f37e1487.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>全局搜一下aliyun.com<del>我的xways罢工了我去</del></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761403814146-bc921f24-15e5-45e7-b444-45d396687fcb.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>前面这种设置过阿里云镜像源的都看得出来这是镜像源等等网址</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761403928372-1055eb53-a83e-4573-9613-087a0e715a44.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>看到market之后感觉应该是，源文件看一下：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761403965335-e6156075-4976-4a84-a660-1a4622132f1f.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>[https://market.aliyun.com/products/56928004/cmapi012976.html](https://market.aliyun.com/products/56928004/cmapi012976.html)</code></p>
+<p>没想到的是他居然就直接写了<code>阿里云接口API</code></p>
+<h2 id="16-分析嫌疑人的云服务器B，涉案服务器中Java网站源码jar包名称是？（答案格式：包含后缀）"><a href="#16-分析嫌疑人的云服务器B，涉案服务器中Java网站源码jar包名称是？（答案格式：包含后缀）" class="headerlink" title="16. 分析嫌疑人的云服务器B，涉案服务器中Java网站源码jar包名称是？（答案格式：包含后缀）"></a><strong>16. 分析嫌疑人的云服务器B，涉案服务器中Java网站源码jar包名称是？（答案格式：包含后缀）</strong></h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761405021027-716f570b-443f-4e23-b99d-8fe777aaf883.png" referrerpolicy="no-referrer" loading="lazy" decoding="async">火眼直接搜jar即可</p>
+<p>我看丁老师的意思是这个bh开头的一眼丁真就是网站源码（而且这个文件本身就很大）</p>
+<p>或者用指令搜：</p>
+<p><code>find / -name *.jar</code></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1761405327196-23e5b02e-e01d-4721-ac81-1d4482a43f2c.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>最后一个就是</p>
+<h2 id="17-分析嫌疑人的云服务器B，涉案Java网站数据库root账号的密码是多少？（答案格式：Abc-123456）"><a href="#17-分析嫌疑人的云服务器B，涉案Java网站数据库root账号的密码是多少？（答案格式：Abc-123456）" class="headerlink" title="17. 分析嫌疑人的云服务器B，涉案Java网站数据库root账号的密码是多少？（答案格式：Abc@123456）"></a><strong>17. 分析嫌疑人的云服务器B，涉案Java网站数据库root账号的密码是多少？（答案格式：Abc@123456）</strong></h2><p>用<code>jadx</code>打开 <del>第一次知道jar可以用jadx打开</del></p>
+<pre><code>
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761405592807-4985203f-a055-4479-bab0-e9658f2a721b.png)
+
+`Tuojie@666`
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;18. 分析嫌疑人的云服务器B，涉案Java网站的端口是多少？（答案示例：3123）&lt;/font&gt;**
+同上8080
+
+构建网站：
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761440966066-582f9cbf-c501-4434-9e1a-bf1525f7fe6a.png)
+
+发现8080没有开，所以运行上面的jar：
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761441039520-ecc04520-01dc-4fad-bef8-83b0dfd9ba97.png)
+
+发现8080有监听了，所以访问`192.168.100.144:8080`
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761441111490-5f2a556f-4cc1-4fbe-9050-458fce1c33d9.png)
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761441190141-5aa774dd-af84-4750-9f02-990b5dec5dcf.png)
+
+~~用刚才获取的账密登录：~~ 失败，验证码看不清楚
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;19. 分析嫌疑人的云服务器B，该网站后台保留的登录账号的用户昵称为？（答案格式：老李）&lt;/font&gt;**
+查看mysql：
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761441807254-cbbe7993-428f-4d32-83a2-5aa6d56c9ac3.png)
+
+发现张三的电话和他一样的，昵称是`三弟`
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;20. 分析嫌疑人的云服务器B，位于南京市江宁区的货物仓库存有多少个产品？（答案格式：123）&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761441874010-ff6d0162-a46f-4444-a9ee-06eeadd502b1.png)
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761442078735-ee845637-9217-498b-950d-10931538552a.png)
+
+8012+12313+1301=21626
+
+# 计算机
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761215837555-93c9ede8-3671-4429-937d-91e88d4cbd04.png)
+
+&lt;font style=&quot;color:rgb(96, 98, 102);background-color:rgba(245, 247, 250, 0.816);&quot;&gt;wangg&lt;/font&gt;
+
+&lt;font style=&quot;color:rgb(96, 98, 102);background-color:rgb(245, 247, 250);&quot;&gt;wanggui1993&lt;/font&gt;
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;1. 分析嫌疑人的电脑，其电脑的设备名称是什么？（答案格式：以实际为准）&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761215611439-fbf78ccf-2adb-44bc-807b-89c027d5d261.png)
+
+`暴富888`
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;2. 分析嫌疑人的电脑，其电脑连接互联网的物理地址(MAC)是多少（答案格式：01-AC-15-R2-B1-3C）&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761215700230-bd99e7e2-fa6d-4af7-b379-844863c894a7.png)
+
+00-0C-29-E3-C6-2B
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;3. 分析嫌疑人的电脑，其电脑2025年6月9日最后一次接入USB设备序列号的后六位是？（答案格式：以实际为准，英文字母全大写）&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761215728672-b4e4e789-a7a4-404c-b124-3757c27838da.png)
+
+000000`123AD3`
+
+
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;4. 分析嫌疑人的电脑，其电脑BitLocker加密分区的48位恢复密钥的后六位是多少？（答案格式：123456）&lt;/font&gt;**
+用`efdd`：
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761315316951-1b2a42f6-2ed0-4997-8ede-a73d644b603d.png)
+
+这里给了内存，获取key，然后获取bitlocker恢复密钥
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761315301236-620038d0-ffff-4e82-b243-f1b4dc929bb4.png)
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761368957379-996b7722-a25c-4086-a228-d4fb4c58688f.png)
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761369044460-66ee8c62-37ed-4e4b-a114-b7dc0fcc81cb.png)保存`key`
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761369065177-02525f8c-3343-4604-a196-9f02cf53c0fa.png)
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761369111621-2d51c73b-2e03-4017-afe0-298710a724f5.png)![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761369135707-58b765da-0eb6-405c-8d14-030b6b1dd5d7.png)
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761369146548-5df17295-e3d2-4c1b-8e67-cc96926e13e1.png)
+
+170258-643148-669911-174548-088726-299772-219439-`200189`
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;5. 分析嫌疑人的电脑，当前该公司后台服务器使用的云服务器是哪个厂商的？（答案格式：京东云）&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761218424533-a293f251-afe5-48c6-9124-0b715526d2ac.png)
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;6. 分析嫌疑人的电脑，当前该公司后台服务器ssh远程端口是多少？(答案格式：123)&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761557733632-8d2b4fc1-f3b7-4a95-9bf5-5ca6aff8fd1f.png)
+
+`**&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;223&lt;/font&gt;**`**&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;  
+&lt;/font&gt;****&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt; 7. 分析嫌疑人的电脑，嫌疑人使用的苹果手机序列号是多少？（答案格式：ABCD1234）&lt;/font&gt;**
+
+这个文件在bitlocker解开之后的E盘中找到
+
+又碰到新软件：用于读取苹果手机备份文件plist。
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761374302572-ac0da3a3-6c2e-40ff-afd6-03f789444961.png)
+
+打开之后查询**&lt;font style=&quot;color:rgb(229, 229, 229);background-color:rgb(23, 23, 23);&quot;&gt;Serial Number&lt;/font&gt;**
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761374433513-da2bd08f-37aa-467d-8f22-a4db88d8b614.png)
+
+`C8PZFDJXN741`
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761407299585-3c78cc0d-c79c-4820-b83d-1ed5593d22d7.png)
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;8. 分析嫌疑人的电脑，嫌疑人曾使用的苹果手机备份四位数字密码是多少？（答案格式：1234）&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761442377838-414898fa-7733-4fc4-93c2-baf6d5df6983.png)
+
+扔到passwarekit即可，设置爆破范围是4位数字，一会儿就出来了
+
+0122
+
+参考：
+
+[passware kit forensic、hashcat使用-CSDN博客](https://blog.csdn.net/wow0524/article/details/131519669)
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;9. 分析嫌疑人的电脑，嫌疑人使用的以太坊钱包名称是什么？（答案格式：AbcDe）&lt;/font&gt;**
+`MetaMask`
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;10. 分析嫌疑人的电脑，嫌疑人使用的以太坊钱包版本是多少？（答案格式：26.16.0）&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761219030151-7e83b931-8a13-4970-95b7-a28bb41a4301.png)
+
+12.13.0
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;11. 分析嫌疑人的电脑，嫌疑人的以太坊钱包私钥助记词第4个单词是什么？（答案格式：以实际为准）&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761370230493-7ba3c9d3-803b-4b1e-8285-d2fbffd71a4d.png)
+
+`cloud`
+
+补充：
+
+
+
+
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;12. 分析嫌疑人的电脑，嫌疑人的Skype账号是多少？（答案格式：以实际为准）&lt;/font&gt;**
+`live:.cid.d2bb7d5a13237f1d`
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761216572558-eb2633b6-460e-46ec-9cdc-dd16c083795b.png)
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;13. 分析嫌疑人的电脑，嫌疑人电脑中Skype应用的安装日期是多少？（答案格式：1900/01/01）&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761219110948-0e82fe84-67cd-4d54-8f09-d6886566a5ec.png)
+
+`2025/04/01`
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;14. 分析嫌疑人的电脑，嫌疑人电脑中安装的VPN软件名称是什么？（答案格式：Abc VPN）&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761216756768-e4772c52-9315-4b57-a6d9-f2f1e46cb495.png)
+
+`Any VPN`
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;15. 分析嫌疑人的电脑，嫌疑人自己使用Wireshark抓的流量包文件名称是什么？（答案格式：以实际为准，包含文件扩展名）&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761218083282-8f5b2b17-c635-4515-a8d8-3288005e68a3.png)
+
+这要改后缀。。
+
+`test.pacpng`
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;16. 分析嫌疑人的电脑，该流量包开始抓取第一个分组的时间是什么？（答案格式：1900/01/01 01:00:00）&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761219185320-56619175-1c69-4181-be8f-eeab121cdd87.png)
+
+`2025-04-03 12:47:18`
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;17. 分析嫌疑人的电脑，抓取该流量包的总时长是？&lt;/font&gt;**
+&lt;font style=&quot;color:rgba(0, 0, 0, 0.88);&quot;&gt;A. A.00:02:14B. B.00:08:25C. C.00:18:25D. D.00:29:31&lt;/font&gt;
+
+&lt;font style=&quot;color:rgba(0, 0, 0, 0.88);&quot;&gt;A&lt;/font&gt;
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;18. 分析嫌疑人的电脑，该流量包中IPV4地址为3.24.46.4的占比是多少？&lt;/font&gt;**
+&lt;font style=&quot;color:rgba(0, 0, 0, 0.88);&quot;&gt;A. A.96.69%B. B.97.36%C. C.98.47%D. D.99.74%&lt;/font&gt;
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761218791289-0a3b73a4-5afe-4e78-a96d-21b8df53b360.png)
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;19. 分析嫌疑人的电脑，嫌疑人使用的AI换脸软件中，当前调用的onnx（Open Neural Network Exchange，开放神经网络交换）格式的模型文件有几个？（答案格式：1）&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761373607503-b39682eb-28cf-4fdf-bbb9-a81180de5159.png)
+
+`5`
+
+意义不明。
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;20. 分析嫌疑人的电脑，嫌疑人注册登录的数字天堂开发工具的账号是什么？（答案格式：aaa@bbb.ccc）&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761219658906-74071231-fda5-4c99-ba81-7ea7fbd37c94.png)
+
+`[wanggui0411@outlook.com](mailto:wanggui0411@outlook.com)`
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;21. 分析嫌疑人电脑里的APK前端源码，如办案人员需要对该APK进行调证，请问调证值是多少？（答案格式：英文大写）&lt;/font&gt;**
+这真不知道，看了答案发现就是id
+
+`H5AAA8907`
+
+
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;22. 分析嫌疑人电脑里的APK前端源码，该APK的中文名称是什么？（答案格式：以实际为准）&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761219771515-6e67ec44-52d7-4faa-8832-a206578e7427.png)
+
+`甜心直播`
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;23. 分析嫌疑人电脑里的APK前端源码，该APK前端页面展示了多少名女生的信息？（答案格式：3）&lt;/font&gt;**
+`7`
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;24. 分析嫌疑人电脑里的APK前端源码，该APK中的API调用的API Server是多少？（答案格式：以实际为准，如http://www.qasz.com/abc/def/）&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761313361752-90d9fba0-f464-4d5b-813e-7005a0475a11.png)
+
+`[http://www.tianxinbobo.com/csapi/uploads/](http://www.tianxinbobo.com/csapi/uploads/)`
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;25. 分析嫌疑人电脑里的APK前端源码，该APK源码的静态资源文件内有多少个png类型的图片？（答案格式：3）&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761313405670-71936e5c-8d46-4e10-858c-86955d953d5e.png)
+
+`14`
+
+# **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;手机取证&lt;/font&gt;**
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;1. 分析嫌疑人的手机，该手机备份压缩包的MD5值是多少？（答案格式：英文全大写）&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761217830430-7d1ee47a-f397-419a-a34b-f8511b71f53b.png)
+
+`86E786FD5A0A91E23174B484BAFEDAEA`
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;2. 分析嫌疑人的手机，嫌疑人的电子邮箱地址是多少？（答案格式：n13di@163.com）&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761310162074-b2a3597a-9f96-4e43-88e9-1e88b02c02a9.png)
+
+`zaj123qaz@163.com`
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;3. 分析嫌疑人的手机，哪个邮箱给她发送的公民信息文件？（答案格式：n13di@163.com）&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761310204012-0ea0b1a0-7bfe-4c9a-9279-e10e84435b24.png)
+
+`&lt;font style=&quot;color:rgba(0, 0, 0, 0.87);&quot;&gt;yet132qwe@163.com&lt;/font&gt;`
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;4. 分析嫌疑人的手机，嫌疑人浏览最多的奢侈品网站是哪个？&lt;/font&gt;**
+&lt;font style=&quot;color:rgba(0, 0, 0, 0.88);&quot;&gt;A. A. 爱马仕B. B. 香奈儿C. C. 迪奥D. D. 阿玛尼&lt;/font&gt;
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761310299570-7f04b478-37d4-420f-8b45-956a08d89705.png)
+
+A
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;5. 分析嫌疑人的手机，嫌疑人记录公务员信息的应用“备忘录记事”包名是什么？（ab.cd.ef）&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761310860368-c573b861-ae94-4b75-82a8-e98b8226b02d.png)
+
+`notepad.beiwang.jishi`
+
+
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;6. 分析嫌疑人的手机，应用“备忘录记事”中记录了多少年龄小于30岁的人员信息？（答案格式：123）&lt;/font&gt;**
+手机没有复现成功，于是直接看了sql文件：
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761311515847-51d38204-889e-4821-9660-f107cafdf925.png)
+
+4
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;7. 分析嫌疑人的手机，嫌疑人曾使用文档扫描软件扫描过文件，请问该扫描软件的名称是什么？（答案格式：名称全称）&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761311635092-1059f131-f0e3-4f1d-8ba4-de3501ab379d.png)
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761311576716-1fa305c1-a87b-4de7-8512-03d8dc43c2e5.png)
+
+夸克扫描王
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;8. 分析嫌疑人的手机，嫌疑人使用文档扫描软件扫描的文件内容是什么？（ ）&lt;/font&gt;**
+&lt;font style=&quot;color:rgba(0, 0, 0, 0.88);&quot;&gt;A. A.提成分红记录B. B.诈骗业绩指标C. C.伪装身份话术D. D.人员名单&lt;/font&gt;
+
+&lt;font style=&quot;color:rgba(0, 0, 0, 0.88);&quot;&gt;如上题目&lt;/font&gt;
+
+&lt;font style=&quot;color:rgba(0, 0, 0, 0.88);&quot;&gt;C&lt;/font&gt;
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;9. 分析嫌疑人的手机，嫌疑人使用的名称为“薄荷记账”的记账软件共记录了多少笔交易？（答案格式：123）&lt;/font&gt;**
+查表，有13个数据
+
+`13`
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761312418550-0cc09fca-5990-4840-b33e-93065cae4a63.png)
+
+
+
+
+
+## **&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;10. 分析嫌疑人的手机，该记账软件中关于诈骗提成分红的收入明细一共多少钱？（答案格式：123）&lt;/font&gt;**
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761312924163-b4eacc6a-ce38-4bed-ba3a-28688f881ec3.png)
+
+![](https://cdn.nlark.com/yuque/0/2025/png/54208227/1761312937597-16d42545-d92d-4bc0-8d78-66cfec4a7f9c.png)
+
+`3281`
+
+**&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;&lt;/font&gt;**
+
+**&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;&lt;/font&gt;**
+
+**&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;&lt;/font&gt;**
+
+**&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;&lt;/font&gt;**
+
+**&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;&lt;/font&gt;**
+
+**&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;&lt;/font&gt;**
+
+**&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;&lt;/font&gt;**
+
+**&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;&lt;/font&gt;**
+
+**&lt;font style=&quot;color:rgb(96, 98, 102);&quot;&gt;&lt;/font&gt;**
+</code></pre>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-list-text">服务器</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E9%87%8D%E6%9E%84"><span class="toc-list-text">重构</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E5%88%A0%E9%99%A4%E7%8E%B0%E6%9C%89%E9%85%8D%E7%BD%AE%EF%BC%88%E8%BF%9E%E6%8E%A5%E4%BC%9A%E6%96%AD%E5%BC%80%EF%BC%81%EF%BC%89"><span class="toc-list-text">删除现有配置（连接会断开！）</span></a></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E9%87%8D%E5%BB%BA%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE"><span class="toc-list-text">重建默认配置</span></a></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E9%87%8D%E5%90%AF%E6%9C%8D%E5%8A%A1"><span class="toc-list-text">重启服务</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E6%B6%89%E6%A1%88%E6%9C%8D%E5%8A%A1%E5%99%A8A%E7%9A%84%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%88Operating-System%EF%BC%89%E7%9A%84%E5%86%85%E6%A0%B8%E7%89%88%E6%9C%AC%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F-1-2-3-456-abc-efg-123"><span class="toc-list-text">1. 涉案服务器A的操作系统（Operating System）的内核版本是什么？(1.2.3-456.abc.efg_123)</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-%E6%B6%89%E6%A1%88%E6%9C%8D%E5%8A%A1%E5%99%A8A%E7%9A%84ssh%E7%9A%84%E7%AB%AF%E5%8F%A3%E5%8F%B7%E6%98%AF%E5%A4%9A%E5%B0%91%EF%BC%9F"><span class="toc-list-text">2. 涉案服务器A的ssh的端口号是多少？</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-%E5%88%86%E6%9E%90%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%95%9C%E5%83%8FA%EF%BC%8C%E6%B6%89%E6%A1%88%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84ip%E5%9C%B0%E5%9D%80%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F-%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A123-123-123-123%EF%BC%89"><span class="toc-list-text">3. 分析服务器镜像A，涉案服务器的ip地址是什么？(答案格式：123.123.123.123）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4-%E6%B6%89%E6%A1%88%E6%9C%8D%E5%8A%A1%E5%99%A8A%E4%B8%AD%E4%BD%BF%E7%94%A8%E7%9A%84nginx%E7%89%88%E6%9C%AC%E5%8F%B7%E6%98%AF%E5%A4%9A%E5%B0%91%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A1-2-3%EF%BC%89"><span class="toc-list-text">4. 涉案服务器A中使用的nginx版本号是多少？（答案格式：1.2.3）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#5-%E6%B6%89%E6%A1%88%E6%9C%8D%E5%8A%A1%E5%99%A8A%E4%B8%ADmysql%E7%9A%84%E7%AB%AF%E5%8F%A3%E5%8F%B7%E6%98%AF%E5%A4%9A%E5%B0%91%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A123%EF%BC%89"><span class="toc-list-text">5. 涉案服务器A中mysql的端口号是多少？（答案格式：123）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#6-%E6%B6%89%E6%A1%88%E6%9C%8D%E5%8A%A1%E5%99%A8A%E4%B8%AD%E5%AE%9D%E5%A1%94%E9%9D%A2%E6%9D%BF%E7%BB%91%E5%AE%9A%E7%9A%84%E6%89%8B%E6%9C%BA%E5%8F%B7%E7%A0%81%E5%90%8E%E5%9B%9B%E4%BD%8D%E4%B8%BA%EF%BC%9F"><span class="toc-list-text">6. 涉案服务器A中宝塔面板绑定的手机号码后四位为？</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#7-%E6%B6%89%E6%A1%88%E6%9C%8D%E5%8A%A1%E5%99%A8A%E4%B8%AD%E5%AE%9D%E5%A1%94%E9%9D%A2%E6%9D%BF%E6%9C%80%E6%97%A9%E4%BF%9D%E5%AD%98%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%99%BB%E9%99%86%E6%97%B6%E7%9A%84ip%E5%9C%B0%E5%9D%80%E5%92%8C%E7%AB%AF%E5%8F%A3%E5%8F%B7%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A123-456-789-123-456%EF%BC%89"><span class="toc-list-text">7. 涉案服务器A中宝塔面板最早保存的第一次登陆时的ip地址和端口号是什么？（答案格式：123.456.789.123:456）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#8-%E6%B6%89%E6%A1%88%E6%9C%8D%E5%8A%A1%E5%99%A8A%E5%89%8D%E7%AB%AF%E7%99%BB%E5%BD%95%E7%BD%91%E5%9D%80%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9Ahttp-xxx-xxx-xxx-xxx-%EF%BC%89"><span class="toc-list-text">8. 涉案服务器A前端登录网址是什么？（答案格式：http:&#x2F;&#x2F;xxx.xxx.xxx.xxx&#x2F;..&#x2F;....）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link"><span class="toc-list-text"></span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#-1"><span class="toc-list-text">**</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#10-%E6%A0%B9%E6%8D%AE%E6%B6%89%E6%A1%88%E6%9C%8D%E5%8A%A1%E5%99%A8A%E5%9B%9E%E7%AD%94%EF%BC%8C%E8%82%96%E4%B8%80%E5%B8%86%E4%B8%80%E5%85%B1%E5%8F%91%E5%B1%95%E4%BA%86%E5%A4%9A%E5%B0%91%E4%B8%AA%E7%94%A8%E6%88%B7%E4%BD%9C%E4%B8%BA%E7%9B%B4%E6%8E%A5%E4%B8%8B%E7%BA%BF%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A123%EF%BC%89"><span class="toc-list-text">10. 根据涉案服务器A回答，肖一帆一共发展了多少个用户作为直接下线？（答案格式：123）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#11-%E6%A0%B9%E6%8D%AE%E6%B6%89%E6%A1%88%E6%9C%8D%E5%8A%A1%E5%99%A8A%E4%B8%ADVIP6%E7%AD%89%E7%BA%A7%E7%9A%84%E7%A7%AF%E5%88%86%E9%99%90%E5%88%B6%E6%98%AF%E5%A4%9A%E5%B0%91%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A123%EF%BC%89"><span class="toc-list-text">11. 根据涉案服务器A中VIP6等级的积分限制是多少？（答案格式：123）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#-2"><span class="toc-list-text"></span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#12-%E6%A0%B9%E6%8D%AE%E6%B6%89%E6%A1%88%E6%9C%8D%E5%8A%A1%E5%99%A8A%E5%88%86%E6%9E%90652301196309100847%E6%98%AF%E8%B0%81%E7%9A%84%E9%93%B6%E8%A1%8C%E5%8D%A1%EF%BC%9F-%E7%AD%94%E6%A1%88%E7%A4%BA%E4%BE%8B%EF%BC%9A%E7%8E%8B%E4%BA%94"><span class="toc-list-text">12. 根据涉案服务器A分析652301196309100847是谁的银行卡？(答案示例：王五)</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#13-%E6%A0%B9%E6%8D%AE%E6%B6%89%E6%A1%88%E6%9C%8D%E5%8A%A1%E5%99%A8A%E5%88%86%E6%9E%90%E5%95%86%E6%88%B7%E5%8F%B7%E4%B8%BA12348888%E7%9A%84%E5%95%86%E6%88%B7%E5%85%B6APPkey%E6%98%AF%E5%A4%9A%E5%B0%91%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A%E4%BB%A5%E5%AE%9E%E9%99%85%E4%B8%BA%E5%87%86%EF%BC%8C%E5%AD%97%E6%AF%8D%E5%B0%8F%E5%86%99%EF%BC%89"><span class="toc-list-text">13. 根据涉案服务器A分析商户号为12348888的商户其APPkey是多少？（答案格式：以实际为准，字母小写）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#14-%E6%A0%B9%E6%8D%AE%E6%B6%89%E6%A1%88%E6%9C%8D%E5%8A%A1%E5%99%A8A%E5%88%86%E6%9E%90%E4%BD%90%E7%BB%B4%E5%88%9B%E6%8A%95%E9%9B%86%E5%9B%A2%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%E7%9A%84%E5%85%B7%E4%BD%93%E5%9C%B0%E5%9D%80%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A%E4%BB%A5%E5%AE%9E%E9%99%85%E4%B8%BA%E5%87%86%EF%BC%89"><span class="toc-list-text">14. 根据涉案服务器A分析佐维创投集团有限公司的具体地址是什么？（答案格式：以实际为准）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#15-%E6%A0%B9%E6%8D%AE%E6%B6%89%E6%A1%88%E6%9C%8D%E5%8A%A1%E5%99%A8A%E5%88%86%E6%9E%90%E9%98%BF%E9%87%8C%E4%BA%91%E6%8E%A5%E5%8F%A3API%E7%9A%84%E9%93%B6%E8%A1%8C%E5%8D%A1%E6%8E%A5%E5%8F%A3%E5%9C%B0%E5%9D%80%E6%98%AF%E5%A4%9A%E5%B0%91%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A%E4%BB%A5%E5%AE%9E%E9%99%85%E4%B8%BA%E5%87%86%EF%BC%89"><span class="toc-list-text">15. 根据涉案服务器A分析阿里云接口API的银行卡接口地址是多少？（答案格式：以实际为准）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#16-%E5%88%86%E6%9E%90%E5%AB%8C%E7%96%91%E4%BA%BA%E7%9A%84%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8B%EF%BC%8C%E6%B6%89%E6%A1%88%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%ADJava%E7%BD%91%E7%AB%99%E6%BA%90%E7%A0%81jar%E5%8C%85%E5%90%8D%E7%A7%B0%E6%98%AF%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9A%E5%8C%85%E5%90%AB%E5%90%8E%E7%BC%80%EF%BC%89"><span class="toc-list-text">16. 分析嫌疑人的云服务器B，涉案服务器中Java网站源码jar包名称是？（答案格式：包含后缀）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#17-%E5%88%86%E6%9E%90%E5%AB%8C%E7%96%91%E4%BA%BA%E7%9A%84%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8B%EF%BC%8C%E6%B6%89%E6%A1%88Java%E7%BD%91%E7%AB%99%E6%95%B0%E6%8D%AE%E5%BA%93root%E8%B4%A6%E5%8F%B7%E7%9A%84%E5%AF%86%E7%A0%81%E6%98%AF%E5%A4%9A%E5%B0%91%EF%BC%9F%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9AAbc-123456%EF%BC%89"><span class="toc-list-text">17. 分析嫌疑人的云服务器B，涉案Java网站数据库root账号的密码是多少？（答案格式：Abc@123456）</span></a></li></ol></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from 电子取证</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E7%BE%8E%E4%BA%9A%E6%9D%AF/%E4%B8%AA%E4%BA%BA%E8%B5%9B/">
+              <strong>个人赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%9124%E6%95%B0%E8%AF%81%E5%86%B3-%E5%9B%A2/">
+              <strong>【转载】24数证决-团</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/2024%E6%95%B0%E8%AF%81%E6%9D%AF%E5%88%9D%E8%B5%9B/">
+              <strong>2024数证杯初赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/2024%E6%95%B0%E8%AF%81%E6%9D%AF%E5%86%B3%E8%B5%9B-%E4%B8%AA%E4%BA%BA%E8%B5%9B/">
+              <strong>2024数证杯决赛-个人赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>
