@@ -21,10 +21,16 @@
 
   <link rel="icon" href="/favicon.png">
 
+<link rel="stylesheet" href="/css/style.css?v=mo6hk5hr">
 
-<link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/vendor/katex/katex.min.css?v=mo6hk5hr">
 
-<script defer src="/js/main.js"></script>
+<style id="site-theme-vars">:root{--font-body:'Space Grotesk', 'PingFang SC', 'Hiragino Sans GB', sans-serif;--font-heading:'Space Grotesk', 'PingFang SC', 'Hiragino Sans GB', sans-serif;--font-mono:'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;--content-width:1130px;--article-side-width:300px;--radius-xl:17px;--radius-lg:13px;--radius-md:9px;--bg:#eaf2ff;--bg-elevated:rgba(245, 249, 255, 0.56);--surface:rgba(255, 255, 255, 0.34);--surface-soft:rgba(255, 255, 255, 0.52);--surface-terminal:rgba(10, 18, 34, 0.88);--line:rgba(255, 255, 255, 0.46);--line-strong:rgba(134, 158, 197, 0.4);--text:#14263d;--text-soft:#5d718d;--accent:#3b82f6;--accent-strong:#22d3ee;--shadow:0 28px 80px rgba(103, 125, 171, 0.18);--shadow-soft:0 18px 48px rgba(103, 125, 171, 0.14);--page-gradient-start:#f6f9ff;--page-gradient-mid:#ebf3ff;--page-gradient-end:#e1eeff;--page-glow-one:rgba(255, 255, 255, 0.92);--page-glow-two:rgba(165, 224, 255, 0.42);--page-glow-three:rgba(120, 149, 255, 0.24);--code-bg:#0b1220;--code-fg:#e6edf7;--code-border:rgba(59, 130, 246, 0.14);--code-shadow:0 14px 28px rgba(14, 23, 38, 0.18);--code-radius:9px;--code-padding-y:7px;--code-padding-x:11px;--code-font-size:0.88rem;--code-line-height:1.41;--code-gutter-color:#6f7f99;--code-title-display:none;--code-language-tag-display:none;--code-language-tag-extra-padding:0px;--inline-code-bg:rgba(59, 130, 246, 0.10);--inline-code-fg:#0f766e;}html[data-theme='dark']{--bg:#040917;--bg-elevated:rgba(9, 15, 29, 0.62);--surface:rgba(13, 22, 42, 0.54);--surface-soft:rgba(15, 25, 47, 0.7);--surface-terminal:rgba(2, 6, 23, 0.92);--line:rgba(165, 185, 220, 0.18);--line-strong:rgba(165, 185, 220, 0.28);--text:#ecf3ff;--text-soft:#97a6ba;--shadow:0 28px 80px rgba(2, 6, 23, 0.5);--shadow-soft:0 18px 48px rgba(2, 6, 23, 0.36);--page-gradient-start:#040917;--page-gradient-mid:#07101d;--page-gradient-end:#0b1424;--page-glow-one:rgba(77, 134, 255, 0.18);--page-glow-two:rgba(34, 211, 238, 0.12);--page-glow-three:rgba(91, 126, 255, 0.12);--inline-code-bg:rgba(16, 185, 129, 0.12);--inline-code-fg:#7cf0bf;}</style>
+
+  <script defer src="/vendor/katex/katex.min.js?v=mo6hk5hr"></script>
+  <script defer src="/vendor/katex/contrib/auto-render.min.js?v=mo6hk5hr"></script>
+
+<script defer src="/js/main.js?v=mo6hk5hr"></script>
 
   <meta name="generator" content="Hexo 8.1.1"></head>
   <body>
@@ -188,7 +194,7 @@
 <figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">90 FC FF FF FF   C6 05 A2 78 00 00   26   C6 05 8D 78 …</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><code>**90**</code>** 在 x86&#x2F;x64 里是 <strong><code>**NOP**</code></strong>（No Operation）** 的意思，表示“什么都不做，仅仅走过这一字节，执行下一个地址”。</li>
+<li><code>**90**</code><strong> 在 x86&#x2F;x64 里是 </strong><code>**NOP**</code><strong>（No Operation）</strong> 的意思，表示“什么都不做，仅仅走过这一字节，执行下一个地址”。</li>
 <li>换掉之后，IDA 就会从 <code>0x14000185F</code> 开始把这几字节当作：<ol>
 <li><code>90</code> → 执行 NOP，不管栈；</li>
 <li>然后看到 <code>FC</code>、<code>FF</code>、<code>FF</code>、<code>FF</code>……这几个字节就会被当成零散的“数据”或“立即数”去继续配合下一个合法的指令前缀解析，最终可能就匹配成 <code>mov [0x78A2], 0x26</code> 这样的指令。</li>
@@ -245,7 +251,7 @@
 </ul>
 </li>
 <li><strong>为什么 IDA 会提示“positive sp value” 并无法反编译？</strong><br>IDA 看到这条 <code>CALL</code>，它会把 <code>RSP</code> 想象成“从 A 变到 A−8”（x64 下每个 call&#x2F;ret 会自动减&#x2F;加 8 字节）。如果在正常函数体里要平衡，IDA 必须找到一个与之配对的 <code>RET</code> 才行。但在你的二进制里，从 <code>0x140001860</code> 开始执行 <code>mov [0x78A2],0x26</code>、<code>mov [0x788D],XX</code> ……一直到函数结束，这条最早的 <code>CALL</code> 压的那 8 字节从没被弹出，IDA 检测到“函数体里出现了一个正的 SP 偏移（压栈多了 8）却没看到对应的弹出”，就干脆放弃反编译。</li>
-<li><strong>为什么单纯改成 <strong><code>**NOP**</code></strong>（</strong><code>**90**</code><strong>）就能让 IDA 反编译通过？</strong><br>把 <code>E8</code> 换成 <code>90</code> 以后，IDA 跟踪到：<ol>
+<li><strong>为什么单纯改成 </strong><code>**NOP**</code><strong>（</strong><code>**90**</code><strong>）就能让 IDA 反编译通过？</strong><br>把 <code>E8</code> 换成 <code>90</code> 以后，IDA 跟踪到：<ol>
 <li><code>0x14000185F: 90</code> → 做什么都不做，RSP 不变</li>
 <li><code>0x140001860: FC</code> 这时 <code>FC</code>、<code>FF</code>、<code>FF</code>、<code>FF</code> 会被 IDA 当作“剩余的字节”去尝试与下一条合法指令前缀匹配，很快就能拼出 <code>mov [0x78A2],0x26</code>（<code>C6 05 A2 78 00 00 26</code>）。</li>
 <li>接下来 <code>mov [0x78A2],0x26</code> → 并不会影响栈；<code>mov [0x788D],XX</code> → 也不影响栈。</li>

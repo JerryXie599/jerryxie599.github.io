@@ -21,10 +21,16 @@
 
   <link rel="icon" href="/favicon.png">
 
+<link rel="stylesheet" href="/css/style.css?v=mo6hk5hr">
 
-<link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/vendor/katex/katex.min.css?v=mo6hk5hr">
 
-<script defer src="/js/main.js"></script>
+<style id="site-theme-vars">:root{--font-body:'Space Grotesk', 'PingFang SC', 'Hiragino Sans GB', sans-serif;--font-heading:'Space Grotesk', 'PingFang SC', 'Hiragino Sans GB', sans-serif;--font-mono:'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;--content-width:1130px;--article-side-width:300px;--radius-xl:17px;--radius-lg:13px;--radius-md:9px;--bg:#eaf2ff;--bg-elevated:rgba(245, 249, 255, 0.56);--surface:rgba(255, 255, 255, 0.34);--surface-soft:rgba(255, 255, 255, 0.52);--surface-terminal:rgba(10, 18, 34, 0.88);--line:rgba(255, 255, 255, 0.46);--line-strong:rgba(134, 158, 197, 0.4);--text:#14263d;--text-soft:#5d718d;--accent:#3b82f6;--accent-strong:#22d3ee;--shadow:0 28px 80px rgba(103, 125, 171, 0.18);--shadow-soft:0 18px 48px rgba(103, 125, 171, 0.14);--page-gradient-start:#f6f9ff;--page-gradient-mid:#ebf3ff;--page-gradient-end:#e1eeff;--page-glow-one:rgba(255, 255, 255, 0.92);--page-glow-two:rgba(165, 224, 255, 0.42);--page-glow-three:rgba(120, 149, 255, 0.24);--code-bg:#0b1220;--code-fg:#e6edf7;--code-border:rgba(59, 130, 246, 0.14);--code-shadow:0 14px 28px rgba(14, 23, 38, 0.18);--code-radius:9px;--code-padding-y:7px;--code-padding-x:11px;--code-font-size:0.88rem;--code-line-height:1.41;--code-gutter-color:#6f7f99;--code-title-display:none;--code-language-tag-display:none;--code-language-tag-extra-padding:0px;--inline-code-bg:rgba(59, 130, 246, 0.10);--inline-code-fg:#0f766e;}html[data-theme='dark']{--bg:#040917;--bg-elevated:rgba(9, 15, 29, 0.62);--surface:rgba(13, 22, 42, 0.54);--surface-soft:rgba(15, 25, 47, 0.7);--surface-terminal:rgba(2, 6, 23, 0.92);--line:rgba(165, 185, 220, 0.18);--line-strong:rgba(165, 185, 220, 0.28);--text:#ecf3ff;--text-soft:#97a6ba;--shadow:0 28px 80px rgba(2, 6, 23, 0.5);--shadow-soft:0 18px 48px rgba(2, 6, 23, 0.36);--page-gradient-start:#040917;--page-gradient-mid:#07101d;--page-gradient-end:#0b1424;--page-glow-one:rgba(77, 134, 255, 0.18);--page-glow-two:rgba(34, 211, 238, 0.12);--page-glow-three:rgba(91, 126, 255, 0.12);--inline-code-bg:rgba(16, 185, 129, 0.12);--inline-code-fg:#7cf0bf;}</style>
+
+  <script defer src="/vendor/katex/katex.min.js?v=mo6hk5hr"></script>
+  <script defer src="/vendor/katex/contrib/auto-render.min.js?v=mo6hk5hr"></script>
+
+<script defer src="/js/main.js?v=mo6hk5hr"></script>
 
   <meta name="generator" content="Hexo 8.1.1"></head>
   <body>
@@ -103,7 +109,7 @@
 <p>因此</p>
 <p>$ \boxed{,c_1^{,s_1}c_2^{,s_2}\equiv m \pmod n, }. $</p>
 <p>共模攻击的基础在于有：<strong>两个公钥且互质</strong>（一般来说就是互质、因为是大素数）</p>
-<p>所以这里引入一个函数：<code>gcdext(e1, e2)</code>是一个计算**扩展最大公约数（Extended GCD）**的函数</p>
+<p>所以这里引入一个函数：<code>gcdext(e1, e2)</code>是一个计算<strong>扩展最大公约数（Extended GCD）</strong>的函数</p>
 <p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1755585468179-d0c3092e-a151-473f-98e2-fbc3ea0005c6.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
 <p>运行结果如上，这里常返回一个三元组 <code>(d, x, y)</code>，其中：</p>
 <p><code>d</code>：<code>e1</code>和 <code>e2</code>的最大公约数。</p>
@@ -140,7 +146,7 @@
 <figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">e=256</span><br><span class="line">m = sympy.nthroot_mod(c,e,p)</span><br><span class="line">print(&quot;m=&quot;,m)</span><br><span class="line">print(long_to_bytes(m))</span><br></pre></td></tr></table></figure>
 
 <p>解释一下<code>nthroot_mod</code>函数：</p>
-<p><code>nthroots_mod(a, n, m)</code> 求的是 <strong>模 <strong>$ m $</strong> 的 n 次方根集合</strong>：$ {,x \mid a \equiv x^n \pmod m,}. $</p>
+<p><code>nthroots_mod(a, n, m)</code> 求的是 <strong>模 </strong>$ m $<strong> 的 n 次方根集合</strong>：$ {,x \mid a \equiv x^n \pmod m,}. $</p>
 <blockquote>
 <p>数学原理：</p>
 <p>给定整数 $ a, n, m $，所谓“模 $ m $ 的 n 次方根”就是解方程：</p>

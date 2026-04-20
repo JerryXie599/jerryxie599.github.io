@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>智器云模拟五 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="智器云模拟五 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/大数据/智器云模拟五/">
+  <link rel="canonical" href="https://jerryxie.top/notes/大数据/智器云模拟五/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+<link rel="stylesheet" href="/css/style.css?v=mo6hk5hr">
+
+  <link rel="stylesheet" href="/vendor/katex/katex.min.css?v=mo6hk5hr">
+
+<style id="site-theme-vars">:root{--font-body:'Space Grotesk', 'PingFang SC', 'Hiragino Sans GB', sans-serif;--font-heading:'Space Grotesk', 'PingFang SC', 'Hiragino Sans GB', sans-serif;--font-mono:'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;--content-width:1130px;--article-side-width:300px;--radius-xl:17px;--radius-lg:13px;--radius-md:9px;--bg:#eaf2ff;--bg-elevated:rgba(245, 249, 255, 0.56);--surface:rgba(255, 255, 255, 0.34);--surface-soft:rgba(255, 255, 255, 0.52);--surface-terminal:rgba(10, 18, 34, 0.88);--line:rgba(255, 255, 255, 0.46);--line-strong:rgba(134, 158, 197, 0.4);--text:#14263d;--text-soft:#5d718d;--accent:#3b82f6;--accent-strong:#22d3ee;--shadow:0 28px 80px rgba(103, 125, 171, 0.18);--shadow-soft:0 18px 48px rgba(103, 125, 171, 0.14);--page-gradient-start:#f6f9ff;--page-gradient-mid:#ebf3ff;--page-gradient-end:#e1eeff;--page-glow-one:rgba(255, 255, 255, 0.92);--page-glow-two:rgba(165, 224, 255, 0.42);--page-glow-three:rgba(120, 149, 255, 0.24);--code-bg:#0b1220;--code-fg:#e6edf7;--code-border:rgba(59, 130, 246, 0.14);--code-shadow:0 14px 28px rgba(14, 23, 38, 0.18);--code-radius:9px;--code-padding-y:7px;--code-padding-x:11px;--code-font-size:0.88rem;--code-line-height:1.41;--code-gutter-color:#6f7f99;--code-title-display:none;--code-language-tag-display:none;--code-language-tag-extra-padding:0px;--inline-code-bg:rgba(59, 130, 246, 0.10);--inline-code-fg:#0f766e;}html[data-theme='dark']{--bg:#040917;--bg-elevated:rgba(9, 15, 29, 0.62);--surface:rgba(13, 22, 42, 0.54);--surface-soft:rgba(15, 25, 47, 0.7);--surface-terminal:rgba(2, 6, 23, 0.92);--line:rgba(165, 185, 220, 0.18);--line-strong:rgba(165, 185, 220, 0.28);--text:#ecf3ff;--text-soft:#97a6ba;--shadow:0 28px 80px rgba(2, 6, 23, 0.5);--shadow-soft:0 18px 48px rgba(2, 6, 23, 0.36);--page-gradient-start:#040917;--page-gradient-mid:#07101d;--page-gradient-end:#0b1424;--page-glow-one:rgba(77, 134, 255, 0.18);--page-glow-two:rgba(34, 211, 238, 0.12);--page-glow-three:rgba(91, 126, 255, 0.12);--inline-code-bg:rgba(16, 185, 129, 0.12);--inline-code-fg:#7cf0bf;}</style>
+
+  <script defer src="/vendor/katex/katex.min.js?v=mo6hk5hr"></script>
+  <script defer src="/vendor/katex/contrib/auto-render.min.js?v=mo6hk5hr"></script>
+
+<script defer src="/js/main.js?v=mo6hk5hr"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
+          
+        
+      </div>
+      <h1>智器云模拟五</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>3 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>大数据/智器云模拟五.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <h1 id="21"><a href="#21" class="headerlink" title="21"></a>21</h1><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757633953353-28b19383-d47a-43bf-9319-ef1ce5773ef3.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>在一起网赌案中，警方获取了网赌团伙中一位核心成员的银行交易流水数据，该银行流水数据中的借贷标志、交易时间列存在异常数据，需要清洗。</p>
+<p>清洗后请统计卡号“6222626160014312002”一共转出去元钱。(结果保留至小数点后两位)</p>
+<p>用火眼清理之后导出结果，遇到了数据没办法求和，搜了一下ai就好了<img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757683305887-c193d138-feec-4e6c-80dc-5fd2c33f77c0.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<table>
+<thead>
+<tr>
+<th>733683.96</th>
+</tr>
+</thead>
+</table>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757683335766-21c03f30-0bb5-40f2-97a4-9b51a4d455b0.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h1 id="22"><a href="#22" class="headerlink" title="22"></a>22</h1><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757633979675-7fb8473c-5ba1-4b1f-bf84-f0ee733254dd.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>警方根据线索掌握了某犯罪团伙中的6位嫌疑人并调取了他们的手机通话数据，现想通过分析他们的密切联系人挖掘犯罪团伙的其他成员，请根据提供的通话数据进行分析研判，完成以下问题:</p>
+<p>已知6位嫌疑人的手机号分别是:</p>
+<p>135****2345</p>
+<p>138****7383</p>
+<p>153****9888</p>
+<p>155****7991</p>
+<p>157****0947</p>
+<p>170****5678</p>
+<h2 id="1-请问和嫌疑人170-5678通话次数最多的对方号码是哪一个-填写手机号-6分"><a href="#1-请问和嫌疑人170-5678通话次数最多的对方号码是哪一个-填写手机号-6分" class="headerlink" title="(1)请问和嫌疑人170****5678通话次数最多的对方号码是哪一个?(填写手机号)(6分)"></a>(1)请问和嫌疑人170****5678通话次数最多的对方号码是哪一个?(填写手机号)(6分)</h2><p>先筛选170****5678之后，上图，战法：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757683466239-2706ec6b-b6ce-428a-8e7f-9d42dda6952f.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p><code>133****0181</code></p>
+<h2 id="2-请问和已知的6位嫌疑人都有过通话关系的对方号码有哪些-填写手机号-6分"><a href="#2-请问和已知的6位嫌疑人都有过通话关系的对方号码有哪些-填写手机号-6分" class="headerlink" title="(2)请问和已知的6位嫌疑人都有过通话关系的对方号码有哪些?(填写手机号)(6分)"></a>(2)请问和已知的6位嫌疑人都有过通话关系的对方号码有哪些?(填写手机号)(6分)</h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757683571147-a343c392-7965-492e-a7a9-793e6218cb24.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>就一个</p>
+<table>
+<thead>
+<tr>
+<th>158****6074</th>
+</tr>
+</thead>
+</table>
+<h2 id="3-请问和已知的6位嫌疑人中任意3位及以上有过通话关系且通话总时长大于10000秒的对方号码有哪些-填写手机号-4分"><a href="#3-请问和已知的6位嫌疑人中任意3位及以上有过通话关系且通话总时长大于10000秒的对方号码有哪些-填写手机号-4分" class="headerlink" title="(3)请问和已知的6位嫌疑人中任意3位及以上有过通话关系且通话总时长大于10000秒的对方号码有哪些?(填写手机号)(4分)"></a>(3)请问和已知的6位嫌疑人中任意3位及以上有过通话关系且通话总时长大于10000秒的对方号码有哪些?(填写手机号)(4分)</h2><p>先筛选共同联系人</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757684284587-7b0a4369-bea1-4975-b003-1489bf8476c4.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>筛选这些号码</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757684268731-1d778c1a-9556-4662-9733-dc0e97cf0b8f.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>接下来逐个时长分析</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757684328105-7cb79b25-49ca-4ce4-b530-cafeef9f6fcb.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>结果就两个：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757684377974-33c94164-34a2-4981-93d2-a796fc32d9f0.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h2 id="4-请问138-7383在2021-12-01-含当天-之后新增的通话对方号码有哪些-填写手机号-4分"><a href="#4-请问138-7383在2021-12-01-含当天-之后新增的通话对方号码有哪些-填写手机号-4分" class="headerlink" title="(4)请问138****7383在2021-12-01(含当天)之后新增的通话对方号码有哪些?(填写手机号)(4分)"></a>(4)请问138****7383在2021-12-01(含当天)之后新增的通话对方号码有哪些?(填写手机号)(4分)</h2><p>“请问1387383在2021-12-01(含当天)之后新增的通话对方号码有哪些?(填写手机号)(4分)</p>
+<p>先筛选N列的“通话时间”在2021-12-01(含当天)之后，对比之后出现的V列“对方号码”中在之前没出现过的号码</p>
+<p>用pandas库，给我py代码</p>
+<p>地址：”E:\大数据\比赛\智器云模拟\模拟五\22\5.xlsx””</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line"># 读取Excel文件</span><br><span class="line">file_path = r&quot;E:\大数据\比赛\智器云模拟\模拟五\22\5.xlsx&quot;</span><br><span class="line">df = pd.read_excel(file_path, sheet_name=&quot;Sheet1&quot;)</span><br><span class="line"></span><br><span class="line"># 筛选本方号码为138<strong><strong>7383的所有记录</span><br><span class="line">target_user = &quot;138</strong></strong>7383&quot;</span><br><span class="line">user_df = df[df[&#x27;本方号码&#x27;] == target_user]</span><br><span class="line"></span><br><span class="line"># 转换通话时间为datetime类型</span><br><span class="line">user_df[&#x27;通话时间&#x27;] = pd.to_datetime(user_df[&#x27;通话时间&#x27;])</span><br><span class="line"></span><br><span class="line"># 分界时间点</span><br><span class="line">cutoff_date = pd.Timestamp(&#x27;2021-12-01&#x27;)</span><br><span class="line"></span><br><span class="line"># 获取2021-12-01前的所有对方号码（去重）</span><br><span class="line">before_cutoff = user_df[user_df[&#x27;通话时间&#x27;] &lt; cutoff_date]</span><br><span class="line">existing_numbers = set(before_cutoff[&#x27;对方号码&#x27;].unique())</span><br><span class="line"></span><br><span class="line"># 获取2021-12-01及之后的新增记录</span><br><span class="line">after_cutoff = user_df[user_df[&#x27;通话时间&#x27;] &gt;= cutoff_date]</span><br><span class="line">new_numbers = set(after_cutoff[&#x27;对方号码&#x27;].unique())</span><br><span class="line"></span><br><span class="line"># 找出新增号码（在之后出现但在之前未出现）</span><br><span class="line">new_unique_numbers = new_numbers - existing_numbers</span><br><span class="line"></span><br><span class="line"># 输出结果</span><br><span class="line">print(f&quot;新增的通话对方号码：&#123;new_unique_numbers&#125;&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>#新增的通话对方号码：{‘183<strong><strong>5333’, ‘1309357’, ‘1375632’, ‘139</strong></strong>2928’}</p>
+<h1 id="23"><a href="#23" class="headerlink" title="23"></a>23</h1><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757685296592-abf4b3e0-e73c-431b-a64a-2c7f21e9a095.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>近期，某银行风控系统发现一批对公账号存在资金交易异常的行为，随即将此线索上报给公安部门，警方调取了相关流水数据，请根据提供的数据进行分析研判，完成以下问题:</p>
+<h2 id="1-警方对调取回来的异常对公账户银行流水进行初步分析，发现这一批对公账户大多数都接收过海顶骨林科技有限公司-卡号-505024661042029-的资金。请问有哪些对公账户接收过海顶骨林科技有限公司的资金-填写银行卡号和账户名称-10分-银行卡号"><a href="#1-警方对调取回来的异常对公账户银行流水进行初步分析，发现这一批对公账户大多数都接收过海顶骨林科技有限公司-卡号-505024661042029-的资金。请问有哪些对公账户接收过海顶骨林科技有限公司的资金-填写银行卡号和账户名称-10分-银行卡号" class="headerlink" title="(1)警方对调取回来的异常对公账户银行流水进行初步分析，发现这一批对公账户大多数都接收过海顶骨林科技有限公司(卡号:505024661042029)的资金。请问有哪些对公账户接收过海顶骨林科技有限公司的资金?(填写银行卡号和账户名称)(10分)银行卡号"></a>(1)警方对调取回来的异常对公账户银行流水进行初步分析，发现这一批对公账户大多数都接收过海顶骨林科技有限公司(卡号:505024661042029)的资金。请问有哪些对公账户接收过海顶骨林科技有限公司的资金?(填写银行卡号和账户名称)(10分)银行卡号</h2><p>筛选一下即可</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1757685730562-8b0be227-81f1-4721-8aa0-6f880bafd9e2.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<h2 id="2-在这一批异常的对公账户中，哪些账户接收了海顶骨林科技有限公司-卡号-505024661042029-2000万以上的资金-填写银行卡号和账户名称-10分-银行卡号"><a href="#2-在这一批异常的对公账户中，哪些账户接收了海顶骨林科技有限公司-卡号-505024661042029-2000万以上的资金-填写银行卡号和账户名称-10分-银行卡号" class="headerlink" title="(2)在这一批异常的对公账户中，哪些账户接收了海顶骨林科技有限公司(卡号:505024661042029)2000万以上的资金?(填写银行卡号和账户名称)(10分)银行卡号"></a>(2)在这一批异常的对公账户中，哪些账户接收了海顶骨林科技有限公司(卡号:505024661042029)2000万以上的资金?(填写银行卡号和账户名称)(10分)银行卡号</h2><p>账户名称</p>
+<h2 id="3-根据目前已到案的一位公司财务供述，在进行大额转账洗钱的时候，通常会通过备注“服务费”类似关键词-“服务费”、“信息服务费”、“充值服务费”等-的形式掩饰其洗钱行为。现定义对公账户出账交易备注中包含关键词“服务费”且对应单笔交易金额大于等于10万的交易为高危异常交易，请在全量数据中查找，已调取过交易流水的公司账户中有3次及以上高危异常交易行为的有哪些-填写银行卡号和账户名称-6分-银行卡号"><a href="#3-根据目前已到案的一位公司财务供述，在进行大额转账洗钱的时候，通常会通过备注“服务费”类似关键词-“服务费”、“信息服务费”、“充值服务费”等-的形式掩饰其洗钱行为。现定义对公账户出账交易备注中包含关键词“服务费”且对应单笔交易金额大于等于10万的交易为高危异常交易，请在全量数据中查找，已调取过交易流水的公司账户中有3次及以上高危异常交易行为的有哪些-填写银行卡号和账户名称-6分-银行卡号" class="headerlink" title="(3)根据目前已到案的一位公司财务供述，在进行大额转账洗钱的时候，通常会通过备注“服务费”类似关键词(“服务费”、“信息服务费”、“充值服务费”等)的形式掩饰其洗钱行为。现定义对公账户出账交易备注中包含关键词“服务费”且对应单笔交易金额大于等于10万的交易为高危异常交易，请在全量数据中查找，已调取过交易流水的公司账户中有3次及以上高危异常交易行为的有哪些?(填写银行卡号和账户名称)(6分)银行卡号"></a>(3)根据目前已到案的一位公司财务供述，在进行大额转账洗钱的时候，通常会通过备注“服务费”类似关键词(“服务费”、“信息服务费”、“充值服务费”等)的形式掩饰其洗钱行为。现定义对公账户出账交易备注中包含关键词“服务费”且对应单笔交易金额大于等于10万的交易为高危异常交易，请在全量数据中查找，已调取过交易流水的公司账户中有3次及以上高危异常交易行为的有哪些?(填写银行卡号和账户名称)(6分)银行卡号</h2><p>账户名称</p>
+<h2 id="4-如果银行账户快进快出的特征是-流出金额一流入金额÷流入金额"><a href="#4-如果银行账户快进快出的特征是-流出金额一流入金额÷流入金额" class="headerlink" title="(4)如果银行账户快进快出的特征是:流出金额一流入金额÷流入金额&lt;5%且流入与流出交易时间间隔小于等于3600秒，请问在全量数据中，满足这个特征且单笔限额(单笔转账金额)在10万及以上的账户有哪些?(填写银行卡号和账户名称)(4分)"></a>(4)如果银行账户快进快出的特征是:流出金额一流入金额÷流入金额&lt;5%且流入与流出交易时间间隔小于等于3600秒，请问在全量数据中，满足这个特征且单笔限额(单笔转账金额)在10万及以上的账户有哪些?(填写银行卡号和账户名称)(4分)</h2>
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#21"><span class="toc-list-text">21</span></a></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#22"><span class="toc-list-text">22</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E8%AF%B7%E9%97%AE%E5%92%8C%E5%AB%8C%E7%96%91%E4%BA%BA170-5678%E9%80%9A%E8%AF%9D%E6%AC%A1%E6%95%B0%E6%9C%80%E5%A4%9A%E7%9A%84%E5%AF%B9%E6%96%B9%E5%8F%B7%E7%A0%81%E6%98%AF%E5%93%AA%E4%B8%80%E4%B8%AA-%E5%A1%AB%E5%86%99%E6%89%8B%E6%9C%BA%E5%8F%B7-6%E5%88%86"><span class="toc-list-text">(1)请问和嫌疑人170****5678通话次数最多的对方号码是哪一个?(填写手机号)(6分)</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-%E8%AF%B7%E9%97%AE%E5%92%8C%E5%B7%B2%E7%9F%A5%E7%9A%846%E4%BD%8D%E5%AB%8C%E7%96%91%E4%BA%BA%E9%83%BD%E6%9C%89%E8%BF%87%E9%80%9A%E8%AF%9D%E5%85%B3%E7%B3%BB%E7%9A%84%E5%AF%B9%E6%96%B9%E5%8F%B7%E7%A0%81%E6%9C%89%E5%93%AA%E4%BA%9B-%E5%A1%AB%E5%86%99%E6%89%8B%E6%9C%BA%E5%8F%B7-6%E5%88%86"><span class="toc-list-text">(2)请问和已知的6位嫌疑人都有过通话关系的对方号码有哪些?(填写手机号)(6分)</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-%E8%AF%B7%E9%97%AE%E5%92%8C%E5%B7%B2%E7%9F%A5%E7%9A%846%E4%BD%8D%E5%AB%8C%E7%96%91%E4%BA%BA%E4%B8%AD%E4%BB%BB%E6%84%8F3%E4%BD%8D%E5%8F%8A%E4%BB%A5%E4%B8%8A%E6%9C%89%E8%BF%87%E9%80%9A%E8%AF%9D%E5%85%B3%E7%B3%BB%E4%B8%94%E9%80%9A%E8%AF%9D%E6%80%BB%E6%97%B6%E9%95%BF%E5%A4%A7%E4%BA%8E10000%E7%A7%92%E7%9A%84%E5%AF%B9%E6%96%B9%E5%8F%B7%E7%A0%81%E6%9C%89%E5%93%AA%E4%BA%9B-%E5%A1%AB%E5%86%99%E6%89%8B%E6%9C%BA%E5%8F%B7-4%E5%88%86"><span class="toc-list-text">(3)请问和已知的6位嫌疑人中任意3位及以上有过通话关系且通话总时长大于10000秒的对方号码有哪些?(填写手机号)(4分)</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4-%E8%AF%B7%E9%97%AE138-7383%E5%9C%A82021-12-01-%E5%90%AB%E5%BD%93%E5%A4%A9-%E4%B9%8B%E5%90%8E%E6%96%B0%E5%A2%9E%E7%9A%84%E9%80%9A%E8%AF%9D%E5%AF%B9%E6%96%B9%E5%8F%B7%E7%A0%81%E6%9C%89%E5%93%AA%E4%BA%9B-%E5%A1%AB%E5%86%99%E6%89%8B%E6%9C%BA%E5%8F%B7-4%E5%88%86"><span class="toc-list-text">(4)请问138****7383在2021-12-01(含当天)之后新增的通话对方号码有哪些?(填写手机号)(4分)</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#23"><span class="toc-list-text">23</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E8%AD%A6%E6%96%B9%E5%AF%B9%E8%B0%83%E5%8F%96%E5%9B%9E%E6%9D%A5%E7%9A%84%E5%BC%82%E5%B8%B8%E5%AF%B9%E5%85%AC%E8%B4%A6%E6%88%B7%E9%93%B6%E8%A1%8C%E6%B5%81%E6%B0%B4%E8%BF%9B%E8%A1%8C%E5%88%9D%E6%AD%A5%E5%88%86%E6%9E%90%EF%BC%8C%E5%8F%91%E7%8E%B0%E8%BF%99%E4%B8%80%E6%89%B9%E5%AF%B9%E5%85%AC%E8%B4%A6%E6%88%B7%E5%A4%A7%E5%A4%9A%E6%95%B0%E9%83%BD%E6%8E%A5%E6%94%B6%E8%BF%87%E6%B5%B7%E9%A1%B6%E9%AA%A8%E6%9E%97%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8-%E5%8D%A1%E5%8F%B7-505024661042029-%E7%9A%84%E8%B5%84%E9%87%91%E3%80%82%E8%AF%B7%E9%97%AE%E6%9C%89%E5%93%AA%E4%BA%9B%E5%AF%B9%E5%85%AC%E8%B4%A6%E6%88%B7%E6%8E%A5%E6%94%B6%E8%BF%87%E6%B5%B7%E9%A1%B6%E9%AA%A8%E6%9E%97%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%E7%9A%84%E8%B5%84%E9%87%91-%E5%A1%AB%E5%86%99%E9%93%B6%E8%A1%8C%E5%8D%A1%E5%8F%B7%E5%92%8C%E8%B4%A6%E6%88%B7%E5%90%8D%E7%A7%B0-10%E5%88%86-%E9%93%B6%E8%A1%8C%E5%8D%A1%E5%8F%B7"><span class="toc-list-text">(1)警方对调取回来的异常对公账户银行流水进行初步分析，发现这一批对公账户大多数都接收过海顶骨林科技有限公司(卡号:505024661042029)的资金。请问有哪些对公账户接收过海顶骨林科技有限公司的资金?(填写银行卡号和账户名称)(10分)银行卡号</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-%E5%9C%A8%E8%BF%99%E4%B8%80%E6%89%B9%E5%BC%82%E5%B8%B8%E7%9A%84%E5%AF%B9%E5%85%AC%E8%B4%A6%E6%88%B7%E4%B8%AD%EF%BC%8C%E5%93%AA%E4%BA%9B%E8%B4%A6%E6%88%B7%E6%8E%A5%E6%94%B6%E4%BA%86%E6%B5%B7%E9%A1%B6%E9%AA%A8%E6%9E%97%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8-%E5%8D%A1%E5%8F%B7-505024661042029-2000%E4%B8%87%E4%BB%A5%E4%B8%8A%E7%9A%84%E8%B5%84%E9%87%91-%E5%A1%AB%E5%86%99%E9%93%B6%E8%A1%8C%E5%8D%A1%E5%8F%B7%E5%92%8C%E8%B4%A6%E6%88%B7%E5%90%8D%E7%A7%B0-10%E5%88%86-%E9%93%B6%E8%A1%8C%E5%8D%A1%E5%8F%B7"><span class="toc-list-text">(2)在这一批异常的对公账户中，哪些账户接收了海顶骨林科技有限公司(卡号:505024661042029)2000万以上的资金?(填写银行卡号和账户名称)(10分)银行卡号</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-%E6%A0%B9%E6%8D%AE%E7%9B%AE%E5%89%8D%E5%B7%B2%E5%88%B0%E6%A1%88%E7%9A%84%E4%B8%80%E4%BD%8D%E5%85%AC%E5%8F%B8%E8%B4%A2%E5%8A%A1%E4%BE%9B%E8%BF%B0%EF%BC%8C%E5%9C%A8%E8%BF%9B%E8%A1%8C%E5%A4%A7%E9%A2%9D%E8%BD%AC%E8%B4%A6%E6%B4%97%E9%92%B1%E7%9A%84%E6%97%B6%E5%80%99%EF%BC%8C%E9%80%9A%E5%B8%B8%E4%BC%9A%E9%80%9A%E8%BF%87%E5%A4%87%E6%B3%A8%E2%80%9C%E6%9C%8D%E5%8A%A1%E8%B4%B9%E2%80%9D%E7%B1%BB%E4%BC%BC%E5%85%B3%E9%94%AE%E8%AF%8D-%E2%80%9C%E6%9C%8D%E5%8A%A1%E8%B4%B9%E2%80%9D%E3%80%81%E2%80%9C%E4%BF%A1%E6%81%AF%E6%9C%8D%E5%8A%A1%E8%B4%B9%E2%80%9D%E3%80%81%E2%80%9C%E5%85%85%E5%80%BC%E6%9C%8D%E5%8A%A1%E8%B4%B9%E2%80%9D%E7%AD%89-%E7%9A%84%E5%BD%A2%E5%BC%8F%E6%8E%A9%E9%A5%B0%E5%85%B6%E6%B4%97%E9%92%B1%E8%A1%8C%E4%B8%BA%E3%80%82%E7%8E%B0%E5%AE%9A%E4%B9%89%E5%AF%B9%E5%85%AC%E8%B4%A6%E6%88%B7%E5%87%BA%E8%B4%A6%E4%BA%A4%E6%98%93%E5%A4%87%E6%B3%A8%E4%B8%AD%E5%8C%85%E5%90%AB%E5%85%B3%E9%94%AE%E8%AF%8D%E2%80%9C%E6%9C%8D%E5%8A%A1%E8%B4%B9%E2%80%9D%E4%B8%94%E5%AF%B9%E5%BA%94%E5%8D%95%E7%AC%94%E4%BA%A4%E6%98%93%E9%87%91%E9%A2%9D%E5%A4%A7%E4%BA%8E%E7%AD%89%E4%BA%8E10%E4%B8%87%E7%9A%84%E4%BA%A4%E6%98%93%E4%B8%BA%E9%AB%98%E5%8D%B1%E5%BC%82%E5%B8%B8%E4%BA%A4%E6%98%93%EF%BC%8C%E8%AF%B7%E5%9C%A8%E5%85%A8%E9%87%8F%E6%95%B0%E6%8D%AE%E4%B8%AD%E6%9F%A5%E6%89%BE%EF%BC%8C%E5%B7%B2%E8%B0%83%E5%8F%96%E8%BF%87%E4%BA%A4%E6%98%93%E6%B5%81%E6%B0%B4%E7%9A%84%E5%85%AC%E5%8F%B8%E8%B4%A6%E6%88%B7%E4%B8%AD%E6%9C%893%E6%AC%A1%E5%8F%8A%E4%BB%A5%E4%B8%8A%E9%AB%98%E5%8D%B1%E5%BC%82%E5%B8%B8%E4%BA%A4%E6%98%93%E8%A1%8C%E4%B8%BA%E7%9A%84%E6%9C%89%E5%93%AA%E4%BA%9B-%E5%A1%AB%E5%86%99%E9%93%B6%E8%A1%8C%E5%8D%A1%E5%8F%B7%E5%92%8C%E8%B4%A6%E6%88%B7%E5%90%8D%E7%A7%B0-6%E5%88%86-%E9%93%B6%E8%A1%8C%E5%8D%A1%E5%8F%B7"><span class="toc-list-text">(3)根据目前已到案的一位公司财务供述，在进行大额转账洗钱的时候，通常会通过备注“服务费”类似关键词(“服务费”、“信息服务费”、“充值服务费”等)的形式掩饰其洗钱行为。现定义对公账户出账交易备注中包含关键词“服务费”且对应单笔交易金额大于等于10万的交易为高危异常交易，请在全量数据中查找，已调取过交易流水的公司账户中有3次及以上高危异常交易行为的有哪些?(填写银行卡号和账户名称)(6分)银行卡号</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4-%E5%A6%82%E6%9E%9C%E9%93%B6%E8%A1%8C%E8%B4%A6%E6%88%B7%E5%BF%AB%E8%BF%9B%E5%BF%AB%E5%87%BA%E7%9A%84%E7%89%B9%E5%BE%81%E6%98%AF-%E6%B5%81%E5%87%BA%E9%87%91%E9%A2%9D%E4%B8%80%E6%B5%81%E5%85%A5%E9%87%91%E9%A2%9D%C3%B7%E6%B5%81%E5%85%A5%E9%87%91%E9%A2%9D"><span class="toc-list-text">(4)如果银行账户快进快出的特征是:流出金额一流入金额÷流入金额&lt;5%且流入与流出交易时间间隔小于等于3600秒，请问在全量数据中，满足这个特征且单笔限额(单笔转账金额)在10万及以上的账户有哪些?(填写银行卡号和账户名称)(4分)</span></a></li></ol></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from 大数据</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/%E5%A4%A7%E6%95%B0%E6%8D%AE/%E7%AC%AC%E4%BA%8C%E5%B1%8A%E5%85%A8%E5%9B%BD%E5%85%AC%E5%AE%89%E9%99%A2%E6%A0%A1%E5%A4%A7%E5%AD%A6%E7%94%9F%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%99%BA%E8%83%BD%E8%AD%A6%E5%8A%A1%E6%8C%91%E6%88%98%E8%B5%9B/">
+              <strong>第二届全国公安院校大学生大数据智能警务挑战赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E5%A4%A7%E6%95%B0%E6%8D%AE/%E6%99%BA%E5%99%A8%E4%BA%912025%E5%88%9D%E8%B5%9B/">
+              <strong>智器云2025初赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E5%A4%A7%E6%95%B0%E6%8D%AE/%E6%99%BA%E5%99%A8%E4%BA%91%E5%86%B3%E8%B5%9B%E6%A8%A1%E6%8B%9F1-%E9%A2%98%E7%9B%AE/">
+              <strong>智器云决赛模拟1-题目</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/%E5%A4%A7%E6%95%B0%E6%8D%AE/%E6%99%BA%E5%99%A8%E4%BA%91%E5%86%B3%E8%B5%9B%E6%A8%A1%E6%8B%9F%E8%B5%9B2/">
+              <strong>智器云决赛模拟赛2</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

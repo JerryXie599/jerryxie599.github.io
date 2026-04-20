@@ -21,10 +21,16 @@
 
   <link rel="icon" href="/favicon.png">
 
+<link rel="stylesheet" href="/css/style.css?v=mo6hk5hr">
 
-<link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/vendor/katex/katex.min.css?v=mo6hk5hr">
 
-<script defer src="/js/main.js"></script>
+<style id="site-theme-vars">:root{--font-body:'Space Grotesk', 'PingFang SC', 'Hiragino Sans GB', sans-serif;--font-heading:'Space Grotesk', 'PingFang SC', 'Hiragino Sans GB', sans-serif;--font-mono:'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;--content-width:1130px;--article-side-width:300px;--radius-xl:17px;--radius-lg:13px;--radius-md:9px;--bg:#eaf2ff;--bg-elevated:rgba(245, 249, 255, 0.56);--surface:rgba(255, 255, 255, 0.34);--surface-soft:rgba(255, 255, 255, 0.52);--surface-terminal:rgba(10, 18, 34, 0.88);--line:rgba(255, 255, 255, 0.46);--line-strong:rgba(134, 158, 197, 0.4);--text:#14263d;--text-soft:#5d718d;--accent:#3b82f6;--accent-strong:#22d3ee;--shadow:0 28px 80px rgba(103, 125, 171, 0.18);--shadow-soft:0 18px 48px rgba(103, 125, 171, 0.14);--page-gradient-start:#f6f9ff;--page-gradient-mid:#ebf3ff;--page-gradient-end:#e1eeff;--page-glow-one:rgba(255, 255, 255, 0.92);--page-glow-two:rgba(165, 224, 255, 0.42);--page-glow-three:rgba(120, 149, 255, 0.24);--code-bg:#0b1220;--code-fg:#e6edf7;--code-border:rgba(59, 130, 246, 0.14);--code-shadow:0 14px 28px rgba(14, 23, 38, 0.18);--code-radius:9px;--code-padding-y:7px;--code-padding-x:11px;--code-font-size:0.88rem;--code-line-height:1.41;--code-gutter-color:#6f7f99;--code-title-display:none;--code-language-tag-display:none;--code-language-tag-extra-padding:0px;--inline-code-bg:rgba(59, 130, 246, 0.10);--inline-code-fg:#0f766e;}html[data-theme='dark']{--bg:#040917;--bg-elevated:rgba(9, 15, 29, 0.62);--surface:rgba(13, 22, 42, 0.54);--surface-soft:rgba(15, 25, 47, 0.7);--surface-terminal:rgba(2, 6, 23, 0.92);--line:rgba(165, 185, 220, 0.18);--line-strong:rgba(165, 185, 220, 0.28);--text:#ecf3ff;--text-soft:#97a6ba;--shadow:0 28px 80px rgba(2, 6, 23, 0.5);--shadow-soft:0 18px 48px rgba(2, 6, 23, 0.36);--page-gradient-start:#040917;--page-gradient-mid:#07101d;--page-gradient-end:#0b1424;--page-glow-one:rgba(77, 134, 255, 0.18);--page-glow-two:rgba(34, 211, 238, 0.12);--page-glow-three:rgba(91, 126, 255, 0.12);--inline-code-bg:rgba(16, 185, 129, 0.12);--inline-code-fg:#7cf0bf;}</style>
+
+  <script defer src="/vendor/katex/katex.min.js?v=mo6hk5hr"></script>
+  <script defer src="/vendor/katex/contrib/auto-render.min.js?v=mo6hk5hr"></script>
+
+<script defer src="/js/main.js?v=mo6hk5hr"></script>
 
   <meta name="generator" content="Hexo 8.1.1"></head>
   <body>
@@ -92,9 +98,8 @@
 <li>延迟绑定为了解决计算机多次调用带来的性能问题</li>
 <li>ELF文件通过PLT和GOT实现延迟绑定，每次调用库函数都有一组对应的PLT和GOT</li>
 <li>.plt节和.got.plt节都是数组，分别占16个和8个字节</li>
+<li></li>
 </ol>
-<h3 id="程序在内存中的布局"><a href="#程序在内存中的布局" class="headerlink" title="程序在内存中的布局"></a>程序在内存中的布局</h3><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1764420337674-4af44328-c98b-4d46-802f-7c78a4214cb8.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
-<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1764425193747-dc620296-418c-4625-b067-cf6c59a1ce26.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
 <h1 id="汇编基础"><a href="#汇编基础" class="headerlink" title="汇编基础"></a>汇编基础</h1><h2 id="ISA（指令集架构）"><a href="#ISA（指令集架构）" class="headerlink" title="ISA（指令集架构）"></a>ISA（指令集架构）</h2><p>分为CISC（复杂指令集计算机）和RISC（精简指令集计算机）</p>
 <h2 id="x86-x64汇编基础"><a href="#x86-x64汇编基础" class="headerlink" title="x86&#x2F;x64汇编基础"></a>x86&#x2F;x64汇编基础</h2><ol>
 <li>x86有三种主要模式：<strong>保护模式</strong>（还有<strong>虚拟8086模式</strong>，即早期的虚拟机来源）、<strong>实地址模式</strong>（直接访问实际内存地址，方便开发）和<strong>系统管理模</strong>式（比如电源管理或者安全保护等等特殊的机制）。除此之外还有IA-32e的操作模式（<strong>兼容模式</strong>和<strong>64位模式</strong>）：<strong>兼容模式</strong>让32位和16位的重新无需重新编译，<strong>64位模式</strong>是让cpu在64位的地址空间下运行程序</li>
@@ -105,7 +110,7 @@
 <ol start="4">
 <li>数据传达与访问</li>
 </ol>
-<p>MOV EAX, ECX就是将ECX寄存器的值赋给EAX，如果说这里的ECX是一个数字的话belike：MOV EAX, 10那么10就是<strong>立即数。<strong>MOV</strong>不支持内存到内存的数据传输</strong></p>
+<p>MOV EAX, ECX就是将ECX寄存器的值赋给EAX，如果说这里的ECX是一个数字的话belike：MOV EAX, 10那么10就是<strong>立即数。</strong>MOV<strong>不支持内存到内存的数据传输</strong></p>
 <ul>
 <li><strong>全零扩展</strong>用于无符号数，高位补 0。</li>
 <li><strong>符号扩展</strong>用于有符号数，高位补符号位。</li>
@@ -187,25 +192,25 @@
 <td>push</td>
 <td>压栈</td>
 <td>push ebp</td>
-<td>mov esp,esp - 4   mov [esp],ebp   []的作用是取寄存器里的地址指向的值   没有[]的作用是取寄存器的地址</td>
+<td>等同于：   mov esp,esp - 4   mov [esp],ebp   []的作用是取寄存器里的地址指向的值   没有[]的作用是取寄存器的地址</td>
 </tr>
 <tr>
 <td>pop</td>
 <td>弹栈</td>
 <td>pop ebp</td>
-<td>等同于：   mov 目标寄存器(ebp), [esp]    ; 从栈顶读取数据<br/>add esp, 数据大小(i386&#x3D;4;amd64&#x3D;8)         ; 移动栈指针</td>
+<td>等同于：   mov ebp,[esp]   mov esp,esp+4</td>
 </tr>
 <tr>
 <td>leave</td>
 <td>返回上级函数时，恢复原本栈空间</td>
 <td>leave</td>
-<td>等同于：   mov esp, ebp    ; 将栈指针 ESP 设置为基址指针 EBP<br/>pop ebp        ; 从栈中恢复上一个栈帧的基址指针</td>
+<td>等同于：   mov esp,ebp   pop ebp</td>
 </tr>
 <tr>
 <td>ret</td>
 <td>返回上级函数后，执行上级函数的指令</td>
 <td>ret</td>
-<td>等同于：   pop eip   （注：这条指令实际是不存在的，不能直接向RIP寄存器传送数据）</td>
+<td>等同于：   pop eip   （注：图中此条有红色下划线，且标注”这条指令实际是不存在的，不能直接向RIP寄存器传送数据”）</td>
 </tr>
 <tr>
 <td>call</td>
@@ -214,8 +219,7 @@
 <td>等同于：   push eip   jmp dofunc</td>
 </tr>
 </tbody></table>
-<p>补充：<code>EIP</code>寄存器的主要功能是存储下一条指令的内存地址。当CPU完成当前指令后，EIP会自动递增，指向下一条待执行的指令地址。这种自动更新机制确保了程序的顺序执行。</p>
-<h2 id="Linux基础"><a href="#Linux基础" class="headerlink" title="Linux基础"></a>Linux基础</h2><h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p>shell是一个用户与Linux进行交互的接口程序，通常它会输出一个提示符，等待用户输入命令。如果该命令行的第一个单词不是一个内置的shell命令，那么shell就会假设这是一个可执行文件的名字，它将加载并运行这个文件。bash是当前Linux标准的默认shell，我们也可以选用其他的shell脚本语言，如zsh、fish等。下面我们列举一些日常使用的命令。</p>
+<h1 id="Linux安全机制"><a href="#Linux安全机制" class="headerlink" title="Linux安全机制"></a>Linux安全机制</h1><h2 id="Linux基础"><a href="#Linux基础" class="headerlink" title="Linux基础"></a>Linux基础</h2><h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p>shell是一个用户与Linux进行交互的接口程序，通常它会输出一个提示符，等待用户输入命令。如果该命令行的第一个单词不是一个内置的shell命令，那么shell就会假设这是一个可执行文件的名字，它将加载并运行这个文件。bash是当前Linux标准的默认shell，我们也可以选用其他的shell脚本语言，如zsh、fish等。下面我们列举一些日常使用的命令。</p>
 <figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">标准格式：命令名称[命令参数][命令对象]</span><br><span class="line">其中命令参数有长和短两种格式，分别用&quot;--&quot;和&quot;-&quot;做前缀。例如：--help和-h</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ls [OPTION]... [FILE]...           列出文件信息</span><br><span class="line">cd [-L|-P|-e] [-@] [dir]           切换工作目录</span><br><span class="line">pwd [-LP]                          显示当前工作目录</span><br><span class="line">uname [OPTION]...                  打印系统信息</span><br><span class="line">whoami [OPTION]...                 打印用户名</span><br><span class="line">man [OPTION...] [SECTION] PAGE...  查找帮助信息</span><br><span class="line">find [options] [path...] [expression] 查找文件</span><br><span class="line">echo [SHORT-OPTION]... [STRING]... 打印文本，参数“-e”可激活转义字符</span><br><span class="line">cat [OPTION]... [FILE]...          打印到标准输出</span><br><span class="line">less [options] file...             分页打印文本，提供比 more 更丰富的功能</span><br><span class="line">head/tail [OPTION]... [FILE]...    打印文本的前/后 N 行</span><br><span class="line">grep [OPTION]... PATTERN [FILE]... 匹配文本模式</span><br><span class="line">cut OPTION... [FILE]...            通过列提取文本</span><br><span class="line">diff [OPTION]... FILES            比较文本差异</span><br><span class="line">mv [OPTION]... [-T] SOURCE DEST   移动或重命名文件</span><br><span class="line">cp [OPTION]... [-T] SOURCE DEST   复制文件</span><br><span class="line">rm [OPTION]... [FILE]...          删除文件</span><br><span class="line">ps [options]                       查看进程状态</span><br><span class="line">top [options]                      实时查看系统运行情况</span><br><span class="line">kill [options] &lt;pid&gt; [...]         杀死进程</span><br><span class="line">ifconfig [-v] [-a] [-l] [interface] 查看或设置网络设备</span><br><span class="line">ping [options] destination        判断网络主机是否响应</span><br><span class="line">netstat [options]                 查网络、路由器、接口等信息</span><br><span class="line">nc [options]                      建立TCP/UDP连接并监听</span><br><span class="line">su [options] [username]           切换到超级用户</span><br><span class="line">touch [OPTION]... FILE...         创建文件</span><br><span class="line">mkdir [OPTION]... DIRECTORY...   创建目录</span><br><span class="line">chmod [OPTION]... MODE[,MODE]... FILE...  修改文件权限</span><br><span class="line">chown [OPTION]... [OWNER][:[GROUP]] FILE...  修改文件所有者</span><br><span class="line">nano / vim / emacs                编辑文本</span><br><span class="line">history [-c] [-d offset] [n]      查“.bash_history”中的历史命令</span><br><span class="line">exit                              退出 shell</span><br><span class="line"></span><br><span class="line">使用变量：</span><br><span class="line">var=value            给变量 var 赋值 value</span><br><span class="line">$&#123;var&#125;, &#123;$var&#125;       取变量的值</span><br><span class="line">`cmd`, $(cmd)        代替标准输出</span><br><span class="line">&#x27;string&#x27;             非替换字符串</span><br><span class="line">&quot;string&quot;             可替换字符串</span><br><span class="line"></span><br><span class="line">示例：</span><br><span class="line">$ var=&quot;test&quot;</span><br><span class="line">$ echo $var</span><br><span class="line">test</span><br><span class="line">$ echo &#x27;This is a $var&#x27;</span><br><span class="line">This is a $var</span><br><span class="line">$ echo &quot;This is a $var&quot;</span><br><span class="line">This is a test</span><br><span class="line"></span><br><span class="line">$ echo `date`</span><br><span class="line">Fri Mar 29 14:39:57 CST 2019</span><br><span class="line">$ $(bash)</span><br><span class="line"></span><br><span class="line">$ echo $0</span><br><span class="line">/bin/bash</span><br><span class="line">$ $(0)</span><br></pre></td></tr></table></figure>
 
 <h4 id="流、管道和重定向"><a href="#流、管道和重定向" class="headerlink" title="流、管道和重定向"></a>流、管道和重定向</h4><p>书P46、47</p>
@@ -239,16 +243,16 @@
 <p>通过<strong>管道 |</strong>，你可以将多个命令串联起来，实现复杂的数据处理任务。在这个例子中，ls、grep 和 wc 三个命令通过管道连接，最终统计出 .txt 文件的数量。</p>
 <p>以下是权限标示</p>
 <p><img src="https://cdn.nlark.com/yuque/0/2025/jpeg/54208227/1742811853492-7e1ab19a-bc0d-484a-a77e-af6ed20738d4.jpeg" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
-<h4 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h4><p>**LD_PRELOAD：**优先调用指定数据库</p>
-<p>**environ：**指向内存中的环境变量表，获得栈地址</p>
-<p>**procfs：**查看系统硬件和运行进程的信息，所有运行的进程都对应&#x2F;proc下的一个目录（名字就是进程的PID）</p>
+<h4 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h4><p><strong>LD_PRELOAD：</strong>优先调用指定数据库</p>
+<p><strong>environ：</strong>指向内存中的环境变量表，获得栈地址</p>
+<p><strong>procfs：</strong>查看系统硬件和运行进程的信息，所有运行的进程都对应&#x2F;proc下的一个目录（名字就是进程的PID）</p>
 <h4 id="字节序"><a href="#字节序" class="headerlink" title="字节序"></a>字节序</h4><h5 id="大小端和M-LSB："><a href="#大小端和M-LSB：" class="headerlink" title="大小端和M&#x2F;LSB："></a>大小端和M&#x2F;LSB：</h5><h6 id="1-MSB（Most-Significant-Bit）和-LSB（Least-Significant-Bit）"><a href="#1-MSB（Most-Significant-Bit）和-LSB（Least-Significant-Bit）" class="headerlink" title="1. MSB（Most Significant Bit）和 LSB（Least Significant Bit）"></a><strong>1. MSB（Most Significant Bit）和 LSB（Least Significant Bit）</strong></h6><ul>
 <li><strong>MSB（最高有效位）</strong>：<br>在二进制数中，<strong>权重最大的那个位</strong>。例如，十进制数 <code>13</code> 的二进制是 <code>1101</code>，左边的第一个 <code>1</code> 就是 MSB（对应 8），因为它代表最大的值。</li>
 <li><strong>LSB（最低有效位）</strong>：<br>在二进制数中，<strong>权重最小的那个位</strong>。例如，<code>1101</code> 中右边的第一个 <code>1</code> 是 LSB（对应 1）。</li>
 </ul>
 <p><strong>通俗理解</strong>：</p>
 <pre><code>- 想象一个数字 `1234`，左边的 `1` 是“千位”（MSB），右边的 `4` 是“个位”（LSB）。
-- **MSB 决定数值的大头，LSB 决定数值的小尾巴**。
+- &lt;strong&gt;MSB 决定数值的大头，LSB 决定数值的小尾巴&lt;/strong&gt;。
 </code></pre>
 <h6 id="2-大端序（Big-Endian）"><a href="#2-大端序（Big-Endian）" class="headerlink" title="2.大端序（Big-Endian）"></a><strong>2.大端序（Big-Endian）</strong></h6><ul>
 <li><strong>规则</strong>：<strong>高位字节存储在低地址</strong>，低位字节存储在高地址。（高对低，低对高）</li>
@@ -274,7 +278,7 @@
 </tbody></table>
 <h6 id="3-小端序（Little-Endian）"><a href="#3-小端序（Little-Endian）" class="headerlink" title="3.小端序（Little-Endian）"></a><strong>3.小端序（Little-Endian）</strong></h6><ul>
 <li><strong>规则</strong>：<strong>低位字节存储在低地址</strong>，高位字节存储在高地址。（高对高，低对低）</li>
-<li>x86&#x2F;x86-64 采用 **小端序（Little-Endian），**x86 始终是小端序！</li>
+<li>x86&#x2F;x86-64 采用 <strong>小端序（Little-Endian），</strong>x86 始终是小端序！</li>
 <li><strong>示例</strong>：同一整数 <code>0x12（高位）345678（低位）</code> 的存储：</li>
 </ul>
 <table>
@@ -382,14 +386,14 @@
 <figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">(gdb) list</span><br><span class="line">1	#include &lt;stdio.h&gt;</span><br><span class="line">2	</span><br><span class="line">3	void crash() &#123;</span><br><span class="line">4	    int *p = NULL;</span><br><span class="line">5	    *p = 10;  // 触发段错误</span><br><span class="line">6	&#125;</span><br><span class="line">7	</span><br><span class="line">8	int main() &#123;</span><br><span class="line">9	    printf(&quot;程序启动\n&quot;);</span><br><span class="line">10	    crash();</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><strong>查看指针</strong>** <strong><code>**p**</code></strong> **<strong>的值</strong>：</li>
+<li><strong>查看指针 </strong><code>**p**</code><strong> 的值</strong>：</li>
 </ul>
 <figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(gdb) print p</span><br><span class="line">$1 = (int *) 0x0  # 指针 p 的值为 NULL</span><br></pre></td></tr></table></figure>
 
 <hr>
 <p><strong>关键步骤总结</strong></p>
 <ol>
-<li><strong>编译时加</strong>** **<code>**-g**</code>：保留调试信息。</li>
+<li><strong>编译时加 </strong><code>**-g**</code>：保留调试信息。</li>
 <li><strong>运行程序生成 core</strong>：需确保 <code>ulimit -c unlimited</code>。</li>
 <li><strong>GDB 加载 core 文件</strong>：<code>gdb &lt;可执行文件&gt; &lt;core文件&gt;</code>。</li>
 <li><strong>分析崩溃点</strong>：<code>bt</code> 查看调用栈，<code>print</code> 查看变量。</li>
@@ -419,7 +423,7 @@
 <li>恢复用户态上下文：<strong>将保存的寄存器恢复</strong>，切换回<strong>用户态</strong>。</li>
 <li>返回用户程序：继续执行用户程序的下一条指令。</li>
 </ul>
-<h4 id="int-0x80-是-enter-kernel-的一种实现方式"><a href="#int-0x80-是-enter-kernel-的一种实现方式" class="headerlink" title="**int $0x80**** 是 **enter_kernel** **的一种实现方式"></a><code>**int $0x80**</code>** <strong><strong>是</strong></strong> <strong><code>**enter_kernel**</code></strong> **<strong>的一种实现方式</strong></h4><ul>
+<h4 id="int-0x80-是-enter-kernel-的一种实现方式"><a href="#int-0x80-是-enter-kernel-的一种实现方式" class="headerlink" title="**int $0x80** 是 **enter_kernel** 的一种实现方式"></a><code>**int $0x80**</code><strong> 是 </strong><code>**enter_kernel**</code><strong> 的一种实现方式</strong></h4><ul>
 <li><code>enter_kernel</code> 是抽象概念：表示用户程序进入内核态的过程。</li>
 <li><code>int $0x80</code> 是具体实现：在传统 x86 架构中，通过 <code>int $0x80</code> 指令实现 <code>enter_kernel</code> 的功能。</li>
 </ul>
@@ -495,7 +499,7 @@
 <td align="center"><code>fld TBYTE PTR [ebp-0x10]</code></td>
 </tr>
 </tbody></table>
-<p>**ii) **gs还有fs：<strong>段寄存器（Segment Register）</strong>，在 x86-32 和 x86-64 中用于指向当前线程的特定内存区域（如 TLS）。</p>
+<p><strong>ii) </strong>gs还有fs：<strong>段寄存器（Segment Register）</strong>，在 x86-32 和 x86-64 中用于指向当前线程的特定内存区域（如 TLS）。</p>
 <p><strong>iii)</strong> TLS：线程局部存储（TLS, Thread-Local Storage），在多线程程序中，每个线程可以有自己的局部变量（如 <code>errno</code>），只有当前线程能读取TLS，而其他线程读取不了。</p>
 <h4 id="补充（数据的写入流程）"><a href="#补充（数据的写入流程）" class="headerlink" title="补充（数据的写入流程）"></a>补充（数据的写入流程）</h4><p>在 x86&#x2F;x86-64 架构中，<strong>数据从寄存器写入内存的顺序</strong>（或从内存加载到寄存器）涉及多个层次的概念，包括 <strong>字节序（Endianness）</strong>、<strong>数据对齐（Alignment）</strong> 和 <strong>CPU 的微架构行为</strong>。下面详细解释这些关键点：</p>
 <hr>
@@ -557,8 +561,9 @@
 <h5 id="3-未对齐访问（Unaligned-Access）"><a href="#3-未对齐访问（Unaligned-Access）" class="headerlink" title="3. 未对齐访问（Unaligned Access）"></a><strong>3. 未对齐访问（Unaligned Access）</strong></h5><ul>
 <li><strong>对齐（Alignment）</strong>：<strong>数据地址最好是数据大小的整数倍（如 4 字节数据应对齐到 4 的倍数地址）</strong>。</li>
 <li>可以用nop辅助对齐</li>
-<li><strong>x86 允许未对齐访问</strong>，但性能可能下降（某些架构如 ARM 会直接报错）。<br><strong>示例</strong>：</li>
+<li><strong>x86 允许未对齐访问</strong>，但性能可能下降（某些架构如 ARM 会直接报错）。</li>
 </ul>
+<p><strong>示例</strong>：</p>
 <figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">asm</span><br><span class="line"></span><br><span class="line">复制</span><br><span class="line">mov DWORD PTR [eax+1], ebx  ; 未对齐写入（地址 0x...1 不是 4 的倍数）</span><br></pre></td></tr></table></figure>
 
 <hr>
@@ -628,9 +633,9 @@
 
 
 
-<h4 id="tcbhead-t"><a href="#tcbhead-t" class="headerlink" title="tcbhead_t"></a>tcbhead_t</h4><p>在操作系统（尤其是 <strong>Linux 内核</strong>）的上下文中，<strong><code>tcbhead_t</code></strong> 是一个与 <strong>线程控制块（Thread Control Block, TCB）</strong> 相关的数据结构，主要用于存储线程的上下文信息和架构特定的控制数据。以下是详细解析：</p>
+<h4 id="tcbhead-t"><a href="#tcbhead-t" class="headerlink" title="tcbhead_t"></a>tcbhead_t</h4><p>在操作系统（尤其是 <strong>Linux 内核</strong>）的上下文中，<strong><code>tcbhead_t</code><strong> 是一个与 </strong>线程控制块（Thread Control Block, TCB）</strong> 相关的数据结构，主要用于存储线程的上下文信息和架构特定的控制数据。以下是详细解析：</p>
 <hr>
-<h5 id="1-tcbhead-t-的基本定义"><a href="#1-tcbhead-t-的基本定义" class="headerlink" title="1. **tcbhead_t** 的基本定义"></a><strong>1. <strong><code>**tcbhead_t**</code></strong> 的基本定义</strong></h5><ul>
+<h5 id="1-tcbhead-t-的基本定义"><a href="#1-tcbhead-t-的基本定义" class="headerlink" title="1. **tcbhead_t** 的基本定义"></a><strong>1. </strong><code>**tcbhead_t**</code><strong> 的基本定义</strong></h5><ul>
 <li><strong>作用</strong>：<code>tcbhead_t</code> 是线程本地存储（Thread-Local Storage, TLS）和线程上下文的核心数据结构，通常定义在操作系统内核或 C 库（如 glibc）中。</li>
 <li><strong>典型场景</strong>：<ul>
 <li>在 <strong>Linux x86_64</strong> 架构中，<code>tcbhead_t</code> 存储线程的栈指针、TLS 指针、浮点寄存器状态等。</li>
@@ -639,7 +644,7 @@
 </li>
 </ul>
 <hr>
-<h5 id="2-tcbhead-t-的典型字段（以-x86-64-为例）"><a href="#2-tcbhead-t-的典型字段（以-x86-64-为例）" class="headerlink" title="2. **tcbhead_t** 的典型字段（以 x86_64 为例）"></a><strong>2. <strong><code>**tcbhead_t**</code></strong> 的典型字段（以 x86_64 为例）</strong></h5><p>以下是 Linux 内核或 glibc 中常见的 <code>tcbhead_t</code> 结构体定义（简化版）：</p>
+<h5 id="2-tcbhead-t-的典型字段（以-x86-64-为例）"><a href="#2-tcbhead-t-的典型字段（以-x86-64-为例）" class="headerlink" title="2. **tcbhead_t** 的典型字段（以 x86_64 为例）"></a><strong>2. </strong><code>**tcbhead_t**</code><strong> 的典型字段（以 x86_64 为例）</strong></h5><p>以下是 Linux 内核或 glibc 中常见的 <code>tcbhead_t</code> 结构体定义（简化版）：</p>
 <figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    void      *tcb;            // 指向线程控制块（TCB）自身的指针</span><br><span class="line">    void      *stack_guard;    // 栈保护金丝雀值（Stack Canary）</span><br><span class="line">    void      *sysinfo;        // 快速系统调用入口（如 vsyscall）</span><br><span class="line">    void      *fs_base;        // FS 段寄存器基址（用于 TLS）</span><br><span class="line">    void      *gs_base;        // GS 段寄存器基址（x86_64 通常用于内核数据）</span><br><span class="line">    unsigned long int __private_ss; // 线程私有栈空间</span><br><span class="line">    // 其他架构相关字段（如浮点状态、异常处理指针等）</span><br><span class="line">&#125; tcbhead_t;</span><br></pre></td></tr></table></figure>
 
 <p><strong>关键字段说明</strong>：</p>
@@ -689,7 +694,7 @@
 <p><strong>示例</strong>：</p>
 <figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// file1.c</span><br><span class="line">static int hidden_var = 42; // 只能在 file1.c 访问</span><br><span class="line"></span><br><span class="line">static void hidden_func() &#123; // 只能在 file1.c 访问</span><br><span class="line">    printf(&quot;This is a hidden function.\n&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// file2.c</span><br><span class="line">extern int hidden_var; // 错误！无法访问 file1.c 的 static 变量</span><br><span class="line">extern void hidden_func(); // 错误！无法访问 file1.c 的 static 函数</span><br></pre></td></tr></table></figure>
 
-<h5 id="static-与数据类型的关系"><a href="#static-与数据类型的关系" class="headerlink" title="**static** 与数据类型的关系"></a><strong><strong><code>**static**</code></strong> 与数据类型的关系</strong></h5><ul>
+<h5 id="static-与数据类型的关系"><a href="#static-与数据类型的关系" class="headerlink" title="******static** 与数据类型的关系"></a>****<code>**static**</code><strong> 与数据类型的关系</strong></h5><ul>
 <li><code>static</code> <strong>不改变变量的数据类型</strong>，它只是改变变量的存储方式和作用域。</li>
 <li>它可以和任何数据类型一起使用，例如：<ul>
 <li><code>static int x;</code></li>
@@ -735,7 +740,7 @@
 </li>
 </ul>
 <hr>
-<h6 id="3-static-局部变量（静态存储期）"><a href="#3-static-局部变量（静态存储期）" class="headerlink" title="3. **static** 局部变量（静态存储期）"></a><strong>3. <strong><code>**static**</code></strong> 局部变量（静态存储期）</strong></h6><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">void func() &#123;</span><br><span class="line">    static int x = 0;  // static 局部变量</span><br><span class="line">    x++;</span><br><span class="line">    printf(&quot;%d\n&quot;, x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    func();  // 输出 1</span><br><span class="line">    func();  // 输出 2（保留了上次的值）</span><br><span class="line">    func();  // 输出 3</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="3-static-局部变量（静态存储期）"><a href="#3-static-局部变量（静态存储期）" class="headerlink" title="3. **static** 局部变量（静态存储期）"></a><strong>3. </strong><code>**static**</code><strong> 局部变量（静态存储期）</strong></h6><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">void func() &#123;</span><br><span class="line">    static int x = 0;  // static 局部变量</span><br><span class="line">    x++;</span><br><span class="line">    printf(&quot;%d\n&quot;, x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    func();  // 输出 1</span><br><span class="line">    func();  // 输出 2（保留了上次的值）</span><br><span class="line">    func();  // 输出 3</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><strong>存储位置</strong>：静态存储区（全局数据区）</li>
@@ -772,7 +777,7 @@
 </tr>
 </tbody></table>
 <p>总结一句话就是普通局部变量每次调用会刷新，<code>static</code> 局部变量每次不刷新（程序结束才结束）</p>
-<h6 id="4-深入理解：为什么-static-变量能保留值？"><a href="#4-深入理解：为什么-static-变量能保留值？" class="headerlink" title="4. 深入理解：为什么 **static** 变量能保留值？"></a><strong>4. 深入理解：为什么 <strong><code>**static**</code></strong> 变量能保留值？</strong></h6><p>(1) 普通局部变量（栈内存）</p>
+<h6 id="4-深入理解：为什么-static-变量能保留值？"><a href="#4-深入理解：为什么-static-变量能保留值？" class="headerlink" title="4. 深入理解：为什么 **static** 变量能保留值？"></a><strong>4. 深入理解：为什么 </strong><code>**static**</code><strong> 变量能保留值？</strong></h6><p>(1) 普通局部变量（栈内存）</p>
 <ul>
 <li>栈内存是 <strong>临时存储</strong>，函数调用时会分配，返回后立即回收。</li>
 <li>每次调用函数时，栈帧（stack frame）被创建，变量重新初始化。</li>
@@ -803,7 +808,7 @@
 
 <h4 id="调用栈概览"><a href="#调用栈概览" class="headerlink" title="调用栈概览"></a><strong>调用栈概览</strong></h4><p>该调用栈展示了 <strong>动态链接器（ld.so）</strong> 的初始化过程，涉及安全机制（如栈保护）、程序加载和系统相关初始化。以下是每个栈帧的详细说明：</p>
 <hr>
-<h5 id="Frame-0-security-init"><a href="#Frame-0-security-init" class="headerlink" title="**Frame #0: ****security_init()**"></a>**Frame #0: **<code>**security_init()**</code></h5><ul>
+<h5 id="Frame-0-security-init"><a href="#Frame-0-security-init" class="headerlink" title="Frame #0: **security_init()**"></a><strong>Frame #0: </strong><code>**security_init()**</code></h5><ul>
 <li><strong>位置</strong>：<code>rtld.c:711</code></li>
 <li><strong>作用</strong>：动态链接器的 <strong>安全初始化函数</strong>。</li>
 <li><strong>关键操作</strong>：<ul>
@@ -817,7 +822,7 @@
 <figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// rtld.c</span><br><span class="line">static void security_init (void) &#123;</span><br><span class="line">  // 生成并设置栈保护金丝雀</span><br><span class="line">  uintptr_t stack_chk_guard = _dl_setup_stack_chk_guard ();</span><br><span class="line">  THREAD_SET_STACK_GUARD (stack_chk_guard);</span><br><span class="line"></span><br><span class="line">  // 初始化 Pointer Guard（随机化指针的 XOR 掩码）</span><br><span class="line">  uintptr_t pointer_guard = _dl_setup_pointer_guard ();</span><br><span class="line">  THREAD_SET_POINTER_GUARD (pointer_guard);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <hr>
-<h5 id="Frame-1-dl-main"><a href="#Frame-1-dl-main" class="headerlink" title="**Frame #1: ****dl_main()**"></a>**Frame #1: **<code>**dl_main()**</code></h5><ul>
+<h5 id="Frame-1-dl-main"><a href="#Frame-1-dl-main" class="headerlink" title="Frame #1: **dl_main()**"></a><strong>Frame #1: </strong><code>**dl_main()**</code></h5><ul>
 <li><strong>位置</strong>：<code>rtld.c:1688</code></li>
 <li><strong>作用</strong>：动态链接器的 <strong>主逻辑函数</strong>，负责加载程序依赖的共享库。</li>
 <li><strong>关键操作</strong>：<ul>
@@ -861,7 +866,7 @@
 </li>
 </ul>
 <hr>
-<h5 id="Frame-2-dl-sysdep-start"><a href="#Frame-2-dl-sysdep-start" class="headerlink" title="**Frame #2: ****_dl_sysdep_start()**"></a>**Frame #2: **<code>**_dl_sysdep_start()**</code></h5><ul>
+<h5 id="Frame-2-dl-sysdep-start"><a href="#Frame-2-dl-sysdep-start" class="headerlink" title="Frame #2: **_dl_sysdep_start()**"></a><strong>Frame #2: </strong><code>**_dl_sysdep_start()**</code></h5><ul>
 <li><strong>位置</strong>：<code>../elf/dl-sysdep.c:249</code></li>
 <li><strong>作用</strong>：系统相关的初始化入口，为动态链接器准备执行环境。</li>
 <li><strong>关键操作</strong>：<ul>
@@ -872,7 +877,7 @@
 </li>
 </ul>
 <hr>
-<h5 id="Frame-3-dl-start-final"><a href="#Frame-3-dl-start-final" class="headerlink" title="**Frame #3: ****_dl_start_final()**"></a>**Frame #3: **<code>**_dl_start_final()**</code></h5><ul>
+<h5 id="Frame-3-dl-start-final"><a href="#Frame-3-dl-start-final" class="headerlink" title="Frame #3: **_dl_start_final()**"></a><strong>Frame #3: </strong><code>**_dl_start_final()**</code></h5><ul>
 <li><strong>位置</strong>：<code>rtld.c:307</code></li>
 <li><strong>作用</strong>：动态链接器启动的 <strong>最终阶段初始化</strong>。</li>
 <li><strong>关键操作</strong>：<ul>
@@ -882,7 +887,7 @@
 </li>
 </ul>
 <hr>
-<h5 id="Frame-4-dl-start"><a href="#Frame-4-dl-start" class="headerlink" title="**Frame #4: ****_dl_start()**"></a>**Frame #4: **<code>**_dl_start()**</code></h5><ul>
+<h5 id="Frame-4-dl-start"><a href="#Frame-4-dl-start" class="headerlink" title="Frame #4: **_dl_start()**"></a><strong>Frame #4: </strong><code>**_dl_start()**</code></h5><ul>
 <li><strong>位置</strong>：<code>rtld.c:413</code></li>
 <li><strong>作用</strong>：动态链接器的 <strong>入口函数</strong>，由汇编代码 <code>_start</code> 调用。</li>
 <li><strong>关键操作</strong>：<ul>
@@ -892,7 +897,7 @@
 </li>
 </ul>
 <hr>
-<h5 id="Frame-5-start"><a href="#Frame-5-start" class="headerlink" title="**Frame #5: ****_start()**"></a>**Frame #5: **<code>**_start()**</code></h5><ul>
+<h5 id="Frame-5-start"><a href="#Frame-5-start" class="headerlink" title="Frame #5: **_start()**"></a><strong>Frame #5: </strong><code>**_start()**</code></h5><ul>
 <li><strong>位置</strong>：<code>/usr/local/glibc-2.23/lib/ld-2.23.so</code></li>
 <li><strong>作用</strong>：动态链接器自身的 <strong>入口点（Entry Point）</strong>，由内核加载后执行。</li>
 <li><strong>关键操作</strong>：<ul>
@@ -947,7 +952,7 @@
     <div class="card-panel sticky-panel">
       <h3>Outline</h3>
       
-        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6"><span class="toc-list-text">二进制文件</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5"><span class="toc-list-text">动态链接</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E4%BD%8D%E7%BD%AE%E6%97%A0%E5%85%B3%E4%BB%A3%E7%A0%81%EF%BC%8CPIC"><span class="toc-list-text">位置无关代码，PIC</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%BB%B6%E8%BF%9F%E7%BB%91%E5%AE%9A"><span class="toc-list-text">延迟绑定</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E7%A8%8B%E5%BA%8F%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E5%B8%83%E5%B1%80"><span class="toc-list-text">程序在内存中的布局</span></a></li></ol></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80"><span class="toc-list-text">汇编基础</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#ISA%EF%BC%88%E6%8C%87%E4%BB%A4%E9%9B%86%E6%9E%B6%E6%9E%84%EF%BC%89"><span class="toc-list-text">ISA（指令集架构）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#x86-x64%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80"><span class="toc-list-text">x86&#x2F;x64汇编基础</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E7%AE%97%E6%95%B0%E5%92%8C%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97-%E8%B7%B3%E8%BD%AC%E5%92%8C%E5%BE%AA%E7%8E%AF%E6%8C%87%E4%BB%A4"><span class="toc-list-text">算数和逻辑运算+跳转和循环指令</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E6%A0%88%E4%B8%8E%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8"><span class="toc-list-text">栈与函数调用</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4%EF%BC%88push-pop-leave-ret-call%EF%BC%89"><span class="toc-list-text">汇编指令（push&#x2F;pop&#x2F;leave&#x2F;ret&#x2F;call）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#Linux%E5%9F%BA%E7%A1%80"><span class="toc-list-text">Linux基础</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-list-text">常用命令</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#Stack-Canaries"><span class="toc-list-text">Stack Canaries</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-list-text">示例</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-list-text">简介</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#Canaries%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-list-text">Canaries的实现</span></a></li></ol></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E6%9D%82%E8%AE%B0"><span class="toc-list-text">杂记</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95"><span class="toc-list-text">1.动态调试</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-pwntool%E7%9A%84%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95"><span class="toc-list-text">2.pwntool的常用语法</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-Ubuntu%E8%BF%90%E8%A1%8C%E5%B8%A6%E6%9C%89pwntools%E7%9A%84py%E6%96%87%E4%BB%B6%E5%BC%80%E5%A4%B4"><span class="toc-list-text">3.Ubuntu运行带有pwntools的py文件开头</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4-%E5%88%86%E5%B1%8F%E6%98%BE%E7%A4%BA"><span class="toc-list-text">4.分屏显示</span></a></li></ol></li></ol></div>
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6"><span class="toc-list-text">二进制文件</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5"><span class="toc-list-text">动态链接</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E4%BD%8D%E7%BD%AE%E6%97%A0%E5%85%B3%E4%BB%A3%E7%A0%81%EF%BC%8CPIC"><span class="toc-list-text">位置无关代码，PIC</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%BB%B6%E8%BF%9F%E7%BB%91%E5%AE%9A"><span class="toc-list-text">延迟绑定</span></a></li></ol></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80"><span class="toc-list-text">汇编基础</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#ISA%EF%BC%88%E6%8C%87%E4%BB%A4%E9%9B%86%E6%9E%B6%E6%9E%84%EF%BC%89"><span class="toc-list-text">ISA（指令集架构）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#x86-x64%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80"><span class="toc-list-text">x86&#x2F;x64汇编基础</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E7%AE%97%E6%95%B0%E5%92%8C%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97-%E8%B7%B3%E8%BD%AC%E5%92%8C%E5%BE%AA%E7%8E%AF%E6%8C%87%E4%BB%A4"><span class="toc-list-text">算数和逻辑运算+跳转和循环指令</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E6%A0%88%E4%B8%8E%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8"><span class="toc-list-text">栈与函数调用</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4%EF%BC%88push-pop-leave-ret-call%EF%BC%89"><span class="toc-list-text">汇编指令（push&#x2F;pop&#x2F;leave&#x2F;ret&#x2F;call）</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#Linux%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6"><span class="toc-list-text">Linux安全机制</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#Linux%E5%9F%BA%E7%A1%80"><span class="toc-list-text">Linux基础</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-list-text">常用命令</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#Stack-Canaries"><span class="toc-list-text">Stack Canaries</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-list-text">示例</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-list-text">简介</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#Canaries%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-list-text">Canaries的实现</span></a></li></ol></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E6%9D%82%E8%AE%B0"><span class="toc-list-text">杂记</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95"><span class="toc-list-text">1.动态调试</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-pwntool%E7%9A%84%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95"><span class="toc-list-text">2.pwntool的常用语法</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-Ubuntu%E8%BF%90%E8%A1%8C%E5%B8%A6%E6%9C%89pwntools%E7%9A%84py%E6%96%87%E4%BB%B6%E5%BC%80%E5%A4%B4"><span class="toc-list-text">3.Ubuntu运行带有pwntools的py文件开头</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4-%E5%88%86%E5%B1%8F%E6%98%BE%E7%A4%BA"><span class="toc-list-text">4.分屏显示</span></a></li></ol></li></ol></div>
       
     </div>
 

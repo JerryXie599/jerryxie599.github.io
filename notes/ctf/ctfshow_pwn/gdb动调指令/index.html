@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>gdb动调指令 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gdb动调指令 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/ctfshow_pwn/gdb动调指令/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/ctfshow_pwn/gdb动调指令/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+<link rel="stylesheet" href="/css/style.css?v=mo6hk5hr">
+
+  <link rel="stylesheet" href="/vendor/katex/katex.min.css?v=mo6hk5hr">
+
+<style id="site-theme-vars">:root{--font-body:'Space Grotesk', 'PingFang SC', 'Hiragino Sans GB', sans-serif;--font-heading:'Space Grotesk', 'PingFang SC', 'Hiragino Sans GB', sans-serif;--font-mono:'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;--content-width:1130px;--article-side-width:300px;--radius-xl:17px;--radius-lg:13px;--radius-md:9px;--bg:#eaf2ff;--bg-elevated:rgba(245, 249, 255, 0.56);--surface:rgba(255, 255, 255, 0.34);--surface-soft:rgba(255, 255, 255, 0.52);--surface-terminal:rgba(10, 18, 34, 0.88);--line:rgba(255, 255, 255, 0.46);--line-strong:rgba(134, 158, 197, 0.4);--text:#14263d;--text-soft:#5d718d;--accent:#3b82f6;--accent-strong:#22d3ee;--shadow:0 28px 80px rgba(103, 125, 171, 0.18);--shadow-soft:0 18px 48px rgba(103, 125, 171, 0.14);--page-gradient-start:#f6f9ff;--page-gradient-mid:#ebf3ff;--page-gradient-end:#e1eeff;--page-glow-one:rgba(255, 255, 255, 0.92);--page-glow-two:rgba(165, 224, 255, 0.42);--page-glow-three:rgba(120, 149, 255, 0.24);--code-bg:#0b1220;--code-fg:#e6edf7;--code-border:rgba(59, 130, 246, 0.14);--code-shadow:0 14px 28px rgba(14, 23, 38, 0.18);--code-radius:9px;--code-padding-y:7px;--code-padding-x:11px;--code-font-size:0.88rem;--code-line-height:1.41;--code-gutter-color:#6f7f99;--code-title-display:none;--code-language-tag-display:none;--code-language-tag-extra-padding:0px;--inline-code-bg:rgba(59, 130, 246, 0.10);--inline-code-fg:#0f766e;}html[data-theme='dark']{--bg:#040917;--bg-elevated:rgba(9, 15, 29, 0.62);--surface:rgba(13, 22, 42, 0.54);--surface-soft:rgba(15, 25, 47, 0.7);--surface-terminal:rgba(2, 6, 23, 0.92);--line:rgba(165, 185, 220, 0.18);--line-strong:rgba(165, 185, 220, 0.28);--text:#ecf3ff;--text-soft:#97a6ba;--shadow:0 28px 80px rgba(2, 6, 23, 0.5);--shadow-soft:0 18px 48px rgba(2, 6, 23, 0.36);--page-gradient-start:#040917;--page-gradient-mid:#07101d;--page-gradient-end:#0b1424;--page-glow-one:rgba(77, 134, 255, 0.18);--page-glow-two:rgba(34, 211, 238, 0.12);--page-glow-three:rgba(91, 126, 255, 0.12);--inline-code-bg:rgba(16, 185, 129, 0.12);--inline-code-fg:#7cf0bf;}</style>
+
+  <script defer src="/vendor/katex/katex.min.js?v=mo6hk5hr"></script>
+  <script defer src="/vendor/katex/contrib/auto-render.min.js?v=mo6hk5hr"></script>
+
+<script defer src="/js/main.js?v=mo6hk5hr"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+            <a class="category-chip" href="/categories/ctf/ctfshow-pwn/">ctfshow_pwn</a>
+          
+        
+      </div>
+      <h1>gdb动调指令</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>4 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/ctfshow_pwn/gdb动调指令.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <h2 id="1-启动与运行控制"><a href="#1-启动与运行控制" class="headerlink" title="1) 启动与运行控制"></a>1) 启动与运行控制</h2><h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><figure class="highlight bash" data-language="bash" data-language-label="Shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gdb ./a.out</span><br><span class="line">gdb -q ./a.out              <span class="comment"># 安静模式</span></span><br><span class="line">gdb --args ./a.out a b c    <span class="comment"># 直接带参数</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="运行-重启-退出"><a href="#运行-重启-退出" class="headerlink" title="运行&#x2F;重启&#x2F;退出"></a>运行&#x2F;重启&#x2F;退出</h3><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">run (r)            # 运行</span><br><span class="line">start              # 在 main 前停住（自动下断）</span><br><span class="line">starti             # 从入口第一条指令开始停（更底层）</span><br><span class="line">kill               # 杀掉被调试进程</span><br><span class="line">run                # 重新 run（相当于重启）</span><br><span class="line">quit (q)           # 退出 gdb</span><br></pre></td></tr></table></figure>
+
+<h3 id="继续-单步"><a href="#继续-单步" class="headerlink" title="继续&#x2F;单步"></a>继续&#x2F;单步</h3><ul>
+<li>源码级（有符号时更好用）</li>
+</ul>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">next (n)           # 下一行（不进函数）</span><br><span class="line">step (s)           # 进入函数</span><br><span class="line">finish             # 跑到当前函数返回处</span><br><span class="line">until              # 跑到当前循环/当前函数内的某行之后</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>指令级（pwn 最常用）</li>
+</ul>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ni                 # next instruction：下一条指令（不跟进 call）</span><br><span class="line">si                 # step instruction：下一条指令（会跟进 call）</span><br><span class="line">continue (c)       # 继续跑到下个断点</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="2-断点：下断、查看、管理、条件断点"><a href="#2-断点：下断、查看、管理、条件断点" class="headerlink" title="2) 断点：下断、查看、管理、条件断点"></a>2) 断点：下断、查看、管理、条件断点</h2><h3 id="常见下断方式"><a href="#常见下断方式" class="headerlink" title="常见下断方式"></a>常见下断方式</h3><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">break main                 # 按符号名</span><br><span class="line">break *0x401234            # 按地址（pwn 常用）</span><br><span class="line">break file.c:123           # 按文件行号</span><br><span class="line">tbreak main                # 临时断点（命中一次自动删）</span><br><span class="line">rbreak ^foo                # 正则断点（符号很多时好用）</span><br></pre></td></tr></table></figure>
+
+<h3 id="条件断点"><a href="#条件断点" class="headerlink" title="条件断点"></a>条件断点</h3><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">break *0x401234 if $rax==0</span><br><span class="line">break vuln if $rsp &lt; 0x7fffffffe000</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看-删除-启用禁用"><a href="#查看-删除-启用禁用" class="headerlink" title="查看&#x2F;删除&#x2F;启用禁用"></a>查看&#x2F;删除&#x2F;启用禁用</h3><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">info breakpoints (i b)</span><br><span class="line">delete 1            # 删除编号 1 的断点</span><br><span class="line">disable 1</span><br><span class="line">enable 1</span><br><span class="line">clear               # 清掉当前行断点（源码级）</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-寄存器-调用栈-当前栈帧"><a href="#3-寄存器-调用栈-当前栈帧" class="headerlink" title="3) 寄存器&#x2F;调用栈&#x2F;当前栈帧"></a>3) 寄存器&#x2F;调用栈&#x2F;当前栈帧</h2><h3 id="看寄存器（EIP-RIP、ESP-RSP、EBP-RBP-等）"><a href="#看寄存器（EIP-RIP、ESP-RSP、EBP-RBP-等）" class="headerlink" title="看寄存器（EIP&#x2F;RIP、ESP&#x2F;RSP、EBP&#x2F;RBP 等）"></a>看寄存器（EIP&#x2F;RIP、ESP&#x2F;RSP、EBP&#x2F;RBP 等）</h3><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">info registers</span><br><span class="line">info registers rip rsp rbp      # x64</span><br><span class="line">info registers eip esp ebp      # x86</span><br><span class="line">p/x $rip                        # 打印 rip（十六进制）</span><br></pre></td></tr></table></figure>
+
+<h3 id="调用栈（谁调用了谁）"><a href="#调用栈（谁调用了谁）" class="headerlink" title="调用栈（谁调用了谁）"></a>调用栈（谁调用了谁）</h3><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bt                 # backtrace</span><br><span class="line">bt full            # 带局部变量（有符号时）</span><br><span class="line">frame 2            # 切到第 2 帧</span><br><span class="line">info frame         # 当前栈帧细节（保存了什么返回地址等）</span><br><span class="line">up / down          # 上下移动栈帧</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="4-反汇编与“下一条指令在哪里”"><a href="#4-反汇编与“下一条指令在哪里”" class="headerlink" title="4) 反汇编与“下一条指令在哪里”"></a>4) 反汇编与“下一条指令在哪里”</h2><h3 id="反汇编"><a href="#反汇编" class="headerlink" title="反汇编"></a>反汇编</h3><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">disassemble</span><br><span class="line">disassemble main</span><br><span class="line">disassemble /m main          # 混合源码/汇编（有符号时）</span><br><span class="line">x/10i $rip                   # 从 rip 开始看 10 条指令（最常用）</span><br></pre></td></tr></table></figure>
+
+<h3 id="切-Intel-语法（建议）"><a href="#切-Intel-语法（建议）" class="headerlink" title="切 Intel 语法（建议）"></a>切 Intel 语法（建议）</h3><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set disassembly-flavor intel</span><br><span class="line">set disassemble-next-line on</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="5-读内存：x-命令（pwn-必会）"><a href="#5-读内存：x-命令（pwn-必会）" class="headerlink" title="5) 读内存：x 命令（pwn 必会）"></a>5) 读内存：x 命令（pwn 必会）</h2><p><code>x</code> 的格式：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x /&lt;数量&gt;&lt;格式&gt;&lt;单位&gt; &lt;地址&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>格式：<code>x</code>(hex) <code>d</code>(dec) <code>u``t``c``s</code>(string) <code>i</code>(instruction)</li>
+<li>单位：<code>b</code>(1) <code>h</code>(2) <code>w</code>(4) <code>g</code>(8)</li>
+</ul>
+<h3 id="常用例子"><a href="#常用例子" class="headerlink" title="常用例子"></a>常用例子</h3><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x/16gx $rsp           # 以 8 字节为单位看栈（x64）</span><br><span class="line">x/32wx $esp           # 以 4 字节为单位看栈（x86）</span><br><span class="line"></span><br><span class="line">x/10i  $rip           # 从当前指令开始看 10 条</span><br><span class="line">x/s    0x404080       # 把某地址当 C 字符串打印</span><br><span class="line">x/32bx 0x404080       # 按字节看（适合看输入/patch）</span><br></pre></td></tr></table></figure>
+
+<p><strong>理解栈布局的小技巧</strong>：栈向“低地址”增长，所以如果你希望“低地址在上”，那你读栈时就把地址从小到大理解为从上到下；<code>x/..</code>输出通常是地址递增排列。</p>
+<hr>
+<h2 id="6-打印与计算：p-set-printf（调试表达式）"><a href="#6-打印与计算：p-set-printf（调试表达式）" class="headerlink" title="6) 打印与计算：p &#x2F; set &#x2F; printf（调试表达式）"></a>6) 打印与计算：p &#x2F; set &#x2F; printf（调试表达式）</h2><h3 id="p：打印变量-表达式"><a href="#p：打印变量-表达式" class="headerlink" title="p：打印变量&#x2F;表达式"></a>p：打印变量&#x2F;表达式</h3><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">p var</span><br><span class="line">p/x var</span><br><span class="line">p/x $rsp</span><br><span class="line">p (char*)0x404080</span><br></pre></td></tr></table></figure>
+
+<h3 id="printf：按格式打印（调试输出很爽）"><a href="#printf：按格式打印（调试输出很爽）" class="headerlink" title="printf：按格式打印（调试输出很爽）"></a>printf：按格式打印（调试输出很爽）</h3><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">printf &quot;rsp=%p rip=%p\n&quot;, $rsp, $rip</span><br></pre></td></tr></table></figure>
+
+<h3 id="set：改寄存器-改内存（动调-patch）"><a href="#set：改寄存器-改内存（动调-patch）" class="headerlink" title="set：改寄存器&#x2F;改内存（动调 patch）"></a>set：改寄存器&#x2F;改内存（动调 patch）</h3><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">set $rip = 0x401000                 # 改控制流（演示用途）</span><br><span class="line">set $rax = 0</span><br><span class="line"></span><br><span class="line">set &#123;int&#125;0x404080 = 0xdeadbeef       # 往内存写 4 字节</span><br><span class="line">set &#123;long&#125;0x404080 = 0x1122334455667788  # 写 8 字节</span><br><span class="line">set *(int*)0x404080 = 123</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="7-监视点（watchpoint）：变量-内存被谁改了"><a href="#7-监视点（watchpoint）：变量-内存被谁改了" class="headerlink" title="7) 监视点（watchpoint）：变量&#x2F;内存被谁改了"></a>7) 监视点（watchpoint）：变量&#x2F;内存被谁改了</h2><p>当你想知道“哪个指令改了某个值”：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">watch *(int*)0x404080     # 写触发</span><br><span class="line">rwatch *(int*)0x404080    # 读触发</span><br><span class="line">awatch *(int*)0x404080    # 读写都触发</span><br><span class="line">info watchpoints</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="8-断点命中时自动执行命令（很实用）"><a href="#8-断点命中时自动执行命令（很实用）" class="headerlink" title="8) 断点命中时自动执行命令（很实用）"></a>8) 断点命中时自动执行命令（很实用）</h2><p>例如每次停住都自动显示寄存器和栈顶：</p>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">commands 1</span><br><span class="line">silent</span><br><span class="line">printf &quot;RIP=%p RSP=%p RBP=%p\n&quot;, $rip, $rsp, $rbp</span><br><span class="line">x/8i $rip</span><br><span class="line">x/16gx $rsp</span><br><span class="line">continue</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="9-多线程-多进程、attach、跟-fork（实战常见）"><a href="#9-多线程-多进程、attach、跟-fork（实战常见）" class="headerlink" title="9) 多线程&#x2F;多进程、attach、跟 fork（实战常见）"></a>9) 多线程&#x2F;多进程、attach、跟 fork（实战常见）</h2><h3 id="attach-到正在跑的进程"><a href="#attach-到正在跑的进程" class="headerlink" title="attach 到正在跑的进程"></a>attach 到正在跑的进程</h3><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">attach &lt;pid&gt;</span><br><span class="line">detach</span><br></pre></td></tr></table></figure>
+
+<h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">info threads</span><br><span class="line">thread 2</span><br></pre></td></tr></table></figure>
+
+<h3 id="fork-exec（调试子进程很常用）"><a href="#fork-exec（调试子进程很常用）" class="headerlink" title="fork&#x2F;exec（调试子进程很常用）"></a>fork&#x2F;exec（调试子进程很常用）</h3><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">set follow-fork-mode child</span><br><span class="line">set detach-on-fork off</span><br><span class="line">catch fork</span><br><span class="line">catch exec</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="10-建议的基础配置（进-gdb-先敲这几句）"><a href="#10-建议的基础配置（进-gdb-先敲这几句）" class="headerlink" title="10) 建议的基础配置（进 gdb 先敲这几句）"></a>10) 建议的基础配置（进 gdb 先敲这几句）</h2><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">set pagination off</span><br><span class="line">set disassembly-flavor intel</span><br><span class="line">set print pretty on</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="11-一个最小“函数调用过程”动调观察模板（看-esp-ebp-eip-或-rsp-rbp-rip）"><a href="#11-一个最小“函数调用过程”动调观察模板（看-esp-ebp-eip-或-rsp-rbp-rip）" class="headerlink" title="11) 一个最小“函数调用过程”动调观察模板（看 esp&#x2F;ebp&#x2F;eip 或 rsp&#x2F;rbp&#x2F;rip）"></a>11) 一个最小“函数调用过程”动调观察模板（看 esp&#x2F;ebp&#x2F;eip 或 rsp&#x2F;rbp&#x2F;rip）</h2><p>假设你停在 <code>call foo</code> 附近：</p>
+<ol>
+<li>看当前下一条指令与栈顶：</li>
+</ol>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x/6i  $rip</span><br><span class="line">x/16gx $rsp     # x64；x86 用 x/32wx $esp</span><br><span class="line">info reg rip rsp rbp</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>si</code> 进入 call（会跳进 foo），观察：</li>
+</ol>
+<figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">si</span><br><span class="line">info reg rip rsp rbp</span><br><span class="line">x/16gx $rsp</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>看到 <code>push rbp; mov rbp,rsp; sub rsp,xx</code> 后，再看：</li>
+</ol>
+<ul>
+<li><code>rbp</code> 会变成“新栈帧基址”</li>
+<li><code>rsp</code> 会向低地址移动（分配局部变量空间）</li>
+<li>栈上通常能看到“返回地址”“保存的 rbp”</li>
+</ul>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E5%90%AF%E5%8A%A8%E4%B8%8E%E8%BF%90%E8%A1%8C%E6%8E%A7%E5%88%B6"><span class="toc-list-text">1) 启动与运行控制</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%90%AF%E5%8A%A8"><span class="toc-list-text">启动</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E8%BF%90%E8%A1%8C-%E9%87%8D%E5%90%AF-%E9%80%80%E5%87%BA"><span class="toc-list-text">运行&#x2F;重启&#x2F;退出</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E7%BB%A7%E7%BB%AD-%E5%8D%95%E6%AD%A5"><span class="toc-list-text">继续&#x2F;单步</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-%E6%96%AD%E7%82%B9%EF%BC%9A%E4%B8%8B%E6%96%AD%E3%80%81%E6%9F%A5%E7%9C%8B%E3%80%81%E7%AE%A1%E7%90%86%E3%80%81%E6%9D%A1%E4%BB%B6%E6%96%AD%E7%82%B9"><span class="toc-list-text">2) 断点：下断、查看、管理、条件断点</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%B8%B8%E8%A7%81%E4%B8%8B%E6%96%AD%E6%96%B9%E5%BC%8F"><span class="toc-list-text">常见下断方式</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E6%9D%A1%E4%BB%B6%E6%96%AD%E7%82%B9"><span class="toc-list-text">条件断点</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E6%9F%A5%E7%9C%8B-%E5%88%A0%E9%99%A4-%E5%90%AF%E7%94%A8%E7%A6%81%E7%94%A8"><span class="toc-list-text">查看&#x2F;删除&#x2F;启用禁用</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-%E5%AF%84%E5%AD%98%E5%99%A8-%E8%B0%83%E7%94%A8%E6%A0%88-%E5%BD%93%E5%89%8D%E6%A0%88%E5%B8%A7"><span class="toc-list-text">3) 寄存器&#x2F;调用栈&#x2F;当前栈帧</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E7%9C%8B%E5%AF%84%E5%AD%98%E5%99%A8%EF%BC%88EIP-RIP%E3%80%81ESP-RSP%E3%80%81EBP-RBP-%E7%AD%89%EF%BC%89"><span class="toc-list-text">看寄存器（EIP&#x2F;RIP、ESP&#x2F;RSP、EBP&#x2F;RBP 等）</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E8%B0%83%E7%94%A8%E6%A0%88%EF%BC%88%E8%B0%81%E8%B0%83%E7%94%A8%E4%BA%86%E8%B0%81%EF%BC%89"><span class="toc-list-text">调用栈（谁调用了谁）</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4-%E5%8F%8D%E6%B1%87%E7%BC%96%E4%B8%8E%E2%80%9C%E4%B8%8B%E4%B8%80%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%9C%A8%E5%93%AA%E9%87%8C%E2%80%9D"><span class="toc-list-text">4) 反汇编与“下一条指令在哪里”</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%8F%8D%E6%B1%87%E7%BC%96"><span class="toc-list-text">反汇编</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%88%87-Intel-%E8%AF%AD%E6%B3%95%EF%BC%88%E5%BB%BA%E8%AE%AE%EF%BC%89"><span class="toc-list-text">切 Intel 语法（建议）</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#5-%E8%AF%BB%E5%86%85%E5%AD%98%EF%BC%9Ax-%E5%91%BD%E4%BB%A4%EF%BC%88pwn-%E5%BF%85%E4%BC%9A%EF%BC%89"><span class="toc-list-text">5) 读内存：x 命令（pwn 必会）</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%B8%B8%E7%94%A8%E4%BE%8B%E5%AD%90"><span class="toc-list-text">常用例子</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#6-%E6%89%93%E5%8D%B0%E4%B8%8E%E8%AE%A1%E7%AE%97%EF%BC%9Ap-set-printf%EF%BC%88%E8%B0%83%E8%AF%95%E8%A1%A8%E8%BE%BE%E5%BC%8F%EF%BC%89"><span class="toc-list-text">6) 打印与计算：p &#x2F; set &#x2F; printf（调试表达式）</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#p%EF%BC%9A%E6%89%93%E5%8D%B0%E5%8F%98%E9%87%8F-%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-list-text">p：打印变量&#x2F;表达式</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#printf%EF%BC%9A%E6%8C%89%E6%A0%BC%E5%BC%8F%E6%89%93%E5%8D%B0%EF%BC%88%E8%B0%83%E8%AF%95%E8%BE%93%E5%87%BA%E5%BE%88%E7%88%BD%EF%BC%89"><span class="toc-list-text">printf：按格式打印（调试输出很爽）</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#set%EF%BC%9A%E6%94%B9%E5%AF%84%E5%AD%98%E5%99%A8-%E6%94%B9%E5%86%85%E5%AD%98%EF%BC%88%E5%8A%A8%E8%B0%83-patch%EF%BC%89"><span class="toc-list-text">set：改寄存器&#x2F;改内存（动调 patch）</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#7-%E7%9B%91%E8%A7%86%E7%82%B9%EF%BC%88watchpoint%EF%BC%89%EF%BC%9A%E5%8F%98%E9%87%8F-%E5%86%85%E5%AD%98%E8%A2%AB%E8%B0%81%E6%94%B9%E4%BA%86"><span class="toc-list-text">7) 监视点（watchpoint）：变量&#x2F;内存被谁改了</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#8-%E6%96%AD%E7%82%B9%E5%91%BD%E4%B8%AD%E6%97%B6%E8%87%AA%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4%EF%BC%88%E5%BE%88%E5%AE%9E%E7%94%A8%EF%BC%89"><span class="toc-list-text">8) 断点命中时自动执行命令（很实用）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#9-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%A4%9A%E8%BF%9B%E7%A8%8B%E3%80%81attach%E3%80%81%E8%B7%9F-fork%EF%BC%88%E5%AE%9E%E6%88%98%E5%B8%B8%E8%A7%81%EF%BC%89"><span class="toc-list-text">9) 多线程&#x2F;多进程、attach、跟 fork（实战常见）</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#attach-%E5%88%B0%E6%AD%A3%E5%9C%A8%E8%B7%91%E7%9A%84%E8%BF%9B%E7%A8%8B"><span class="toc-list-text">attach 到正在跑的进程</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E7%BA%BF%E7%A8%8B"><span class="toc-list-text">线程</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#fork-exec%EF%BC%88%E8%B0%83%E8%AF%95%E5%AD%90%E8%BF%9B%E7%A8%8B%E5%BE%88%E5%B8%B8%E7%94%A8%EF%BC%89"><span class="toc-list-text">fork&#x2F;exec（调试子进程很常用）</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#10-%E5%BB%BA%E8%AE%AE%E7%9A%84%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE%EF%BC%88%E8%BF%9B-gdb-%E5%85%88%E6%95%B2%E8%BF%99%E5%87%A0%E5%8F%A5%EF%BC%89"><span class="toc-list-text">10) 建议的基础配置（进 gdb 先敲这几句）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#11-%E4%B8%80%E4%B8%AA%E6%9C%80%E5%B0%8F%E2%80%9C%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E8%BF%87%E7%A8%8B%E2%80%9D%E5%8A%A8%E8%B0%83%E8%A7%82%E5%AF%9F%E6%A8%A1%E6%9D%BF%EF%BC%88%E7%9C%8B-esp-ebp-eip-%E6%88%96-rsp-rbp-rip%EF%BC%89"><span class="toc-list-text">11) 一个最小“函数调用过程”动调观察模板（看 esp&#x2F;ebp&#x2F;eip 或 rsp&#x2F;rbp&#x2F;rip）</span></a></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>

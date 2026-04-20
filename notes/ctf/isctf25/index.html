@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>isctf25 | JerryXie&#39;s Blog</title>
+<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="isctf25 | JerryXie&#39;s Blog">
+<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+
+  <meta property="og:url" content="https://jerryxie.top/notes/ctf/isctf25/">
+  <link rel="canonical" href="https://jerryxie.top/notes/ctf/isctf25/">
+
+
+  <meta name="author" content="JerryXie">
+
+
+  <link rel="icon" href="/favicon.png">
+
+<link rel="stylesheet" href="/css/style.css?v=mo6hk5hr">
+
+  <link rel="stylesheet" href="/vendor/katex/katex.min.css?v=mo6hk5hr">
+
+<style id="site-theme-vars">:root{--font-body:'Space Grotesk', 'PingFang SC', 'Hiragino Sans GB', sans-serif;--font-heading:'Space Grotesk', 'PingFang SC', 'Hiragino Sans GB', sans-serif;--font-mono:'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;--content-width:1130px;--article-side-width:300px;--radius-xl:17px;--radius-lg:13px;--radius-md:9px;--bg:#eaf2ff;--bg-elevated:rgba(245, 249, 255, 0.56);--surface:rgba(255, 255, 255, 0.34);--surface-soft:rgba(255, 255, 255, 0.52);--surface-terminal:rgba(10, 18, 34, 0.88);--line:rgba(255, 255, 255, 0.46);--line-strong:rgba(134, 158, 197, 0.4);--text:#14263d;--text-soft:#5d718d;--accent:#3b82f6;--accent-strong:#22d3ee;--shadow:0 28px 80px rgba(103, 125, 171, 0.18);--shadow-soft:0 18px 48px rgba(103, 125, 171, 0.14);--page-gradient-start:#f6f9ff;--page-gradient-mid:#ebf3ff;--page-gradient-end:#e1eeff;--page-glow-one:rgba(255, 255, 255, 0.92);--page-glow-two:rgba(165, 224, 255, 0.42);--page-glow-three:rgba(120, 149, 255, 0.24);--code-bg:#0b1220;--code-fg:#e6edf7;--code-border:rgba(59, 130, 246, 0.14);--code-shadow:0 14px 28px rgba(14, 23, 38, 0.18);--code-radius:9px;--code-padding-y:7px;--code-padding-x:11px;--code-font-size:0.88rem;--code-line-height:1.41;--code-gutter-color:#6f7f99;--code-title-display:none;--code-language-tag-display:none;--code-language-tag-extra-padding:0px;--inline-code-bg:rgba(59, 130, 246, 0.10);--inline-code-fg:#0f766e;}html[data-theme='dark']{--bg:#040917;--bg-elevated:rgba(9, 15, 29, 0.62);--surface:rgba(13, 22, 42, 0.54);--surface-soft:rgba(15, 25, 47, 0.7);--surface-terminal:rgba(2, 6, 23, 0.92);--line:rgba(165, 185, 220, 0.18);--line-strong:rgba(165, 185, 220, 0.28);--text:#ecf3ff;--text-soft:#97a6ba;--shadow:0 28px 80px rgba(2, 6, 23, 0.5);--shadow-soft:0 18px 48px rgba(2, 6, 23, 0.36);--page-gradient-start:#040917;--page-gradient-mid:#07101d;--page-gradient-end:#0b1424;--page-glow-one:rgba(77, 134, 255, 0.18);--page-glow-two:rgba(34, 211, 238, 0.12);--page-glow-three:rgba(91, 126, 255, 0.12);--inline-code-bg:rgba(16, 185, 129, 0.12);--inline-code-fg:#7cf0bf;}</style>
+
+  <script defer src="/vendor/katex/katex.min.js?v=mo6hk5hr"></script>
+  <script defer src="/vendor/katex/contrib/auto-render.min.js?v=mo6hk5hr"></script>
+
+<script defer src="/js/main.js?v=mo6hk5hr"></script>
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="site-shell">
+      
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      <span class="brand-name">JerryXie&#39;s Blog</span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-menu-panel>
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/archives/" class="">Archive</a>
+      
+        <a href="/categories/" class="">Library</a>
+      
+        <a href="/about/" class="">About</a>
+      
+    </nav>
+
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+      <span data-theme-icon>Dark</span>
+    </button>
+  </div>
+</header>
+
+      <main class="page-shell">
+        
+
+<article class="article-layout">
+  <div class="article-main card-panel">
+    <a class="back-link" href="/categories/">Back to library</a>
+    <header class="article-header">
+      <div class="article-badges">
+        
+          
+            <a class="category-chip" href="/categories/ctf/">ctf</a>
+          
+        
+      </div>
+      <h1>isctf25</h1>
+      <div class="article-meta">
+        <span>Published 2026-04-19</span>
+        <span>Updated 2026-04-19</span>
+        <span>10 min</span>
+      </div>
+      
+        <p class="article-source">Source path: <code>ctf/isctf25.md</code></p>
+      
+    </header>
+
+    <div class="article-content">
+      <h1 id="misc"><a href="#misc" class="headerlink" title="misc"></a>misc</h1><h2 id="1-OSINT-3"><a href="#1-OSINT-3" class="headerlink" title="1.OSINT-3"></a>1.OSINT-3</h2><h2 id=""><a href="#" class="headerlink" title=""></a><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1764765419591-e7f4edb3-5a1f-4848-9296-5dc7e0140f16.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></h2><p>misc</p>
+<h2 id="1-美丽的风景照"><a href="#1-美丽的风景照" class="headerlink" title="1.美丽的风景照"></a>1.美丽的风景照</h2><p>gif分帧，按彩虹色排序</p>
+<p>jqW2_Dg2C_7HLo8_6yRWh_3CaEK_ZXw8T_98Mz</p>
+<p>jqW2</p>
+<p>Dg2C</p>
+<p>7HLo8</p>
+<p>6yRWh</p>
+<p>3CaEK</p>
+<p>ZXw8T</p>
+<p>98Mz</p>
+<p>zM89</p>
+<p>T8wXZ</p>
+<p>KEaC3</p>
+<p>hWRy6</p>
+<p>8oLH7</p>
+<p>C2gD</p>
+<p>2Wqj</p>
+<h2 id="2-Guess！"><a href="#2-Guess！" class="headerlink" title="2.Guess！"></a>2.Guess！</h2><p>猜一下就行了</p>
+<h2 id="3-湖心亭看雪"><a href="#3-湖心亭看雪" class="headerlink" title="3.湖心亭看雪"></a>3.湖心亭看雪</h2><p>异或+分离zip+添加zip文件头+snow解密</p>
+<p>ISCTF{y0U_H4v3_kN0wn_Wh4t_15_Sn0w!!!}</p>
+<h2 id="4-小蓝鲨的神秘文件"><a href="#4-小蓝鲨的神秘文件" class="headerlink" title="4.小蓝鲨的神秘文件"></a>4.小蓝鲨的神秘文件</h2><p>给了一个这文件<code>ChsPinyinUDL.dat</code></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/studyzy/imewlconverter/issues/58#issuecomment-602237341">谁有微软拼音自学习词库的导入导出算法？ · Issue #58 · studyzy&#x2F;imewlconverter</a></p>
+<p>在这找到了转换算法：</p>
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> platform</span><br><span class="line"><span class="keyword">import</span> pypinyin</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">str2sysstr</span>(<span class="params">strout</span>):</span><br><span class="line">    sysstr = platform.system()</span><br><span class="line">    <span class="keyword">if</span>(sysstr ==<span class="string">&quot;Windows&quot;</span>):</span><br><span class="line">        <span class="keyword">return</span> strout.encode(<span class="string">&quot;gbk&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> strout.encode(<span class="string">&quot;utf-8&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(sys.argv)==<span class="number">2</span>:</span><br><span class="line">        user_word_file = sys.argv[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        user_word_file = <span class="string">r&quot;E:\CTF\比赛\isctf\misc\wireshark\ChsPinyinUDL.dat&quot;</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(user_word_file):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;file:&quot;</span>,user_word_file,<span class="string">&quot;not exist\n\n&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;use example&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>( <span class="string">&quot;user_word_exporter.exe&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>( <span class="string">&quot; : paser %USERPROFILE%\AppData\Roaming\Microsoft\InputMethod\Chs\ChsPinyinUDL.dat&quot;</span> )</span><br><span class="line">        <span class="built_in">print</span>( <span class="string">&quot;user_word_exporter.exe dat_file_name&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>( <span class="string">&quot; : paser dat_file_name&quot;</span>)</span><br><span class="line">        sys.exit(<span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line">    fp = <span class="built_in">open</span>(user_word_file,<span class="string">&quot;rb&quot;</span>)</span><br><span class="line">    userword = <span class="built_in">open</span>(<span class="string">&quot;user_word_microsoft_pinyin.txt&quot;</span>,<span class="string">&quot;at&quot;</span>)</span><br><span class="line">    data = fp.read()</span><br><span class="line">    cnt = <span class="built_in">int</span>.from_bytes(data[<span class="number">12</span>:<span class="number">16</span>], byteorder=<span class="string">&#x27;little&#x27;</span>, signed=<span class="literal">False</span>)</span><br><span class="line">    user_word_base = <span class="number">0x2400</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(cnt):</span><br><span class="line">        cur_idx = user_word_base + i * <span class="number">60</span></span><br><span class="line">        word_len = <span class="built_in">int</span>.from_bytes(data[cur_idx + <span class="number">10</span>:cur_idx + <span class="number">11</span>], byteorder=<span class="string">&#x27;little&#x27;</span>, signed=<span class="literal">False</span>)</span><br><span class="line">        word = data[cur_idx + <span class="number">12</span> : cur_idx + <span class="number">12</span> + word_len * <span class="number">2</span> ].decode(<span class="string">&quot;utf-16&quot;</span>)</span><br><span class="line">        <span class="comment"># -=-=-=-=-=-=--=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=</span></span><br><span class="line">        <span class="comment"># reference: https://www.jb51.net/article/167461.htm</span></span><br><span class="line">        <span class="comment">#</span></span><br><span class="line">        <span class="comment"># convert character to pinyin</span></span><br><span class="line">        pinyin_str = <span class="string">&#x27;\t&#x27;</span></span><br><span class="line">        pinyin_list = pypinyin.pinyin(word, style=pypinyin.NORMAL)</span><br><span class="line">        <span class="comment"># return [[&#x27;shi&#x27;], [&#x27;shu&#x27;], [&#x27;ji&#x27;], [&#x27;shi&#x27;], [&#x27;zhang&#x27;]]</span></span><br><span class="line">        <span class="keyword">for</span> i, py <span class="keyword">in</span> <span class="built_in">enumerate</span>(pinyin_list):   </span><br><span class="line">            pinyin_str += py[<span class="number">0</span>]</span><br><span class="line">            <span class="keyword">if</span> i+<span class="number">1</span> != word_len:  <span class="comment"># not the last word, add space behind</span></span><br><span class="line">                pinyin_str += <span class="string">&#x27; &#x27;</span></span><br><span class="line">        one_line = word + pinyin_str + <span class="string">&#x27;\t1&#x27;</span></span><br><span class="line">        <span class="built_in">print</span>(word + pinyin_str + <span class="string">&#x27;\t1&#x27;</span>)</span><br><span class="line">        <span class="comment"># -=-=-=-=-=-==-=-=-=-=-==-=-=-=-=-=-=---=-=-=-=-=-=-=-=</span></span><br><span class="line">        userword.write(one_line + <span class="string">&quot;\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">    fp.close()</span><br><span class="line">    userword.close()</span><br></pre></td></tr></table></figure>
+
+<p>输出结果如下：</p>
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">帮我优化这段代码        bang wo you hua zhe duan dai ma <span class="number">1</span></span><br><span class="line">不要乱动我的代码        bu yao luan dong wo de dai ma   <span class="number">1</span></span><br><span class="line">不要动我原来的代码      bu yao dong wo yuan lai de dai ma       <span class="number">1</span></span><br><span class="line">出题人说弗莱格在官网    chu ti ren shuo fu lai ge zai guan wang <span class="number">1</span></span><br><span class="line">出题人说弗莱格在那里    chu ti ren shuo fu lai ge zai na li     <span class="number">1</span></span><br><span class="line">官网的新闻里    guan wang de xin wen li <span class="number">1</span></span><br><span class="line">弗莱格  fu lai ge       <span class="number">1</span></span><br><span class="line">还有一些项目合作的机会  hai you yi xie xiang mu he zuo de ji hui        <span class="number">1</span></span><br><span class="line">福州蓝鲨信息技术有限公司        fu zhou lan sha xin xi ji shu you xian gong si  <span class="number">1</span></span><br><span class="line">机会是留给有准备的人    ji hui shi liu gei you zhun bei de ren  <span class="number">1</span></span><br><span class="line">看看官网的新闻吧        kan kan guan wang de xin wen ba <span class="number">1</span></span><br><span class="line">你把简历投了再说        ni ba jian li tou le zai shuo   <span class="number">1</span></span><br><span class="line">你去看看新闻动态呢      ni qu kan kan xin wen dong tai ne       <span class="number">1</span></span><br><span class="line">你去找辅导员问问        ni qu zhao fu dao yuan wen wen  <span class="number">1</span></span><br><span class="line">你去蓝鲨官网看看呗      ni qu lan sha guan wang kan kan bei     <span class="number">1</span></span><br><span class="line">你这个脚本跑不了啊      ni zhe ge jiao ben pao bu liao a        <span class="number">1</span></span><br><span class="line">他们招实习的    ta men zhao shi xi de   <span class="number">1</span></span><br><span class="line">这次比赛你参加了吗      zhe ci bi sai ni can jia le ma  <span class="number">1</span></span><br><span class="line">真的可以去试试  zhen de ke yi qu shi shi        <span class="number">1</span></span><br><span class="line">在我原来的基础上修改    zai wo yuan lai de ji chu shang xiu gai <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>提示到官网新闻动态找</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1764803213609-0764554b-a76b-4f58-8a5d-7de6b776c0c5.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<ol start="5">
+<li></li>
+</ol>
+<h1 id="crypto"><a href="#crypto" class="headerlink" title="crypto"></a>crypto</h1><h2 id="1"><a href="#1" class="headerlink" title="1"></a>1</h2><figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = getPrime(<span class="number">1024</span>)</span><br><span class="line">q = getPrime(<span class="number">1024</span>)</span><br><span class="line">N = p*q</span><br><span class="line">e = <span class="number">65537</span></span><br><span class="line">msg = bytes_to_long(<span class="string">b&quot;ISCTF&#123;dummy_flag&#125;&quot;</span>)</span><br><span class="line">ct1 = <span class="built_in">pow</span>(msg, e, N)</span><br><span class="line">ct2 = <span class="built_in">pow</span>(msg, p+q, N)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;N = &#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;ct1 = &#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;ct2 = &#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">N = 17630258257080557797062320474423515967705950026415012912087655679315479168903980901728425140787005046038000068414269936806478828260848859753400786557270120330760791255046985114127285672634413513991988895166115794242018674042563788348381567565190146278040811257757119090296478610798393944581870309373529884950663990485525646200034220648901490835962964029936321155200390798215987316069871958913773199197073860062515329879288106446016695204426001393566351524023857332978260894409698596465474214898402707157933326431896629025197964209580991821222557663589475589423032130993456522178540455360695933336455068507071827928617</span></span><br><span class="line"><span class="string">ct1 = 5961639119243884817956362325106436035547108981120248145301572089585639543543496627985540773185452108709958107818159430835510386993354596106366458898765597405461225798615020342640056386757104855709899089816838805631480329264128349465229327090721088394549641366346516133008681155817222994359616737681983784274513555455340301061302815102944083173679173923728968671113926376296481298323500774419099682647601977970777260084799036306508597807029122276595080580483336115458713338522372181732208078117809553781889555191883178157241590455408910096212697893247529197116309329028589569527960811338838624831855672463438531266455</span></span><br><span class="line"><span class="string">ct2 = 11792054298654397865983651507912282632831471680334312509918945120797862876661899077559686851237832931501121869814783150387308320349940383857026679141830402807715397332316601439614741315278033853646418275632174160816784618982743834204997402866931295619202826633629690164429512723957241072421663170829944076753483616865208617479794763412611604625495201470161813033934476868949612651276104339747165276204945125001274777134529491152840672010010940034503257315555511274325831684793040209224816879778725612468542758777428888563266233284958660088175139114166433501743740034567850893745466521144371670962121062992082312948789</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>欧拉定理</strong>：</p>
+<p>$ msg^{ϕ(N)}≡1\ mod\ N $</p>
+<p>而 RSA 中：</p>
+<p>$ ϕ(N)&#x3D;(p−1)(q−1)&#x3D;N−p−q+1 $</p>
+<p>所以我们有：</p>
+<p>$ msg^{N−p−q+1}≡1\ mod\ N $</p>
+<p>两边同时乘以 msg_p_+<em>q</em>−1，得：</p>
+<p>$ msg^{N+1}≡msg^{p+q}\ mod\ N→ ct2≡msg^{N+1}\ mod\ N $</p>
+<p>$ ct1≡msg^{e}\ mod\ N $</p>
+<p>计算一下发现：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1764681692652-6fe373e0-e3d0-4eea-a314-d2f1c3564101.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
+<p>$ gcd(e,N+1)&#x3D;1 $</p>
+<p>这样可以利用gcdext算出</p>
+<p>$ a<em>e+b</em>(N+1)&#x3D;1 $</p>
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> gmpy2</span><br><span class="line">g, a, b = gmpy2.gcdext(e, N + <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>有：</p>
+<p>$ msg^1≡msg^{e<em>a+b</em>(N+1)}≡(msg^e)^a*(msg^{N+1})^b≡(ct1)^a*(ct2)^b\ \ mod\ N $</p>
+<p>解题代码：</p>
+<figure class="highlight python" data-language="python" data-language-label="Python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Cryptodome.Util.number <span class="keyword">import</span> long_to_bytes</span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"></span><br><span class="line">N = ...</span><br><span class="line">ct1 = ...</span><br><span class="line">ct2 = ...</span><br><span class="line">e = <span class="number">65537</span></span><br><span class="line"></span><br><span class="line">g, a, b = gmpy2.gcdext(e, N + <span class="number">1</span>)</span><br><span class="line">ct1 = <span class="built_in">pow</span>(ct1, a, N)</span><br><span class="line">ct2 = <span class="built_in">pow</span>(ct2, b, N)</span><br><span class="line">m = (ct1 * ct2) % N</span><br><span class="line">flag = long_to_bytes(m)</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h1><h2 id="1-ez-fmt"><a href="#1-ez-fmt" class="headerlink" title="1.ez_fmt"></a>1.ez_fmt</h2><p>考点：格式化字符串</p>
+<h3 id="前置：格式化字符串漏洞利用"><a href="#前置：格式化字符串漏洞利用" class="headerlink" title="前置：格式化字符串漏洞利用"></a>前置：格式化字符串漏洞利用</h3><p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_73985089/article/details/137199087?ops_request_misc=&request_id=&biz_id=102&utm_term=pwn%20%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-1-137199087.142%5Ev102%5Epc_search_result_base7">格式化字符串漏洞原理及其利用（附带pwn例题讲解）-CSDN博客</a></p>
+<p>有两个比较好玩的输出：一个是<code>%n</code>，一个格式<code>%\d$s</code></p>
+<blockquote>
+<p>很久没写c了，有点手生</p>
+</blockquote>
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> </span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> cnt;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;he%nllo\n&quot;</span>, &amp;cnt);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,cnt);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;hello%n\n&quot;</span>, &amp;cnt);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,cnt);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//hello</span></span><br><span class="line"><span class="comment">//2</span></span><br><span class="line"><span class="comment">//hello</span></span><br><span class="line"><span class="comment">//5</span></span><br><span class="line"><span class="comment">//printf 在解析到 %n 时，会把“当前已经输出的字符数”写到传进来的那个指针指向的内存里，也就是 cnt 所在的位置</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c" data-language="c" data-language-label="C"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">char</span> a[] = <span class="string">&quot;aaaa&quot;</span>;</span><br><span class="line">    <span class="type">char</span> b[] = <span class="string">&quot;bbbb&quot;</span>;</span><br><span class="line">    <span class="type">char</span> c[] = <span class="string">&quot;cccc&quot;</span>;</span><br><span class="line">    <span class="type">char</span> d[] = <span class="string">&quot;dddd&quot;</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%3$s  %2$s  %1$s&quot;</span>, a, b, c);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">//cccc  bbbb  aaaa</span></span><br><span class="line"><span class="comment">//%\d$s限制了参数顺序打印，按照给定的参数序号来返回</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+</blockquote>
+
+    </div>
+  </div>
+
+  <aside class="article-side">
+    <div class="card-panel sticky-panel">
+      <h3>Outline</h3>
+      
+        <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#misc"><span class="toc-list-text">misc</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-OSINT-3"><span class="toc-list-text">1.OSINT-3</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link"><span class="toc-list-text"></span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E7%BE%8E%E4%B8%BD%E7%9A%84%E9%A3%8E%E6%99%AF%E7%85%A7"><span class="toc-list-text">1.美丽的风景照</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-Guess%EF%BC%81"><span class="toc-list-text">2.Guess！</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-%E6%B9%96%E5%BF%83%E4%BA%AD%E7%9C%8B%E9%9B%AA"><span class="toc-list-text">3.湖心亭看雪</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4-%E5%B0%8F%E8%93%9D%E9%B2%A8%E7%9A%84%E7%A5%9E%E7%A7%98%E6%96%87%E4%BB%B6"><span class="toc-list-text">4.小蓝鲨的神秘文件</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#crypto"><span class="toc-list-text">crypto</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1"><span class="toc-list-text">1</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#pwn"><span class="toc-list-text">pwn</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-ez-fmt"><span class="toc-list-text">1.ez_fmt</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%89%8D%E7%BD%AE%EF%BC%9A%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-list-text">前置：格式化字符串漏洞利用</span></a></li></ol></li></ol></li></ol></div>
+      
+    </div>
+
+    
+      <div class="card-panel sticky-panel">
+        <h3>More from ctf</h3>
+        <div class="mini-list">
+          
+            <a href="/notes/ctf/_CTF/">
+              <strong>_CTF</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/_CTF/Week_1/">
+              <strong>Week_1</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/">
+              <strong>2025_SWPU-NSSCTF_秋季招新入门训练赛</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+            <a href="/notes/ctf/2025_SWPU-NSSCTF_%E7%A7%8B%E5%AD%A3%E6%8B%9B%E6%96%B0%E5%85%A5%E9%97%A8%E8%AE%AD%E7%BB%83%E8%B5%9B/%E8%BF%98%E5%9C%A8%E5%86%99%E3%80%82CopperSmith%E7%AE%97%E6%B3%95/">
+              <strong>还在写。CopperSmith算法</strong>
+              <span>2026-04-19</span>
+            </a>
+          
+        </div>
+      </div>
+    
+  </aside>
+</article>
+
+      </main>
+      
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>JerryXie&#39;s Blog</strong>
+      <p>CTF, digital forensics, offensive security, and study notes.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Hexo</span>
+      <span class="dot"></span>
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
+      <span class="dot"></span>
+      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>
