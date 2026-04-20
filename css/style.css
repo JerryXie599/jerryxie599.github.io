@@ -33,8 +33,8 @@
   --code-radius: 12px;
   --code-padding-y: 10px;
   --code-padding-x: 12px;
-  --code-safe-padding-y: max(var(--code-padding-y), calc(var(--code-radius) + 2px));
-  --code-safe-padding-x: max(var(--code-padding-x), calc(var(--code-radius) + 2px));
+  --code-safe-padding-y: var(--code-padding-y);
+  --code-safe-padding-x: var(--code-padding-x);
   --code-font-size: 0.88rem;
   --code-line-height: 1.5;
   --code-gutter-color: #6f7f99;
