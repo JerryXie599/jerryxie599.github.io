@@ -1166,11 +1166,25 @@ strong {
   background: var(--code-bg);
   color: var(--code-fg);
   box-shadow: var(--code-shadow);
+  font-family: var(--font-mono) !important;
 }
 
 .rich-content pre[data-language-label],
 .rich-content figure.highlight[data-language-label] {
   padding-top: calc(var(--code-safe-padding-y) + var(--code-language-tag-extra-padding));
+}
+
+.rich-content pre *,
+.rich-content figure.highlight *,
+.rich-content figure.highlight table,
+.rich-content figure.highlight tbody,
+.rich-content figure.highlight tr,
+.rich-content figure.highlight td,
+.rich-content figure.highlight th,
+.rich-content figure.highlight .gutter,
+.rich-content figure.highlight .code,
+.rich-content figure.highlight .line {
+  font-family: var(--font-mono) !important;
 }
 
 .rich-content pre code,
