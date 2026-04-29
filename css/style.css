@@ -1157,6 +1157,9 @@ strong {
   color: var(--code-fg);
   font-size: var(--code-font-size);
   line-height: var(--code-line-height);
+  letter-spacing: 0;
+  font-variant-ligatures: none;
+  font-feature-settings: 'liga' 0, 'calt' 0;
 }
 
 .rich-content pre[data-language-label]::before,
@@ -1182,11 +1185,11 @@ strong {
 .rich-content figure.highlight figcaption {
   display: var(--code-title-display);
   margin: calc(var(--code-safe-padding-y) * -1) calc(var(--code-safe-padding-x) * -1) 0.9rem;
-  padding: 0.7rem var(--code-safe-padding-x);
+  padding: 0.5rem var(--code-safe-padding-x);
   border-bottom: 1px solid rgba(255, 255, 255, 0.14);
   color: rgba(247, 243, 232, 0.9);
   font-family: var(--font-mono);
-  font-size: 0.74rem;
+  font-size: 0.7rem;
 }
 
 .rich-content figure.highlight table {
@@ -1203,13 +1206,13 @@ strong {
 }
 
 .rich-content figure.highlight .gutter {
-  width: 44px;
+  width: 38px;
   color: var(--code-gutter-color);
 }
 
 .rich-content figure.highlight .gutter pre {
   margin: 0;
-  padding-right: 0.65rem;
+  padding-right: 0.5rem;
   border-right: 1px solid rgba(255, 255, 255, 0.12);
 }
 
@@ -1218,6 +1221,7 @@ strong {
   border: 0;
   background: transparent;
   box-shadow: none;
+  line-height: var(--code-line-height);
 }
 
 .rich-content figure.highlight .code pre {
