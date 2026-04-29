@@ -4,13 +4,13 @@
     
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>运维2025 | JerryXie&#39;s Blog</title>
-<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
-<meta name="theme-color" content="#f5f5f7">
+<title>运维2025 | JerryXie 安全档案</title>
+<meta name="description" content="一个面向 CTF、二进制利用、数字取证与长期学习记录的静态安全知识库。">
+<meta name="theme-color" content="#f9f9f7">
 <meta name="referrer" content="no-referrer">
 <meta property="og:type" content="article">
-<meta property="og:title" content="运维2025 | JerryXie&#39;s Blog">
-<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta property="og:title" content="运维2025 | JerryXie 安全档案">
+<meta property="og:description" content="一个面向 CTF、二进制利用、数字取证与长期学习记录的静态安全知识库。">
 
   <meta property="og:url" content="https://jerryxie.top/notes/电子取证/运维2025/">
   <link rel="canonical" href="https://jerryxie.top/notes/电子取证/运维2025/">
@@ -21,77 +21,80 @@
 
   <link rel="icon" href="/favicon.png">
 
-<link rel="stylesheet" href="/css/style.css?v=mo6ixrx0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Lora:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:wght@600;700;800;900&display=swap"
+  rel="stylesheet"
+>
+<link rel="stylesheet" href="/css/style.css?v=mojchirb">
 
-  <link rel="stylesheet" href="/vendor/katex/katex.min.css?v=mo6ixrx0">
+  <link rel="stylesheet" href="/vendor/katex/katex.min.css?v=mojchirb">
 
-<style id="site-theme-vars">:root{--font-body:'Space Grotesk', 'PingFang SC', 'Hiragino Sans GB', sans-serif;--font-heading:'Space Grotesk', 'PingFang SC', 'Hiragino Sans GB', sans-serif;--font-mono:'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;--content-width:1130px;--article-side-width:300px;--radius-xl:17px;--radius-lg:13px;--radius-md:9px;--bg:#eaf2ff;--bg-elevated:rgba(245, 249, 255, 0.56);--surface:rgba(255, 255, 255, 0.34);--surface-soft:rgba(255, 255, 255, 0.52);--surface-terminal:rgba(10, 18, 34, 0.88);--line:rgba(255, 255, 255, 0.46);--line-strong:rgba(134, 158, 197, 0.4);--text:#14263d;--text-soft:#5d718d;--accent:#3b82f6;--accent-strong:#22d3ee;--shadow:0 28px 80px rgba(103, 125, 171, 0.18);--shadow-soft:0 18px 48px rgba(103, 125, 171, 0.14);--page-gradient-start:#f6f9ff;--page-gradient-mid:#ebf3ff;--page-gradient-end:#e1eeff;--page-glow-one:rgba(255, 255, 255, 0.92);--page-glow-two:rgba(165, 224, 255, 0.42);--page-glow-three:rgba(120, 149, 255, 0.24);--code-bg:#0b1220;--code-fg:#e6edf7;--code-border:rgba(59, 130, 246, 0.14);--code-shadow:0 14px 28px rgba(14, 23, 38, 0.18);--code-radius:9px;--code-padding-y:7px;--code-padding-x:11px;--code-font-size:0.88rem;--code-line-height:1.41;--code-gutter-color:#6f7f99;--code-title-display:none;--code-language-tag-display:inline-flex;--code-language-tag-opacity:0;--code-language-tag-visibility:hidden;--code-language-tag-transform-y:-4px;--code-language-tag-extra-padding:0px;--inline-code-bg:rgba(59, 130, 246, 0.10);--inline-code-fg:#0f766e;}html[data-theme='dark']{--bg:#040917;--bg-elevated:rgba(9, 15, 29, 0.62);--surface:rgba(13, 22, 42, 0.54);--surface-soft:rgba(15, 25, 47, 0.7);--surface-terminal:rgba(2, 6, 23, 0.92);--line:rgba(165, 185, 220, 0.18);--line-strong:rgba(165, 185, 220, 0.28);--text:#ecf3ff;--text-soft:#97a6ba;--shadow:0 28px 80px rgba(2, 6, 23, 0.5);--shadow-soft:0 18px 48px rgba(2, 6, 23, 0.36);--page-gradient-start:#040917;--page-gradient-mid:#07101d;--page-gradient-end:#0b1424;--page-glow-one:rgba(77, 134, 255, 0.18);--page-glow-two:rgba(34, 211, 238, 0.12);--page-glow-three:rgba(91, 126, 255, 0.12);--inline-code-bg:rgba(16, 185, 129, 0.12);--inline-code-fg:#7cf0bf;}</style>
+<style id="site-theme-vars">:root{--font-body:'Lora', 'Noto Serif SC', 'Songti SC', serif;--font-heading:'Playfair Display', 'Noto Serif SC', 'STSong', serif;--font-mono:'JetBrains Mono', 'IBM Plex Mono', Consolas, monospace;--content-width:1380px;--article-side-width:320px;--radius-xl:0px;--radius-lg:0px;--radius-md:0px;--bg:#f9f9f7;--bg-elevated:#fbfbf8;--surface:rgba(255, 255, 255, 0.94);--surface-soft:#f1efe8;--surface-terminal:#141414;--line:#d7d3c7;--line-strong:#111111;--text:#141414;--text-soft:#5b5850;--accent:#b32020;--accent-strong:#d45b2d;--shadow:0 20px 40px rgba(17, 17, 17, 0.05);--shadow-soft:0 12px 24px rgba(17, 17, 17, 0.04);--page-gradient-start:#f9f9f7;--page-gradient-mid:#f9f9f7;--page-gradient-end:#f9f9f7;--page-glow-one:rgba(255, 255, 255, 0);--page-glow-two:rgba(255, 255, 255, 0);--page-glow-three:rgba(255, 255, 255, 0);--code-bg:#111111;--code-fg:#f7f3e8;--code-border:#2a2a2a;--code-shadow:none;--code-radius:0px;--code-padding-y:12px;--code-padding-x:14px;--code-font-size:0.88rem;--code-line-height:1.55;--code-gutter-color:#8f8a80;--code-title-display:block;--code-language-tag-display:inline-flex;--code-language-tag-opacity:1;--code-language-tag-visibility:visible;--code-language-tag-transform-y:0px;--code-language-tag-extra-padding:28px;--inline-code-bg:rgba(179, 32, 32, 0.08);--inline-code-fg:#8d1e1e;}html[data-theme='dark']{--bg:#101010;--bg-elevated:#131313;--surface:#171717;--surface-soft:#1d1d1d;--surface-terminal:#090909;--line:#343434;--line-strong:#f5f2e9;--text:#f5f2e9;--text-soft:#b5b0a6;--shadow:0 20px 40px rgba(0, 0, 0, 0.25);--shadow-soft:0 12px 24px rgba(0, 0, 0, 0.18);--page-gradient-start:#101010;--page-gradient-mid:#101010;--page-gradient-end:#101010;--page-glow-one:rgba(255, 255, 255, 0);--page-glow-two:rgba(255, 255, 255, 0);--page-glow-three:rgba(255, 255, 255, 0);--inline-code-bg:rgba(255, 255, 255, 0.08);--inline-code-fg:#f5f2e9;}</style>
 
-  <script defer src="/vendor/katex/katex.min.js?v=mo6ixrx0"></script>
-  <script defer src="/vendor/katex/contrib/auto-render.min.js?v=mo6ixrx0"></script>
+  <script defer src="/vendor/katex/katex.min.js?v=mojchirb"></script>
+  <script defer src="/vendor/katex/contrib/auto-render.min.js?v=mojchirb"></script>
 
-<script defer src="/js/main.js?v=mo6ixrx0"></script>
+<script defer src="/js/main.js?v=mojchirb"></script>
 
   <meta name="generator" content="Hexo 8.1.1"></head>
-  <body>
+  <body class="page-post">
     <div class="scroll-progress" data-scroll-progress></div>
     <div class="site-shell">
       
-<header class="site-header">
-  <div class="header-inner">
-    <a class="brand" href="/">
-      <span class="brand-mark"></span>
-      <span class="brand-name">JerryXie&#39;s Blog</span>
-    </a>
-
-    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
-      <span></span><span></span><span></span>
-    </button>
-
-    <nav class="site-nav" data-menu-panel>
+<header class="masthead">
+  <div class="masthead-top">
+    <a class="masthead-title" href="/">JerryXie 安全档案</a>
+    <p class="masthead-subtitle">CTF / PWN / 数字取证 / 研究笔记</p>
+  </div>
+  <div class="masthead-meta">
+    <span>VOL. 1 | STATIC EDITION</span>
+    <span class="hide-mobile">UPDATED 2026-04-19</span>
+    <span>JERRYXIE.TOP</span>
+  </div>
+  <div class="masthead-nav-row">
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">Menu</button>
+    <nav class="masthead-nav" data-menu-panel>
       
-        <a href="/" class="">Home</a>
+        <a href="/" class="nav-link ">首页</a>
       
-        <a href="/archives/" class="">Archive</a>
+        <a href="/archives/" class="nav-link ">归档</a>
       
-        <a href="/categories/" class="">Library</a>
+        <a href="/categories/" class="nav-link ">目录</a>
       
-        <a href="/about/" class="">About</a>
+        <a href="/about/" class="nav-link ">关于</a>
       
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener" class="nav-link">GitHub</a>
     </nav>
-
-    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
-      <span data-theme-icon>Dark</span>
-    </button>
   </div>
 </header>
 
       <main class="page-shell">
         
 
-<article class="article-layout">
-  <div class="article-main card-panel">
-    <a class="back-link" href="/categories/">Back to library</a>
-    <header class="article-header">
-      <div class="article-badges">
+<article class="post-shell reveal">
+  <div class="post-main">
+    <a class="back-link" href="/categories/">返回目录</a>
+    <header class="post-header">
+      <div class="post-header-cat">
         
           
             <a class="category-chip" href="/categories/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/">电子取证</a>
           
         
       </div>
-      <h1>运维2025</h1>
-      <div class="article-meta">
+      <h1 class="post-header-title">运维2025</h1>
+      <div class="post-header-meta">
         <span>Published 2026-04-19</span>
         <span>Updated 2026-04-19</span>
         <span>9 min</span>
       </div>
       
-        <p class="article-source">Source path: <code>电子取证/运维2025.md</code></p>
+        <p class="post-source">Source path: <code>电子取证/运维2025.md</code></p>
       
     </header>
-
-    <div class="article-content">
+    <div class="rich-content post-content">
       <p>线上初赛官方writeup发布，见 </p>
 <p><a target="_blank" rel="noopener" href="https://contest.pku.edu.cn/#/info/announcements">高校网络安全管理运维赛</a></p>
 <h1 id="1-电子数据提取与固定-Fitness"><a href="#1-电子数据提取与固定-Fitness" class="headerlink" title="1.电子数据提取与固定-Fitness"></a>1.电子数据提取与固定-Fitness</h1><h1 id="一、电子数据提取与固定-Fitness"><a href="#一、电子数据提取与固定-Fitness" class="headerlink" title="一、电子数据提取与固定-Fitness"></a>一、电子数据提取与固定-Fitness</h1><h2 id="1-镜像中用户“berserker”的密码哈希是多少"><a href="#1-镜像中用户“berserker”的密码哈希是多少" class="headerlink" title="1.镜像中用户“berserker”的密码哈希是多少"></a>1.镜像中用户“berserker”的密码哈希是多少</h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1760954307182-47a5f8af-5d1f-47e8-9e26-3443e39b9164.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
@@ -198,17 +201,17 @@
     </div>
   </div>
 
-  <aside class="article-side">
-    <div class="card-panel sticky-panel">
-      <h3>Outline</h3>
+  <aside class="post-side">
+    <div class="post-side-card">
+      <h3>文章大纲</h3>
       
         <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#1-%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96%E4%B8%8E%E5%9B%BA%E5%AE%9A-Fitness"><span class="toc-list-text">1.电子数据提取与固定-Fitness</span></a></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E4%B8%80%E3%80%81%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96%E4%B8%8E%E5%9B%BA%E5%AE%9A-Fitness"><span class="toc-list-text">一、电子数据提取与固定-Fitness</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E9%95%9C%E5%83%8F%E4%B8%AD%E7%94%A8%E6%88%B7%E2%80%9Cberserker%E2%80%9D%E7%9A%84%E5%AF%86%E7%A0%81%E5%93%88%E5%B8%8C%E6%98%AF%E5%A4%9A%E5%B0%91"><span class="toc-list-text">1.镜像中用户“berserker”的密码哈希是多少</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-%E9%95%9C%E5%83%8F%E4%B8%AD%E6%98%AF%E5%90%A6%E5%AE%89%E8%A3%85%E4%BA%86Linux%E7%8E%AF%E5%A2%83%EF%BC%8C%E8%8B%A5%E6%9C%89%EF%BC%8C%E8%AF%B7%E7%BB%99%E5%87%BALinux%E5%8F%91%E8%A1%8C%E7%89%88%E5%90%8D%E7%A7%B0-%EF%BC%88%E5%85%A8%E5%B0%8F%E5%86%99%EF%BC%89"><span class="toc-list-text">2.镜像中是否安装了Linux环境，若有，请给出Linux发行版名称 （全小写）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-%E7%94%A8%E6%88%B7%E6%A1%8C%E9%9D%A2%E4%B8%8A%E5%AD%98%E5%9C%A8%E4%B8%80%E4%B8%AA%E4%BB%8E%E8%BF%90%E5%8A%A8%E8%AE%BE%E5%A4%87%E4%B8%AD%E5%AF%BC%E5%87%BA%E7%9A%84%E8%BF%90%E5%8A%A8%E8%AE%B0%E5%BD%95%E6%96%87%E4%BB%B6%EF%BC%8C%E8%AF%A5%E6%96%87%E4%BB%B6%E5%AD%98%E5%9C%A8%E6%8D%9F%E5%9D%8F%EF%BC%8C%E8%AF%B7%E5%B0%9D%E8%AF%95%E4%BF%AE%E5%A4%8D%E5%B9%B6%E7%BB%99%E5%87%BA%E4%BF%AE%E5%A4%8D%E5%90%8E%E7%9A%84SM3%E6%A0%A1%E9%AA%8C%E5%80%BC-%EF%BC%88%E5%85%A8%E5%A4%A7%E5%86%99%EF%BC%89"><span class="toc-list-text">3.用户桌面上存在一个从运动设备中导出的运动记录文件，该文件存在损坏，请尝试修复并给出修复后的SM3校验值 （全大写）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link"><span class="toc-list-text"></span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4-%E8%A7%A3%E6%9E%90%E4%BF%AE%E5%A4%8D%E5%90%8E%E7%9A%84%E6%96%87%E4%BB%B6%EF%BC%8C%E8%AF%B7%E7%BB%99%E5%87%BA%E8%AF%A5%E8%BF%90%E5%8A%A8%E8%AE%B0%E5%BD%95%E4%B8%AD%E6%9C%80%E9%AB%98%E6%97%B6%E9%80%9F%EF%BC%88%E5%8D%95%E4%BD%8DKM-H%EF%BC%8C%E4%BF%9D%E7%95%99%E4%B8%A4%E4%BD%8D%E5%B0%8F%E6%95%B0%EF%BC%89"><span class="toc-list-text">4.解析修复后的文件，请给出该运动记录中最高时速（单位KM&#x2F;H，保留两位小数）</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#5-%E8%A7%A3%E6%9E%90%E4%BF%AE%E5%A4%8D%E5%90%8E%E7%9A%84%E6%96%87%E4%BB%B6%EF%BC%8C%E6%96%87%E4%BB%B6%E4%B8%AD%E8%AE%B0%E5%BD%95%E7%9A%84%E8%AF%A5%E8%AE%BE%E5%A4%87%E7%9A%84%E5%88%B6%E9%80%A0%E5%95%86%E5%90%8D%E7%A7%B0%E4%B8%BA%EF%BC%88%E5%85%A8%E5%B0%8F%E5%86%99%EF%BC%89"><span class="toc-list-text">5.解析修复后的文件，文件中记录的该设备的制造商名称为（全小写）</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#2-%E7%BD%91%E7%BB%9C%E8%BF%90%E7%BB%B4%E5%B0%8F%E5%8A%A9%E6%89%8B"><span class="toc-list-text">2.网络运维小助手</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1"><span class="toc-list-text">1.</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#3-%E6%A0%A1%E5%9B%AD%E7%BD%91%E7%BB%9C%E4%BF%9D%E5%8D%AB%E6%88%98"><span class="toc-list-text">3.校园网络保卫战</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-1"><span class="toc-list-text">1.</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2"><span class="toc-list-text">2.</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#4-%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90-aipowah%EF%BC%88%E6%A3%80%E6%9D%904%EF%BC%89"><span class="toc-list-text">4.电子数据分析-aipowah（检材4）</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E6%9C%8D%E5%8A%A1%E5%99%A8rootfs%E9%87%87%E7%94%A8%E7%9A%84%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%A0%BC%E5%BC%8F"><span class="toc-list-text">1.服务器rootfs采用的文件系统格式</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#-1"><span class="toc-list-text"></span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-AI%E8%AF%88%E9%AA%97%E7%AB%99%E7%82%B9%E7%9A%84%E5%9F%9F%E5%90%8D"><span class="toc-list-text">2.AI诈骗站点的域名</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4%E4%BA%BA%E5%91%98%E7%9A%84%E4%B8%BB%E6%9C%BA%E5%90%8D"><span class="toc-list-text">3.服务器运维人员的主机名</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#authorized-keys%E6%96%87%E4%BB%B6%E5%AD%98%E7%9A%84%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-list-text">authorized_keys文件存的是什么?</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#-2"><span class="toc-list-text"></span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4-%E7%94%A8%E4%BA%8E%E8%AF%88%E9%AA%97%E8%81%8A%E5%A4%A9%E7%9A%84AI%E6%A8%A1%E5%9E%8B%E5%90%8D%E7%A7%B0"><span class="toc-list-text">4.用于诈骗聊天的AI模型名称</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#5-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%97%A5%E5%BF%97%E5%A4%96%E5%8F%91%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8IP%E5%9C%B0%E5%9D%80"><span class="toc-list-text">5.操作系统日志外发的服务器IP地址</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#6-%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E8%B0%83%E7%94%A8AI%E6%A8%A1%E5%9E%8B%E6%9C%8D%E5%8A%A1%E6%89%80%E4%BD%BF%E7%94%A8%E7%9A%84%E5%AF%86%E9%92%A5"><span class="toc-list-text">6.开发人员调用AI模型服务所使用的密钥</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#7-%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E7%9A%84%E9%82%AE%E7%AE%B1"><span class="toc-list-text">7.开发人员的邮箱</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#8-%E2%80%9C%E6%9C%BA%E7%A5%A8%E9%80%80%E6%AC%BE%E2%80%9D%E7%B1%BB%E5%9E%8B%E8%AF%88%E9%AA%97%E9%A1%B5%E7%9A%84%E5%9F%9F%E5%90%8D"><span class="toc-list-text">8.“机票退款”类型诈骗页的域名</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E7%A3%81%E7%9B%98%E9%98%B5%E5%88%97%E7%9A%84%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-list-text">磁盘阵列的文件系统</span></a></li></ol></div>
       
     </div>
 
     
-      <div class="card-panel sticky-panel">
-        <h3>More from 电子取证</h3>
+      <div class="post-side-card">
+        <h3>同目录更多文章 电子取证</h3>
         <div class="mini-list">
           
             <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/2024%E6%95%B0%E8%AF%81%E6%9D%AF%E5%88%9D%E8%B5%9B/">
@@ -240,18 +243,26 @@
       </main>
       
 <footer class="site-footer">
-  <div class="footer-inner">
-    <div>
-      <strong>JerryXie&#39;s Blog</strong>
-      <p>CTF, digital forensics, offensive security, and study notes.</p>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h4>JerryXie 安全档案</h4>
+      <p>一个面向 CTF、二进制利用、数字取证与长期学习记录的静态安全知识库。</p>
+    </div>
+    <div class="footer-links">
+      <a href="/">首页</a>
+      <a href="/archives/">归档</a>
+      <a href="/categories/">目录</a>
+      <a href="/about/">关于</a>
     </div>
     <div class="footer-meta">
-      <span>Hexo</span>
-      <span class="dot"></span>
-      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
-      <span class="dot"></span>
-      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+      <p>HEXO STATIC PIPELINE</p>
+      <p><a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub Repository</a></p>
+      <p><a href="https://jerryxie.top/" target="_blank" rel="noopener">Live Site</a></p>
     </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 JerryXie</span>
+    <span>PUBLISHED AT JERRYXIE.TOP</span>
   </div>
 </footer>
 

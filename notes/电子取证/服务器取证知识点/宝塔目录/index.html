@@ -4,13 +4,13 @@
     
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>宝塔目录 | JerryXie&#39;s Blog</title>
-<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
-<meta name="theme-color" content="#f5f5f7">
+<title>宝塔目录 | JerryXie 安全档案</title>
+<meta name="description" content="一个面向 CTF、二进制利用、数字取证与长期学习记录的静态安全知识库。">
+<meta name="theme-color" content="#f9f9f7">
 <meta name="referrer" content="no-referrer">
 <meta property="og:type" content="article">
-<meta property="og:title" content="宝塔目录 | JerryXie&#39;s Blog">
-<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta property="og:title" content="宝塔目录 | JerryXie 安全档案">
+<meta property="og:description" content="一个面向 CTF、二进制利用、数字取证与长期学习记录的静态安全知识库。">
 
   <meta property="og:url" content="https://jerryxie.top/notes/电子取证/服务器取证知识点/宝塔目录/">
   <link rel="canonical" href="https://jerryxie.top/notes/电子取证/服务器取证知识点/宝塔目录/">
@@ -21,79 +21,82 @@
 
   <link rel="icon" href="/favicon.png">
 
-<link rel="stylesheet" href="/css/style.css?v=mo6ixrx0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Lora:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:wght@600;700;800;900&display=swap"
+  rel="stylesheet"
+>
+<link rel="stylesheet" href="/css/style.css?v=mojchirb">
 
-  <link rel="stylesheet" href="/vendor/katex/katex.min.css?v=mo6ixrx0">
+  <link rel="stylesheet" href="/vendor/katex/katex.min.css?v=mojchirb">
 
-<style id="site-theme-vars">:root{--font-body:'Space Grotesk', 'PingFang SC', 'Hiragino Sans GB', sans-serif;--font-heading:'Space Grotesk', 'PingFang SC', 'Hiragino Sans GB', sans-serif;--font-mono:'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;--content-width:1130px;--article-side-width:300px;--radius-xl:17px;--radius-lg:13px;--radius-md:9px;--bg:#eaf2ff;--bg-elevated:rgba(245, 249, 255, 0.56);--surface:rgba(255, 255, 255, 0.34);--surface-soft:rgba(255, 255, 255, 0.52);--surface-terminal:rgba(10, 18, 34, 0.88);--line:rgba(255, 255, 255, 0.46);--line-strong:rgba(134, 158, 197, 0.4);--text:#14263d;--text-soft:#5d718d;--accent:#3b82f6;--accent-strong:#22d3ee;--shadow:0 28px 80px rgba(103, 125, 171, 0.18);--shadow-soft:0 18px 48px rgba(103, 125, 171, 0.14);--page-gradient-start:#f6f9ff;--page-gradient-mid:#ebf3ff;--page-gradient-end:#e1eeff;--page-glow-one:rgba(255, 255, 255, 0.92);--page-glow-two:rgba(165, 224, 255, 0.42);--page-glow-three:rgba(120, 149, 255, 0.24);--code-bg:#0b1220;--code-fg:#e6edf7;--code-border:rgba(59, 130, 246, 0.14);--code-shadow:0 14px 28px rgba(14, 23, 38, 0.18);--code-radius:9px;--code-padding-y:7px;--code-padding-x:11px;--code-font-size:0.88rem;--code-line-height:1.41;--code-gutter-color:#6f7f99;--code-title-display:none;--code-language-tag-display:inline-flex;--code-language-tag-opacity:0;--code-language-tag-visibility:hidden;--code-language-tag-transform-y:-4px;--code-language-tag-extra-padding:0px;--inline-code-bg:rgba(59, 130, 246, 0.10);--inline-code-fg:#0f766e;}html[data-theme='dark']{--bg:#040917;--bg-elevated:rgba(9, 15, 29, 0.62);--surface:rgba(13, 22, 42, 0.54);--surface-soft:rgba(15, 25, 47, 0.7);--surface-terminal:rgba(2, 6, 23, 0.92);--line:rgba(165, 185, 220, 0.18);--line-strong:rgba(165, 185, 220, 0.28);--text:#ecf3ff;--text-soft:#97a6ba;--shadow:0 28px 80px rgba(2, 6, 23, 0.5);--shadow-soft:0 18px 48px rgba(2, 6, 23, 0.36);--page-gradient-start:#040917;--page-gradient-mid:#07101d;--page-gradient-end:#0b1424;--page-glow-one:rgba(77, 134, 255, 0.18);--page-glow-two:rgba(34, 211, 238, 0.12);--page-glow-three:rgba(91, 126, 255, 0.12);--inline-code-bg:rgba(16, 185, 129, 0.12);--inline-code-fg:#7cf0bf;}</style>
+<style id="site-theme-vars">:root{--font-body:'Lora', 'Noto Serif SC', 'Songti SC', serif;--font-heading:'Playfair Display', 'Noto Serif SC', 'STSong', serif;--font-mono:'JetBrains Mono', 'IBM Plex Mono', Consolas, monospace;--content-width:1380px;--article-side-width:320px;--radius-xl:0px;--radius-lg:0px;--radius-md:0px;--bg:#f9f9f7;--bg-elevated:#fbfbf8;--surface:rgba(255, 255, 255, 0.94);--surface-soft:#f1efe8;--surface-terminal:#141414;--line:#d7d3c7;--line-strong:#111111;--text:#141414;--text-soft:#5b5850;--accent:#b32020;--accent-strong:#d45b2d;--shadow:0 20px 40px rgba(17, 17, 17, 0.05);--shadow-soft:0 12px 24px rgba(17, 17, 17, 0.04);--page-gradient-start:#f9f9f7;--page-gradient-mid:#f9f9f7;--page-gradient-end:#f9f9f7;--page-glow-one:rgba(255, 255, 255, 0);--page-glow-two:rgba(255, 255, 255, 0);--page-glow-three:rgba(255, 255, 255, 0);--code-bg:#111111;--code-fg:#f7f3e8;--code-border:#2a2a2a;--code-shadow:none;--code-radius:0px;--code-padding-y:12px;--code-padding-x:14px;--code-font-size:0.88rem;--code-line-height:1.55;--code-gutter-color:#8f8a80;--code-title-display:block;--code-language-tag-display:inline-flex;--code-language-tag-opacity:1;--code-language-tag-visibility:visible;--code-language-tag-transform-y:0px;--code-language-tag-extra-padding:28px;--inline-code-bg:rgba(179, 32, 32, 0.08);--inline-code-fg:#8d1e1e;}html[data-theme='dark']{--bg:#101010;--bg-elevated:#131313;--surface:#171717;--surface-soft:#1d1d1d;--surface-terminal:#090909;--line:#343434;--line-strong:#f5f2e9;--text:#f5f2e9;--text-soft:#b5b0a6;--shadow:0 20px 40px rgba(0, 0, 0, 0.25);--shadow-soft:0 12px 24px rgba(0, 0, 0, 0.18);--page-gradient-start:#101010;--page-gradient-mid:#101010;--page-gradient-end:#101010;--page-glow-one:rgba(255, 255, 255, 0);--page-glow-two:rgba(255, 255, 255, 0);--page-glow-three:rgba(255, 255, 255, 0);--inline-code-bg:rgba(255, 255, 255, 0.08);--inline-code-fg:#f5f2e9;}</style>
 
-  <script defer src="/vendor/katex/katex.min.js?v=mo6ixrx0"></script>
-  <script defer src="/vendor/katex/contrib/auto-render.min.js?v=mo6ixrx0"></script>
+  <script defer src="/vendor/katex/katex.min.js?v=mojchirb"></script>
+  <script defer src="/vendor/katex/contrib/auto-render.min.js?v=mojchirb"></script>
 
-<script defer src="/js/main.js?v=mo6ixrx0"></script>
+<script defer src="/js/main.js?v=mojchirb"></script>
 
   <meta name="generator" content="Hexo 8.1.1"></head>
-  <body>
+  <body class="page-post">
     <div class="scroll-progress" data-scroll-progress></div>
     <div class="site-shell">
       
-<header class="site-header">
-  <div class="header-inner">
-    <a class="brand" href="/">
-      <span class="brand-mark"></span>
-      <span class="brand-name">JerryXie&#39;s Blog</span>
-    </a>
-
-    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
-      <span></span><span></span><span></span>
-    </button>
-
-    <nav class="site-nav" data-menu-panel>
+<header class="masthead">
+  <div class="masthead-top">
+    <a class="masthead-title" href="/">JerryXie 安全档案</a>
+    <p class="masthead-subtitle">CTF / PWN / 数字取证 / 研究笔记</p>
+  </div>
+  <div class="masthead-meta">
+    <span>VOL. 1 | STATIC EDITION</span>
+    <span class="hide-mobile">UPDATED 2026-04-19</span>
+    <span>JERRYXIE.TOP</span>
+  </div>
+  <div class="masthead-nav-row">
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">Menu</button>
+    <nav class="masthead-nav" data-menu-panel>
       
-        <a href="/" class="">Home</a>
+        <a href="/" class="nav-link ">首页</a>
       
-        <a href="/archives/" class="">Archive</a>
+        <a href="/archives/" class="nav-link ">归档</a>
       
-        <a href="/categories/" class="">Library</a>
+        <a href="/categories/" class="nav-link ">目录</a>
       
-        <a href="/about/" class="">About</a>
+        <a href="/about/" class="nav-link ">关于</a>
       
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener" class="nav-link">GitHub</a>
     </nav>
-
-    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
-      <span data-theme-icon>Dark</span>
-    </button>
   </div>
 </header>
 
       <main class="page-shell">
         
 
-<article class="article-layout">
-  <div class="article-main card-panel">
-    <a class="back-link" href="/categories/">Back to library</a>
-    <header class="article-header">
-      <div class="article-badges">
+<article class="post-shell reveal">
+  <div class="post-main">
+    <a class="back-link" href="/categories/">返回目录</a>
+    <header class="post-header">
+      <div class="post-header-cat">
         
           
-            <a class="category-chip" href="/categories/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/">电子取证</a>
+            <a class="category-chip" href="/categories/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/">电子取证</a> 
           
             <a class="category-chip" href="/categories/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81%E7%9F%A5%E8%AF%86%E7%82%B9/">服务器取证知识点</a>
           
         
       </div>
-      <h1>宝塔目录</h1>
-      <div class="article-meta">
+      <h1 class="post-header-title">宝塔目录</h1>
+      <div class="post-header-meta">
         <span>Published 2026-04-19</span>
         <span>Updated 2026-04-19</span>
         <span>8 min</span>
       </div>
       
-        <p class="article-source">Source path: <code>电子取证/服务器取证知识点/宝塔目录.md</code></p>
+        <p class="post-source">Source path: <code>电子取证/服务器取证知识点/宝塔目录.md</code></p>
       
     </header>
-
-    <div class="article-content">
+    <div class="rich-content post-content">
       <p>参考：</p>
 <p><a target="_blank" rel="noopener" href="https://luoyinhui.github.io/2025/10/13/%E5%AE%9D%E5%A1%94%E9%9D%A2%E6%9D%BF%E7%9F%A5%E8%AF%86%E7%82%B9/">https://luoyinhui.github.io/2025/10/13/%E5%AE%9D%E5%A1%94%E9%9D%A2%E6%9D%BF%E7%9F%A5%E8%AF%86%E7%82%B9/</a></p>
 <figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br></pre></td><td class="code"><pre><span class="line">/www/</span><br><span class="line">├── backup  -----------------------------------&gt;宝塔面板的备份文件目录          </span><br><span class="line">│   ├── database------------------------------&gt;宝塔面板的数据库备份目录</span><br><span class="line">│   ├── panel---------------------------------&gt;宝塔面板配置自动备份目录（6.9.32版本新添加）</span><br><span class="line">│   │   └── 2019-10-16-----------------------&gt;宝塔面板配置自动备份的文件，默认是以年月日格式备份，数量为15天</span><br><span class="line">│   └── site----------------------------------&gt;宝塔面板站点备份目录</span><br><span class="line">├── server-------------------------------------&gt;宝塔面板服务目录（比较关键）</span><br><span class="line">│   ├── data----------------------------------&gt;mysql数据库服务的目录</span><br><span class="line">		├── xindb.cn.err-----------------------&gt;数据库错误日志文件（比较重要，数据库启动不了可以将此日志文件打开，找到最新的日志发给DBA进行分析错误）</span><br><span class="line">		├── xindb.cn.pid-----------------------&gt;存放数据库pid的文件</span><br><span class="line">│   ├── nginx---------------------------------&gt;nginx的主目录</span><br><span class="line">│   │   ├── client_body_temp</span><br><span class="line">│   │   ├── conf-----------------------------&gt;nginx的默认配置目录</span><br><span class="line">│   │   ├── fastcgi_temp</span><br><span class="line">│   │   ├── html</span><br><span class="line">│   │   │   ├── 50x.html</span><br><span class="line">│   │   │   └── index.html</span><br><span class="line">│   │   ├── logs-----------------------------&gt;nginx的日志目录</span><br><span class="line">│   │   │   ├── error.log</span><br><span class="line">│   │   │   └── nginx.pid</span><br><span class="line">│   │   ├── off</span><br><span class="line">│   │   ├── proxy_cache_dir</span><br><span class="line">│   │   ├── proxy_temp_dir</span><br><span class="line">│   │   ├── rpm.pl</span><br><span class="line">│   │   ├── sbin</span><br><span class="line">│   │   │   └── nginx-----------------------&gt;nginx的启动文件</span><br><span class="line">│   │   ├── scgi_temp</span><br><span class="line">│   │   ├── uwsgi_temp</span><br><span class="line">│   │   ├── version.pl</span><br><span class="line">│   │   └── waf</span><br><span class="line">│   │       ├── config.lua</span><br><span class="line">│   │       ├── init.lua</span><br><span class="line">│   │       └── waf.lua</span><br><span class="line">│   ├── panel---------------------------------&gt;面板文件目录（最为重要）</span><br><span class="line">│   │   ├── BTPanel</span><br><span class="line">│   │   ├── class</span><br><span class="line">│   │   ├── config</span><br><span class="line">│   │   ├── data</span><br><span class="line">│   │   ├── default.pl</span><br><span class="line">│   │   ├── init.sh</span><br><span class="line">│   │   ├── install--------------------------&gt;面板软件安装脚本路径</span><br><span class="line">│   │   │   ├── install_soft.sh</span><br><span class="line">│   │   │   ├── lib.sh</span><br><span class="line">│   │   │   ├── mysql.sh</span><br><span class="line">│   │   │   ├── nginx.sh</span><br><span class="line">│   │   │   ├── phpmyadmin.sh</span><br><span class="line">│   │   │   ├── php.sh</span><br><span class="line">│   │   │   ├── public.sh-------------------&gt;安装软件主脚本</span><br><span class="line">│   │   │   └── pureftpd.sh</span><br><span class="line">│   │   ├── license.txt</span><br><span class="line">│   │   ├── logs------------------------------&gt;面板日志存放目录</span><br><span class="line">│   │   │   ├── access.log-------------------&gt;面板访问日志文件</span><br><span class="line">│   │   │   ├── certbot.log</span><br><span class="line">│   │   │   ├── error.log--------------------&gt;面板错误日志文件</span><br><span class="line">（面板打不开或者软件安装不了，可以打开这个文件将最新的日志信息发到宝塔论坛）</span><br><span class="line">│   │   │   ├── panel.pid</span><br><span class="line">│   │   │   ├── request</span><br><span class="line">│   │   │   │   └── 2019-10-16.json</span><br><span class="line">│   │   │   └── task.log</span><br><span class="line">│   │   ├── rewrite---------------------------&gt;伪静态存放目录</span><br><span class="line">│   │   │   ├── apache-----------------------&gt;apache默认的伪静态规则目录</span><br><span class="line">│   │   │   │   ├── dedecms.conf</span><br><span class="line">│   │   │   │   ├── default.conf</span><br><span class="line">│   │   │   │   ├── discuzx2.conf</span><br><span class="line">│   │   │   │   ├── discuzx3.conf</span><br><span class="line">│   │   │   │   ├── discuzx.conf</span><br><span class="line">│   │   │   │   ├── ecshop.conf</span><br><span class="line">│   │   │   │   ├── EmpireCMS.conf</span><br><span class="line">│   │   │   │   ├── list.txt</span><br><span class="line">│   │   │   │   ├── mvc.conf</span><br><span class="line">│   │   │   │   ├── phpcms.conf</span><br><span class="line">│   │   │   │   ├── phpwind.conf</span><br><span class="line">│   │   │   │   ├── thinkphp.conf</span><br><span class="line">│   │   │   │   ├── wordpress.conf</span><br><span class="line">│   │   │   │   └── zblog.conf</span><br><span class="line">│   │   │   └── nginx-------------------------&gt;nginx默认的伪静态规则存放目录</span><br><span class="line">│   │   │       ├── dabr.conf</span><br><span class="line">│   │   │       ├── dbshop.conf</span><br><span class="line">│   │   │       ├── dedecms.conf</span><br><span class="line">│   │   │       ├── default.conf</span><br><span class="line">│   │   │       ├── discuz.conf</span><br><span class="line">│   │   │       ├── discuzx2.conf</span><br><span class="line">│   │   │       ├── discuzx3.conf</span><br><span class="line">│   │   │       ├── discuzx.conf</span><br><span class="line">│   │   │       ├── drupal.conf</span><br><span class="line">│   │   │       ├── ecshop.conf</span><br><span class="line">│   │   │       ├── emlog.conf</span><br><span class="line">│   │   │       ├── EmpireCMS.conf</span><br><span class="line">│   │   │       ├── laravel5.conf</span><br><span class="line">│   │   │       ├── maccms.conf</span><br><span class="line">│   │   │       ├── mvc.conf</span><br><span class="line">│   │   │       ├── niushop.conf</span><br><span class="line">│   │   │       ├── phpcms.conf</span><br><span class="line">│   │   │       ├── phpwind.conf</span><br><span class="line">│   │   │       ├── sablog.conf</span><br><span class="line">│   │   │       ├── seacms.conf</span><br><span class="line">│   │   │       ├── shopex.conf</span><br><span class="line">│   │   │       ├── thinkphp.conf</span><br><span class="line">│   │   │       ├── typecho2.conf</span><br><span class="line">│   │   │       ├── typecho.conf</span><br><span class="line">│   │   │       ├── wordpress.conf</span><br><span class="line">│   │   │       ├── wp2.conf</span><br><span class="line">│   │   │       └── zblog.conf</span><br><span class="line">│   │   ├── runconfig.py</span><br><span class="line">│   │   ├── runserver.py</span><br><span class="line">│   │   ├── runserver.pyc</span><br><span class="line">│   │   ├── script------------------------------&gt;面板计划任务备份脚本目录</span><br><span class="line">│   │   │   ├── backup</span><br><span class="line">│   │   │   ├── backup.py</span><br><span class="line">│   │   │   ├── ftp.sh</span><br><span class="line">│   │   │   ├── GetOS.sh</span><br><span class="line">│   │   │   ├── install.sh</span><br><span class="line">│   │   │   ├── logsBackup</span><br><span class="line">│   │   │   ├── logsBackup.py</span><br><span class="line">│   │   │   └── rememory.sh</span><br><span class="line">│   │   ├── ssl----------------------------------&gt;面板证书目录</span><br><span class="line">│   │   │   ├── certificate.pem</span><br><span class="line">│   │   │   └── privateKey.pem</span><br><span class="line">│   │   ├── task.py</span><br><span class="line">│   │   ├── tmp</span><br><span class="line">│   │   ├── tools.py</span><br><span class="line">│   │   ├── tools.pyc</span><br><span class="line">│   │   └── vhost--------------------------------&gt;站点配置文件目录</span><br><span class="line">│   │       ├── apache---------------------------&gt;apache 站点配置文件目录</span><br><span class="line">│   │       │   ├── 0.default.conf</span><br><span class="line">│   │       │   └── xindb.cn.conf</span><br><span class="line">│   │       ├── cert-----------------------------&gt;站点证书目录</span><br><span class="line">│   │       ├── nginx----------------------------&gt;nginx站点配置文件目录</span><br><span class="line">│   │       │   ├── 0.default.conf</span><br><span class="line">│   │       │   ├── xindb.cn.conf</span><br><span class="line">│   │       │   └── phpfpm_status.conf</span><br><span class="line">│   │       ├── rewrite--------------------------&gt;站点重定向配置文件目录</span><br><span class="line">│   │       │   └── xindb.cn.conf</span><br><span class="line">│   │       ├── template</span><br><span class="line">│   │       │   ├── apache</span><br><span class="line">│   │       │   └── nginx</span><br><span class="line">│   │       │       ├── anti.conf</span><br><span class="line">│   │       │       ├── error_page.conf</span><br><span class="line">│   │       │       ├── other.conf</span><br><span class="line">│   │       │       ├── proxy.conf</span><br><span class="line">│   │       │       ├── redirect.conf</span><br><span class="line">│   │       │       └── ssl.conf</span><br><span class="line">│   │       ├── tomcat----------------------------&gt;tomcat站点配置文件目录</span><br><span class="line">│   │       └── wafconf</span><br><span class="line">│   │           ├── args</span><br><span class="line">│   │           ├── blockip</span><br><span class="line">│   │           ├── cookie</span><br><span class="line">│   │           ├── denycc</span><br><span class="line">│   │           ├── post</span><br><span class="line">│   │           ├── returnhtml</span><br><span class="line">│   │           ├── url</span><br><span class="line">│   │           ├── user-agent</span><br><span class="line">│   │           ├── whiteip</span><br><span class="line">│   │           └── whiteurl</span><br><span class="line">│   ├── php----------------------------------------&gt;php安装目录</span><br><span class="line">│   │   └── 54</span><br><span class="line">│   ├── phpmyadmin</span><br><span class="line">│   ├── pure-ftpd</span><br><span class="line">├── wwwlogs-----------------------------------------&gt;站点日志目录（当站点打不开或者出错，将最新错误日志发到论坛）</span><br><span class="line">│   ├── access.log</span><br><span class="line">│   ├── xindb.cn.error.log</span><br><span class="line">│   ├── xindb.cn.log</span><br><span class="line">│   ├── nginx_error.log</span><br><span class="line">│   └── waf</span><br><span class="line">├── wwwroot-----------------------------------------&gt;站点根目录</span><br><span class="line">│   └── xindb.cn</span><br><span class="line">│       ├── 404.html</span><br><span class="line">│       └── index.html</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -101,17 +104,17 @@
     </div>
   </div>
 
-  <aside class="article-side">
-    <div class="card-panel sticky-panel">
-      <h3>Outline</h3>
+  <aside class="post-side">
+    <div class="post-side-card">
+      <h3>文章大纲</h3>
       
-        <p class="muted-copy">No heading outline is available for this note.</p>
+        <p class="muted-copy">这篇笔记没有可用的大纲。</p>
       
     </div>
 
     
-      <div class="card-panel sticky-panel">
-        <h3>More from 电子取证</h3>
+      <div class="post-side-card">
+        <h3>同目录更多文章 电子取证</h3>
         <div class="mini-list">
           
             <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/2024%E6%95%B0%E8%AF%81%E6%9D%AF%E5%88%9D%E8%B5%9B/">
@@ -143,18 +146,26 @@
       </main>
       
 <footer class="site-footer">
-  <div class="footer-inner">
-    <div>
-      <strong>JerryXie&#39;s Blog</strong>
-      <p>CTF, digital forensics, offensive security, and study notes.</p>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h4>JerryXie 安全档案</h4>
+      <p>一个面向 CTF、二进制利用、数字取证与长期学习记录的静态安全知识库。</p>
+    </div>
+    <div class="footer-links">
+      <a href="/">首页</a>
+      <a href="/archives/">归档</a>
+      <a href="/categories/">目录</a>
+      <a href="/about/">关于</a>
     </div>
     <div class="footer-meta">
-      <span>Hexo</span>
-      <span class="dot"></span>
-      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
-      <span class="dot"></span>
-      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+      <p>HEXO STATIC PIPELINE</p>
+      <p><a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub Repository</a></p>
+      <p><a href="https://jerryxie.top/" target="_blank" rel="noopener">Live Site</a></p>
     </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 JerryXie</span>
+    <span>PUBLISHED AT JERRYXIE.TOP</span>
   </div>
 </footer>
 

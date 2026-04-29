@@ -4,13 +4,13 @@
     
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>25校内比武 | JerryXie&#39;s Blog</title>
-<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
-<meta name="theme-color" content="#f5f5f7">
+<title>25校内比武 | JerryXie 安全档案</title>
+<meta name="description" content="一个面向 CTF、二进制利用、数字取证与长期学习记录的静态安全知识库。">
+<meta name="theme-color" content="#f9f9f7">
 <meta name="referrer" content="no-referrer">
 <meta property="og:type" content="article">
-<meta property="og:title" content="25校内比武 | JerryXie&#39;s Blog">
-<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta property="og:title" content="25校内比武 | JerryXie 安全档案">
+<meta property="og:description" content="一个面向 CTF、二进制利用、数字取证与长期学习记录的静态安全知识库。">
 
   <meta property="og:url" content="https://jerryxie.top/notes/电子取证/25校内比武/">
   <link rel="canonical" href="https://jerryxie.top/notes/电子取证/25校内比武/">
@@ -21,77 +21,80 @@
 
   <link rel="icon" href="/favicon.png">
 
-<link rel="stylesheet" href="/css/style.css?v=mo6ixrx0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Lora:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:wght@600;700;800;900&display=swap"
+  rel="stylesheet"
+>
+<link rel="stylesheet" href="/css/style.css?v=mojchirb">
 
-  <link rel="stylesheet" href="/vendor/katex/katex.min.css?v=mo6ixrx0">
+  <link rel="stylesheet" href="/vendor/katex/katex.min.css?v=mojchirb">
 
-<style id="site-theme-vars">:root{--font-body:'Space Grotesk', 'PingFang SC', 'Hiragino Sans GB', sans-serif;--font-heading:'Space Grotesk', 'PingFang SC', 'Hiragino Sans GB', sans-serif;--font-mono:'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;--content-width:1130px;--article-side-width:300px;--radius-xl:17px;--radius-lg:13px;--radius-md:9px;--bg:#eaf2ff;--bg-elevated:rgba(245, 249, 255, 0.56);--surface:rgba(255, 255, 255, 0.34);--surface-soft:rgba(255, 255, 255, 0.52);--surface-terminal:rgba(10, 18, 34, 0.88);--line:rgba(255, 255, 255, 0.46);--line-strong:rgba(134, 158, 197, 0.4);--text:#14263d;--text-soft:#5d718d;--accent:#3b82f6;--accent-strong:#22d3ee;--shadow:0 28px 80px rgba(103, 125, 171, 0.18);--shadow-soft:0 18px 48px rgba(103, 125, 171, 0.14);--page-gradient-start:#f6f9ff;--page-gradient-mid:#ebf3ff;--page-gradient-end:#e1eeff;--page-glow-one:rgba(255, 255, 255, 0.92);--page-glow-two:rgba(165, 224, 255, 0.42);--page-glow-three:rgba(120, 149, 255, 0.24);--code-bg:#0b1220;--code-fg:#e6edf7;--code-border:rgba(59, 130, 246, 0.14);--code-shadow:0 14px 28px rgba(14, 23, 38, 0.18);--code-radius:9px;--code-padding-y:7px;--code-padding-x:11px;--code-font-size:0.88rem;--code-line-height:1.41;--code-gutter-color:#6f7f99;--code-title-display:none;--code-language-tag-display:inline-flex;--code-language-tag-opacity:0;--code-language-tag-visibility:hidden;--code-language-tag-transform-y:-4px;--code-language-tag-extra-padding:0px;--inline-code-bg:rgba(59, 130, 246, 0.10);--inline-code-fg:#0f766e;}html[data-theme='dark']{--bg:#040917;--bg-elevated:rgba(9, 15, 29, 0.62);--surface:rgba(13, 22, 42, 0.54);--surface-soft:rgba(15, 25, 47, 0.7);--surface-terminal:rgba(2, 6, 23, 0.92);--line:rgba(165, 185, 220, 0.18);--line-strong:rgba(165, 185, 220, 0.28);--text:#ecf3ff;--text-soft:#97a6ba;--shadow:0 28px 80px rgba(2, 6, 23, 0.5);--shadow-soft:0 18px 48px rgba(2, 6, 23, 0.36);--page-gradient-start:#040917;--page-gradient-mid:#07101d;--page-gradient-end:#0b1424;--page-glow-one:rgba(77, 134, 255, 0.18);--page-glow-two:rgba(34, 211, 238, 0.12);--page-glow-three:rgba(91, 126, 255, 0.12);--inline-code-bg:rgba(16, 185, 129, 0.12);--inline-code-fg:#7cf0bf;}</style>
+<style id="site-theme-vars">:root{--font-body:'Lora', 'Noto Serif SC', 'Songti SC', serif;--font-heading:'Playfair Display', 'Noto Serif SC', 'STSong', serif;--font-mono:'JetBrains Mono', 'IBM Plex Mono', Consolas, monospace;--content-width:1380px;--article-side-width:320px;--radius-xl:0px;--radius-lg:0px;--radius-md:0px;--bg:#f9f9f7;--bg-elevated:#fbfbf8;--surface:rgba(255, 255, 255, 0.94);--surface-soft:#f1efe8;--surface-terminal:#141414;--line:#d7d3c7;--line-strong:#111111;--text:#141414;--text-soft:#5b5850;--accent:#b32020;--accent-strong:#d45b2d;--shadow:0 20px 40px rgba(17, 17, 17, 0.05);--shadow-soft:0 12px 24px rgba(17, 17, 17, 0.04);--page-gradient-start:#f9f9f7;--page-gradient-mid:#f9f9f7;--page-gradient-end:#f9f9f7;--page-glow-one:rgba(255, 255, 255, 0);--page-glow-two:rgba(255, 255, 255, 0);--page-glow-three:rgba(255, 255, 255, 0);--code-bg:#111111;--code-fg:#f7f3e8;--code-border:#2a2a2a;--code-shadow:none;--code-radius:0px;--code-padding-y:12px;--code-padding-x:14px;--code-font-size:0.88rem;--code-line-height:1.55;--code-gutter-color:#8f8a80;--code-title-display:block;--code-language-tag-display:inline-flex;--code-language-tag-opacity:1;--code-language-tag-visibility:visible;--code-language-tag-transform-y:0px;--code-language-tag-extra-padding:28px;--inline-code-bg:rgba(179, 32, 32, 0.08);--inline-code-fg:#8d1e1e;}html[data-theme='dark']{--bg:#101010;--bg-elevated:#131313;--surface:#171717;--surface-soft:#1d1d1d;--surface-terminal:#090909;--line:#343434;--line-strong:#f5f2e9;--text:#f5f2e9;--text-soft:#b5b0a6;--shadow:0 20px 40px rgba(0, 0, 0, 0.25);--shadow-soft:0 12px 24px rgba(0, 0, 0, 0.18);--page-gradient-start:#101010;--page-gradient-mid:#101010;--page-gradient-end:#101010;--page-glow-one:rgba(255, 255, 255, 0);--page-glow-two:rgba(255, 255, 255, 0);--page-glow-three:rgba(255, 255, 255, 0);--inline-code-bg:rgba(255, 255, 255, 0.08);--inline-code-fg:#f5f2e9;}</style>
 
-  <script defer src="/vendor/katex/katex.min.js?v=mo6ixrx0"></script>
-  <script defer src="/vendor/katex/contrib/auto-render.min.js?v=mo6ixrx0"></script>
+  <script defer src="/vendor/katex/katex.min.js?v=mojchirb"></script>
+  <script defer src="/vendor/katex/contrib/auto-render.min.js?v=mojchirb"></script>
 
-<script defer src="/js/main.js?v=mo6ixrx0"></script>
+<script defer src="/js/main.js?v=mojchirb"></script>
 
   <meta name="generator" content="Hexo 8.1.1"></head>
-  <body>
+  <body class="page-post">
     <div class="scroll-progress" data-scroll-progress></div>
     <div class="site-shell">
       
-<header class="site-header">
-  <div class="header-inner">
-    <a class="brand" href="/">
-      <span class="brand-mark"></span>
-      <span class="brand-name">JerryXie&#39;s Blog</span>
-    </a>
-
-    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
-      <span></span><span></span><span></span>
-    </button>
-
-    <nav class="site-nav" data-menu-panel>
+<header class="masthead">
+  <div class="masthead-top">
+    <a class="masthead-title" href="/">JerryXie 安全档案</a>
+    <p class="masthead-subtitle">CTF / PWN / 数字取证 / 研究笔记</p>
+  </div>
+  <div class="masthead-meta">
+    <span>VOL. 1 | STATIC EDITION</span>
+    <span class="hide-mobile">UPDATED 2026-04-19</span>
+    <span>JERRYXIE.TOP</span>
+  </div>
+  <div class="masthead-nav-row">
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">Menu</button>
+    <nav class="masthead-nav" data-menu-panel>
       
-        <a href="/" class="">Home</a>
+        <a href="/" class="nav-link ">首页</a>
       
-        <a href="/archives/" class="">Archive</a>
+        <a href="/archives/" class="nav-link ">归档</a>
       
-        <a href="/categories/" class="">Library</a>
+        <a href="/categories/" class="nav-link ">目录</a>
       
-        <a href="/about/" class="">About</a>
+        <a href="/about/" class="nav-link ">关于</a>
       
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener" class="nav-link">GitHub</a>
     </nav>
-
-    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
-      <span data-theme-icon>Dark</span>
-    </button>
   </div>
 </header>
 
       <main class="page-shell">
         
 
-<article class="article-layout">
-  <div class="article-main card-panel">
-    <a class="back-link" href="/categories/">Back to library</a>
-    <header class="article-header">
-      <div class="article-badges">
+<article class="post-shell reveal">
+  <div class="post-main">
+    <a class="back-link" href="/categories/">返回目录</a>
+    <header class="post-header">
+      <div class="post-header-cat">
         
           
             <a class="category-chip" href="/categories/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/">电子取证</a>
           
         
       </div>
-      <h1>25校内比武</h1>
-      <div class="article-meta">
+      <h1 class="post-header-title">25校内比武</h1>
+      <div class="post-header-meta">
         <span>Published 2026-04-19</span>
         <span>Updated 2026-04-19</span>
         <span>12 min</span>
       </div>
       
-        <p class="article-source">Source path: <code>电子取证/25校内比武.md</code></p>
+        <p class="post-source">Source path: <code>电子取证/25校内比武.md</code></p>
       
     </header>
-
-    <div class="article-content">
+    <div class="rich-content post-content">
       <h1 id="计算机取证"><a href="#计算机取证" class="headerlink" title="计算机取证"></a>计算机取证</h1><h2 id="1-请分析技术PC检材，该计算机的开机密码为？"><a href="#1-请分析技术PC检材，该计算机的开机密码为？" class="headerlink" title="1. 请分析技术PC检材，该计算机的开机密码为？"></a>1. 请分析技术PC检材，该计算机的开机密码为？</h2><p><img src="https://cdn.nlark.com/yuque/0/2025/png/54208227/1764242180781-b5a63ce1-9a9c-450c-9a0e-b9a56a8c807e.png" referrerpolicy="no-referrer" loading="lazy" decoding="async"></p>
 <p>admin</p>
 <h2 id="2-请分析技术PC检材，该检材中的最后一次正常关机时间"><a href="#2-请分析技术PC检材，该检材中的最后一次正常关机时间" class="headerlink" title="2. 请分析技术PC检材，该检材中的最后一次正常关机时间"></a>2. 请分析技术PC检材，该检材中的最后一次正常关机时间</h2><p>开关机时间倒序即可：</p>
@@ -364,17 +367,17 @@
     </div>
   </div>
 
-  <aside class="article-side">
-    <div class="card-panel sticky-panel">
-      <h3>Outline</h3>
+  <aside class="post-side">
+    <div class="post-side-card">
+      <h3>文章大纲</h3>
       
         <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%96%E8%AF%81"><span class="toc-list-text">计算机取证</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E8%AF%B7%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AFPC%E6%A3%80%E6%9D%90%EF%BC%8C%E8%AF%A5%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%9A%84%E5%BC%80%E6%9C%BA%E5%AF%86%E7%A0%81%E4%B8%BA%EF%BC%9F"><span class="toc-list-text">1. 请分析技术PC检材，该计算机的开机密码为？</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-%E8%AF%B7%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AFPC%E6%A3%80%E6%9D%90%EF%BC%8C%E8%AF%A5%E6%A3%80%E6%9D%90%E4%B8%AD%E7%9A%84%E6%9C%80%E5%90%8E%E4%B8%80%E6%AC%A1%E6%AD%A3%E5%B8%B8%E5%85%B3%E6%9C%BA%E6%97%B6%E9%97%B4"><span class="toc-list-text">2. 请分析技术PC检材，该检材中的最后一次正常关机时间</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-%E8%AF%B7%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AFPC%E6%A3%80%E6%9D%90%EF%BC%8C%E8%AF%A5%E6%A3%80%E6%9D%90%E4%B8%AD%E5%AD%98%E5%9C%A8VC%E5%AE%B9%E5%99%A8%EF%BC%8C%E8%AF%A5%E5%AE%B9%E5%99%A8%E4%B8%AD%E5%AD%98%E6%94%BE%E4%BA%86%E5%A4%9A%E5%B0%91%E5%BC%A0%E8%8B%8F%E6%9F%90%E7%94%9F%E6%88%90%E7%9A%84AI%E5%9B%BE%E7%89%87%EF%BC%9F"><span class="toc-list-text">3. 请分析技术PC检材，该检材中存在VC容器，该容器中存放了多少张苏某生成的AI图片？</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4-%E8%AF%B7%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AFPC%E6%A3%80%E6%9D%90%EF%BC%8C%E8%AF%A5%E6%A3%80%E6%9D%90%E4%B8%AD%E6%96%87%E4%BB%B6%E5%90%8D%E4%B8%BA%E2%80%9D00032-3240475050-png%E2%80%9D%E7%9A%84Ai%E7%94%9F%E6%88%90%E5%9B%BE%E7%89%87%E6%AD%A3%E5%90%91%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%8C%85%E5%90%AB%E5%A6%82%E4%B8%8B%E5%93%AA%E4%BA%9B%E5%86%85%E5%AE%B9"><span class="toc-list-text">4. 请分析技术PC检材，该检材中文件名为”00032-3240475050.png”的Ai生成图片正向提示词包含如下哪些内容</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#5-%E8%AF%B7%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AFPC%E6%A3%80%E6%9D%90%EF%BC%8C%E8%AF%A5%E6%A3%80%E6%9D%90%E4%B8%AD%E6%96%87%E4%BB%B6%E5%90%8D%E4%B8%BA%E2%80%9D00032-3240475050-png%E2%80%9D%E7%9A%84Ai%E7%94%9F%E6%88%90%E5%9B%BE%E7%89%87%E4%BD%BF%E7%94%A8%E7%9A%84%E6%A8%A1%E5%9E%8B%E6%98%AF"><span class="toc-list-text">5. 请分析技术PC检材，该检材中文件名为”00032-3240475050.png”的Ai生成图片使用的模型是</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#6-%E8%AF%B7%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AFPC%E6%A3%80%E6%9D%90%EF%BC%8C%E5%AB%8C%E7%96%91%E4%BA%BA%E4%B8%BA%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E5%85%B3%E4%BA%8E%E2%80%9D%E7%89%B9%E8%8B%8F%E6%B1%BD%E8%BD%A6%E2%80%9D%E7%9A%84%E7%9B%B8%E5%85%B3%E8%AF%84%E8%AE%BA%EF%BC%8C%E4%BD%BF%E7%94%A8Python%E8%84%9A%E6%9C%AC%E5%88%9B%E5%BB%BA%E4%BA%86%E4%B8%80%E4%B8%AAweb%E7%A8%8B%E5%BA%8F%EF%BC%8C%E7%94%A8%E4%BB%A5%E8%B0%83%E7%94%A8Ai%E7%BD%91%E7%AB%99%E6%8E%A5%E5%8F%A3%EF%BC%8C%E8%AF%A5%E8%84%9A%E6%9C%AC%E8%B0%83%E7%94%A8Ai%E6%8E%A5%E5%8F%A3%E4%BD%BF%E7%94%A8api%E7%9A%84key%E4%B8%BA"><span class="toc-list-text">6. 请分析技术PC检材，嫌疑人为自动生成关于”特苏汽车”的相关评论，使用Python脚本创建了一个web程序，用以调用Ai网站接口，该脚本调用Ai接口使用api的key为?</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#7-%E8%AF%B7%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AFPC%E6%A3%80%E6%9D%90%EF%BC%8C%E8%AF%A5%E6%A3%80%E6%9D%90%E4%B8%AD%E4%B8%8A%E8%BF%B0%E8%84%9A%E6%9C%AC%E8%AE%BF%E9%97%AEAi%E6%8E%A5%E5%8F%A3%E4%BD%BF%E7%94%A8%E7%9A%84%E6%A8%A1%E5%9E%8B%E6%98%AF"><span class="toc-list-text">7. 请分析技术PC检材，该检材中上述脚本访问Ai接口使用的模型是</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#8-%E8%AF%B7%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AFPC%E6%A3%80%E6%9D%90%EF%BC%8C%E8%AF%A5%E6%A3%80%E6%9D%90%E4%B8%AD%E5%AB%8C%E7%96%91%E4%BA%BA%E8%99%9A%E6%9E%84%E4%BA%86%E5%87%A0%E6%9D%A1%E2%80%9D%E6%9D%8E%E5%AE%89%E5%AE%89%E2%80%9D%E5%85%B3%E4%BA%8E%E2%80%9D%E7%89%B9%E8%8B%8F%E6%B1%BD%E8%BD%A6%E2%80%9D%E7%9A%84%E7%BB%8F%E5%8E%86"><span class="toc-list-text">8. 请分析技术PC检材，该检材中嫌疑人虚构了几条”李安安”关于”特苏汽车”的经历</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#9-%E8%AF%B7%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AFPC%E6%A3%80%E6%9D%90%EF%BC%8C%E5%AB%8C%E7%96%91%E4%BA%BA%E6%9C%AC%E5%9C%B0%E5%AE%89%E8%A3%85%E7%9A%84%E7%94%A8%E4%BA%8E%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E7%9A%84%E5%B7%A5%E5%85%B7%E5%90%8D%E7%A7%B0%E4%B8%BA"><span class="toc-list-text">9. 请分析技术PC检材，嫌疑人本地安装的用于模型训练的工具名称为</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#10-%E8%AF%B7%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AFPC%E6%A3%80%E6%9D%90%EF%BC%8C%E5%AB%8C%E7%96%91%E4%BA%BA%E5%9C%A8%E6%9C%AC%E5%9C%B0%E5%8C%96Ai%E8%BD%AF%E4%BB%B6%E4%B8%AD%E5%AE%89%E8%A3%85%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%90%8D%E7%A7%B0%E4%B8%BA"><span class="toc-list-text">10. 请分析技术PC检材，嫌疑人在本地化Ai软件中安装的模型名称为</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#11-%E8%AF%B7%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AFPC%E6%A3%80%E6%9D%90%EF%BC%8C%E4%B8%8B%E5%88%97%E5%85%B3%E4%BA%8E%E6%9C%AC%E5%9C%B0%E5%8C%96AI%E8%BD%AF%E4%BB%B6%E6%9D%A5%E6%BA%90%E6%8F%8F%E8%BF%B0%E6%AD%A3%E7%A1%AE%E7%9A%84%E6%98%AF%EF%BC%9F"><span class="toc-list-text">11. 请分析技术PC检材，下列关于本地化AI软件来源描述正确的是？</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#12-%E8%AF%B7%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AFPC%E6%A3%80%E6%9D%90%EF%BC%8C%E8%AF%A5%E6%A3%80%E6%9D%90%E4%B8%AD%E5%AB%8C%E7%96%91%E4%BA%BA%E4%BD%BF%E7%94%A8%E7%9A%84%E9%82%AE%E7%AE%B1%E8%B4%A6%E5%8F%B7%E6%98%AF"><span class="toc-list-text">12. 请分析技术PC检材，该检材中嫌疑人使用的邮箱账号是</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#13-%E8%AF%B7%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AFPC%E6%A3%80%E6%9D%90%EF%BC%8C%E8%AF%A5%E6%A3%80%E6%9D%90%E4%B8%AD%E5%AB%8C%E7%96%91%E4%BA%BA%E5%90%91%E8%80%81%E6%9D%BF%E7%9A%84%E9%82%AE%E7%AE%B1%E5%8F%91%E9%80%81%E4%BA%86%E4%B8%80%E4%B8%AAAi%E7%94%9F%E6%88%90%E7%9A%84%E5%9B%BE%E7%89%87%EF%BC%8C%E8%AF%A5%E5%9B%BE%E7%89%87%E7%9A%84seed%E5%80%BC%E6%98%AF"><span class="toc-list-text">13. 请分析技术PC检材，该检材中嫌疑人向老板的邮箱发送了一个Ai生成的图片，该图片的seed值是</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#14-%E8%AF%B7%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AFPC%E6%A3%80%E6%9D%90%EF%BC%8CAI%E6%B5%8B%E8%AF%95%E5%AF%B9%E8%AF%9D%E5%85%B1%E6%9C%89%E5%A4%9A%E5%B0%91%E6%9D%A1%E8%AE%B0%E5%BD%95"><span class="toc-list-text">14. 请分析技术PC检材，AI测试对话共有多少条记录</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#15-%E8%AF%B7%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AFPC%E6%A3%80%E6%9D%90%EF%BC%8C%E6%9C%AC%E5%9C%B0AI%E6%A8%A1%E5%9E%8B%E8%BD%AF%E4%BB%B6%E7%9B%91%E5%90%AC%E7%9A%84%E7%AB%AF%E5%8F%A3%E5%8F%B7%E4%B8%BA"><span class="toc-list-text">15. 请分析技术PC检材，本地AI模型软件监听的端口号为</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81"><span class="toc-list-text">服务器取证</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E5%AE%9D%E5%A1%94%E9%87%8D%E6%9E%84"><span class="toc-list-text">宝塔重构</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E5%88%86%E6%9E%90%E6%A3%80%E6%9D%905%EF%BC%8C%E8%AF%A5%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6%E7%9A%84SHA256%E5%80%BC%E6%98%AF%EF%BC%9F"><span class="toc-list-text">1. 分析检材5，该镜像文件的SHA256值是？</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-%E5%88%86%E6%9E%90%E6%A3%80%E6%9D%905%EF%BC%8C%E8%AF%A5%E9%95%9C%E5%83%8F%E4%B8%AD%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%86%85%E6%A0%B8%E7%89%88%E6%9C%AC%E5%8F%B7%E6%98%AF%EF%BC%9F"><span class="toc-list-text">2. 分析检材5，该镜像中操作系统的内核版本号是？</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-%E5%88%86%E6%9E%90%E6%A3%80%E6%9D%905%EF%BC%8C%E7%B3%BB%E7%BB%9F%E6%9C%89%E5%87%A0%E6%AC%A1%E7%99%BB%E5%BD%95%E5%A4%B1%E8%B4%A5%E7%9A%84%E8%AE%B0%E5%BD%95%E6%95%B0%EF%BC%9F"><span class="toc-list-text">3. 分析检材5，系统有几次登录失败的记录数？</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4-%E5%88%86%E6%9E%90%E6%A3%80%E6%9D%905%EF%BC%8C%E5%AE%9D%E5%A1%94%E9%9D%A2%E6%9D%BF%E5%AF%B9%E5%BA%94%E7%9A%84%E8%B4%A6%E5%8F%B7%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-list-text">4. 分析检材5，宝塔面板对应的账号是什么？</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#5-%E5%88%86%E6%9E%90%E6%A3%80%E6%9D%905%EF%BC%8CMysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E7%89%88%E6%9C%AC%E5%8F%B7%E6%98%AF%EF%BC%9F"><span class="toc-list-text">5. 分析检材5，Mysql数据库的版本号是？</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#6-%E5%88%86%E6%9E%90%E6%A3%80%E6%9D%905%EF%BC%8C%E8%AF%A5%E6%9C%8D%E5%8A%A1%E5%99%A8ssh%E6%9C%8D%E5%8A%A1%E5%85%81%E8%AE%B8root%E8%B4%A6%E6%88%B7%E4%BB%8E%E5%93%AA%E4%B8%AAIP%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95%EF%BC%9F"><span class="toc-list-text">6. 分析检材5，该服务器ssh服务允许root账户从哪个IP远程登录？</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#7-%E5%88%86%E6%9E%90%E6%A3%80%E6%9D%905%EF%BC%8C%E7%BD%91%E7%AB%99%E5%90%8E%E5%8F%B0%E7%9A%84uri%E6%98%AF%EF%BC%9F"><span class="toc-list-text">7. 分析检材5，网站后台的uri是？</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-list-text">前置知识</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E9%A2%98%E8%A7%A3"><span class="toc-list-text">题解</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#8-%E5%88%86%E6%9E%90%E6%A3%80%E6%9D%905%EF%BC%8C%E7%BD%91%E7%AB%99%E4%BB%A3%E7%A0%81%E6%89%80%E5%9C%A8%E7%9A%84%E5%AE%8C%E6%95%B4%E8%B7%AF%E5%BE%84%E4%B8%BA%EF%BC%9F"><span class="toc-list-text">8. 分析检材5，网站代码所在的完整路径为？</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#9-%E5%88%86%E6%9E%90%E6%A3%80%E6%9D%905%EF%BC%8C%E7%BD%91%E7%AB%99%E4%BB%A3%E7%A0%81%E4%B8%AD%E8%AE%B0%E5%BD%95%E4%BA%86MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%90%8D%E4%B8%BA%EF%BC%9F"><span class="toc-list-text">9. 分析检材5，网站代码中记录了MySQL数据库账号密码的配置文件名为？</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#10-%E8%B6%85%E7%BA%A7%E7%AE%A1%E7%90%86%E5%91%98%E7%94%A8%E6%88%B7%E7%9A%84%E5%AF%86%E7%A0%81%E5%9C%A8%E5%8A%A0%E5%AF%86%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%85%B1%E8%BF%9B%E8%A1%8C%E4%BA%86%E5%87%A0%E6%AC%A1%E5%93%88%E5%B8%8C%E5%80%BC%E8%AE%A1%E7%AE%97"><span class="toc-list-text">10. 超级管理员用户的密码在加密过程中共进行了几次哈希值计算</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#11-%E8%AF%A5%E7%BD%91%E7%AB%99%E5%AF%B9%E8%B6%85%E7%BA%A7%E7%AE%A1%E7%90%86%E5%91%98%E7%94%A8%E6%88%B7%E5%90%8D%E4%B9%9F%E8%BF%9B%E8%A1%8C%E4%BA%86%E5%8A%A0%E5%AF%86%E5%A4%84%E7%90%86%EF%BC%8C%E8%AF%B7%E9%97%AE%E5%8A%A0%E5%AF%86%E6%97%B6%E6%89%80%E4%BD%BF%E7%94%A8%E4%BA%86rsa%E7%AE%97%E6%B3%95%EF%BC%8C%E8%AF%A5%E7%A7%81%E9%92%A5%E5%AF%B9%E5%BA%94%E7%9A%84%E5%8F%98%E9%87%8F%E5%90%8D%E6%98%AF"><span class="toc-list-text">11. 该网站对超级管理员用户名也进行了加密处理，请问加密时所使用了rsa算法，该私钥对应的变量名是</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#12-%E8%B6%85%E7%BA%A7%E7%AE%A1%E7%90%86%E5%91%98%E7%9A%84%E5%AF%86%E7%A0%81%E6%98%8E%E6%96%87%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-list-text">12. 超级管理员的密码明文是什么</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#13-%E9%87%8D%E6%9E%84%E5%B9%B6%E7%99%BB%E5%BD%95%E5%88%B0%E7%BD%91%E7%AB%99%E5%90%8E%E5%8F%B0%EF%BC%8C%E2%80%9C%E4%B8%BB%E9%A1%B5-%E6%8E%A7%E5%88%B6%E5%8F%B0%E2%80%9D%E4%B8%AD%E9%A1%B5%E9%9D%A2%E6%98%BE%E7%A4%BA%E7%9A%84%E4%BC%9A%E5%91%98%E6%95%B0%E9%87%8F%E6%98%AF%E5%A4%9A%E5%B0%91"><span class="toc-list-text">13. 重构并登录到网站后台，“主页-控制台”中页面显示的会员数量是多少</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#14-%E9%87%8D%E6%9E%84%E5%B9%B6%E7%99%BB%E5%BD%95%E5%88%B0%E7%BD%91%E7%AB%99%E5%90%8E%E5%8F%B0%EF%BC%8C%E2%80%9C%E4%B8%BB%E9%A1%B5-%E6%8E%A7%E5%88%B6%E5%8F%B0%E2%80%9D%E4%B8%AD%E9%BB%98%E8%AE%A4%E6%83%85%E5%86%B5%E4%B8%8B%E6%98%BE%E7%A4%BA%E7%9A%84%E5%85%85%E5%80%BC%E8%AE%B0%E5%BD%95%E5%85%B1%E6%9C%89%E5%A4%9A%E5%B0%91%E9%A1%B5%E6%95%B0%E6%8D%AE"><span class="toc-list-text">14. 重构并登录到网站后台，“主页-控制台”中默认情况下显示的充值记录共有多少页数据</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#15-%E5%88%86%E6%9E%90%E8%AF%A5%E7%BD%91%E7%AB%99%EF%BC%8C%E7%94%A8%E6%88%B7%E5%85%85%E5%80%BC%E7%9A%84%E6%80%BB%E9%87%91%E9%A2%9D%E4%B8%BA"><span class="toc-list-text">15. 分析该网站，用户充值的总金额为</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#16-%E5%B7%B2%E5%88%A0%E9%99%A4%E7%9A%84%E7%94%A8%E6%88%B7%E6%9C%89%E5%A4%9A%E5%B0%91%E4%B8%AA"><span class="toc-list-text">16. 已删除的用户有多少个</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#17-%E4%BA%BA%E6%95%B0%E6%9C%80%E5%A4%9A%E7%9A%84%E7%BE%A4%E7%BB%84%E5%90%8D%E7%A7%B0"><span class="toc-list-text">17. 人数最多的群组名称</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#18-%E6%B3%A8%E5%86%8C%E6%89%8B%E6%9C%BA%E5%B0%BE%E5%8F%B7%E4%B8%BA0066%E7%9A%84%E7%94%A8%E6%88%B7%EF%BC%8C%E5%85%B1%E6%9C%89%E5%87%A0%E4%B8%AA%E5%A5%BD%E5%8F%8B"><span class="toc-list-text">18. 注册手机尾号为0066的用户，共有几个好友</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#19-%E6%B3%A8%E5%86%8C%E6%89%8B%E6%9C%BA%E5%B0%BE%E5%8F%B7%E4%B8%BA0066%E7%9A%84%E7%94%A8%E6%88%B7%EF%BC%8C%E9%93%B6%E8%A1%8C%E5%8D%A1%E5%8F%B7%E4%B8%BA"><span class="toc-list-text">19. 注册手机尾号为0066的用户，银行卡号为</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#20-%E6%B3%A8%E5%86%8C%E6%89%8B%E6%9C%BA%E5%B0%BE%E5%8F%B7%E4%B8%BA0066%E7%9A%84%E7%94%A8%E6%88%B7%EF%BC%8C%E5%85%B1%E5%85%85%E5%80%BC%E5%A4%9A%E5%B0%91%E5%85%83"><span class="toc-list-text">20. 注册手机尾号为0066的用户，共充值多少元</span></a></li></ol></li></ol></div>
       
     </div>
 
     
-      <div class="card-panel sticky-panel">
-        <h3>More from 电子取证</h3>
+      <div class="post-side-card">
+        <h3>同目录更多文章 电子取证</h3>
         <div class="mini-list">
           
             <a href="/notes/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/2024%E6%95%B0%E8%AF%81%E6%9D%AF/2024%E6%95%B0%E8%AF%81%E6%9D%AF%E5%88%9D%E8%B5%9B/">
@@ -406,18 +409,26 @@
       </main>
       
 <footer class="site-footer">
-  <div class="footer-inner">
-    <div>
-      <strong>JerryXie&#39;s Blog</strong>
-      <p>CTF, digital forensics, offensive security, and study notes.</p>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h4>JerryXie 安全档案</h4>
+      <p>一个面向 CTF、二进制利用、数字取证与长期学习记录的静态安全知识库。</p>
+    </div>
+    <div class="footer-links">
+      <a href="/">首页</a>
+      <a href="/archives/">归档</a>
+      <a href="/categories/">目录</a>
+      <a href="/about/">关于</a>
     </div>
     <div class="footer-meta">
-      <span>Hexo</span>
-      <span class="dot"></span>
-      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
-      <span class="dot"></span>
-      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+      <p>HEXO STATIC PIPELINE</p>
+      <p><a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub Repository</a></p>
+      <p><a href="https://jerryxie.top/" target="_blank" rel="noopener">Live Site</a></p>
     </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 JerryXie</span>
+    <span>PUBLISHED AT JERRYXIE.TOP</span>
   </div>
 </footer>
 

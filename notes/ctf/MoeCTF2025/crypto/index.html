@@ -4,13 +4,13 @@
     
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>crypto | JerryXie&#39;s Blog</title>
-<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
-<meta name="theme-color" content="#f5f5f7">
+<title>crypto | JerryXie 安全档案</title>
+<meta name="description" content="一个面向 CTF、二进制利用、数字取证与长期学习记录的静态安全知识库。">
+<meta name="theme-color" content="#f9f9f7">
 <meta name="referrer" content="no-referrer">
 <meta property="og:type" content="article">
-<meta property="og:title" content="crypto | JerryXie&#39;s Blog">
-<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta property="og:title" content="crypto | JerryXie 安全档案">
+<meta property="og:description" content="一个面向 CTF、二进制利用、数字取证与长期学习记录的静态安全知识库。">
 
   <meta property="og:url" content="https://jerryxie.top/notes/ctf/MoeCTF2025/crypto/">
   <link rel="canonical" href="https://jerryxie.top/notes/ctf/MoeCTF2025/crypto/">
@@ -21,79 +21,82 @@
 
   <link rel="icon" href="/favicon.png">
 
-<link rel="stylesheet" href="/css/style.css?v=mo6ixrx0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Lora:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:wght@600;700;800;900&display=swap"
+  rel="stylesheet"
+>
+<link rel="stylesheet" href="/css/style.css?v=mojchirb">
 
-  <link rel="stylesheet" href="/vendor/katex/katex.min.css?v=mo6ixrx0">
+  <link rel="stylesheet" href="/vendor/katex/katex.min.css?v=mojchirb">
 
-<style id="site-theme-vars">:root{--font-body:'Space Grotesk', 'PingFang SC', 'Hiragino Sans GB', sans-serif;--font-heading:'Space Grotesk', 'PingFang SC', 'Hiragino Sans GB', sans-serif;--font-mono:'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;--content-width:1130px;--article-side-width:300px;--radius-xl:17px;--radius-lg:13px;--radius-md:9px;--bg:#eaf2ff;--bg-elevated:rgba(245, 249, 255, 0.56);--surface:rgba(255, 255, 255, 0.34);--surface-soft:rgba(255, 255, 255, 0.52);--surface-terminal:rgba(10, 18, 34, 0.88);--line:rgba(255, 255, 255, 0.46);--line-strong:rgba(134, 158, 197, 0.4);--text:#14263d;--text-soft:#5d718d;--accent:#3b82f6;--accent-strong:#22d3ee;--shadow:0 28px 80px rgba(103, 125, 171, 0.18);--shadow-soft:0 18px 48px rgba(103, 125, 171, 0.14);--page-gradient-start:#f6f9ff;--page-gradient-mid:#ebf3ff;--page-gradient-end:#e1eeff;--page-glow-one:rgba(255, 255, 255, 0.92);--page-glow-two:rgba(165, 224, 255, 0.42);--page-glow-three:rgba(120, 149, 255, 0.24);--code-bg:#0b1220;--code-fg:#e6edf7;--code-border:rgba(59, 130, 246, 0.14);--code-shadow:0 14px 28px rgba(14, 23, 38, 0.18);--code-radius:9px;--code-padding-y:7px;--code-padding-x:11px;--code-font-size:0.88rem;--code-line-height:1.41;--code-gutter-color:#6f7f99;--code-title-display:none;--code-language-tag-display:inline-flex;--code-language-tag-opacity:0;--code-language-tag-visibility:hidden;--code-language-tag-transform-y:-4px;--code-language-tag-extra-padding:0px;--inline-code-bg:rgba(59, 130, 246, 0.10);--inline-code-fg:#0f766e;}html[data-theme='dark']{--bg:#040917;--bg-elevated:rgba(9, 15, 29, 0.62);--surface:rgba(13, 22, 42, 0.54);--surface-soft:rgba(15, 25, 47, 0.7);--surface-terminal:rgba(2, 6, 23, 0.92);--line:rgba(165, 185, 220, 0.18);--line-strong:rgba(165, 185, 220, 0.28);--text:#ecf3ff;--text-soft:#97a6ba;--shadow:0 28px 80px rgba(2, 6, 23, 0.5);--shadow-soft:0 18px 48px rgba(2, 6, 23, 0.36);--page-gradient-start:#040917;--page-gradient-mid:#07101d;--page-gradient-end:#0b1424;--page-glow-one:rgba(77, 134, 255, 0.18);--page-glow-two:rgba(34, 211, 238, 0.12);--page-glow-three:rgba(91, 126, 255, 0.12);--inline-code-bg:rgba(16, 185, 129, 0.12);--inline-code-fg:#7cf0bf;}</style>
+<style id="site-theme-vars">:root{--font-body:'Lora', 'Noto Serif SC', 'Songti SC', serif;--font-heading:'Playfair Display', 'Noto Serif SC', 'STSong', serif;--font-mono:'JetBrains Mono', 'IBM Plex Mono', Consolas, monospace;--content-width:1380px;--article-side-width:320px;--radius-xl:0px;--radius-lg:0px;--radius-md:0px;--bg:#f9f9f7;--bg-elevated:#fbfbf8;--surface:rgba(255, 255, 255, 0.94);--surface-soft:#f1efe8;--surface-terminal:#141414;--line:#d7d3c7;--line-strong:#111111;--text:#141414;--text-soft:#5b5850;--accent:#b32020;--accent-strong:#d45b2d;--shadow:0 20px 40px rgba(17, 17, 17, 0.05);--shadow-soft:0 12px 24px rgba(17, 17, 17, 0.04);--page-gradient-start:#f9f9f7;--page-gradient-mid:#f9f9f7;--page-gradient-end:#f9f9f7;--page-glow-one:rgba(255, 255, 255, 0);--page-glow-two:rgba(255, 255, 255, 0);--page-glow-three:rgba(255, 255, 255, 0);--code-bg:#111111;--code-fg:#f7f3e8;--code-border:#2a2a2a;--code-shadow:none;--code-radius:0px;--code-padding-y:12px;--code-padding-x:14px;--code-font-size:0.88rem;--code-line-height:1.55;--code-gutter-color:#8f8a80;--code-title-display:block;--code-language-tag-display:inline-flex;--code-language-tag-opacity:1;--code-language-tag-visibility:visible;--code-language-tag-transform-y:0px;--code-language-tag-extra-padding:28px;--inline-code-bg:rgba(179, 32, 32, 0.08);--inline-code-fg:#8d1e1e;}html[data-theme='dark']{--bg:#101010;--bg-elevated:#131313;--surface:#171717;--surface-soft:#1d1d1d;--surface-terminal:#090909;--line:#343434;--line-strong:#f5f2e9;--text:#f5f2e9;--text-soft:#b5b0a6;--shadow:0 20px 40px rgba(0, 0, 0, 0.25);--shadow-soft:0 12px 24px rgba(0, 0, 0, 0.18);--page-gradient-start:#101010;--page-gradient-mid:#101010;--page-gradient-end:#101010;--page-glow-one:rgba(255, 255, 255, 0);--page-glow-two:rgba(255, 255, 255, 0);--page-glow-three:rgba(255, 255, 255, 0);--inline-code-bg:rgba(255, 255, 255, 0.08);--inline-code-fg:#f5f2e9;}</style>
 
-  <script defer src="/vendor/katex/katex.min.js?v=mo6ixrx0"></script>
-  <script defer src="/vendor/katex/contrib/auto-render.min.js?v=mo6ixrx0"></script>
+  <script defer src="/vendor/katex/katex.min.js?v=mojchirb"></script>
+  <script defer src="/vendor/katex/contrib/auto-render.min.js?v=mojchirb"></script>
 
-<script defer src="/js/main.js?v=mo6ixrx0"></script>
+<script defer src="/js/main.js?v=mojchirb"></script>
 
   <meta name="generator" content="Hexo 8.1.1"></head>
-  <body>
+  <body class="page-post">
     <div class="scroll-progress" data-scroll-progress></div>
     <div class="site-shell">
       
-<header class="site-header">
-  <div class="header-inner">
-    <a class="brand" href="/">
-      <span class="brand-mark"></span>
-      <span class="brand-name">JerryXie&#39;s Blog</span>
-    </a>
-
-    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
-      <span></span><span></span><span></span>
-    </button>
-
-    <nav class="site-nav" data-menu-panel>
+<header class="masthead">
+  <div class="masthead-top">
+    <a class="masthead-title" href="/">JerryXie 安全档案</a>
+    <p class="masthead-subtitle">CTF / PWN / 数字取证 / 研究笔记</p>
+  </div>
+  <div class="masthead-meta">
+    <span>VOL. 1 | STATIC EDITION</span>
+    <span class="hide-mobile">UPDATED 2026-04-19</span>
+    <span>JERRYXIE.TOP</span>
+  </div>
+  <div class="masthead-nav-row">
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">Menu</button>
+    <nav class="masthead-nav" data-menu-panel>
       
-        <a href="/" class="">Home</a>
+        <a href="/" class="nav-link ">首页</a>
       
-        <a href="/archives/" class="">Archive</a>
+        <a href="/archives/" class="nav-link ">归档</a>
       
-        <a href="/categories/" class="">Library</a>
+        <a href="/categories/" class="nav-link ">目录</a>
       
-        <a href="/about/" class="">About</a>
+        <a href="/about/" class="nav-link ">关于</a>
       
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener" class="nav-link">GitHub</a>
     </nav>
-
-    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
-      <span data-theme-icon>Dark</span>
-    </button>
   </div>
 </header>
 
       <main class="page-shell">
         
 
-<article class="article-layout">
-  <div class="article-main card-panel">
-    <a class="back-link" href="/categories/">Back to library</a>
-    <header class="article-header">
-      <div class="article-badges">
+<article class="post-shell reveal">
+  <div class="post-main">
+    <a class="back-link" href="/categories/">返回目录</a>
+    <header class="post-header">
+      <div class="post-header-cat">
         
           
-            <a class="category-chip" href="/categories/ctf/">ctf</a>
+            <a class="category-chip" href="/categories/ctf/">ctf</a> 
           
             <a class="category-chip" href="/categories/ctf/MoeCTF2025/">MoeCTF2025</a>
           
         
       </div>
-      <h1>crypto</h1>
-      <div class="article-meta">
+      <h1 class="post-header-title">crypto</h1>
+      <div class="post-header-meta">
         <span>Published 2026-04-19</span>
         <span>Updated 2026-04-19</span>
         <span>16 min</span>
       </div>
       
-        <p class="article-source">Source path: <code>ctf/MoeCTF2025/crypto.md</code></p>
+        <p class="post-source">Source path: <code>ctf/MoeCTF2025/crypto.md</code></p>
       
     </header>
-
-    <div class="article-content">
+    <div class="rich-content post-content">
       <h1 id="1-指北："><a href="#1-指北：" class="headerlink" title="1.指北："></a>1.指北：</h1><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.PublicKey import ElGamal</span><br><span class="line">from Crypto.Random import get_random_bytes, random</span><br><span class="line">from Crypto.Util.number import *</span><br><span class="line">from random import *</span><br><span class="line">from secret import flag</span><br><span class="line"></span><br><span class="line">def generate_elgamal_keypair(bits=512):</span><br><span class="line">    p = getPrime(bits)</span><br><span class="line"></span><br><span class="line">    for _ in range(1000):</span><br><span class="line">        g = getRandomRange(2, 5)</span><br><span class="line">        if pow(g, (p - 1) // 2, p) != 1:</span><br><span class="line">            break</span><br><span class="line"></span><br><span class="line">    x = randrange(2, p - 1)</span><br><span class="line">    y = pow(g, x, p)</span><br><span class="line"></span><br><span class="line">    return p, g, y, x</span><br><span class="line"></span><br><span class="line"># 生成密钥对</span><br><span class="line">key = generate_elgamal_keypair(bits=512)</span><br><span class="line">p, g, y, x = key</span><br><span class="line"></span><br><span class="line">print(&quot;=== 公钥 (p, g, y) ===&quot;)</span><br><span class="line">print(&quot;p =&quot;, p)</span><br><span class="line">print(&quot;g =&quot;, g)</span><br><span class="line">print(&quot;y =&quot;, y)</span><br><span class="line">print()</span><br><span class="line"></span><br><span class="line"># 加密</span><br><span class="line">k = randrange(1, p - 2)</span><br><span class="line">m = bytes_to_long(flag)</span><br><span class="line">c1 = pow(g, k, p)</span><br><span class="line">c2 = (m * pow(y, k, p)) % p</span><br><span class="line"></span><br><span class="line">print(&quot;=== 密文 (c1, c2) ===&quot;)</span><br><span class="line">print(&quot;c1 =&quot;, c1)</span><br><span class="line">print(&quot;c2 =&quot;, c2)</span><br><span class="line"></span><br><span class="line"># 不小心泄露了私钥</span><br><span class="line">print(&quot;x =&quot;, x)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">p =11540963715962144951763578255357417528966715904849014985547597657698304891044841099894993117258279094910424033273299863589407477091830213468539451196239863</span><br><span class="line">g = 2</span><br><span class="line">y =8313424783366011287014623582773521595333285291380540689467073212212931648415580065207081449784135835711205324186662482526357834042013400765421925274271853</span><br><span class="line">=== 密文 (c1, c2) ===</span><br><span class="line">c1 =6652053553055645358275362259554856525976931841318251152940464543175108560132949610916012490837970851191204144757409335011811874896056430105292534244732863</span><br><span class="line">c2 =2314913568081526428247981719100952331444938852399031826635475971947484663418362533363591441216570597417789120470703548843342170567039399830377459228297983</span><br><span class="line">x =8010957078086554284020959664124784479610913596560035011951143269559761229114027738791440961864150225798049120582540951874956255115884539333966429021004214</span><br><span class="line">&#x27;&#x27;&#x27;</span><br></pre></td></tr></table></figure>
 
 <p>题目稍微有点乱乱的，不过没关系，就是很典型的 <code>ElGamal</code>算法（加解密看附的文章）</p>
@@ -125,17 +128,17 @@
     </div>
   </div>
 
-  <aside class="article-side">
-    <div class="card-panel sticky-panel">
-      <h3>Outline</h3>
+  <aside class="post-side">
+    <div class="post-side-card">
+      <h3>文章大纲</h3>
       
         <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#1-%E6%8C%87%E5%8C%97%EF%BC%9A"><span class="toc-list-text">1.指北：</span></a></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#2-ez-des"><span class="toc-list-text">2.ez_des</span></a></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#3-baby-next"><span class="toc-list-text">3.baby_next</span></a></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#4-bsgs"><span class="toc-list-text">4.bsgs</span></a></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#5-ez-square"><span class="toc-list-text">5. ez_square</span></a></li></ol></div>
       
     </div>
 
     
-      <div class="card-panel sticky-panel">
-        <h3>More from ctf</h3>
+      <div class="post-side-card">
+        <h3>同目录更多文章 ctf</h3>
         <div class="mini-list">
           
             <a href="/notes/ctf/_CTF/">
@@ -167,18 +170,26 @@
       </main>
       
 <footer class="site-footer">
-  <div class="footer-inner">
-    <div>
-      <strong>JerryXie&#39;s Blog</strong>
-      <p>CTF, digital forensics, offensive security, and study notes.</p>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h4>JerryXie 安全档案</h4>
+      <p>一个面向 CTF、二进制利用、数字取证与长期学习记录的静态安全知识库。</p>
+    </div>
+    <div class="footer-links">
+      <a href="/">首页</a>
+      <a href="/archives/">归档</a>
+      <a href="/categories/">目录</a>
+      <a href="/about/">关于</a>
     </div>
     <div class="footer-meta">
-      <span>Hexo</span>
-      <span class="dot"></span>
-      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
-      <span class="dot"></span>
-      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+      <p>HEXO STATIC PIPELINE</p>
+      <p><a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub Repository</a></p>
+      <p><a href="https://jerryxie.top/" target="_blank" rel="noopener">Live Site</a></p>
     </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 JerryXie</span>
+    <span>PUBLISHED AT JERRYXIE.TOP</span>
   </div>
 </footer>
 

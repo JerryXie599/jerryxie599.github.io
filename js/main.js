@@ -1,36 +1,7 @@
 (() => {
-  const root = document.documentElement;
-  const THEME_KEY = 'jerryxie-theme';
-
   function normalizeHref(path) {
     if (!path) return '/';
     return path.startsWith('/') ? path : `/${path}`;
-  }
-
-  function applyTheme(theme) {
-    root.setAttribute('data-theme', theme);
-    const icon = document.querySelector('[data-theme-icon]');
-    if (icon) {
-      icon.textContent = theme === 'dark' ? 'Light' : 'Dark';
-    }
-  }
-
-  const storedTheme = localStorage.getItem(THEME_KEY);
-  if (storedTheme) {
-    applyTheme(storedTheme);
-  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    applyTheme('dark');
-  } else {
-    applyTheme('light');
-  }
-
-  const themeToggle = document.querySelector('[data-theme-toggle]');
-  if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-      const nextTheme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      localStorage.setItem(THEME_KEY, nextTheme);
-      applyTheme(nextTheme);
-    });
   }
 
   const progressBar = document.querySelector('[data-scroll-progress]');
@@ -49,6 +20,12 @@
   if (menuToggle && menuPanel) {
     menuToggle.addEventListener('click', () => {
       menuPanel.classList.toggle('is-open');
+    });
+
+    menuPanel.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        menuPanel.classList.remove('is-open');
+      });
     });
   }
 
@@ -72,7 +49,7 @@
       });
 
       if (count) {
-        count.textContent = `Showing ${visibleCount} posts`;
+        count.textContent = `当前显示 ${visibleCount} 篇笔记`;
       }
     };
 
@@ -87,6 +64,24 @@
     image.decoding = 'async';
     image.classList.add('external-image');
   });
+
+  const revealElements = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && revealElements.length) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, {
+      threshold: 0.08,
+      rootMargin: '0px 0px -30px 0px',
+    });
+
+    revealElements.forEach((element) => revealObserver.observe(element));
+  } else {
+    revealElements.forEach((element) => element.classList.add('is-visible'));
+  }
 
   function normalizeStandaloneMathBlocks(container) {
     container.querySelectorAll('p').forEach((paragraph) => {
@@ -107,11 +102,11 @@
   function initMathRendering() {
     if (typeof window.renderMathInElement !== 'function') return;
 
-    document.querySelectorAll('.article-content').forEach((articleContent) => {
-      if (articleContent.dataset.mathReady === 'true') return;
+    document.querySelectorAll('.rich-content').forEach((contentRoot) => {
+      if (contentRoot.dataset.mathReady === 'true') return;
 
-      normalizeStandaloneMathBlocks(articleContent);
-      window.renderMathInElement(articleContent, {
+      normalizeStandaloneMathBlocks(contentRoot);
+      window.renderMathInElement(contentRoot, {
         delimiters: [
           { left: '$$', right: '$$', display: true },
           { left: '\\[', right: '\\]', display: true },
@@ -124,11 +119,7 @@
         ignoredClasses: ['katex'],
       });
 
-      articleContent.dataset.mathReady = 'true';
-    });
-
-    window.requestAnimationFrame(() => {
-      window.dispatchEvent(new Event('resize'));
+      contentRoot.dataset.mathReady = 'true';
     });
   }
 
@@ -143,7 +134,7 @@
 
     return `
       <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
-        <rect x="7" y="3.5" width="8.5" height="11" rx="1.8" stroke="currentColor" stroke-width="1.5"/>
+        <rect x="7" y="3.5" width="8.5" height="11" stroke="currentColor" stroke-width="1.5"/>
         <path d="M5.5 6H4.8A1.8 1.8 0 0 0 3 7.8v7.4C3 16.2 3.8 17 4.8 17h6.4A1.8 1.8 0 0 0 13 15.2v-.7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
       </svg>
     `;
@@ -151,8 +142,8 @@
 
   function setCopyButtonState(button, isCopied) {
     button.dataset.copyState = isCopied ? 'copied' : 'idle';
-    button.setAttribute('aria-label', isCopied ? 'Copied' : 'Copy code');
-    button.setAttribute('title', isCopied ? 'Copied' : 'Copy code');
+    button.setAttribute('aria-label', isCopied ? '已复制' : '复制代码');
+    button.setAttribute('title', isCopied ? '已复制' : '复制代码');
     button.innerHTML = copyIconMarkup(isCopied);
   }
 
@@ -202,7 +193,7 @@
   }
 
   function initCodeCopyButtons() {
-    document.querySelectorAll('.article-content figure.highlight, .article-content pre').forEach((block) => {
+    document.querySelectorAll('.rich-content figure.highlight, .rich-content pre').forEach((block) => {
       if (block.tagName.toLowerCase() === 'pre' && block.closest('figure.highlight')) return;
       if (block.dataset.copyReady === 'true') return;
 
@@ -231,17 +222,16 @@
         }
       });
 
-      block.classList.add('has-copy-button');
       block.dataset.copyReady = 'true';
       block.appendChild(button);
     });
   }
 
   function initArticleTocSync() {
-    document.querySelectorAll('.article-layout').forEach((articleLayout) => {
-      const tocShell = articleLayout.querySelector('.toc-shell');
-      const articleContent = articleLayout.querySelector('.article-content');
-      if (!tocShell || !articleContent) return;
+    document.querySelectorAll('.post-shell').forEach((postShell) => {
+      const tocShell = postShell.querySelector('.toc-shell');
+      const contentRoot = postShell.querySelector('.rich-content');
+      if (!tocShell || !contentRoot) return;
 
       const tocLinks = Array.from(tocShell.querySelectorAll('.toc-list-link[href^="#"], a[href^="#"]'))
         .filter((link) => !link.classList.contains('headerlink'));
@@ -273,29 +263,24 @@
 
       const activationOffset = () => {
         const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 800;
-        return Math.max(120, Math.min(220, Math.round(viewportHeight * 0.28)));
+        return Math.max(110, Math.min(200, Math.round(viewportHeight * 0.26)));
       };
 
       function clearActiveState() {
-        tocShell.querySelectorAll('.is-active').forEach((node) => {
-          node.classList.remove('is-active');
-        });
+        tocShell.querySelectorAll('.is-active').forEach((node) => node.classList.remove('is-active'));
       }
 
       function keepActiveLinkVisible(link, behavior = 'auto') {
         const shellRect = tocShell.getBoundingClientRect();
         const linkRect = link.getBoundingClientRect();
-        const topBuffer = 28;
-        const bottomBuffer = 36;
+        const topBuffer = 22;
+        const bottomBuffer = 24;
 
-        if (
-          linkRect.top >= shellRect.top + topBuffer
-          && linkRect.bottom <= shellRect.bottom - bottomBuffer
-        ) {
+        if (linkRect.top >= shellRect.top + topBuffer && linkRect.bottom <= shellRect.bottom - bottomBuffer) {
           return;
         }
 
-        const nextTop = tocShell.scrollTop + (linkRect.top - shellRect.top) - (tocShell.clientHeight * 0.34);
+        const nextTop = tocShell.scrollTop + (linkRect.top - shellRect.top) - (tocShell.clientHeight * 0.32);
         tocShell.scrollTo({
           top: Math.max(0, nextTop),
           behavior,
@@ -396,7 +381,7 @@
           requestSync();
         }, {
           root: null,
-          rootMargin: '-12% 0px -62% 0px',
+          rootMargin: '-10% 0px -64% 0px',
           threshold: [0, 0.1, 0.25, 0.5, 1],
         });
 
@@ -414,7 +399,7 @@
         });
       });
 
-      articleContent.querySelectorAll('img').forEach((image) => {
+      contentRoot.querySelectorAll('img').forEach((image) => {
         if (!image.complete) {
           image.addEventListener('load', requestSync);
           image.addEventListener('error', requestSync);
@@ -542,9 +527,9 @@
         const postRows = posts.map((post) => postRowMarkup(post)).join('');
         const emptyMarkup = folders.length || posts.length
           ? ''
-          : '<div class="finder-empty">No posts in this folder yet.</div>';
+          : '<div class="finder-empty">这个目录里还没有文章。</div>';
         const openLink = node.path
-          ? `<a class="finder-column-link" href="${normalizeHref(node.path)}">Open folder page</a>`
+          ? `<a class="finder-column-link" href="${normalizeHref(node.path)}">打开目录页</a>`
           : '';
 
         return `
@@ -552,7 +537,7 @@
             <header class="finder-column-header">
               <div>
                 <strong>${node.name}</strong>
-                <span>${folders.length} subfolders / ${posts.length} notes</span>
+                <span>${folders.length} 个子目录 / ${posts.length} 篇笔记</span>
               </div>
               ${openLink}
             </header>

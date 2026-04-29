@@ -4,13 +4,13 @@
     
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Week_1 | JerryXie&#39;s Blog</title>
-<meta name="description" content="CTF, digital forensics, offensive security, and study notes.">
-<meta name="theme-color" content="#f5f5f7">
+<title>Week_1 | JerryXie 安全档案</title>
+<meta name="description" content="一个面向 CTF、二进制利用、数字取证与长期学习记录的静态安全知识库。">
+<meta name="theme-color" content="#f9f9f7">
 <meta name="referrer" content="no-referrer">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Week_1 | JerryXie&#39;s Blog">
-<meta property="og:description" content="CTF, digital forensics, offensive security, and study notes.">
+<meta property="og:title" content="Week_1 | JerryXie 安全档案">
+<meta property="og:description" content="一个面向 CTF、二进制利用、数字取证与长期学习记录的静态安全知识库。">
 
   <meta property="og:url" content="https://jerryxie.top/notes/ctf/NewStar_2025/Week_1/">
   <link rel="canonical" href="https://jerryxie.top/notes/ctf/NewStar_2025/Week_1/">
@@ -21,79 +21,82 @@
 
   <link rel="icon" href="/favicon.png">
 
-<link rel="stylesheet" href="/css/style.css?v=mo6ixrx0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Lora:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:wght@600;700;800;900&display=swap"
+  rel="stylesheet"
+>
+<link rel="stylesheet" href="/css/style.css?v=mojchirb">
 
-  <link rel="stylesheet" href="/vendor/katex/katex.min.css?v=mo6ixrx0">
+  <link rel="stylesheet" href="/vendor/katex/katex.min.css?v=mojchirb">
 
-<style id="site-theme-vars">:root{--font-body:'Space Grotesk', 'PingFang SC', 'Hiragino Sans GB', sans-serif;--font-heading:'Space Grotesk', 'PingFang SC', 'Hiragino Sans GB', sans-serif;--font-mono:'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;--content-width:1130px;--article-side-width:300px;--radius-xl:17px;--radius-lg:13px;--radius-md:9px;--bg:#eaf2ff;--bg-elevated:rgba(245, 249, 255, 0.56);--surface:rgba(255, 255, 255, 0.34);--surface-soft:rgba(255, 255, 255, 0.52);--surface-terminal:rgba(10, 18, 34, 0.88);--line:rgba(255, 255, 255, 0.46);--line-strong:rgba(134, 158, 197, 0.4);--text:#14263d;--text-soft:#5d718d;--accent:#3b82f6;--accent-strong:#22d3ee;--shadow:0 28px 80px rgba(103, 125, 171, 0.18);--shadow-soft:0 18px 48px rgba(103, 125, 171, 0.14);--page-gradient-start:#f6f9ff;--page-gradient-mid:#ebf3ff;--page-gradient-end:#e1eeff;--page-glow-one:rgba(255, 255, 255, 0.92);--page-glow-two:rgba(165, 224, 255, 0.42);--page-glow-three:rgba(120, 149, 255, 0.24);--code-bg:#0b1220;--code-fg:#e6edf7;--code-border:rgba(59, 130, 246, 0.14);--code-shadow:0 14px 28px rgba(14, 23, 38, 0.18);--code-radius:9px;--code-padding-y:7px;--code-padding-x:11px;--code-font-size:0.88rem;--code-line-height:1.41;--code-gutter-color:#6f7f99;--code-title-display:none;--code-language-tag-display:inline-flex;--code-language-tag-opacity:0;--code-language-tag-visibility:hidden;--code-language-tag-transform-y:-4px;--code-language-tag-extra-padding:0px;--inline-code-bg:rgba(59, 130, 246, 0.10);--inline-code-fg:#0f766e;}html[data-theme='dark']{--bg:#040917;--bg-elevated:rgba(9, 15, 29, 0.62);--surface:rgba(13, 22, 42, 0.54);--surface-soft:rgba(15, 25, 47, 0.7);--surface-terminal:rgba(2, 6, 23, 0.92);--line:rgba(165, 185, 220, 0.18);--line-strong:rgba(165, 185, 220, 0.28);--text:#ecf3ff;--text-soft:#97a6ba;--shadow:0 28px 80px rgba(2, 6, 23, 0.5);--shadow-soft:0 18px 48px rgba(2, 6, 23, 0.36);--page-gradient-start:#040917;--page-gradient-mid:#07101d;--page-gradient-end:#0b1424;--page-glow-one:rgba(77, 134, 255, 0.18);--page-glow-two:rgba(34, 211, 238, 0.12);--page-glow-three:rgba(91, 126, 255, 0.12);--inline-code-bg:rgba(16, 185, 129, 0.12);--inline-code-fg:#7cf0bf;}</style>
+<style id="site-theme-vars">:root{--font-body:'Lora', 'Noto Serif SC', 'Songti SC', serif;--font-heading:'Playfair Display', 'Noto Serif SC', 'STSong', serif;--font-mono:'JetBrains Mono', 'IBM Plex Mono', Consolas, monospace;--content-width:1380px;--article-side-width:320px;--radius-xl:0px;--radius-lg:0px;--radius-md:0px;--bg:#f9f9f7;--bg-elevated:#fbfbf8;--surface:rgba(255, 255, 255, 0.94);--surface-soft:#f1efe8;--surface-terminal:#141414;--line:#d7d3c7;--line-strong:#111111;--text:#141414;--text-soft:#5b5850;--accent:#b32020;--accent-strong:#d45b2d;--shadow:0 20px 40px rgba(17, 17, 17, 0.05);--shadow-soft:0 12px 24px rgba(17, 17, 17, 0.04);--page-gradient-start:#f9f9f7;--page-gradient-mid:#f9f9f7;--page-gradient-end:#f9f9f7;--page-glow-one:rgba(255, 255, 255, 0);--page-glow-two:rgba(255, 255, 255, 0);--page-glow-three:rgba(255, 255, 255, 0);--code-bg:#111111;--code-fg:#f7f3e8;--code-border:#2a2a2a;--code-shadow:none;--code-radius:0px;--code-padding-y:12px;--code-padding-x:14px;--code-font-size:0.88rem;--code-line-height:1.55;--code-gutter-color:#8f8a80;--code-title-display:block;--code-language-tag-display:inline-flex;--code-language-tag-opacity:1;--code-language-tag-visibility:visible;--code-language-tag-transform-y:0px;--code-language-tag-extra-padding:28px;--inline-code-bg:rgba(179, 32, 32, 0.08);--inline-code-fg:#8d1e1e;}html[data-theme='dark']{--bg:#101010;--bg-elevated:#131313;--surface:#171717;--surface-soft:#1d1d1d;--surface-terminal:#090909;--line:#343434;--line-strong:#f5f2e9;--text:#f5f2e9;--text-soft:#b5b0a6;--shadow:0 20px 40px rgba(0, 0, 0, 0.25);--shadow-soft:0 12px 24px rgba(0, 0, 0, 0.18);--page-gradient-start:#101010;--page-gradient-mid:#101010;--page-gradient-end:#101010;--page-glow-one:rgba(255, 255, 255, 0);--page-glow-two:rgba(255, 255, 255, 0);--page-glow-three:rgba(255, 255, 255, 0);--inline-code-bg:rgba(255, 255, 255, 0.08);--inline-code-fg:#f5f2e9;}</style>
 
-  <script defer src="/vendor/katex/katex.min.js?v=mo6ixrx0"></script>
-  <script defer src="/vendor/katex/contrib/auto-render.min.js?v=mo6ixrx0"></script>
+  <script defer src="/vendor/katex/katex.min.js?v=mojchirb"></script>
+  <script defer src="/vendor/katex/contrib/auto-render.min.js?v=mojchirb"></script>
 
-<script defer src="/js/main.js?v=mo6ixrx0"></script>
+<script defer src="/js/main.js?v=mojchirb"></script>
 
   <meta name="generator" content="Hexo 8.1.1"></head>
-  <body>
+  <body class="page-post">
     <div class="scroll-progress" data-scroll-progress></div>
     <div class="site-shell">
       
-<header class="site-header">
-  <div class="header-inner">
-    <a class="brand" href="/">
-      <span class="brand-mark"></span>
-      <span class="brand-name">JerryXie&#39;s Blog</span>
-    </a>
-
-    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">
-      <span></span><span></span><span></span>
-    </button>
-
-    <nav class="site-nav" data-menu-panel>
+<header class="masthead">
+  <div class="masthead-top">
+    <a class="masthead-title" href="/">JerryXie 安全档案</a>
+    <p class="masthead-subtitle">CTF / PWN / 数字取证 / 研究笔记</p>
+  </div>
+  <div class="masthead-meta">
+    <span>VOL. 1 | STATIC EDITION</span>
+    <span class="hide-mobile">UPDATED 2026-04-19</span>
+    <span>JERRYXIE.TOP</span>
+  </div>
+  <div class="masthead-nav-row">
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle navigation">Menu</button>
+    <nav class="masthead-nav" data-menu-panel>
       
-        <a href="/" class="">Home</a>
+        <a href="/" class="nav-link ">首页</a>
       
-        <a href="/archives/" class="">Archive</a>
+        <a href="/archives/" class="nav-link ">归档</a>
       
-        <a href="/categories/" class="">Library</a>
+        <a href="/categories/" class="nav-link ">目录</a>
       
-        <a href="/about/" class="">About</a>
+        <a href="/about/" class="nav-link ">关于</a>
       
+      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener" class="nav-link">GitHub</a>
     </nav>
-
-    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
-      <span data-theme-icon>Dark</span>
-    </button>
   </div>
 </header>
 
       <main class="page-shell">
         
 
-<article class="article-layout">
-  <div class="article-main card-panel">
-    <a class="back-link" href="/categories/">Back to library</a>
-    <header class="article-header">
-      <div class="article-badges">
+<article class="post-shell reveal">
+  <div class="post-main">
+    <a class="back-link" href="/categories/">返回目录</a>
+    <header class="post-header">
+      <div class="post-header-cat">
         
           
-            <a class="category-chip" href="/categories/ctf/">ctf</a>
+            <a class="category-chip" href="/categories/ctf/">ctf</a> 
           
             <a class="category-chip" href="/categories/ctf/NewStar-2025/">NewStar_2025</a>
           
         
       </div>
-      <h1>Week_1</h1>
-      <div class="article-meta">
+      <h1 class="post-header-title">Week_1</h1>
+      <div class="post-header-meta">
         <span>Published 2026-04-19</span>
         <span>Updated 2026-04-19</span>
         <span>47 min</span>
       </div>
       
-        <p class="article-source">Source path: <code>ctf/NewStar_2025/Week_1.md</code></p>
+        <p class="post-source">Source path: <code>ctf/NewStar_2025/Week_1.md</code></p>
       
     </header>
-
-    <div class="article-content">
+    <div class="rich-content post-content">
       <h1 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h1><h2 id="1-初识rsa"><a href="#1-初识rsa" class="headerlink" title="1.初识rsa"></a>1.初识rsa</h2><figure class="highlight plaintext" data-language="plaintext" data-language-label="Plain text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line">import hashlib</span><br><span class="line"></span><br><span class="line">key=b&#x27;??????&#x27;   </span><br><span class="line">assert len(key)==6</span><br><span class="line">KEY = hashlib.md5(key).hexdigest().encode()</span><br><span class="line">print(&#x27;KEY=&#x27;,KEY)</span><br><span class="line"></span><br><span class="line">flag=b&#x27;flag&#123;?????????????&#125;&#x27;</span><br><span class="line"></span><br><span class="line">m=bytes_to_long(flag)</span><br><span class="line"></span><br><span class="line">e=65537</span><br><span class="line">p=getPrime(512)</span><br><span class="line">q=getPrime(512)</span><br><span class="line">n=pow(p,3)* pow(q,2)</span><br><span class="line">c=pow(m,e,n)</span><br><span class="line"></span><br><span class="line">P=p^(bytes_to_long(key))</span><br><span class="line"></span><br><span class="line">print(&quot;P=&quot;,P)</span><br><span class="line">print(&quot;n=&quot;,n)</span><br><span class="line">print(&quot;c=&quot;,c)</span><br><span class="line"></span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">KEY = b&#x27;5ae9b7f211e23aac3df5f2b8f3b8eada&#x27;</span><br><span class="line">P= 8950704257708450266553505566662195919814660677796969745141332884563215887576312397012443714881729945084204600427983533462340628158820681332200645787691506</span><br><span class="line">n= 44446616188218819786207128669544260200786245231084315865332960254466674511396013452706960167237712984131574242297631824608996400521594802041774252109118569706894250996931000927100268277762882754652796291883967540656284636140320080424646971672065901724016868601110447608443973020392152580956168514740954659431174557221037876268055284535861917524270777789465109449562493757855709667594266126482042307573551713967456278514060120085808631486752297737122542989222157016105822237703651230721732928806660755347805734140734412060262304703945060273095463889784812104712104670060859740991896998661852639384506489736605859678660859641869193937584995837021541846286340552602342167842171089327681673432201518271389316638905030292484631032669474635442148203414558029464840768382970333</span><br><span class="line">c= 42481263623445394280231262620086584153533063717448365833463226221868120488285951050193025217363839722803025158955005926008972866584222969940058732766011030882489151801438753030989861560817833544742490630377584951708209970467576914455924941590147893518967800282895563353672016111485919944929116082425633214088603366618022110688943219824625736102047862782981661923567377952054731667935736545461204871636455479900964960932386422126739648242748169170002728992333044486415920542098358305720024908051943748019208098026882781236570466259348897847759538822450491169806820787193008018522291685488876743242619977085369161240842263956004215038707275256809199564441801377497312252051117441861760886176100719291068180295195677144938101948329274751595514805340601788344134469750781845</span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>先倒查md5</p>
@@ -442,17 +445,17 @@
     </div>
   </div>
 
-  <aside class="article-side">
-    <div class="card-panel sticky-panel">
-      <h3>Outline</h3>
+  <aside class="post-side">
+    <div class="post-side-card">
+      <h3>文章大纲</h3>
       
         <div class="toc-shell"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#Crypto"><span class="toc-list-text">Crypto</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E5%88%9D%E8%AF%86rsa"><span class="toc-list-text">1.初识rsa</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-Sagemath%E4%BD%BF%E7%94%A8%E6%8C%87%E5%93%AA%EF%BC%9F"><span class="toc-list-text">2.Sagemath使用指哪？</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-%E5%94%AF%E4%B8%80%E8%A1%A8%E7%A4%BA"><span class="toc-list-text">3.唯一表示</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4-%E9%9A%8F%E6%9C%BA%E6%95%B0%E4%B9%8B%E6%97%851"><span class="toc-list-text">4.随机数之旅1</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#p-%E7%9A%84%E6%AF%94%E7%89%B9%E9%95%BF%E5%BA%A6%E6%AF%94-message-int-%E7%95%A5%E5%A4%A7"><span class="toc-list-text">p 的比特长度比 message_int 略大</span></a></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#a-%E7%9A%84%E6%AF%94%E7%89%B9%E9%95%BF%E5%BA%A6%E5%92%8C-p-%E7%9B%B8%E5%90%8C"><span class="toc-list-text">a 的比特长度和 p 相同</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#5-%E5%B0%8F%E8%B7%B3%E8%9B%99"><span class="toc-list-text">5.小跳蛙</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#6-random1-3"><span class="toc-list-text">6.random1.3</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#7-random1-9"><span class="toc-list-text">7.random1.9</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#Misc"><span class="toc-list-text">Misc</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-%E6%88%91%E4%B8%8D%E8%A6%81%E9%9D%A9%E5%91%BD%E5%A4%B1%E8%B4%A5"><span class="toc-list-text">1.我不要革命失败</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-OSINT-%E5%A4%A9%E7%A9%BAbelong"><span class="toc-list-text">2.OSINT-天空belong</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-MISC%E5%9F%8E%E9%82%A6-%E5%8E%8B%E7%BC%A9%E6%9C%AF"><span class="toc-list-text">3.MISC城邦-压缩术</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4-EZ-fence"><span class="toc-list-text">4.EZ-fence</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#5-%E5%89%8D%E6%9C%89%E6%96%87%E5%AD%97%EF%BC%8C%E6%89%80%E4%BB%A5%E6%90%9C%E7%B4%A2%E5%BE%88%E6%9C%89%E7%94%A8"><span class="toc-list-text">5.前有文字，所以搜索很有用</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#Track1"><span class="toc-list-text">Track1</span></a></li></ol></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#%E9%9B%B6%E5%AE%BD%E5%BA%A6%E5%AD%97%E7%AC%A6%EF%BC%9A%E5%92%8C%E8%B0%90%EF%BC%9F%E5%B1%8F%E8%94%BD%EF%BC%9F%E4%B8%8D%E5%AD%98%E5%9C%A8%E7%9A%84"><span class="toc-list-text">零宽度字符：和谐？屏蔽？不存在的</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#Track2"><span class="toc-list-text">Track2</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#Track3"><span class="toc-list-text">Track3</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#pwn"><span class="toc-list-text">pwn</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-pwn%E2%80%99s-door"><span class="toc-list-text">1.pwn’s door</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-INTbug"><span class="toc-list-text">2.INTbug</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#undo3-GNU-Debugger"><span class="toc-list-text">undo3.GNU Debugger</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4-overflow"><span class="toc-list-text">4.overflow</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#5-input-fuction"><span class="toc-list-text">5.input_fuction</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#reverse"><span class="toc-list-text">reverse</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-xor"><span class="toc-list-text">1.xor</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-Strange-Base"><span class="toc-list-text">2.Strange Base</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-Puzzle"><span class="toc-list-text">3.Puzzle</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4-EzMyDroid"><span class="toc-list-text">4.EzMyDroid</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#5-plzdebugme"><span class="toc-list-text">5.plzdebugme</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#web"><span class="toc-list-text">web</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#1-multi-headach3"><span class="toc-list-text">1.multi-headach3</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#2-strange-login"><span class="toc-list-text">2.strange_login</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#3-%E5%AE%87%E5%AE%99%E7%9A%84%E4%B8%AD%E5%BF%83%E6%98%AFphp"><span class="toc-list-text">3.宇宙的中心是php</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#4-%E5%88%AB%E7%AC%91%EF%BC%8C%E4%BD%A0%E4%B9%9F%E8%BF%87%E4%B8%8D%E4%BA%86%E7%AC%AC%E4%BA%8C%E5%85%B3"><span class="toc-list-text">4.别笑，你也过不了第二关</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#undo5-%E6%88%91%E7%9C%9F%E5%BE%97%E6%8E%A7%E5%88%B6%E4%BD%A0%E4%BA%86"><span class="toc-list-text">undo5.我真得控制你了</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#6-%E9%BB%91%E5%AE%A2%E5%B0%8FW%E7%9A%84%E6%95%85%E4%BA%8B%EF%BC%881%EF%BC%89"><span class="toc-list-text">6.黑客小W的故事（1）</span></a></li></ol></li></ol></div>
       
     </div>
 
     
-      <div class="card-panel sticky-panel">
-        <h3>More from ctf</h3>
+      <div class="post-side-card">
+        <h3>同目录更多文章 ctf</h3>
         <div class="mini-list">
           
             <a href="/notes/ctf/_CTF/">
@@ -484,18 +487,26 @@
       </main>
       
 <footer class="site-footer">
-  <div class="footer-inner">
-    <div>
-      <strong>JerryXie&#39;s Blog</strong>
-      <p>CTF, digital forensics, offensive security, and study notes.</p>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h4>JerryXie 安全档案</h4>
+      <p>一个面向 CTF、二进制利用、数字取证与长期学习记录的静态安全知识库。</p>
+    </div>
+    <div class="footer-links">
+      <a href="/">首页</a>
+      <a href="/archives/">归档</a>
+      <a href="/categories/">目录</a>
+      <a href="/about/">关于</a>
     </div>
     <div class="footer-meta">
-      <span>Hexo</span>
-      <span class="dot"></span>
-      <a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub</a>
-      <span class="dot"></span>
-      <a href="https://jerryxie.top/" target="_blank" rel="noopener">Live</a>
+      <p>HEXO STATIC PIPELINE</p>
+      <p><a href="https://github.com/JerryXie599/jerryxie599.github.io" target="_blank" rel="noopener">GitHub Repository</a></p>
+      <p><a href="https://jerryxie.top/" target="_blank" rel="noopener">Live Site</a></p>
     </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 JerryXie</span>
+    <span>PUBLISHED AT JERRYXIE.TOP</span>
   </div>
 </footer>
 
