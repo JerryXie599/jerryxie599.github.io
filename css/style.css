@@ -1158,8 +1158,10 @@ strong {
   font-size: var(--code-font-size);
   line-height: var(--code-line-height);
   letter-spacing: 0;
+  font-weight: 500;
   font-variant-ligatures: none;
   font-feature-settings: 'liga' 0, 'calt' 0;
+  font-variant-numeric: tabular-nums;
 }
 
 .rich-content pre[data-language-label]::before,
@@ -1170,11 +1172,11 @@ strong {
   right: var(--code-safe-padding-x);
   display: var(--code-language-tag-display);
   align-items: center;
-  padding: 0.18rem 0.5rem;
+  padding: 0.14rem 0.42rem;
   border: 1px solid rgba(255, 255, 255, 0.12);
   color: rgba(247, 243, 232, 0.9);
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.66rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   opacity: var(--code-language-tag-opacity);
@@ -1185,11 +1187,11 @@ strong {
 .rich-content figure.highlight figcaption {
   display: var(--code-title-display);
   margin: calc(var(--code-safe-padding-y) * -1) calc(var(--code-safe-padding-x) * -1) 0.9rem;
-  padding: 0.5rem var(--code-safe-padding-x);
+  padding: 0.42rem var(--code-safe-padding-x);
   border-bottom: 1px solid rgba(255, 255, 255, 0.14);
   color: rgba(247, 243, 232, 0.9);
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.64rem;
 }
 
 .rich-content figure.highlight table {
@@ -1206,13 +1208,13 @@ strong {
 }
 
 .rich-content figure.highlight .gutter {
-  width: 38px;
+  width: 34px;
   color: var(--code-gutter-color);
 }
 
 .rich-content figure.highlight .gutter pre {
   margin: 0;
-  padding-right: 0.5rem;
+  padding-right: 0.4rem;
   border-right: 1px solid rgba(255, 255, 255, 0.12);
 }
 
@@ -1268,8 +1270,8 @@ strong {
   right: 12px;
   bottom: 12px;
   z-index: 2;
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1283,8 +1285,8 @@ strong {
 }
 
 .code-copy-button svg {
-  width: 14px;
-  height: 14px;
+  width: 13px;
+  height: 13px;
 }
 
 .rich-content pre:hover > .code-copy-button,
