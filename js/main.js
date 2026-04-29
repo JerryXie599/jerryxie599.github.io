@@ -68,21 +68,32 @@
   });
 
   const revealElements = document.querySelectorAll('.reveal');
+  const markRevealVisible = (element) => {
+    element.classList.add('is-visible');
+  };
+
+  revealElements.forEach((element) => {
+    const rect = element.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      markRevealVisible(element);
+    }
+  });
+
   if ('IntersectionObserver' in window && revealElements.length) {
     const revealObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-visible');
+        markRevealVisible(entry.target);
         observer.unobserve(entry.target);
       });
     }, {
-      threshold: 0.08,
-      rootMargin: '0px 0px -30px 0px',
+      threshold: 0.001,
+      rootMargin: '0px 0px -10% 0px',
     });
 
     revealElements.forEach((element) => revealObserver.observe(element));
   } else {
-    revealElements.forEach((element) => element.classList.add('is-visible'));
+    revealElements.forEach((element) => markRevealVisible(element));
   }
 
   function normalizeStandaloneMathBlocks(container) {
