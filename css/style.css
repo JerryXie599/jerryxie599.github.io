@@ -1,3 +1,27 @@
+@font-face {
+  font-family: 'Site Code Mono';
+  src: url('/fonts/SourceCodePro-Regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Site Code Mono';
+  src: url('/fonts/SourceCodePro-Medium.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Site Code Mono';
+  src: url('/fonts/SourceCodePro-Semibold.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
 :root {
   --paper: var(--bg);
   --paper-elevated: var(--bg-elevated);
