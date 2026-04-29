@@ -1211,8 +1211,9 @@ strong {
   display: var(--code-language-tag-display);
   align-items: center;
   padding: 0.14rem 0.42rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: rgba(247, 243, 232, 0.9);
+  border: 1px solid rgba(47, 38, 31, 0.14);
+  background: rgba(255, 255, 255, 0.72);
+  color: rgba(47, 38, 31, 0.82);
   font-family: var(--font-mono);
   font-size: 0.66rem;
   letter-spacing: 0.04em;
@@ -1226,8 +1227,8 @@ strong {
   display: var(--code-title-display);
   margin: calc(var(--code-safe-padding-y) * -1) calc(var(--code-safe-padding-x) * -1) 0.9rem;
   padding: 0.42rem var(--code-safe-padding-x);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-  color: rgba(247, 243, 232, 0.9);
+  border-bottom: 1px solid rgba(47, 38, 31, 0.12);
+  color: rgba(47, 38, 31, 0.8);
   font-family: var(--font-mono);
   font-size: 0.64rem;
 }
@@ -1253,7 +1254,7 @@ strong {
 .rich-content figure.highlight .gutter pre {
   margin: 0;
   padding-right: 0.4rem;
-  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  border-right: 1px solid rgba(47, 38, 31, 0.12);
 }
 
 .rich-content figure.highlight .code pre,
@@ -1270,7 +1271,7 @@ strong {
 
 .rich-content figure.highlight .comment,
 .rich-content figure.highlight .quote {
-  color: #938d82;
+  color: #8d7c6c;
 }
 
 .rich-content figure.highlight .keyword,
@@ -1278,19 +1279,19 @@ strong {
 .rich-content figure.highlight .literal,
 .rich-content figure.highlight .built_in,
 .rich-content figure.highlight .type {
-  color: #f28b82;
+  color: #a13d2d;
 }
 
 .rich-content figure.highlight .string,
 .rich-content figure.highlight .regexp,
 .rich-content figure.highlight .subst {
-  color: #b2df8a;
+  color: #2f7a55;
 }
 
 .rich-content figure.highlight .number,
 .rich-content figure.highlight .symbol,
 .rich-content figure.highlight .bullet {
-  color: #fbc97f;
+  color: #9a6700;
 }
 
 .rich-content figure.highlight .title,
@@ -1300,7 +1301,7 @@ strong {
 .rich-content figure.highlight .attribute,
 .rich-content figure.highlight .params,
 .rich-content figure.highlight .variable {
-  color: #a9d7ff;
+  color: #1f5f8b;
 }
 
 .code-copy-button {
@@ -1313,9 +1314,9 @@ strong {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(247, 243, 232, 0.92);
+  border: 1px solid rgba(47, 38, 31, 0.14);
+  background: rgba(255, 255, 255, 0.78);
+  color: rgba(47, 38, 31, 0.82);
   cursor: pointer;
   opacity: 0;
   transform: translateY(4px);
@@ -1338,13 +1339,13 @@ strong {
 
 .code-copy-button:hover,
 .code-copy-button:focus-visible {
-  border-color: rgba(255, 255, 255, 0.28);
-  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(47, 38, 31, 0.28);
+  background: rgba(255, 255, 255, 0.96);
   outline: none;
 }
 
 .code-copy-button[data-copy-state='copied'] {
-  color: #8ff0cf;
+  color: #0f766e;
 }
 
 .rich-content .katex {
