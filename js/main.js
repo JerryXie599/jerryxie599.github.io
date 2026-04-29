@@ -1,4 +1,6 @@
 (() => {
+  document.documentElement.classList.add('js-enhanced');
+
   function normalizeHref(path) {
     if (!path) return '/';
     return path.startsWith('/') ? path : `/${path}`;
