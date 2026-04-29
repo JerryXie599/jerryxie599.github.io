@@ -1249,6 +1249,7 @@ strong {
   padding: 0;
   border: 0;
   background: transparent;
+  vertical-align: top;
 }
 
 .rich-content figure.highlight .gutter {
@@ -1265,6 +1266,9 @@ strong {
 
 .rich-content figure.highlight .code pre,
 .rich-content figure.highlight .gutter pre {
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
   border: 0;
   background: transparent;
   box-shadow: none;
