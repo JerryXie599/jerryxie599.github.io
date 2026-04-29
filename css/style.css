@@ -1203,13 +1203,13 @@ strong {
 }
 
 .rich-content figure.highlight .gutter {
-  width: 52px;
+  width: 44px;
   color: var(--code-gutter-color);
 }
 
 .rich-content figure.highlight .gutter pre {
   margin: 0;
-  padding-right: 0.9rem;
+  padding-right: 0.65rem;
   border-right: 1px solid rgba(255, 255, 255, 0.12);
 }
 
